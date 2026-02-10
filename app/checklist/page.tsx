@@ -29,6 +29,28 @@ function pill(label: string) {
   );
 }
 
+function normalizeState(value?: string) {
+  const v = (value ?? "").trim();
+  if (!v) return "";
+  return v.toUpperCase();
+}
+
+function normalizeProviderType(value?: string) {
+  const v = (value ?? "").trim();
+  if (!v) return "";
+  return v.toLowerCase();
+}
+
+function normalizeScope(value?: string) {
+  const v = (value ?? "").trim();
+  if (!v) return "";
+  return v.toUpperCase();
+}
+
+function uniq(values: string[]) {
+  return Array.from(new Set(values.filter(Boolean)));
+}
+
 export default async function ChecklistPage({
   searchParams,
 }: {
@@ -36,16 +58,74 @@ export default async function ChecklistPage({
 }) {
   const sp = await searchParams;
 
-  const state = (sp.state || "MD").toUpperCase();
-  const provider_type = sp.provider_type || "home_health";
-  const scope = (sp.scope || "ORG").toUpperCase();
+  // Requested (normalized)
+  const requested = {
+    state: normalizeState(sp.state),
+    provider_type: normalizeProviderType(sp.provider_type),
+    scope: normalizeScope(sp.scope),
+  };
+
+  // Defaults (normalized)
+  const defaults = {
+    state: "MD",
+    provider_type: "home_health",
+    scope: "ORG",
+  };
+
+  /**
+   * Validate against actual DB values (read-only).
+   * If this fails for any reason, we still render using defaults.
+   */
+  const { data: optionRows, error: optionsError } = await supabase
+    .from("requirements")
+    .select("state,provider_type,scope")
+    .limit(1000);
+
+  const allowedStates = uniq(
+    (optionRows ?? []).map((r: any) => normalizeState(r?.state))
+  );
+  const allowedProviderTypes = uniq(
+    (optionRows ?? []).map((r: any) => normalizeProviderType(r?.provider_type))
+  );
+  const allowedScopes = uniq(
+    (optionRows ?? []).map((r: any) => normalizeScope(r?.scope))
+  );
+
+  // If options couldn't be loaded, fall back to defaults (still stable)
+  const canValidate =
+    !optionsError &&
+    allowedStates.length > 0 &&
+    allowedProviderTypes.length > 0 &&
+    allowedScopes.length > 0;
+
+  const final = {
+    state:
+      requested.state && canValidate && allowedStates.includes(requested.state)
+        ? requested.state
+        : defaults.state,
+    provider_type:
+      requested.provider_type &&
+      canValidate &&
+      allowedProviderTypes.includes(requested.provider_type)
+        ? requested.provider_type
+        : defaults.provider_type,
+    scope:
+      requested.scope && canValidate && allowedScopes.includes(requested.scope)
+        ? requested.scope
+        : defaults.scope,
+  };
+
+  const wasNormalized =
+    (requested.state && requested.state !== final.state) ||
+    (requested.provider_type && requested.provider_type !== final.provider_type) ||
+    (requested.scope && requested.scope !== final.scope);
 
   const { data, error } = await supabase
     .from("requirements")
     .select("*")
-    .eq("state", state)
-    .eq("provider_type", provider_type)
-    .eq("scope", scope)
+    .eq("state", final.state)
+    .eq("provider_type", final.provider_type)
+    .eq("scope", final.scope)
     .order("category", { ascending: true })
     .order("sort_order", { ascending: true });
 
@@ -66,16 +146,41 @@ export default async function ChecklistPage({
           <h1 style={{ fontSize: 40, fontWeight: 800, margin: 0 }}>
             MedicaidReady Checklist
           </h1>
+
           <p style={{ marginTop: 8, color: "#555" }}>
-            Read-only template checklist for Maryland Home Health (Agency-level).
+            Read-only template checklist for <b>{final.state}</b> /{" "}
+            <b>{final.provider_type}</b> / <b>{final.scope}</b>.
           </p>
 
-          <div style={{ marginTop: 14, display: "flex", gap: 10, flexWrap: "wrap" }}>
-            {pill(`State: ${state}`)}
-            {pill(`Provider type: ${provider_type}`)}
-            {pill(`Scope: ${scope}`)}
+          <div
+            style={{
+              marginTop: 14,
+              display: "flex",
+              gap: 10,
+              flexWrap: "wrap",
+            }}
+          >
+            {pill(`State: ${final.state}`)}
+            {pill(`Provider type: ${final.provider_type}`)}
+            {pill(`Scope: ${final.scope}`)}
             {pill(`Items: ${items.length}`)}
+
+            {wasNormalized ? (
+              <span style={{ color: "#777", fontSize: 13 }}>
+                Normalized from{" "}
+                <code>
+                  {requested.state || "—"}/{requested.provider_type || "—"}/
+                  {requested.scope || "—"}
+                </code>
+              </span>
+            ) : null}
           </div>
+
+          {optionsError ? (
+            <div style={{ marginTop: 10, color: "#777", fontSize: 13 }}>
+              (Options validation unavailable — using safe defaults.)
+            </div>
+          ) : null}
         </div>
 
         <div style={{ alignSelf: "flex-start" }}>
@@ -85,7 +190,9 @@ export default async function ChecklistPage({
         </div>
       </header>
 
-      <hr style={{ margin: "26px 0", border: "none", borderTop: "1px solid #eee" }} />
+      <hr
+        style={{ margin: "26px 0", border: "none", borderTop: "1px solid #eee" }}
+      />
 
       {error ? (
         <div
@@ -103,8 +210,8 @@ export default async function ChecklistPage({
 
       {Object.keys(groups).length === 0 ? (
         <div style={{ color: "#666" }}>
-          No checklist items found for <b>{state}</b> / <b>{provider_type}</b> /{" "}
-          <b>{scope}</b>.
+          No checklist items found for <b>{final.state}</b> /{" "}
+          <b>{final.provider_type}</b> / <b>{final.scope}</b>.
         </div>
       ) : (
         <div style={{ display: "grid", gap: 18 }}>
@@ -139,7 +246,9 @@ export default async function ChecklistPage({
                       gap: 6,
                     }}
                   >
-                    <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+                    <div
+                      style={{ display: "flex", gap: 10, alignItems: "center" }}
+                    >
                       <input type="checkbox" disabled />
                       <div style={{ fontSize: 18, fontWeight: 800 }}>
                         {item.title}
@@ -176,7 +285,9 @@ export default async function ChecklistPage({
                         marginTop: 6,
                       }}
                     >
-                      {item.renewal_frequency ? pill(`Renewal: ${item.renewal_frequency}`) : null}
+                      {item.renewal_frequency
+                        ? pill(`Renewal: ${item.renewal_frequency}`)
+                        : null}
                       {item.alert_days ? pill(`Alert: ${item.alert_days} days`) : null}
                       {item.authority ? pill(item.authority) : null}
                     </div>
