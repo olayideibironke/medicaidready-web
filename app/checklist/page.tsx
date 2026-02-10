@@ -1,16 +1,13 @@
 // app/checklist/page.tsx
 import Link from "next/link";
 import { supabase } from "@/lib/supabaseClient";
-import {
-  type RequirementRow,
-  mapRequirementRow,
-  groupByCategory,
-} from "@/lib/requirementsModel";
+import { type RequirementRow, mapRequirementRow } from "@/lib/requirementsModel";
 import {
   labelForProviderType,
   labelForScope,
   labelForState,
 } from "@/lib/options";
+import ChecklistClient from "@/app/checklist/ChecklistClient";
 
 export const dynamic = "force-dynamic";
 
@@ -145,9 +142,8 @@ export default async function ChecklistPage({
 
   const rows = (data ?? []) as RequirementRow[];
   const items = rows.map(mapRequirementRow);
-  const groups = groupByCategory(items);
 
-  // Display labels (keep codes in URL/DB, show humans in UI)
+  // Display labels
   const displayState = labelForState(final.state);
   const displayProviderType = labelForProviderType(final.provider_type);
   const displayScope = labelForScope(final.scope);
@@ -159,6 +155,9 @@ export default async function ChecklistPage({
       : "—",
     scope: requested.scope ? labelForScope(requested.scope) : "—",
   };
+
+  // Local progress key (per selection)
+  const storageKey = `medicaidready_progress:${final.state}:${final.provider_type}:${final.scope}`;
 
   return (
     <main style={{ maxWidth: 980, margin: "0 auto", padding: "44px 20px" }}>
@@ -176,8 +175,8 @@ export default async function ChecklistPage({
           </h1>
 
           <p style={{ marginTop: 10, color: "#555", lineHeight: 1.5 }}>
-            Read-only template checklist for <b>{displayState}</b> /{" "}
-            <b>{displayProviderType}</b> / <b>{displayScope}</b>.
+            Checklist for <b>{displayState}</b> / <b>{displayProviderType}</b> /{" "}
+            <b>{displayScope}</b>.
           </p>
 
           <div
@@ -247,131 +246,8 @@ export default async function ChecklistPage({
         </div>
       ) : null}
 
-      {Object.keys(groups).length === 0 ? (
-        <div style={{ color: "#666", lineHeight: 1.5 }}>
-          No checklist items found for <b>{displayState}</b> /{" "}
-          <b>{displayProviderType}</b> / <b>{displayScope}</b>.
-        </div>
-      ) : (
-        <div style={{ display: "grid", gap: 18 }}>
-          {Object.entries(groups).map(([category, rows]) => (
-            <section
-              key={category}
-              style={{
-                border: "1px solid #eee",
-                borderRadius: 18,
-                background: "#fff",
-                overflow: "hidden",
-              }}
-            >
-              <div
-                style={{
-                  padding: "16px 18px",
-                  borderBottom: "1px solid #f0f0f0",
-                  background: "#fafafa",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  gap: 10,
-                  alignItems: "baseline",
-                  flexWrap: "wrap",
-                }}
-              >
-                <h2 style={{ margin: 0, fontSize: 22, fontWeight: 850 as any }}>
-                  {category}
-                </h2>
-                <div style={{ color: "#666", fontSize: 13 }}>
-                  {rows.length} items
-                </div>
-              </div>
-
-              <div style={{ padding: 18, display: "grid", gap: 14 }}>
-                {rows.map((item) => (
-                  <div
-                    key={item.id}
-                    style={{
-                      border: "1px solid #efefef",
-                      borderRadius: 16,
-                      padding: 16,
-                      display: "grid",
-                      gap: 8,
-                    }}
-                  >
-                    <div
-                      style={{
-                        display: "flex",
-                        gap: 10,
-                        alignItems: "flex-start",
-                      }}
-                    >
-                      <input
-                        type="checkbox"
-                        disabled
-                        style={{ marginTop: 4 }}
-                      />
-
-                      <div style={{ minWidth: 0 }}>
-                        <div
-                          style={{
-                            fontSize: 17,
-                            fontWeight: 850 as any,
-                            lineHeight: 1.25,
-                          }}
-                        >
-                          {item.title}
-                        </div>
-
-                        {item.description ? (
-                          <div
-                            style={{
-                              color: "#444",
-                              marginTop: 6,
-                              lineHeight: 1.45,
-                            }}
-                          >
-                            {item.description}
-                          </div>
-                        ) : null}
-
-                        <div
-                          style={{
-                            display: "flex",
-                            gap: 10,
-                            flexWrap: "wrap",
-                            marginTop: 10,
-                          }}
-                        >
-                          {item.isRequired ? (
-                            <span
-                              style={{
-                                fontSize: 12,
-                                fontWeight: 850 as any,
-                                background: "#111",
-                                color: "#fff",
-                                padding: "4px 8px",
-                                borderRadius: 999,
-                                lineHeight: 1,
-                              }}
-                            >
-                              Required
-                            </span>
-                          ) : null}
-
-                          {item.renewalRule
-                            ? pill(`Renewal: ${item.renewalRule}`)
-                            : null}
-                          {typeof item.dueDaysBeforeExpiry === "number"
-                            ? pill(`Alert: ${item.dueDaysBeforeExpiry} days`)
-                            : null}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </section>
-          ))}
-        </div>
-      )}
+      {/* Client-side progress + interactive checkboxes (local only) */}
+      <ChecklistClient items={items} storageKey={storageKey} />
     </main>
   );
 }
