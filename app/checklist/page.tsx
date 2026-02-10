@@ -2,11 +2,7 @@
 import Link from "next/link";
 import { supabase } from "@/lib/supabaseClient";
 import { type RequirementRow, mapRequirementRow } from "@/lib/requirementsModel";
-import {
-  labelForProviderType,
-  labelForScope,
-  labelForState,
-} from "@/lib/options";
+import { labelForProviderType, labelForScope, labelForState } from "@/lib/options";
 import ChecklistClient from "@/app/checklist/ChecklistClient";
 
 export const dynamic = "force-dynamic";
@@ -90,17 +86,11 @@ export default async function ChecklistPage({
     .select("state,provider_type,scope")
     .limit(1000);
 
-  const allowedStates = uniq(
-    (optionRows ?? []).map((r: any) => normalizeState(r?.state))
-  );
+  const allowedStates = uniq((optionRows ?? []).map((r: any) => normalizeState(r?.state)));
   const allowedProviderTypes = uniq(
-    (optionRows ?? []).map((r: any) =>
-      normalizeProviderType(r?.provider_type)
-    )
+    (optionRows ?? []).map((r: any) => normalizeProviderType(r?.provider_type))
   );
-  const allowedScopes = uniq(
-    (optionRows ?? []).map((r: any) => normalizeScope(r?.scope))
-  );
+  const allowedScopes = uniq((optionRows ?? []).map((r: any) => normalizeScope(r?.scope)));
 
   const canValidate =
     !optionsError &&
@@ -114,9 +104,7 @@ export default async function ChecklistPage({
         ? requested.state
         : defaults.state,
     provider_type:
-      requested.provider_type &&
-      canValidate &&
-      allowedProviderTypes.includes(requested.provider_type)
+      requested.provider_type && canValidate && allowedProviderTypes.includes(requested.provider_type)
         ? requested.provider_type
         : defaults.provider_type,
     scope:
@@ -150,9 +138,7 @@ export default async function ChecklistPage({
 
   const displayRequested = {
     state: requested.state ? labelForState(requested.state) : "—",
-    provider_type: requested.provider_type
-      ? labelForProviderType(requested.provider_type)
-      : "—",
+    provider_type: requested.provider_type ? labelForProviderType(requested.provider_type) : "—",
     scope: requested.scope ? labelForScope(requested.scope) : "—",
   };
 
@@ -160,8 +146,41 @@ export default async function ChecklistPage({
   const storageKey = `medicaidready_progress:${final.state}:${final.provider_type}:${final.scope}`;
 
   return (
-    <main style={{ maxWidth: 980, margin: "0 auto", padding: "44px 20px" }}>
+    <main className="mr-print-page" style={{ maxWidth: 980, margin: "0 auto", padding: "44px 20px" }}>
+      {/* Server-safe print CSS: DO NOT use styled-jsx here */}
+      <style>{`
+        @media print {
+          .mr-print-page {
+            max-width: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+          }
+
+          .mr-print-hide {
+            display: none !important;
+          }
+
+          html, body {
+            background: #fff !important;
+          }
+
+          * {
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+          }
+
+          .mr-print-header {
+            margin-bottom: 10px !important;
+          }
+
+          .mr-print-hr {
+            margin: 14px 0 !important;
+          }
+        }
+      `}</style>
+
       <header
+        className="mr-print-header"
         style={{
           display: "flex",
           justifyContent: "space-between",
@@ -170,13 +189,10 @@ export default async function ChecklistPage({
         }}
       >
         <div style={{ minWidth: 0 }}>
-          <h1 style={{ fontSize: 40, fontWeight: 850 as any, margin: 0 }}>
-            MedicaidReady Checklist
-          </h1>
+          <h1 style={{ fontSize: 40, fontWeight: 850 as any, margin: 0 }}>MedicaidReady Checklist</h1>
 
           <p style={{ marginTop: 10, color: "#555", lineHeight: 1.5 }}>
-            Checklist for <b>{displayState}</b> / <b>{displayProviderType}</b> /{" "}
-            <b>{displayScope}</b>.
+            Checklist for <b>{displayState}</b> / <b>{displayProviderType}</b> / <b>{displayScope}</b>.
           </p>
 
           <div
@@ -203,8 +219,7 @@ export default async function ChecklistPage({
                     borderRadius: 8,
                   }}
                 >
-                  {displayRequested.state}/{displayRequested.provider_type}/
-                  {displayRequested.scope}
+                  {displayRequested.state}/{displayRequested.provider_type}/{displayRequested.scope}
                 </code>
               </span>
             ) : null}
@@ -217,7 +232,8 @@ export default async function ChecklistPage({
           </div>
         </div>
 
-        <div style={{ alignSelf: "flex-start", whiteSpace: "nowrap" }}>
+        {/* Hide in print */}
+        <div className="mr-print-hide" style={{ alignSelf: "flex-start", whiteSpace: "nowrap" }}>
           <Link href="/" style={{ textDecoration: "underline" }}>
             Home
           </Link>
@@ -225,6 +241,7 @@ export default async function ChecklistPage({
       </header>
 
       <hr
+        className="mr-print-hr"
         style={{
           margin: "26px 0",
           border: "none",

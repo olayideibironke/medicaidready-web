@@ -81,8 +81,48 @@ export default function ChecklistClient(props: {
 
   return (
     <>
-      {/* Progress header */}
+      {/* Print-only CSS (local to checklist output) */}
+      <style jsx global>{`
+        @media print {
+          .mr-print-hide {
+            display: none !important;
+          }
+
+          .mr-print-only {
+            display: inline-flex !important;
+          }
+
+          .mr-print-page {
+            padding: 0 !important;
+            margin: 0 !important;
+          }
+
+          /* Avoid splitting sections/cards across pages */
+          .mr-print-section {
+            break-inside: avoid;
+            page-break-inside: avoid;
+          }
+
+          .mr-print-card {
+            break-inside: avoid;
+            page-break-inside: avoid;
+          }
+
+          /* Slightly tighten spacing in print */
+          .mr-print-tight {
+            margin-top: 10px !important;
+          }
+        }
+
+        /* Default (screen): print-only items hidden */
+        .mr-print-only {
+          display: none;
+        }
+      `}</style>
+
+      {/* Progress header (hide in print) */}
       <section
+        className="mr-print-hide"
         style={{
           border: "1px solid #eee",
           borderRadius: 18,
@@ -154,7 +194,7 @@ export default function ChecklistClient(props: {
           No checklist items found.
         </div>
       ) : (
-        <div style={{ display: "grid", gap: 18, marginTop: 18 }}>
+        <div className="mr-print-tight" style={{ display: "grid", gap: 18, marginTop: 18 }}>
           {Object.entries(groups).map(([category, rows]) => {
             const sectionTotal = rows.length;
             const sectionChecked = rows.reduce(
@@ -165,6 +205,7 @@ export default function ChecklistClient(props: {
             return (
               <section
                 key={category}
+                className="mr-print-section"
                 style={{
                   border: "1px solid #eee",
                   borderRadius: 18,
@@ -188,7 +229,11 @@ export default function ChecklistClient(props: {
                     {category}
                   </h2>
 
-                  <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
+                  {/* Hide section completion count in print */}
+                  <div
+                    className="mr-print-hide"
+                    style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}
+                  >
                     <span style={{ color: "#666", fontSize: 13 }}>
                       {sectionChecked}/{sectionTotal} done
                     </span>
@@ -202,6 +247,7 @@ export default function ChecklistClient(props: {
                     return (
                       <div
                         key={item.id}
+                        className="mr-print-card"
                         style={{
                           border: "1px solid #efefef",
                           borderRadius: 16,
@@ -217,12 +263,35 @@ export default function ChecklistClient(props: {
                             alignItems: "flex-start",
                           }}
                         >
+                          {/* Screen: interactive checkbox */}
                           <input
+                            className="mr-print-hide"
                             type="checkbox"
                             checked={isChecked}
                             onChange={() => toggle(item.id)}
                             style={{ marginTop: 4, cursor: "pointer" }}
                           />
+
+                          {/* Print: static checkbox */}
+                          <span
+                            className="mr-print-only"
+                            aria-hidden="true"
+                            style={{
+                              width: 14,
+                              height: 14,
+                              marginTop: 4,
+                              borderRadius: 3,
+                              border: "1px solid #111",
+                              display: "inline-flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              fontSize: 12,
+                              lineHeight: 1,
+                              fontWeight: 900,
+                            }}
+                          >
+                            {isChecked ? "✓" : ""}
+                          </span>
 
                           <div style={{ minWidth: 0 }}>
                             <div
