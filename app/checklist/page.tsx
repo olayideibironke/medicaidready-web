@@ -24,9 +24,11 @@ function pill(label: string) {
         gap: 6,
         padding: "6px 10px",
         borderRadius: 999,
-        border: "1px solid #e6e6e6",
+        border: "1px solid #e9e9e9",
         background: "#fff",
         fontSize: 13,
+        lineHeight: 1,
+        whiteSpace: "nowrap",
       }}
     >
       {label}
@@ -141,14 +143,21 @@ export default async function ChecklistPage({
   const groups = groupByCategory(items);
 
   return (
-    <main style={{ maxWidth: 980, margin: "0 auto", padding: "48px 20px" }}>
-      <header style={{ display: "flex", justifyContent: "space-between" }}>
-        <div>
-          <h1 style={{ fontSize: 40, fontWeight: 800, margin: 0 }}>
+    <main style={{ maxWidth: 980, margin: "0 auto", padding: "44px 20px" }}>
+      <header
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          gap: 16,
+          alignItems: "flex-start",
+        }}
+      >
+        <div style={{ minWidth: 0 }}>
+          <h1 style={{ fontSize: 40, fontWeight: 850 as any, margin: 0 }}>
             MedicaidReady Checklist
           </h1>
 
-          <p style={{ marginTop: 8, color: "#555" }}>
+          <p style={{ marginTop: 10, color: "#555", lineHeight: 1.5 }}>
             Read-only template checklist for <b>{final.state}</b> /{" "}
             <b>{final.provider_type}</b> / <b>{final.scope}</b>.
           </p>
@@ -159,32 +168,33 @@ export default async function ChecklistPage({
               display: "flex",
               gap: 10,
               flexWrap: "wrap",
+              alignItems: "center",
             }}
           >
             {pill(`State: ${final.state}`)}
-            {pill(`Provider type: ${final.provider_type}`)}
+            {pill(`Provider: ${final.provider_type}`)}
             {pill(`Scope: ${final.scope}`)}
             {pill(`Items: ${items.length}`)}
 
             {wasNormalized ? (
               <span style={{ color: "#777", fontSize: 13 }}>
                 Normalized from{" "}
-                <code>
+                <code style={{ background: "#f6f6f6", padding: "2px 6px", borderRadius: 8 }}>
                   {requested.state || "—"}/{requested.provider_type || "—"}/
                   {requested.scope || "—"}
                 </code>
               </span>
             ) : null}
-          </div>
 
-          {optionsError ? (
-            <div style={{ marginTop: 10, color: "#777", fontSize: 13 }}>
-              (Options validation unavailable — using safe defaults.)
-            </div>
-          ) : null}
+            {optionsError ? (
+              <span style={{ color: "#777", fontSize: 13 }}>
+                (Options validation unavailable — using safe defaults.)
+              </span>
+            ) : null}
+          </div>
         </div>
 
-        <div style={{ alignSelf: "flex-start" }}>
+        <div style={{ alignSelf: "flex-start", whiteSpace: "nowrap" }}>
           <Link href="/" style={{ textDecoration: "underline" }}>
             Home
           </Link>
@@ -192,7 +202,11 @@ export default async function ChecklistPage({
       </header>
 
       <hr
-        style={{ margin: "26px 0", border: "none", borderTop: "1px solid #eee" }}
+        style={{
+          margin: "26px 0",
+          border: "none",
+          borderTop: "1px solid #eee",
+        }}
       />
 
       {error ? (
@@ -210,7 +224,7 @@ export default async function ChecklistPage({
       ) : null}
 
       {Object.keys(groups).length === 0 ? (
-        <div style={{ color: "#666" }}>
+        <div style={{ color: "#666", lineHeight: 1.5 }}>
           No checklist items found for <b>{final.state}</b> /{" "}
           <b>{final.provider_type}</b> / <b>{final.scope}</b>.
         </div>
@@ -222,20 +236,33 @@ export default async function ChecklistPage({
               style={{
                 border: "1px solid #eee",
                 borderRadius: 18,
-                padding: 18,
                 background: "#fff",
+                overflow: "hidden",
               }}
             >
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <h2 style={{ margin: 0, fontSize: 26, fontWeight: 800 }}>
+              {/* Section header */}
+              <div
+                style={{
+                  padding: "16px 18px",
+                  borderBottom: "1px solid #f0f0f0",
+                  background: "#fafafa",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  gap: 10,
+                  alignItems: "baseline",
+                  flexWrap: "wrap",
+                }}
+              >
+                <h2 style={{ margin: 0, fontSize: 22, fontWeight: 850 as any }}>
                   {category}
                 </h2>
-                <div style={{ color: "#666", fontSize: 14 }}>
+                <div style={{ color: "#666", fontSize: 13 }}>
                   {rows.length} items
                 </div>
               </div>
 
-              <div style={{ marginTop: 14, display: "grid", gap: 14 }}>
+              {/* Items */}
+              <div style={{ padding: 18, display: "grid", gap: 14 }}>
                 {rows.map((item) => (
                   <div
                     key={item.id}
@@ -244,54 +271,69 @@ export default async function ChecklistPage({
                       borderRadius: 16,
                       padding: 16,
                       display: "grid",
-                      gap: 6,
+                      gap: 8,
                     }}
                   >
-                    <div
-                      style={{ display: "flex", gap: 10, alignItems: "center" }}
-                    >
-                      <input type="checkbox" disabled />
-                      <div style={{ fontSize: 18, fontWeight: 800 }}>
-                        {item.title}
-                      </div>
-                      {item.isRequired ? (
-                        <span
-                          style={{
-                            marginLeft: 6,
-                            fontSize: 12,
-                            fontWeight: 800,
-                            background: "#111",
-                            color: "#fff",
-                            padding: "3px 8px",
-                            borderRadius: 999,
-                          }}
-                        >
-                          Required
-                        </span>
-                      ) : null}
-                    </div>
-
-                    {item.description ? (
-                      <div style={{ color: "#444", marginLeft: 28 }}>
-                        {item.description}
-                      </div>
-                    ) : null}
-
                     <div
                       style={{
                         display: "flex",
                         gap: 10,
-                        flexWrap: "wrap",
-                        marginLeft: 28,
-                        marginTop: 6,
+                        alignItems: "flex-start",
                       }}
                     >
-                      {item.renewalRule
-                        ? pill(`Renewal: ${item.renewalRule}`)
-                        : null}
-                      {typeof item.dueDaysBeforeExpiry === "number"
-                        ? pill(`Alert: ${item.dueDaysBeforeExpiry} days`)
-                        : null}
+                      <input
+                        type="checkbox"
+                        disabled
+                        style={{ marginTop: 4 }}
+                      />
+
+                      <div style={{ minWidth: 0 }}>
+                        <div
+                          style={{
+                            fontSize: 17,
+                            fontWeight: 850 as any,
+                            lineHeight: 1.25,
+                          }}
+                        >
+                          {item.title}
+                        </div>
+
+                        {item.description ? (
+                          <div style={{ color: "#444", marginTop: 6, lineHeight: 1.45 }}>
+                            {item.description}
+                          </div>
+                        ) : null}
+
+                        <div
+                          style={{
+                            display: "flex",
+                            gap: 10,
+                            flexWrap: "wrap",
+                            marginTop: 10,
+                          }}
+                        >
+                          {item.isRequired ? (
+                            <span
+                              style={{
+                                fontSize: 12,
+                                fontWeight: 850 as any,
+                                background: "#111",
+                                color: "#fff",
+                                padding: "4px 8px",
+                                borderRadius: 999,
+                                lineHeight: 1,
+                              }}
+                            >
+                              Required
+                            </span>
+                          ) : null}
+
+                          {item.renewalRule ? pill(`Renewal: ${item.renewalRule}`) : null}
+                          {typeof item.dueDaysBeforeExpiry === "number"
+                            ? pill(`Alert: ${item.dueDaysBeforeExpiry} days`)
+                            : null}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 ))}
