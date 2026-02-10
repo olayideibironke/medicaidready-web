@@ -24,6 +24,7 @@ export const FALLBACK_STATE_OPTIONS: OptionItem<StateCode>[] = [
 
 export const FALLBACK_PROVIDER_TYPE_OPTIONS: OptionItem<ProviderType>[] = [
   { value: "home_health", label: "Home Health" },
+  { value: "personal_care", label: "Personal Care" }, // ✅ added
   { value: "behavioral_health", label: "Behavioral Health" },
   { value: "primary_care", label: "Primary Care" },
 ];
@@ -103,15 +104,11 @@ export async function loadOptionsFromSupabase(tableName?: string) {
 
     if (error || !data || data.length === 0) return null;
 
-    const states = uniqSorted(
-      data.map((r: any) => (r?.state ?? "").toString())
-    );
+    const states = uniqSorted(data.map((r: any) => (r?.state ?? "").toString()));
     const providerTypes = uniqSorted(
       data.map((r: any) => (r?.provider_type ?? "").toString())
     );
-    const scopes = uniqSorted(
-      data.map((r: any) => (r?.scope ?? "").toString())
-    );
+    const scopes = uniqSorted(data.map((r: any) => (r?.scope ?? "").toString()));
 
     if (states.length === 0 || providerTypes.length === 0 || scopes.length === 0)
       return null;
