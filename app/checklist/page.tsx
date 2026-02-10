@@ -1,6 +1,11 @@
 // app/checklist/page.tsx
 import Link from "next/link";
 import { supabase } from "@/lib/supabaseClient";
+import {
+  type RequirementRow,
+  mapRequirementRow,
+  groupByCategory,
+} from "@/lib/requirementsModel";
 
 export const dynamic = "force-dynamic";
 
@@ -85,13 +90,14 @@ export default async function ChecklistPage({
     (optionRows ?? []).map((r: any) => normalizeState(r?.state))
   );
   const allowedProviderTypes = uniq(
-    (optionRows ?? []).map((r: any) => normalizeProviderType(r?.provider_type))
+    (optionRows ?? []).map((r: any) =>
+      normalizeProviderType(r?.provider_type)
+    )
   );
   const allowedScopes = uniq(
     (optionRows ?? []).map((r: any) => normalizeScope(r?.scope))
   );
 
-  // If options couldn't be loaded, fall back to defaults (still stable)
   const canValidate =
     !optionsError &&
     allowedStates.length > 0 &&
@@ -120,6 +126,7 @@ export default async function ChecklistPage({
     (requested.provider_type && requested.provider_type !== final.provider_type) ||
     (requested.scope && requested.scope !== final.scope);
 
+  // Fetch requirements
   const { data, error } = await supabase
     .from("requirements")
     .select("*")
@@ -129,15 +136,9 @@ export default async function ChecklistPage({
     .order("category", { ascending: true })
     .order("sort_order", { ascending: true });
 
-  const items = data ?? [];
-
-  // Group by category
-  const groups = items.reduce((acc: Record<string, any[]>, item: any) => {
-    const key = item.category || "General";
-    acc[key] = acc[key] || [];
-    acc[key].push(item);
-    return acc;
-  }, {});
+  const rows = (data ?? []) as RequirementRow[];
+  const items = rows.map(mapRequirementRow);
+  const groups = groupByCategory(items);
 
   return (
     <main style={{ maxWidth: 980, margin: "0 auto", padding: "48px 20px" }}>
@@ -235,7 +236,7 @@ export default async function ChecklistPage({
               </div>
 
               <div style={{ marginTop: 14, display: "grid", gap: 14 }}>
-                {rows.map((item: any) => (
+                {rows.map((item) => (
                   <div
                     key={item.id}
                     style={{
@@ -253,7 +254,7 @@ export default async function ChecklistPage({
                       <div style={{ fontSize: 18, fontWeight: 800 }}>
                         {item.title}
                       </div>
-                      {item.required ? (
+                      {item.isRequired ? (
                         <span
                           style={{
                             marginLeft: 6,
@@ -285,11 +286,12 @@ export default async function ChecklistPage({
                         marginTop: 6,
                       }}
                     >
-                      {item.renewal_frequency
-                        ? pill(`Renewal: ${item.renewal_frequency}`)
+                      {item.renewalRule
+                        ? pill(`Renewal: ${item.renewalRule}`)
                         : null}
-                      {item.alert_days ? pill(`Alert: ${item.alert_days} days`) : null}
-                      {item.authority ? pill(item.authority) : null}
+                      {typeof item.dueDaysBeforeExpiry === "number"
+                        ? pill(`Alert: ${item.dueDaysBeforeExpiry} days`)
+                        : null}
                     </div>
                   </div>
                 ))}
