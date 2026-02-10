@@ -35,10 +35,7 @@ function safeParseIds(value: string | null): string[] {
   }
 }
 
-export default function ChecklistClient(props: {
-  items: RequirementItem[];
-  storageKey: string;
-}) {
+export default function ChecklistClient(props: { items: RequirementItem[]; storageKey: string }) {
   const { items, storageKey } = props;
 
   const [checkedIds, setCheckedIds] = useState<Set<string>>(new Set());
@@ -81,43 +78,22 @@ export default function ChecklistClient(props: {
 
   return (
     <>
-      {/* Print-only CSS (local to checklist output) */}
-      <style jsx global>{`
+      {/* Print CSS (server-safe: plain <style>, no styled-jsx) */}
+      <style>{`
         @media print {
-          .mr-print-hide {
-            display: none !important;
-          }
-
-          .mr-print-only {
-            display: inline-flex !important;
-          }
-
-          .mr-print-page {
-            padding: 0 !important;
-            margin: 0 !important;
-          }
+          .mr-print-hide { display: none !important; }
+          .mr-print-only { display: inline-flex !important; }
 
           /* Avoid splitting sections/cards across pages */
-          .mr-print-section {
-            break-inside: avoid;
-            page-break-inside: avoid;
-          }
-
-          .mr-print-card {
-            break-inside: avoid;
-            page-break-inside: avoid;
-          }
+          .mr-print-section { break-inside: avoid; page-break-inside: avoid; }
+          .mr-print-card { break-inside: avoid; page-break-inside: avoid; }
 
           /* Slightly tighten spacing in print */
-          .mr-print-tight {
-            margin-top: 10px !important;
-          }
+          .mr-print-tight { margin-top: 10px !important; }
         }
 
         /* Default (screen): print-only items hidden */
-        .mr-print-only {
-          display: none;
-        }
+        .mr-print-only { display: none; }
       `}</style>
 
       {/* Progress header (hide in print) */}
@@ -166,21 +142,8 @@ export default function ChecklistClient(props: {
         </div>
 
         <div style={{ padding: "12px 18px" }}>
-          <div
-            style={{
-              height: 10,
-              borderRadius: 999,
-              background: "#eee",
-              overflow: "hidden",
-            }}
-          >
-            <div
-              style={{
-                height: "100%",
-                width: `${percent}%`,
-                background: "#111",
-              }}
-            />
+          <div style={{ height: 10, borderRadius: 999, background: "#eee", overflow: "hidden" }}>
+            <div style={{ height: "100%", width: `${percent}%`, background: "#111" }} />
           </div>
           <div style={{ marginTop: 8, fontSize: 13, color: "#777" }}>
             Saved locally in your browser for this State / Provider / Scope.
@@ -190,17 +153,12 @@ export default function ChecklistClient(props: {
 
       {/* Checklist groups */}
       {Object.keys(groups).length === 0 ? (
-        <div style={{ color: "#666", lineHeight: 1.5, marginTop: 18 }}>
-          No checklist items found.
-        </div>
+        <div style={{ color: "#666", lineHeight: 1.5, marginTop: 18 }}>No checklist items found.</div>
       ) : (
         <div className="mr-print-tight" style={{ display: "grid", gap: 18, marginTop: 18 }}>
           {Object.entries(groups).map(([category, rows]) => {
             const sectionTotal = rows.length;
-            const sectionChecked = rows.reduce(
-              (acc, it) => acc + (checkedIds.has(it.id) ? 1 : 0),
-              0
-            );
+            const sectionChecked = rows.reduce((acc, it) => acc + (checkedIds.has(it.id) ? 1 : 0), 0);
 
             return (
               <section
@@ -225,9 +183,7 @@ export default function ChecklistClient(props: {
                     flexWrap: "wrap",
                   }}
                 >
-                  <h2 style={{ margin: 0, fontSize: 22, fontWeight: 850 as any }}>
-                    {category}
-                  </h2>
+                  <h2 style={{ margin: 0, fontSize: 22, fontWeight: 850 as any }}>{category}</h2>
 
                   {/* Hide section completion count in print */}
                   <div
@@ -256,13 +212,7 @@ export default function ChecklistClient(props: {
                           gap: 8,
                         }}
                       >
-                        <div
-                          style={{
-                            display: "flex",
-                            gap: 10,
-                            alignItems: "flex-start",
-                          }}
-                        >
+                        <div style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
                           {/* Screen: interactive checkbox */}
                           <input
                             className="mr-print-hide"
@@ -282,7 +232,6 @@ export default function ChecklistClient(props: {
                               marginTop: 4,
                               borderRadius: 3,
                               border: "1px solid #111",
-                              display: "inline-flex",
                               alignItems: "center",
                               justifyContent: "center",
                               fontSize: 12,
@@ -312,14 +261,7 @@ export default function ChecklistClient(props: {
                               </div>
                             ) : null}
 
-                            <div
-                              style={{
-                                display: "flex",
-                                gap: 10,
-                                flexWrap: "wrap",
-                                marginTop: 10,
-                              }}
-                            >
+                            <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 10 }}>
                               {item.isRequired ? (
                                 <span
                                   style={{
