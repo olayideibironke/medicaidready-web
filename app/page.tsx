@@ -2,54 +2,19 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
-
-/**
- * Step 2: Add dropdown UI (state, provider type, scope)
- * - Builds the /checklist link dynamically from selections
- * - Checklist remains read-only (handled on /checklist)
- */
-
-type StateCode = "MD" | "DC" | "VA";
-type ProviderType = "home_health" | "behavioral_health" | "primary_care";
-type Scope = "ORG" | "INDIVIDUAL";
-
-const STATE_OPTIONS: Array<{ value: StateCode; label: string }> = [
-  { value: "MD", label: "Maryland (MD)" },
-  { value: "DC", label: "Washington, DC (DC)" },
-  { value: "VA", label: "Virginia (VA)" },
-];
-
-const PROVIDER_TYPE_OPTIONS: Array<{ value: ProviderType; label: string }> = [
-  { value: "home_health", label: "Home Health" },
-  { value: "behavioral_health", label: "Behavioral Health" },
-  { value: "primary_care", label: "Primary Care" },
-];
-
-const SCOPE_OPTIONS: Array<{ value: Scope; label: string }> = [
-  { value: "ORG", label: "Organization (ORG)" },
-  { value: "INDIVIDUAL", label: "Individual (INDIVIDUAL)" },
-];
-
-const DEFAULTS = {
-  state: "MD" as StateCode,
-  provider_type: "home_health" as ProviderType,
-  scope: "ORG" as Scope,
-};
-
-function buildChecklistHref(params: {
-  state: StateCode;
-  provider_type: ProviderType;
-  scope: Scope;
-}) {
-  const { state, provider_type, scope } = params;
-
-  return `/checklist?state=${encodeURIComponent(
-    state
-  )}&provider_type=${encodeURIComponent(
-    provider_type
-  )}&scope=${encodeURIComponent(scope)}`;
-}
+import { useEffect, useMemo, useState } from "react";
+import {
+  DEFAULTS,
+  type OptionItem,
+  type ProviderType,
+  type Scope,
+  type StateCode,
+  FALLBACK_PROVIDER_TYPE_OPTIONS,
+  FALLBACK_SCOPE_OPTIONS,
+  FALLBACK_STATE_OPTIONS,
+  buildChecklistHref,
+  loadOptionsFromSupabase,
+} from "@/lib/options";
 
 export default function HomePage() {
   const [state, setState] = useState<StateCode>(DEFAULTS.state);
@@ -57,6 +22,63 @@ export default function HomePage() {
     DEFAULTS.provider_type
   );
   const [scope, setScope] = useState<Scope>(DEFAULTS.scope);
+
+  const [stateOptions, setStateOptions] = useState<OptionItem<StateCode>[]>(
+    FALLBACK_STATE_OPTIONS
+  );
+  const [providerTypeOptions, setProviderTypeOptions] = useState<
+    OptionItem<ProviderType>[]
+  >(FALLBACK_PROVIDER_TYPE_OPTIONS);
+  const [scopeOptions, setScopeOptions] = useState<OptionItem<Scope>[]>(
+    FALLBACK_SCOPE_OPTIONS
+  );
+
+  const [optionsStatus, setOptionsStatus] = useState<
+    "idle" | "loading" | "loaded" | "fallback"
+  >("idle");
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function run() {
+      setOptionsStatus("loading");
+
+      const table = process.env.NEXT_PUBLIC_OPTIONS_SOURCE_TABLE;
+      const result = await loadOptionsFromSupabase(table);
+
+      if (cancelled) return;
+
+      if (!result) {
+        // Silent fallback
+        setOptionsStatus("fallback");
+        return;
+      }
+
+      setStateOptions(result.stateOptions);
+      setProviderTypeOptions(result.providerTypeOptions);
+      setScopeOptions(result.scopeOptions);
+
+      // If current selection isn't present in fetched options, reset to defaults
+      if (!result.stateOptions.some((o) => o.value === state)) {
+        setState(DEFAULTS.state);
+      }
+      if (!result.providerTypeOptions.some((o) => o.value === providerType)) {
+        setProviderType(DEFAULTS.provider_type);
+      }
+      if (!result.scopeOptions.some((o) => o.value === scope)) {
+        setScope(DEFAULTS.scope);
+      }
+
+      setOptionsStatus("loaded");
+    }
+
+    run();
+
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const href = useMemo(
     () =>
@@ -100,6 +122,14 @@ export default function HomePage() {
           Pick options below, then open the generated checklist.
         </p>
 
+        {/* status (subtle + non-blocking) */}
+        <div style={{ marginTop: 10, fontSize: 13, color: "#777" }}>
+          {optionsStatus === "loading" && "Loading options…"}
+          {optionsStatus === "loaded" && "Options loaded from Supabase."}
+          {optionsStatus === "fallback" &&
+            "Using fallback options (Supabase options unavailable)."}
+        </div>
+
         {/* Selectors */}
         <div
           style={{
@@ -129,7 +159,7 @@ export default function HomePage() {
                 fontWeight: 600,
               }}
             >
-              {STATE_OPTIONS.map((opt) => (
+              {stateOptions.map((opt) => (
                 <option key={opt.value} value={opt.value}>
                   {opt.label}
                 </option>
@@ -159,7 +189,7 @@ export default function HomePage() {
                 fontWeight: 600,
               }}
             >
-              {PROVIDER_TYPE_OPTIONS.map((opt) => (
+              {providerTypeOptions.map((opt) => (
                 <option key={opt.value} value={opt.value}>
                   {opt.label}
                 </option>
@@ -187,7 +217,7 @@ export default function HomePage() {
                 fontWeight: 600,
               }}
             >
-              {SCOPE_OPTIONS.map((opt) => (
+              {scopeOptions.map((opt) => (
                 <option key={opt.value} value={opt.value}>
                   {opt.label}
                 </option>
