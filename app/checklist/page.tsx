@@ -6,6 +6,11 @@ import {
   mapRequirementRow,
   groupByCategory,
 } from "@/lib/requirementsModel";
+import {
+  labelForProviderType,
+  labelForScope,
+  labelForState,
+} from "@/lib/options";
 
 export const dynamic = "force-dynamic";
 
@@ -142,6 +147,19 @@ export default async function ChecklistPage({
   const items = rows.map(mapRequirementRow);
   const groups = groupByCategory(items);
 
+  // Display labels (keep codes in URL/DB, show humans in UI)
+  const displayState = labelForState(final.state);
+  const displayProviderType = labelForProviderType(final.provider_type);
+  const displayScope = labelForScope(final.scope);
+
+  const displayRequested = {
+    state: requested.state ? labelForState(requested.state) : "—",
+    provider_type: requested.provider_type
+      ? labelForProviderType(requested.provider_type)
+      : "—",
+    scope: requested.scope ? labelForScope(requested.scope) : "—",
+  };
+
   return (
     <main style={{ maxWidth: 980, margin: "0 auto", padding: "44px 20px" }}>
       <header
@@ -158,8 +176,8 @@ export default async function ChecklistPage({
           </h1>
 
           <p style={{ marginTop: 10, color: "#555", lineHeight: 1.5 }}>
-            Read-only template checklist for <b>{final.state}</b> /{" "}
-            <b>{final.provider_type}</b> / <b>{final.scope}</b>.
+            Read-only template checklist for <b>{displayState}</b> /{" "}
+            <b>{displayProviderType}</b> / <b>{displayScope}</b>.
           </p>
 
           <div
@@ -171,17 +189,23 @@ export default async function ChecklistPage({
               alignItems: "center",
             }}
           >
-            {pill(`State: ${final.state}`)}
-            {pill(`Provider: ${final.provider_type}`)}
-            {pill(`Scope: ${final.scope}`)}
+            {pill(`State: ${displayState}`)}
+            {pill(`Provider: ${displayProviderType}`)}
+            {pill(`Scope: ${displayScope}`)}
             {pill(`Items: ${items.length}`)}
 
             {wasNormalized ? (
               <span style={{ color: "#777", fontSize: 13 }}>
                 Normalized from{" "}
-                <code style={{ background: "#f6f6f6", padding: "2px 6px", borderRadius: 8 }}>
-                  {requested.state || "—"}/{requested.provider_type || "—"}/
-                  {requested.scope || "—"}
+                <code
+                  style={{
+                    background: "#f6f6f6",
+                    padding: "2px 6px",
+                    borderRadius: 8,
+                  }}
+                >
+                  {displayRequested.state}/{displayRequested.provider_type}/
+                  {displayRequested.scope}
                 </code>
               </span>
             ) : null}
@@ -225,8 +249,8 @@ export default async function ChecklistPage({
 
       {Object.keys(groups).length === 0 ? (
         <div style={{ color: "#666", lineHeight: 1.5 }}>
-          No checklist items found for <b>{final.state}</b> /{" "}
-          <b>{final.provider_type}</b> / <b>{final.scope}</b>.
+          No checklist items found for <b>{displayState}</b> /{" "}
+          <b>{displayProviderType}</b> / <b>{displayScope}</b>.
         </div>
       ) : (
         <div style={{ display: "grid", gap: 18 }}>
@@ -240,7 +264,6 @@ export default async function ChecklistPage({
                 overflow: "hidden",
               }}
             >
-              {/* Section header */}
               <div
                 style={{
                   padding: "16px 18px",
@@ -261,7 +284,6 @@ export default async function ChecklistPage({
                 </div>
               </div>
 
-              {/* Items */}
               <div style={{ padding: 18, display: "grid", gap: 14 }}>
                 {rows.map((item) => (
                   <div
@@ -299,7 +321,13 @@ export default async function ChecklistPage({
                         </div>
 
                         {item.description ? (
-                          <div style={{ color: "#444", marginTop: 6, lineHeight: 1.45 }}>
+                          <div
+                            style={{
+                              color: "#444",
+                              marginTop: 6,
+                              lineHeight: 1.45,
+                            }}
+                          >
                             {item.description}
                           </div>
                         ) : null}
@@ -328,7 +356,9 @@ export default async function ChecklistPage({
                             </span>
                           ) : null}
 
-                          {item.renewalRule ? pill(`Renewal: ${item.renewalRule}`) : null}
+                          {item.renewalRule
+                            ? pill(`Renewal: ${item.renewalRule}`)
+                            : null}
                           {typeof item.dueDaysBeforeExpiry === "number"
                             ? pill(`Alert: ${item.dueDaysBeforeExpiry} days`)
                             : null}

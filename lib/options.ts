@@ -46,7 +46,8 @@ export function buildChecklistHref(params: {
   )}&scope=${encodeURIComponent(scope)}`;
 }
 
-function titleize(value: string) {
+// Exported: use these for display labels anywhere in the UI
+export function titleize(value: string) {
   // home_health -> Home Health
   return value
     .replace(/[_-]+/g, " ")
@@ -56,7 +57,7 @@ function titleize(value: string) {
     .join(" ");
 }
 
-function labelForState(code: string) {
+export function labelForState(code: string) {
   const upper = code.toUpperCase();
   if (upper === "MD") return "Maryland (MD)";
   if (upper === "DC") return "Washington, DC (DC)";
@@ -64,11 +65,16 @@ function labelForState(code: string) {
   return `${upper}`;
 }
 
-function labelForScope(scope: string) {
+export function labelForScope(scope: string) {
   const upper = scope.toUpperCase();
   if (upper === "ORG") return "Organization (ORG)";
   if (upper === "INDIVIDUAL") return "Individual (INDIVIDUAL)";
   return upper;
+}
+
+// Friendly label for provider_type code (snake_case -> Title Case)
+export function labelForProviderType(providerType: string) {
+  return titleize(providerType);
 }
 
 function uniqSorted(values: string[]) {
@@ -90,8 +96,6 @@ export async function loadOptionsFromSupabase(tableName?: string) {
   if (!tableName) return null;
 
   try {
-    // Fetch up to 1000 rows and dedupe values locally.
-    // (Keeps it simple and avoids relying on DISTINCT support differences.)
     const { data, error } = await supabase
       .from(tableName)
       .select("state,provider_type,scope")
@@ -109,7 +113,6 @@ export async function loadOptionsFromSupabase(tableName?: string) {
       data.map((r: any) => (r?.scope ?? "").toString())
     );
 
-    // Must have at least one of each to be usable; otherwise fallback.
     if (states.length === 0 || providerTypes.length === 0 || scopes.length === 0)
       return null;
 
@@ -121,7 +124,7 @@ export async function loadOptionsFromSupabase(tableName?: string) {
     const providerTypeOptions: OptionItem<ProviderType>[] = providerTypes.map(
       (p) => ({
         value: p,
-        label: titleize(p),
+        label: labelForProviderType(p),
       })
     );
 
