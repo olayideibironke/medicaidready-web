@@ -16,6 +16,34 @@ import {
   loadOptionsFromSupabase,
 } from "@/lib/options";
 
+/**
+ * Home now supports URL-driven selections:
+ *   /?state=MD&provider_type=home_health&scope=ORG
+ *
+ * Behavior:
+ * - Attempts to initialize dropdowns from URL params
+ * - Validates against loaded option lists (Supabase or fallback)
+ * - Falls back to DEFAULTS when params are missing/invalid
+ */
+
+function normalizeState(value?: string) {
+  const v = (value ?? "").trim();
+  if (!v) return "";
+  return v.toUpperCase();
+}
+
+function normalizeProviderType(value?: string) {
+  const v = (value ?? "").trim();
+  if (!v) return "";
+  return v.toLowerCase();
+}
+
+function normalizeScope(value?: string) {
+  const v = (value ?? "").trim();
+  if (!v) return "";
+  return v.toUpperCase();
+}
+
 export default function HomePage() {
   const [state, setState] = useState<StateCode>(DEFAULTS.state);
   const [providerType, setProviderType] = useState<ProviderType>(
@@ -37,6 +65,10 @@ export default function HomePage() {
     "idle" | "loading" | "loaded" | "fallback"
   >("idle");
 
+  const [hydratedFromUrl, setHydratedFromUrl] = useState(false);
+  const [normalizedNote, setNormalizedNote] = useState<string | null>(null);
+
+  // 1) Load options (Supabase if available, otherwise fallback)
   useEffect(() => {
     let cancelled = false;
 
@@ -49,7 +81,6 @@ export default function HomePage() {
       if (cancelled) return;
 
       if (!result) {
-        // Silent fallback
         setOptionsStatus("fallback");
         return;
       }
@@ -57,18 +88,6 @@ export default function HomePage() {
       setStateOptions(result.stateOptions);
       setProviderTypeOptions(result.providerTypeOptions);
       setScopeOptions(result.scopeOptions);
-
-      // If current selection isn't present in fetched options, reset to defaults
-      if (!result.stateOptions.some((o) => o.value === state)) {
-        setState(DEFAULTS.state);
-      }
-      if (!result.providerTypeOptions.some((o) => o.value === providerType)) {
-        setProviderType(DEFAULTS.provider_type);
-      }
-      if (!result.scopeOptions.some((o) => o.value === scope)) {
-        setScope(DEFAULTS.scope);
-      }
-
       setOptionsStatus("loaded");
     }
 
@@ -77,8 +96,73 @@ export default function HomePage() {
     return () => {
       cancelled = true;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // 2) Hydrate selections from URL ONCE (after options are available)
+  useEffect(() => {
+    if (hydratedFromUrl) return;
+
+    // We can hydrate as soon as we have *some* options (fallback or loaded)
+    if (optionsStatus !== "loaded" && optionsStatus !== "fallback") return;
+
+    const params = new URLSearchParams(window.location.search);
+
+    const requested = {
+      state: normalizeState(params.get("state") ?? undefined),
+      provider_type: normalizeProviderType(params.get("provider_type") ?? undefined),
+      scope: normalizeScope(params.get("scope") ?? undefined),
+    };
+
+    // Validate against current option lists
+    const stateAllowed = stateOptions.some((o) => o.value === requested.state);
+    const providerAllowed = providerTypeOptions.some(
+      (o) => o.value === requested.provider_type
+    );
+    const scopeAllowed = scopeOptions.some((o) => o.value === requested.scope);
+
+    const final = {
+      state: requested.state && stateAllowed ? requested.state : DEFAULTS.state,
+      provider_type:
+        requested.provider_type && providerAllowed
+          ? requested.provider_type
+          : DEFAULTS.provider_type,
+      scope: requested.scope && scopeAllowed ? requested.scope : DEFAULTS.scope,
+    };
+
+    // Apply
+    setState(final.state);
+    setProviderType(final.provider_type);
+    setScope(final.scope);
+
+    // Note if the URL had values but they were adjusted
+    const urlHadAny =
+      Boolean(requested.state) ||
+      Boolean(requested.provider_type) ||
+      Boolean(requested.scope);
+
+    const changed =
+      (requested.state && requested.state !== final.state) ||
+      (requested.provider_type && requested.provider_type !== final.provider_type) ||
+      (requested.scope && requested.scope !== final.scope);
+
+    if (urlHadAny && changed) {
+      setNormalizedNote(
+        `Normalized from ${requested.state || "—"}/${requested.provider_type || "—"}/${
+          requested.scope || "—"
+        }`
+      );
+    } else {
+      setNormalizedNote(null);
+    }
+
+    setHydratedFromUrl(true);
+  }, [
+    hydratedFromUrl,
+    optionsStatus,
+    stateOptions,
+    providerTypeOptions,
+    scopeOptions,
+  ]);
 
   const href = useMemo(
     () =>
@@ -89,6 +173,12 @@ export default function HomePage() {
       }),
     [state, providerType, scope]
   );
+
+  const homeShareHref = useMemo(() => {
+    return `/?state=${encodeURIComponent(state)}&provider_type=${encodeURIComponent(
+      providerType
+    )}&scope=${encodeURIComponent(scope)}`;
+  }, [state, providerType, scope]);
 
   return (
     <main style={{ maxWidth: 980, margin: "0 auto", padding: "48px 20px" }}>
@@ -122,12 +212,16 @@ export default function HomePage() {
           Pick options below, then open the generated checklist.
         </p>
 
-        {/* status (subtle + non-blocking) */}
         <div style={{ marginTop: 10, fontSize: 13, color: "#777" }}>
           {optionsStatus === "loading" && "Loading options…"}
           {optionsStatus === "loaded" && "Options loaded from Supabase."}
           {optionsStatus === "fallback" &&
             "Using fallback options (Supabase options unavailable)."}
+          {normalizedNote ? (
+            <span style={{ marginLeft: 10 }}>
+              <code>{normalizedNote}</code>
+            </span>
+          ) : null}
         </div>
 
         {/* Selectors */}
@@ -240,11 +334,16 @@ export default function HomePage() {
             Current selection: <b>{state}</b> / <b>{providerType}</b> /{" "}
             <b>{scope}</b>
           </div>
+
           <div style={{ marginTop: 6, color: "#777", fontSize: 13 }}>
-            Generated URL: <code>{href}</code>
+            Checklist URL: <code>{href}</code>
           </div>
 
-          <div style={{ marginTop: 12 }}>
+          <div style={{ marginTop: 6, color: "#777", fontSize: 13 }}>
+            Shareable Home URL: <code>{homeShareHref}</code>
+          </div>
+
+          <div style={{ marginTop: 12, display: "flex", gap: 10, flexWrap: "wrap" }}>
             <Link
               href={href}
               style={{
@@ -259,6 +358,22 @@ export default function HomePage() {
               }}
             >
               Open checklist →
+            </Link>
+
+            <Link
+              href={homeShareHref}
+              style={{
+                display: "inline-block",
+                padding: "10px 14px",
+                borderRadius: 12,
+                border: "1px solid #111",
+                background: "#fff",
+                color: "#111",
+                textDecoration: "none",
+                fontWeight: 700,
+              }}
+            >
+              Open this selection on Home →
             </Link>
           </div>
         </div>
