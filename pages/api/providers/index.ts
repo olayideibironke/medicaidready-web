@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { promises as fs } from "fs";
-import path from "path";
+import { requireRole } from "../../../lib/access";
+import { supabaseAdmin } from "../../../lib/supabaseAdmin";
 
 type ChecklistItemStatus = "not_started" | "in_progress" | "complete";
 
@@ -12,35 +12,6 @@ type ChecklistItem = {
   completedAt?: string;
   notes?: string;
 };
-
-type ProviderRecord = {
-  id: string;
-  createdAt: string;
-  updatedAt: string;
-
-  // Optional metadata for Phase 24 listing/analytics
-  meta?: {
-    name?: string;
-    provider_type_code?: string;
-    jurisdiction_code?: string;
-  };
-
-  onboard?: {
-    status: "not_started" | "in_progress" | "complete";
-    startedAt?: string;
-    completedAt?: string;
-    contact?: { name?: string; email?: string; phone?: string };
-    org?: { name?: string; npi?: string; medicaidId?: string };
-  };
-
-  checklist: ChecklistItem[];
-};
-
-type Store = {
-  providers: Record<string, ProviderRecord>;
-};
-
-const STORE_PATH = path.join(process.cwd(), "data", "providers.json");
 
 const DEFAULT_CHECKLIST: Array<Pick<ChecklistItem, "key" | "title">> = [
   { key: "provider_profile", title: "Provider profile completed" },
@@ -68,48 +39,14 @@ function slugify(input: string) {
     .replace(/(^-|-$)/g, "");
 }
 
-async function readStore(): Promise<Store> {
-  try {
-    const buf = await fs.readFile(STORE_PATH);
-    const parsed = JSON.parse(buf.toString());
-    if (!parsed || typeof parsed !== "object") throw new Error("bad_store");
-    if (!parsed.providers || typeof parsed.providers !== "object") return { providers: {} };
-    return parsed as Store;
-  } catch {
-    return { providers: {} };
-  }
-}
-
-async function writeStore(store: Store): Promise<void> {
-  await fs.mkdir(path.dirname(STORE_PATH), { recursive: true });
-  await fs.writeFile(STORE_PATH, JSON.stringify(store, null, 2), "utf8");
-}
-
 function buildDefaultChecklist(): ChecklistItem[] {
   const t = nowIso();
   return DEFAULT_CHECKLIST.map((x) => ({
     key: x.key,
     title: x.title,
-    status: "not_started",
+    status: "not_started" as const,
     updatedAt: t,
   }));
-}
-
-function ensureProvider(store: Store, id: string): ProviderRecord {
-  const t = nowIso();
-  const existing = store.providers[id];
-  if (existing) return existing;
-
-  const created: ProviderRecord = {
-    id,
-    createdAt: t,
-    updatedAt: t,
-    onboard: { status: "not_started" },
-    checklist: buildDefaultChecklist(),
-  };
-
-  store.providers[id] = created;
-  return created;
 }
 
 function computeProgress(items: ChecklistItem[]) {
@@ -122,83 +59,122 @@ function computeProgress(items: ChecklistItem[]) {
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const store = await readStore();
+  const sb = supabaseAdmin();
 
   if (req.method === "GET") {
-    const providers = Object.values(store.providers)
-      .sort((a, b) => (b.updatedAt || "").localeCompare(a.updatedAt || ""))
-      .map((p) => {
-        const progress = computeProgress(p.checklist || []);
-        return {
-          id: p.id,
-          createdAt: p.createdAt,
-          updatedAt: p.updatedAt,
-          meta: p.meta ?? {},
-          onboardStatus: p.onboard?.status ?? "not_started",
-          progress,
-        };
-      });
+    const { data, error } = await sb
+      .from("providers")
+      .select("id, created_at, updated_at, meta, onboard, checklist")
+      .order("updated_at", { ascending: false });
+
+    if (error) {
+      return res.status(500).json({ ok: false, error: "providers_fetch_failed", message: error.message });
+    }
+
+    const providers = (data ?? []).map((p: any) => {
+      const checklist: ChecklistItem[] = Array.isArray(p.checklist) ? p.checklist : [];
+      const progress = computeProgress(checklist);
+
+      return {
+        id: p.id,
+        createdAt: p.created_at,
+        updatedAt: p.updated_at,
+        meta: p.meta ?? {},
+        onboardStatus: p.onboard?.status ?? "not_started",
+        progress,
+      };
+    });
 
     return res.status(200).json({ ok: true, providers });
   }
 
   if (req.method === "POST") {
+    // Write protection
+    if (process.env.READ_ONLY_MODE === "true") {
+      return res.status(503).json({ ok: false, error: "read_only_mode_enabled" });
+    }
+
+    // Role protection
+    const gate = requireRole(req, ["admin"]);
+    if (!gate.ok) return res.status(403).json({ ok: false, error: "forbidden", role: gate.role });
+
     // Accepts:
-    // {
-    //   id?: string,
-    //   name?: string,
-    //   provider_type_code?: string,
-    //   jurisdiction_code?: string
-    // }
+    // { id?: string, name?: string, provider_type_code?: string, jurisdiction_code?: string }
     const body = req.body ?? {};
     const requestedId = cleanString(body?.id);
     const name = cleanString(body?.name);
     const provider_type_code = cleanString(body?.provider_type_code);
     const jurisdiction_code = cleanString(body?.jurisdiction_code);
 
-    // Generate id if not provided
     const id =
       requestedId ??
       slugify(name ?? `provider-${Date.now()}`) + "-" + String(Date.now()).slice(-6);
 
-    // Create or return existing
-    const existing = store.providers[id];
+    // If exists, return it (keep UI behavior)
+    const { data: existing, error: exErr } = await sb
+      .from("providers")
+      .select("id, created_at, updated_at, meta, onboard, checklist")
+      .eq("id", id)
+      .maybeSingle();
+
+    if (exErr) {
+      return res.status(500).json({ ok: false, error: "providers_fetch_failed", message: exErr.message });
+    }
+
     if (existing) {
+      const checklist: ChecklistItem[] = Array.isArray((existing as any).checklist) ? (existing as any).checklist : [];
       return res.status(200).json({
         ok: true,
         provider: {
-          id: existing.id,
-          createdAt: existing.createdAt,
-          updatedAt: existing.updatedAt,
-          meta: existing.meta ?? {},
-          onboardStatus: existing.onboard?.status ?? "not_started",
-          progress: computeProgress(existing.checklist || []),
+          id: (existing as any).id,
+          createdAt: (existing as any).created_at,
+          updatedAt: (existing as any).updated_at,
+          meta: (existing as any).meta ?? {},
+          onboardStatus: (existing as any).onboard?.status ?? "not_started",
+          progress: computeProgress(checklist),
         },
         created: false,
       });
     }
 
-    const p = ensureProvider(store, id);
-    p.meta = {
-      ...(p.meta ?? {}),
+    const t = nowIso();
+    const meta = {
       name,
       provider_type_code,
       jurisdiction_code,
     };
-    p.updatedAt = nowIso();
 
-    store.providers[id] = p;
-    await writeStore(store);
+    const onboard = { status: "not_started" as const };
+    const checklist = buildDefaultChecklist();
 
+    const { data: inserted, error: insErr } = await sb
+      .from("providers")
+      .insert({
+        id,
+        name: name ?? "Unknown Provider",
+        meta,
+        onboard,
+        checklist,
+        created_at: t,
+        updated_at: t,
+      })
+      .select("id, created_at, updated_at, meta, onboard, checklist")
+      .single();
+
+    if (insErr) {
+      return res.status(500).json({ ok: false, error: "providers_insert_failed", message: insErr.message });
+    }
+
+    const checklistInserted: ChecklistItem[] = Array.isArray((inserted as any).checklist) ? (inserted as any).checklist : [];
     return res.status(201).json({
       ok: true,
       provider: {
-        id: p.id,
-        createdAt: p.createdAt,
-        updatedAt: p.updatedAt,
-        meta: p.meta ?? {},
-        onboardStatus: p.onboard?.status ?? "not_started",
-        progress: computeProgress(p.checklist || []),
+        id: (inserted as any).id,
+        createdAt: (inserted as any).created_at,
+        updatedAt: (inserted as any).updated_at,
+        meta: (inserted as any).meta ?? {},
+        onboardStatus: (inserted as any).onboard?.status ?? "not_started",
+        progress: computeProgress(checklistInserted),
       },
       created: true,
     });
