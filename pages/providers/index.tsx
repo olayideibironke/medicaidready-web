@@ -107,8 +107,17 @@ export default function ProvidersIndexPage() {
 
   return (
     <main style={{ padding: 24, fontFamily: "system-ui, sans-serif", maxWidth: 980, margin: "0 auto" }}>
+      {/* Header */}
       <header style={{ marginBottom: 16 }}>
-        <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "baseline",
+            justifyContent: "space-between",
+            gap: 12,
+            flexWrap: "wrap",
+          }}
+        >
           <div>
             <h1 style={{ fontSize: 24, margin: 0 }}>Providers</h1>
             <p style={{ margin: "6px 0 0", color: "#555" }}>
@@ -137,6 +146,69 @@ export default function ProvidersIndexPage() {
         </div>
       </header>
 
+      {/* Revenue CTA Block */}
+      <section
+        style={{
+          border: "1px solid rgba(11, 31, 58, 0.14)",
+          background: "#ffffff",
+          borderRadius: 14,
+          padding: 16,
+          marginBottom: 16,
+          boxShadow: "0 8px 18px rgba(11, 31, 58, 0.06)",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
+          <div>
+            <div style={{ fontSize: 12, fontWeight: 800, color: "rgba(11, 31, 58, 0.75)" }}>
+              MedicaidReady — DMV Region
+            </div>
+            <div style={{ fontSize: 16, fontWeight: 900, marginTop: 6, color: "#0b1f3a" }}>
+              Access is credentialed. Review pricing or request access.
+            </div>
+            <div style={{ fontSize: 13, color: "rgba(11, 31, 58, 0.72)", marginTop: 6, lineHeight: 1.5 }}>
+              Continuous Medicaid compliance monitoring for providers in Maryland, Virginia &amp; Washington DC.
+            </div>
+          </div>
+
+          <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+            <Link
+              href="/pricing"
+              style={{
+                padding: "10px 12px",
+                borderRadius: 12,
+                border: "1px solid rgba(11, 31, 58, 0.18)",
+                background: "white",
+                textDecoration: "none",
+                color: "#0b2a4a",
+                fontWeight: 800,
+                display: "inline-flex",
+                alignItems: "center",
+              }}
+            >
+              Pricing
+            </Link>
+
+            <Link
+              href="/request-access"
+              style={{
+                padding: "10px 12px",
+                borderRadius: 12,
+                border: "1px solid rgba(11, 31, 58, 0.12)",
+                background: "#0b2a4a",
+                textDecoration: "none",
+                color: "white",
+                fontWeight: 900,
+                display: "inline-flex",
+                alignItems: "center",
+              }}
+            >
+              Request Access
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Errors */}
       {error && (
         <div style={{ border: "1px solid #f3b6b6", background: "#fff1f1", padding: 12, borderRadius: 10, marginBottom: 16 }}>
           <strong style={{ display: "block", marginBottom: 6 }}>Error</strong>
@@ -144,6 +216,7 @@ export default function ProvidersIndexPage() {
         </div>
       )}
 
+      {/* Create / Upsert */}
       <section style={{ border: "1px solid #e6e6e6", borderRadius: 14, padding: 16, marginBottom: 16 }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
           <h2 style={{ fontSize: 18, margin: 0 }}>Create / Upsert Provider</h2>
@@ -239,17 +312,14 @@ export default function ProvidersIndexPage() {
         </div>
       </section>
 
+      {/* List */}
       <section style={{ border: "1px solid #e6e6e6", borderRadius: 14, padding: 16 }}>
         <h2 style={{ fontSize: 18, margin: 0 }}>All Providers</h2>
-        <p style={{ margin: "6px 0 12px", color: "#555" }}>
-          {sorted.length} provider(s)
-        </p>
+        <p style={{ margin: "6px 0 12px", color: "#555" }}>{sorted.length} provider(s)</p>
 
         {loading && sorted.length === 0 && <p>Loading…</p>}
 
-        {sorted.length === 0 && !loading && (
-          <p style={{ color: "#666" }}>No providers yet. Create one above.</p>
-        )}
+        {sorted.length === 0 && !loading && <p style={{ color: "#666" }}>No providers yet. Create one above.</p>}
 
         {sorted.length > 0 && (
           <div style={{ display: "grid", gap: 10 }}>

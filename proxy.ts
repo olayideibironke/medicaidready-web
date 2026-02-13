@@ -1,61 +1,41 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+// proxy.ts
+import { NextRequest, NextResponse } from "next/server";
 
-function isProtectedPath(pathname: string) {
-  return pathname.startsWith("/providers") || pathname.startsWith("/api/providers");
-}
+const BASIC_AUTH_ENABLED =
+  String(process.env.BASIC_AUTH_ENABLED ?? "false").toLowerCase() === "true";
 
-function isProvidersApi(pathname: string) {
-  return pathname.startsWith("/api/providers");
-}
-
-function isWriteMethod(method: string) {
-  return ["POST", "PUT", "PATCH", "DELETE"].includes(method.toUpperCase());
-}
+const USER = process.env.BASIC_AUTH_USER || "";
+const PASS = process.env.BASIC_AUTH_PASS || "";
 
 function unauthorized() {
   return new NextResponse("Authentication required", {
     status: 401,
-    headers: { "WWW-Authenticate": 'Basic realm="MedicaidReady"' },
+    headers: {
+      "WWW-Authenticate": 'Basic realm="Secure Area"',
+    },
   });
 }
 
-export function proxy(req: NextRequest) {
-  const { pathname } = req.nextUrl;
+export default function proxy(req: NextRequest) {
+  if (!BASIC_AUTH_ENABLED) return NextResponse.next();
 
-  // --- Read-only kill switch for provider writes ---
-  const readOnly = process.env.READ_ONLY_MODE === "true";
-  if (readOnly && isProvidersApi(pathname) && isWriteMethod(req.method)) {
-    return NextResponse.json(
-      { ok: false, error: "read_only_mode", message: "Writes are disabled (READ_ONLY_MODE=true)." },
-      { status: 403 }
-    );
+  const authHeader = req.headers.get("authorization");
+  if (!authHeader) return unauthorized();
+
+  const parts = authHeader.split(" ");
+  const base64 = parts.length === 2 ? parts[1] : "";
+  if (!base64) return unauthorized();
+
+  const decoded = Buffer.from(base64, "base64").toString("utf-8");
+  const [username, password] = decoded.split(":");
+
+  if (username === USER && password === PASS) {
+    return NextResponse.next();
   }
 
-  // --- Optional Basic Auth perimeter (env-driven) ---
-  if (!isProtectedPath(pathname)) return NextResponse.next();
-
-  const user = process.env.BASIC_AUTH_USER;
-  const pass = process.env.BASIC_AUTH_PASS;
-
-  // If env not set, do nothing
-  if (!user || !pass) return NextResponse.next();
-
-  const auth = req.headers.get("authorization");
-  if (!auth || !auth.startsWith("Basic ")) return unauthorized();
-
-  try {
-    const encoded = auth.slice("Basic ".length);
-    const decoded = Buffer.from(encoded, "base64").toString("utf8");
-    const [u, p] = decoded.split(":");
-
-    if (u === user && p === pass) return NextResponse.next();
-    return unauthorized();
-  } catch {
-    return unauthorized();
-  }
+  return unauthorized();
 }
 
 export const config = {
-  matcher: ["/providers/:path*", "/api/providers/:path*"],
+  matcher: "/:path*",
 };
