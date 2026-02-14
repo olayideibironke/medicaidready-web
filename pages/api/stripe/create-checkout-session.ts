@@ -24,7 +24,7 @@ function safeFromEmail(email: string) {
   };
 }
 
-// Defaults aligned with your app behavior
+// Defaults aligned with current app behavior
 const DEFAULTS = {
   state: "MD",
   provider_type: "home_health",
@@ -52,19 +52,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const fallback = safeFromEmail(email);
 
-    // Accept from UI if present, otherwise safe defaults
+    // Accept real values if provided, otherwise safe defaults
     const name = pickString(body.name) || fallback.name;
     const organization = pickString(body.organization) || fallback.organization;
-
     const state = pickString(body.state) || DEFAULTS.state;
-    const provider_type = pickString(body.provider_type) || DEFAULTS.provider_type;
+    const provider_type =
+      pickString(body.provider_type) || DEFAULTS.provider_type;
 
     const origin =
-      (req.headers.origin as string | undefined) || `http://${req.headers.host}`;
+      (req.headers.origin as string | undefined) ||
+      `http://${req.headers.host}`;
 
     const sb = supabaseAdmin();
 
-    // Insert request_access_submissions row FIRST (deterministic id for webhook)
+    // 1) Create deterministic submission row FIRST
     const { data: inserted, error: insertErr } = await sb
       .from("request_access_submissions")
       .insert({
@@ -82,27 +83,45 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(500).json({
         ok: false,
         error: "request_access_insert_failed",
-        message: insertErr?.message ?? "Failed to create request_access_submissions row",
+        message:
+          insertErr?.message ??
+          "Failed to create request_access_submissions row",
       });
     }
 
     const submissionId = inserted.id as string;
 
+    // 2) Create Stripe Checkout Session
     const session = await stripe.checkout.sessions.create({
       mode: "subscription",
       line_items: [{ price: priceId, quantity: 1 }],
       customer_email: email,
       client_reference_id: submissionId,
+
       success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/checkout/cancel`,
+
       metadata: {
         email,
         submission_id: submissionId,
         product: "medicaidready_dmv_plan",
       },
+
+      // 🔥 POLISH: Also attach metadata to the Subscription object itself
+      subscription_data: {
+        metadata: {
+          email,
+          submission_id: submissionId,
+          product: "medicaidready_dmv_plan",
+        },
+      },
     });
 
-    return res.status(200).json({ ok: true, url: session.url, submissionId });
+    return res.status(200).json({
+      ok: true,
+      url: session.url,
+      submissionId,
+    });
   } catch (e: any) {
     return res.status(500).json({
       ok: false,
