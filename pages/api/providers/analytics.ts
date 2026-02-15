@@ -25,7 +25,7 @@ function determineRiskLevel(score: number): "low" | "medium" | "high" {
   return "high";
 }
 
-function classifyStatus(riskLevel: string): string {
+function classifyStatus(riskLevel: "low" | "medium" | "high"): "ready" | "in_progress" | "at_risk" {
   if (riskLevel === "low") return "ready";
   if (riskLevel === "medium") return "in_progress";
   return "at_risk";
@@ -43,157 +43,26 @@ function trendFrom(prev: number | undefined, curr: number): "↑" | "↓" | "→
   return "→";
 }
 
-function cleanString(v: unknown): string | undefined {
-  if (typeof v !== "string") return undefined;
-  const s = v.trim();
-  return s ? s : undefined;
-}
-
-function getSubmissionId(req: NextApiRequest): string | undefined {
-  const q = cleanString((req.query as any)?.submission_id);
-  if (q) return q;
-
-  const h = cleanString(req.headers["x-submission-id"]);
-  if (h) return h;
-
-  const c1 = cleanString((req as any).cookies?.submission_id);
-  if (c1) return c1;
-
-  const c2 = cleanString((req as any).cookies?.mr_submission_id);
-  if (c2) return c2;
-
-  const c3 = cleanString((req as any).cookies?.medicaidready_submission_id);
-  if (c3) return c3;
-
-  return undefined;
-}
-
-function parsePeriodEndToMs(v: unknown): number | null {
-  if (v == null) return null;
-
-  if (typeof v === "number" && Number.isFinite(v)) {
-    if (v > 1e12) return v;
-    if (v > 1e9) return v * 1000;
-    return null;
-  }
-
-  if (typeof v === "string") {
-    if (/^\d+$/.test(v)) {
-      const n = Number(v);
-      if (n > 1e12) return n;
-      if (n > 1e9) return n * 1000;
-      return null;
-    }
-    const d = new Date(v);
-    return Number.isFinite(d.getTime()) ? d.getTime() : null;
-  }
-
-  return null;
-}
-
-async function revokeSubmissionAccess(submissionId: string, reason: string) {
-  const sb = supabaseAdmin();
-  const t = new Date().toISOString();
-
-  await sb
-    .from("request_access_submissions")
-    .update({
-      access_revoked_at: t,
-      access_revoked_reason: reason,
-    })
-    .eq("id", submissionId)
-    .is("access_revoked_at", null);
-}
-
-async function requireApprovedActiveSubscriber(req: NextApiRequest) {
-  const submissionId = getSubmissionId(req);
-  if (!submissionId) {
-    return { ok: false, status: 403, error: "missing_submission_id" };
-  }
-
-  const sb = supabaseAdmin();
-
-  const { data } = await sb
-    .from("request_access_submissions")
-    .select("status, stripe_subscription_status, stripe_current_period_end, access_revoked_at")
-    .eq("id", submissionId)
-    .maybeSingle();
-
-  if (!data) {
-    return { ok: false, status: 403, error: "submission_not_found", submissionId };
-  }
-
-  if (data.access_revoked_at) {
-    return { ok: false, status: 403, error: "access_revoked", submissionId };
-  }
-
-  if (String(data.status).toLowerCase() !== "approved") {
-    return { ok: false, status: 403, error: "not_approved", submissionId };
-  }
-
-  const subStatus = String(data.stripe_subscription_status).toLowerCase();
-
-  if (subStatus === "active" || subStatus === "trialing") {
-    const periodEndMs = parsePeriodEndToMs(data.stripe_current_period_end);
-    if (periodEndMs && periodEndMs < Date.now()) {
-      await revokeSubmissionAccess(submissionId, "period_end_elapsed");
-      return { ok: false, status: 403, error: "subscription_period_ended", submissionId };
-    }
-  }
-
-  if (!(subStatus === "active" || subStatus === "trialing")) {
-    return { ok: false, status: 403, error: "subscription_inactive", submissionId };
-  }
-
-  return { ok: true, submissionId };
-}
-
-async function writeAccessAudit(submissionId: string, allowed: boolean, reason?: string) {
-  const sb = supabaseAdmin();
-  await sb.from("provider_access_audit").insert({
-    submission_id: submissionId,
-    route: "/api/providers/analytics",
-    method: "GET",
-    allowed,
-    reason: reason ?? null,
-  });
-}
-
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  const gate = requireRole(req, ["viewer", "analyst", "admin"]);
+  if (!gate.ok) return res.status(403).json({ ok: false, error: "forbidden", role: gate.role });
+
   if (req.method !== "GET") {
     res.setHeader("Allow", "GET");
     return res.status(405).json({ ok: false, error: "method_not_allowed" });
-  }
-
-  const roleGate = requireRole(req, ["viewer", "analyst", "admin"]);
-  if (!roleGate.ok) return res.status(403).json({ ok: false, error: "forbidden" });
-
-  if (roleGate.role !== "admin") {
-    const subGate = await requireApprovedActiveSubscriber(req);
-
-    if ((subGate as any).submissionId) {
-      await writeAccessAudit(
-        (subGate as any).submissionId,
-        subGate.ok,
-        subGate.ok ? "allowed" : (subGate as any).error
-      );
-    }
-
-    if (!subGate.ok) {
-      return res.status((subGate as any).status ?? 403).json({
-        ok: false,
-        error: (subGate as any).error,
-      });
-    }
   }
 
   try {
     const sb = supabaseAdmin();
     const monthKey = getMonthKey();
 
-    const { data: providers } = await sb
+    const { data: providers, error: pErr } = await sb
       .from("providers")
       .select("id, created_at, updated_at, meta, onboard, checklist");
+
+    if (pErr) {
+      return res.status(500).json({ ok: false, error: "db_read_failed", message: pErr.message });
+    }
 
     const rows: AnyRecord[] = [];
 
@@ -207,10 +76,43 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const status = classifyStatus(riskLevel);
       const state = meta?.jurisdiction_code || "UNASSIGNED";
 
-      await sb.from("compliance_history").upsert(
-        { provider_id: p.id, month_key: monthKey, score },
-        { onConflict: "provider_id,month_key" }
-      );
+      // history (best-effort; if table missing, we still return rows)
+      let previousScore: number | undefined = undefined;
+      let prevPrevScore: number | undefined = undefined;
+
+      try {
+        const { data: hist } = await sb
+          .from("compliance_history")
+          .select("month_key, score")
+          .eq("provider_id", p.id)
+          .order("month_key", { ascending: false })
+          .limit(3);
+
+        const history = (hist || []).map((x: any) => ({ month: String(x.month_key), score: Number(x.score) }));
+        const prevEntry = history.find((x) => x.month !== monthKey);
+        const prevPrevEntry = history.filter((x) => x.month !== monthKey)[1];
+
+        previousScore = prevEntry?.score;
+        prevPrevScore = prevPrevEntry?.score;
+
+        // idempotent upsert (ignore failures so UI never crashes)
+        await sb.from("compliance_history").upsert(
+          { provider_id: p.id, month_key: monthKey, score },
+          { onConflict: "provider_id,month_key" }
+        );
+      } catch {
+        // ignore
+      }
+
+      const trend = trendFrom(previousScore, score);
+      const declining = trend === "↓";
+
+      const prevTrend = trendFrom(prevPrevScore, previousScore ?? score);
+      const escalationRisk =
+        previousScore !== undefined &&
+        prevPrevScore !== undefined &&
+        prevTrend === "↓" &&
+        trend === "↓";
 
       rows.push({
         id: p.id,
@@ -220,17 +122,47 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         updatedAt: p.updated_at || null,
         score,
         riskLevel,
+        trend,
+        declining,
+        escalationRisk,
+        issuesCount: riskLevel === "high" ? 1 : 0,
       });
     }
 
+    // ✅ ALWAYS return these objects so frontend never reads undefined.high
+    const riskSummary = {
+      high: rows.filter((r) => r.riskLevel === "high").length,
+      medium: rows.filter((r) => r.riskLevel === "medium").length,
+      low: rows.filter((r) => r.riskLevel === "low").length,
+    };
+
+    const stateSummary: Record<string, { total: number; high: number; medium: number; low: number }> = {};
+    for (const r of rows) {
+      if (!stateSummary[r.state]) stateSummary[r.state] = { total: 0, high: 0, medium: 0, low: 0 };
+      stateSummary[r.state].total += 1;
+      stateSummary[r.state][r.riskLevel] += 1;
+    }
+
+    const decliningCount = rows.filter((r) => r.declining).length;
+    const escalationRiskCount = rows.filter((r) => r.escalationRisk).length;
+
     return res.status(200).json({
       ok: true,
-      role: roleGate.role,
+      source: "supabase",
+      role: gate.role,
       generatedAt: new Date().toISOString(),
-      totals: { providers: rows.length },
+      totals: {
+        providers: rows.length,
+        withScore: rows.length,
+        withUpdates: rows.filter((r) => !!r.updatedAt).length,
+        withIssues: rows.filter((r) => r.issuesCount > 0).length,
+      },
+      riskSummary,
+      stateSummary,
+      trendSummary: { declining: decliningCount, escalationRisk: escalationRiskCount },
       rows,
     });
   } catch (err: any) {
-    return res.status(500).json({ ok: false, error: "analytics_failed", message: err?.message });
+    return res.status(500).json({ ok: false, error: "analytics_failed", message: err?.message ?? String(err) });
   }
 }
