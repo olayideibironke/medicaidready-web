@@ -4,6 +4,23 @@ import { supabaseAdmin } from "../../../lib/supabaseAdmin";
 
 type AnyRecord = Record<string, any>;
 
+type RiskLevel = "low" | "medium" | "high";
+type ProviderStatus = "ready" | "in_progress" | "at_risk";
+
+type AnalyticsRow = {
+  id: string;
+  name: string;
+  status: ProviderStatus;
+  state: string;
+  updatedAt: string | null;
+  score: number;
+  riskLevel: RiskLevel;
+  trend: "↑" | "↓" | "→";
+  declining: boolean;
+  escalationRisk: boolean;
+  issuesCount: number;
+};
+
 function asArray<T = any>(value: any): T[] {
   return Array.isArray(value) ? value : [];
 }
@@ -19,13 +36,13 @@ function computeScore(provider: AnyRecord): number {
   return Math.round((complete / checklist.length) * 100);
 }
 
-function determineRiskLevel(score: number): "low" | "medium" | "high" {
+function determineRiskLevel(score: number): RiskLevel {
   if (score >= 80) return "low";
   if (score >= 60) return "medium";
   return "high";
 }
 
-function classifyStatus(riskLevel: "low" | "medium" | "high"): "ready" | "in_progress" | "at_risk" {
+function classifyStatus(riskLevel: RiskLevel): ProviderStatus {
   if (riskLevel === "low") return "ready";
   if (riskLevel === "medium") return "in_progress";
   return "at_risk";
@@ -64,19 +81,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(500).json({ ok: false, error: "db_read_failed", message: pErr.message });
     }
 
-    const rows: AnyRecord[] = [];
+    const rows: AnalyticsRow[] = [];
 
     for (const p of providers || []) {
-      const checklist = p.checklist ?? [];
-      const meta = p.meta ?? {};
-      const onboard = p.onboard ?? {};
+      const checklist = (p as any).checklist ?? [];
+      const meta = (p as any).meta ?? {};
+      const onboard = (p as any).onboard ?? {};
 
       const score = computeScore({ checklist });
       const riskLevel = determineRiskLevel(score);
       const status = classifyStatus(riskLevel);
       const state = meta?.jurisdiction_code || "UNASSIGNED";
 
-      // history (best-effort; if table missing, we still return rows)
+      // history (best-effort)
       let previousScore: number | undefined = undefined;
       let prevPrevScore: number | undefined = undefined;
 
@@ -84,11 +101,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const { data: hist } = await sb
           .from("compliance_history")
           .select("month_key, score")
-          .eq("provider_id", p.id)
+          .eq("provider_id", (p as any).id)
           .order("month_key", { ascending: false })
           .limit(3);
 
-        const history = (hist || []).map((x: any) => ({ month: String(x.month_key), score: Number(x.score) }));
+        const history = (hist || []).map((x: any) => ({
+          month: String(x.month_key),
+          score: Number(x.score),
+        }));
+
         const prevEntry = history.find((x) => x.month !== monthKey);
         const prevPrevEntry = history.filter((x) => x.month !== monthKey)[1];
 
@@ -97,7 +118,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         // idempotent upsert (ignore failures so UI never crashes)
         await sb.from("compliance_history").upsert(
-          { provider_id: p.id, month_key: monthKey, score },
+          { provider_id: (p as any).id, month_key: monthKey, score },
           { onConflict: "provider_id,month_key" }
         );
       } catch {
@@ -115,11 +136,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         trend === "↓";
 
       rows.push({
-        id: p.id,
-        name: onboard?.org?.name || p.id,
+        id: (p as any).id,
+        name: onboard?.org?.name || (p as any).id,
         status,
         state,
-        updatedAt: p.updated_at || null,
+        updatedAt: (p as any).updated_at || null,
         score,
         riskLevel,
         trend,
@@ -129,7 +150,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       });
     }
 
-    // ✅ ALWAYS return these objects so frontend never reads undefined.high
     const riskSummary = {
       high: rows.filter((r) => r.riskLevel === "high").length,
       medium: rows.filter((r) => r.riskLevel === "medium").length,
