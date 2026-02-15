@@ -1,4 +1,4 @@
-import Head from "next/head";
+﻿import Head from "next/head";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -213,8 +213,6 @@ export default function PricingPage() {
             align-items: center;
             gap: 10px;
           }
-
-          /* PREMIUM NAV PILLS */
           .navPill {
             color: #1f2b3d;
             text-decoration: none;
@@ -233,7 +231,6 @@ export default function PricingPage() {
             color: #1f2b3d;
           }
 
-          /* PREMIUM CTA BUTTON */
           .navCta {
             text-decoration: none;
             font-size: 13px;
@@ -405,7 +402,6 @@ export default function PricingPage() {
             color: #445065;
             line-height: 1.6;
           }
-
           .sideCta {
             margin-top: 12px;
             display: inline-flex;
@@ -454,7 +450,6 @@ export default function PricingPage() {
             align-items: center;
             gap: 10px;
           }
-
           .footerPill {
             color: #1f2b3d;
             text-decoration: none;
