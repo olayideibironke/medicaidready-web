@@ -1,4 +1,4 @@
-﻿import Head from "next/head";
+import Head from "next/head";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -75,10 +75,10 @@ export default function PricingPage() {
         <main className="main">
           <section className="hero">
             <div className="container">
-              <h1 className="h1">Pricing</h1>
+              <h1 className="h1">Pricing — BUILD TEST 20260215</h1>
               <p className="sub">
-                Continuous Medicaid compliance monitoring for provider organizations operating in
-                Maryland, Virginia &amp; Washington DC.
+                Continuous Medicaid compliance monitoring for provider organizations operating in Maryland,
+                Virginia &amp; Washington DC.
               </p>
 
               <div className="grid">
@@ -86,9 +86,7 @@ export default function PricingPage() {
                   <div className="planTop">
                     <div>
                       <div className="planName">DMV Plan</div>
-                      <div className="planDesc">
-                        Subscription access for credentialed provider organizations.
-                      </div>
+                      <div className="planDesc">Subscription access for credentialed provider organizations.</div>
                     </div>
                     <div className="price">
                       <div className="amt">$249</div>
@@ -142,9 +140,7 @@ export default function PricingPage() {
           <div className="container footerInner">
             <div className="footerLeft">
               <div className="footerBrand">MedicaidReady</div>
-              <div className="footerSmall">
-                Continuous Medicaid compliance monitoring for MD • VA • DC.
-              </div>
+              <div className="footerSmall">Continuous Medicaid compliance monitoring for MD • VA • DC.</div>
             </div>
             <div className="footerRight">
               <Link className="footerPill" href="/request-access">
@@ -485,6 +481,3 @@ export default function PricingPage() {
     </>
   );
 }
-
-// PRICING_POLISH_FINGERPRINT_20260215
-
