@@ -1,8 +1,101 @@
 // pages/index.tsx
 import Head from "next/head";
 import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
+
+type HeroSlide = {
+  badge: string;
+  titleEmphasis: string;
+  sub: string;
+  highlights: { k: string; v: string }[];
+  list: { level: "high" | "med" | "low"; title: string; sub: string; tag: string }[];
+};
 
 export default function Home() {
+  const slides: HeroSlide[] = useMemo(
+    () => [
+      {
+        badge: "Continuous Compliance Monitoring",
+        titleEmphasis: "Maryland, Virginia & Washington, DC",
+        sub:
+          "Track readiness, score risk, and surface escalation signals before audits and corrective action plans force urgent response.",
+        highlights: [
+          { k: "Risk scoring", v: "Monthly trend visibility" },
+          { k: "Audit readiness", v: "Checklist + onboarding tracking" },
+          { k: "Operational clarity", v: "Provider-level reporting" },
+        ],
+        list: [
+          { level: "high", title: "High risk provider", sub: "Declining trend detected", tag: "Review" },
+          { level: "med", title: "Medium risk provider", sub: "Checklist in progress", tag: "Track" },
+          { level: "low", title: "Low risk provider", sub: "Stable month-over-month", tag: "OK" },
+        ],
+      },
+      {
+        badge: "Audit Readiness + Checklist Tracking",
+        titleEmphasis: "smaller provider teams",
+        sub:
+          "Replace manual check-ins with structured readiness tracking, due dates, and consistent status visibility across the roster.",
+        highlights: [
+          { k: "Checklists", v: "Assigned + tracked to completion" },
+          { k: "Onboarding", v: "Credentialing + documentation" },
+          { k: "Visibility", v: "Team-wide readiness posture" },
+        ],
+        list: [
+          { level: "med", title: "Checklist overdue", sub: "Missing documentation item", tag: "Fix" },
+          { level: "low", title: "Onboarding complete", sub: "Ready for review", tag: "OK" },
+          { level: "high", title: "Escalation risk", sub: "Multiple late items detected", tag: "Review" },
+        ],
+      },
+      {
+        badge: "Risk + Trend Visibility",
+        titleEmphasis: "early warning signals",
+        sub:
+          "See month-over-month risk movement and prioritize intervention before problems become audit findings or corrective action plans.",
+        highlights: [
+          { k: "Trends", v: "Up / down / stable movement" },
+          { k: "Signals", v: "Decline + escalation indicators" },
+          { k: "Focus", v: "Prioritize attention where needed" },
+        ],
+        list: [
+          { level: "low", title: "Stable month", sub: "No major changes detected", tag: "OK" },
+          { level: "med", title: "Moderate change", sub: "Small decline in readiness", tag: "Track" },
+          { level: "high", title: "Rapid decline", sub: "Immediate review recommended", tag: "Review" },
+        ],
+      },
+    ],
+    []
+  );
+
+  const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
+
+  // Auto-rotate hero "collections"
+  useEffect(() => {
+    if (paused) return;
+    const id = window.setInterval(() => {
+      setActive((i) => (i + 1) % slides.length);
+    }, 5200);
+    return () => window.clearInterval(id);
+  }, [paused, slides.length]);
+
+  const slide = slides[active];
+
+  // Auto-rotate the list rows inside the preview to feel alive
+  const [listShift, setListShift] = useState(0);
+  useEffect(() => {
+    if (paused) return;
+    const id = window.setInterval(() => {
+      setListShift((n) => (n + 1) % 3);
+    }, 3600);
+    return () => window.clearInterval(id);
+  }, [paused]);
+
+  const rotatedList = useMemo(() => {
+    const base = slide.list;
+    const s = listShift % base.length;
+    return [...base.slice(s), ...base.slice(0, s)];
+  }, [slide.list, listShift]);
+
   return (
     <>
       <Head>
@@ -33,7 +126,7 @@ export default function Home() {
               <Link className="navLink" href="/request-access">
                 Request Access
               </Link>
-              <Link className="navButton" href="/providers">
+              <Link className="navButton" href="/signin">
                 Sign in
               </Link>
             </nav>
@@ -42,22 +135,30 @@ export default function Home() {
 
         {/* Hero */}
         <main className="main">
-          <section className="hero">
+          <section
+            className="hero"
+            onMouseEnter={() => setPaused(true)}
+            onMouseLeave={() => setPaused(false)}
+          >
             <div className="container heroGrid">
-              <div>
-                <div className="badge">
+              <div className="left">
+                <div className="badge" aria-live="polite">
                   <span className="dot" aria-hidden="true" />
-                  Continuous Compliance Monitoring
+                  <span className="fadeSwap" key={`badge-${active}`}>
+                    {slide.badge}
+                  </span>
                 </div>
 
-                <h1 className="h1">
+                <h1 className="h1" aria-live="polite">
                   Continuous Medicaid compliance monitoring for providers in{" "}
-                  <span className="em">Maryland, Virginia &amp; Washington, DC</span>.
+                  <span className="em fadeSwap" key={`title-${active}`}>
+                    {slide.titleEmphasis}
+                  </span>
+                  .
                 </h1>
 
-                <p className="sub">
-                  Track readiness, score risk, and surface escalation signals before audits and
-                  corrective action plans force urgent response.
+                <p className="sub fadeSwap" key={`sub-${active}`}>
+                  {slide.sub}
                 </p>
 
                 <div className="ctaRow">
@@ -69,23 +170,32 @@ export default function Home() {
                   </Link>
                 </div>
 
-                <div className="trustRow">
-                  <div className="trustItem">
-                    <div className="trustK">Risk scoring</div>
-                    <div className="trustV">Monthly trend visibility</div>
-                  </div>
-                  <div className="trustItem">
-                    <div className="trustK">Audit readiness</div>
-                    <div className="trustV">Checklist + onboarding tracking</div>
-                  </div>
-                  <div className="trustItem">
-                    <div className="trustK">Operational clarity</div>
-                    <div className="trustV">Provider-level reporting</div>
-                  </div>
+                <div className="trustRow" aria-label="Key benefits">
+                  {slide.highlights.map((h, idx) => (
+                    <div className="trustItem" key={`${active}-h-${idx}`}>
+                      <div className="trustK">{h.k}</div>
+                      <div className="trustV">{h.v}</div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Dots: “collections” control */}
+                <div className="dots" aria-label="Hero collections">
+                  {slides.map((_, i) => (
+                    <button
+                      key={`dot-${i}`}
+                      className={`dotBtn ${i === active ? "on" : ""}`}
+                      onClick={() => setActive(i)}
+                      aria-label={`Show collection ${i + 1}`}
+                      type="button"
+                    />
+                  ))}
+                  <div className="dotsHint">Hover to pause</div>
                 </div>
               </div>
 
               <div className="heroCard" role="region" aria-label="Platform preview">
+                <div className="sweep" aria-hidden="true" />
                 <div className="cardTop">
                   <div className="cardTitle">Compliance Overview</div>
                   <div className="pill">DMV Region</div>
@@ -94,55 +204,44 @@ export default function Home() {
                 <div className="cardGrid">
                   <div className="metric">
                     <div className="metricLabel">Providers monitored</div>
-                    <div className="metricValue">—</div>
+                    <div className="metricValue shimmer">—</div>
                     <div className="metricHint">Connected to your roster</div>
                   </div>
                   <div className="metric">
                     <div className="metricLabel">Risk level</div>
-                    <div className="metricValue">—</div>
+                    <div className="metricValue shimmer">—</div>
                     <div className="metricHint">Low • Medium • High</div>
                   </div>
                   <div className="metric">
                     <div className="metricLabel">Trend</div>
-                    <div className="metricValue">—</div>
+                    <div className="metricValue shimmer">—</div>
                     <div className="metricHint">Improving • Stable • Declining</div>
                   </div>
                   <div className="metric">
                     <div className="metricLabel">Escalation signals</div>
-                    <div className="metricValue">—</div>
+                    <div className="metricValue shimmer">—</div>
                     <div className="metricHint">Flags that require attention</div>
                   </div>
                 </div>
 
                 <div className="divider" />
 
-                <div className="list">
-                  <div className="listRow">
-                    <div className="statusDot sHigh" aria-hidden="true" />
-                    <div className="listText">
-                      <div className="listTitle">High risk provider</div>
-                      <div className="listSub">Declining trend detected</div>
+                <div className="list" aria-live="polite">
+                  {rotatedList.map((row, idx) => (
+                    <div className="listRow liftIn" key={`${active}-row-${idx}`}>
+                      <div
+                        className={`statusDot ${
+                          row.level === "high" ? "sHigh" : row.level === "med" ? "sMed" : "sLow"
+                        }`}
+                        aria-hidden="true"
+                      />
+                      <div className="listText">
+                        <div className="listTitle">{row.title}</div>
+                        <div className="listSub">{row.sub}</div>
+                      </div>
+                      <div className="listTag">{row.tag}</div>
                     </div>
-                    <div className="listTag">Review</div>
-                  </div>
-
-                  <div className="listRow">
-                    <div className="statusDot sMed" aria-hidden="true" />
-                    <div className="listText">
-                      <div className="listTitle">Medium risk provider</div>
-                      <div className="listSub">Checklist in progress</div>
-                    </div>
-                    <div className="listTag">Track</div>
-                  </div>
-
-                  <div className="listRow">
-                    <div className="statusDot sLow" aria-hidden="true" />
-                    <div className="listText">
-                      <div className="listTitle">Low risk provider</div>
-                      <div className="listSub">Stable month-over-month</div>
-                    </div>
-                    <div className="listTag">OK</div>
-                  </div>
+                  ))}
                 </div>
 
                 <div className="cardFoot">
@@ -315,7 +414,7 @@ export default function Home() {
               <Link className="footerLink" href="/request-access">
                 Request access
               </Link>
-              <Link className="footerLink" href="/providers">
+              <Link className="footerLink" href="/signin">
                 Sign in
               </Link>
             </div>
@@ -443,12 +542,17 @@ export default function Home() {
               ),
               radial-gradient(980px 520px at 86% 20%, rgba(11, 58, 102, 0.11), transparent 58%);
             padding: 64px 0 42px;
+            overflow: hidden;
           }
           .heroGrid {
             display: grid;
             grid-template-columns: 1.12fr 0.88fr;
             gap: 30px;
             align-items: start;
+          }
+
+          .left {
+            position: relative;
           }
 
           .badge {
@@ -469,6 +573,23 @@ export default function Home() {
             height: 8px;
             border-radius: 999px;
             background: #0f6aa6;
+          }
+
+          .fadeSwap {
+            display: inline-block;
+            animation: fadeSwap 520ms ease both;
+          }
+          @keyframes fadeSwap {
+            from {
+              opacity: 0;
+              transform: translateY(4px);
+              filter: blur(1px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0);
+              filter: blur(0);
+            }
           }
 
           .h1 {
@@ -507,6 +628,11 @@ export default function Home() {
             border: 1px solid rgba(11, 58, 102, 0.35);
             min-width: 180px;
             box-shadow: 0 12px 26px rgba(11, 18, 32, 0.12);
+            transition: transform 140ms ease, box-shadow 140ms ease;
+          }
+          .primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 16px 32px rgba(11, 18, 32, 0.14);
           }
           .secondary {
             display: inline-flex;
@@ -520,6 +646,10 @@ export default function Home() {
             border: 1px solid rgba(215, 220, 230, 0.9);
             min-width: 140px;
             box-shadow: 0 10px 22px rgba(11, 18, 32, 0.06);
+            transition: transform 140ms ease;
+          }
+          .secondary:hover {
+            transform: translateY(-1px);
           }
 
           .trustRow {
@@ -534,6 +664,10 @@ export default function Home() {
             padding: 12px;
             background: rgba(255, 255, 255, 0.78);
             box-shadow: 0 10px 22px rgba(11, 18, 32, 0.05);
+            transition: transform 160ms ease;
+          }
+          .trustItem:hover {
+            transform: translateY(-2px);
           }
           .trustK {
             font-weight: 800;
@@ -548,13 +682,85 @@ export default function Home() {
             line-height: 1.45;
           }
 
+          .dots {
+            margin-top: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+          }
+          .dotBtn {
+            width: 10px;
+            height: 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(11, 58, 102, 0.22);
+            background: rgba(255, 255, 255, 0.85);
+            cursor: pointer;
+            padding: 0;
+            transition: transform 140ms ease, background 140ms ease;
+          }
+          .dotBtn:hover {
+            transform: scale(1.08);
+          }
+          .dotBtn.on {
+            background: #0f6aa6;
+            border-color: rgba(11, 58, 102, 0.35);
+          }
+          .dotsHint {
+            margin-left: 10px;
+            font-size: 12px;
+            color: #6b7688;
+          }
+
           .heroCard {
             border: 1px solid rgba(230, 233, 239, 0.95);
             border-radius: 20px;
             background: rgba(255, 255, 255, 0.9);
             box-shadow: 0 18px 44px rgba(11, 18, 32, 0.12);
             overflow: hidden;
+            position: relative;
+            animation: float 6.5s ease-in-out infinite;
           }
+          @keyframes float {
+            0% {
+              transform: translateY(0px);
+            }
+            50% {
+              transform: translateY(-6px);
+            }
+            100% {
+              transform: translateY(0px);
+            }
+          }
+
+          .sweep {
+            position: absolute;
+            inset: -40%;
+            background: radial-gradient(
+                420px 240px at 35% 30%,
+                rgba(15, 106, 166, 0.16),
+                rgba(255, 255, 255, 0) 60%
+              ),
+              radial-gradient(
+                420px 240px at 70% 60%,
+                rgba(11, 58, 102, 0.12),
+                rgba(255, 255, 255, 0) 62%
+              );
+            transform: rotate(10deg);
+            animation: sweep 10.5s ease-in-out infinite;
+            pointer-events: none;
+          }
+          @keyframes sweep {
+            0% {
+              transform: translateX(-2%) translateY(0%) rotate(10deg);
+            }
+            50% {
+              transform: translateX(2%) translateY(-2%) rotate(10deg);
+            }
+            100% {
+              transform: translateX(-2%) translateY(0%) rotate(10deg);
+            }
+          }
+
           .cardTop {
             display: flex;
             align-items: center;
@@ -562,6 +768,8 @@ export default function Home() {
             padding: 16px 16px 12px;
             border-bottom: 1px solid #eef1f6;
             background: rgba(255, 255, 255, 0.92);
+            position: relative;
+            z-index: 1;
           }
           .cardTitle {
             font-weight: 850;
@@ -582,6 +790,8 @@ export default function Home() {
             grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 10px;
             padding: 16px;
+            position: relative;
+            z-index: 1;
           }
           .metric {
             border: 1px solid #eef1f6;
@@ -605,14 +815,49 @@ export default function Home() {
             color: #7a8597;
             line-height: 1.4;
           }
+
+          .shimmer {
+            position: relative;
+            color: rgba(11, 18, 32, 0.68);
+          }
+          .shimmer::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            transform: translateX(-120%);
+            background: linear-gradient(
+              90deg,
+              rgba(255, 255, 255, 0) 0%,
+              rgba(11, 58, 102, 0.10) 50%,
+              rgba(255, 255, 255, 0) 100%
+            );
+            animation: shimmer 2.8s ease-in-out infinite;
+            border-radius: 10px;
+          }
+          @keyframes shimmer {
+            0% {
+              transform: translateX(-120%);
+            }
+            60% {
+              transform: translateX(120%);
+            }
+            100% {
+              transform: translateX(120%);
+            }
+          }
+
           .divider {
             height: 1px;
             background: #eef1f6;
+            position: relative;
+            z-index: 1;
           }
           .list {
             padding: 12px 16px;
             display: grid;
             gap: 10px;
+            position: relative;
+            z-index: 1;
           }
           .listRow {
             display: grid;
@@ -624,6 +869,20 @@ export default function Home() {
             padding: 10px 12px;
             background: rgba(255, 255, 255, 0.96);
           }
+          .liftIn {
+            animation: liftIn 420ms ease both;
+          }
+          @keyframes liftIn {
+            from {
+              opacity: 0;
+              transform: translateY(6px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+
           .statusDot {
             width: 10px;
             height: 10px;
@@ -658,6 +917,8 @@ export default function Home() {
           }
           .cardFoot {
             padding: 0 16px 16px;
+            position: relative;
+            z-index: 1;
           }
           .footNote {
             font-size: 12px;
@@ -784,6 +1045,10 @@ export default function Home() {
             background: rgba(255, 255, 255, 0.95);
             padding: 18px;
             box-shadow: 0 14px 30px rgba(11, 18, 32, 0.06);
+            transition: transform 160ms ease;
+          }
+          .tile:hover {
+            transform: translateY(-2px);
           }
           .tileTitle {
             font-weight: 900;
@@ -876,6 +1141,22 @@ export default function Home() {
           .footerLink:hover {
             background: rgba(243, 245, 249, 0.9);
             border-color: rgba(230, 233, 239, 0.9);
+          }
+
+          @media (prefers-reduced-motion: reduce) {
+            .fadeSwap,
+            .heroCard,
+            .sweep,
+            .shimmer::after,
+            .liftIn,
+            .trustItem,
+            .tile,
+            .primary,
+            .secondary {
+              animation: none !important;
+              transition: none !important;
+              transform: none !important;
+            }
           }
 
           @media (max-width: 980px) {
