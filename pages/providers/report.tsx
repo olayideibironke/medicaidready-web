@@ -168,7 +168,7 @@ export default function ProviderReportPage({ data }: { data: AnalyticsPayload })
           </table>
 
           <div style={{ marginTop: 10, fontSize: 11, color: "#6b7280" }}>
-            Notes: Trend compares current month score vs last recorded month in <code>data/compliance-history.json</code>.
+            Notes: Trend compares current month score vs the last recorded month in the provider history dataset.
             Escalation Risk requires two consecutive declines (≥3 months of score history).
           </div>
         </section>
@@ -185,7 +185,9 @@ function Stat({ label, value, accent }: { label: string; value: number; accent?:
   return (
     <div style={{ border: "1px solid #e5e7eb", borderRadius: 12, padding: 12 }}>
       <div style={{ fontSize: 12, color: "#6b7280" }}>{label}</div>
-      <div style={{ fontSize: 18, fontWeight: 800, color: accent || "#111", marginTop: 4 }}>{value}</div>
+      <div style={{ fontSize: 18, fontWeight: 800, color: accent || "#111", marginTop: 4 }}>
+        {value}
+      </div>
     </div>
   );
 }

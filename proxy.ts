@@ -15,13 +15,12 @@ const ACCESS_PASSCODE = process.env.MEDICAIDREADY_ACCESS_PASSCODE || "";
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
 const SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
 
-function unauthorized() {
-  return new NextResponse("Authentication required", {
-    status: 401,
-    headers: {
-      "WWW-Authenticate": 'Basic realm="MedicaidReady"',
-    },
-  });
+function redirectToRequestAccess(req: NextRequest) {
+  const url = req.nextUrl.clone();
+  url.pathname = "/request-access";
+  url.searchParams.set("next", req.nextUrl.pathname);
+  // Important: no WWW-Authenticate header => no browser popup
+  return NextResponse.redirect(url, 302);
 }
 
 function decodeBasicAuth(req: NextRequest): { user: string; pass: string } | null {
@@ -61,48 +60,43 @@ async function isApprovedEmail(email: string): Promise<boolean> {
   return Array.isArray(data) && data.length > 0;
 }
 
-// Only run gate on protected paths
-function isProtectedPath(pathname: string) {
-  return (
-    pathname === "/providers" ||
-    pathname.startsWith("/providers/") ||
-    pathname === "/api/providers" ||
-    pathname.startsWith("/api/providers/")
-  );
-}
-
 export default async function proxy(req: NextRequest) {
   const pathname = req.nextUrl.pathname;
 
-  // Public routes stay public (request-access, pricing, landing)
-  if (!isProtectedPath(pathname)) return NextResponse.next();
+  // Only run on /providers routes (matcher below), but keep guard anyway.
+  if (!(pathname === "/providers" || pathname.startsWith("/providers/"))) {
+    return NextResponse.next();
+  }
 
   const authRequired = BASIC_AUTH_ENABLED || ACCESS_CONTROL_ENABLED;
   if (!authRequired) return NextResponse.next();
 
   const creds = decodeBasicAuth(req);
-  if (!creds) return unauthorized();
+
+  // If no creds, DO NOT challenge with Basic Auth. Redirect instead (no popup).
+  if (!creds) return redirectToRequestAccess(req);
 
   const user = creds.user.trim();
   const pass = creds.pass;
 
-  // 1) Admin pass-through (existing perimeter)
+  // 1) Admin pass-through (only meaningful if someone sends an Authorization header)
   if (BASIC_AUTH_ENABLED && user === ADMIN_USER && pass === ADMIN_PASS) {
     return NextResponse.next();
   }
 
   // 2) Credentialed access (approved email + shared passcode)
   if (ACCESS_CONTROL_ENABLED) {
-    if (!ACCESS_PASSCODE) return unauthorized();
-    if (pass !== ACCESS_PASSCODE) return unauthorized();
+    if (!ACCESS_PASSCODE) return redirectToRequestAccess(req);
+    if (pass !== ACCESS_PASSCODE) return redirectToRequestAccess(req);
 
     const ok = await isApprovedEmail(user);
     if (ok) return NextResponse.next();
   }
 
-  return unauthorized();
+  return redirectToRequestAccess(req);
 }
 
+// Only match /providers UI routes.
 export const config = {
-  matcher: "/:path*",
+  matcher: ["/providers", "/providers/:path*"],
 };

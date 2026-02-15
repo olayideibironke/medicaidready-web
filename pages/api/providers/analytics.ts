@@ -1,29 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import fs from "fs/promises";
-import path from "path";
 import { requireRole } from "../../../lib/access";
-import { writeJsonAtomic } from "../../../lib/safeFile";
+import { supabaseAdmin } from "../../../lib/supabaseAdmin";
 
 type AnyRecord = Record<string, any>;
 
-const PROVIDERS_FILE = path.join(process.cwd(), "data", "providers.json");
-const HISTORY_FILE = path.join(process.cwd(), "data", "compliance-history.json");
-
 function asArray<T = any>(value: any): T[] {
   return Array.isArray(value) ? value : [];
-}
-
-function readProviders(parsed: any): AnyRecord[] {
-  if (!parsed) return [];
-  if (Array.isArray(parsed)) return parsed;
-  if (Array.isArray(parsed.providers)) return parsed.providers;
-  if (parsed.providers && typeof parsed.providers === "object") return Object.values(parsed.providers);
-  return [];
-}
-
-async function readJson(filePath: string) {
-  const raw = await fs.readFile(filePath, "utf8");
-  return JSON.parse(raw);
 }
 
 function computeScore(provider: AnyRecord): number {
@@ -61,107 +43,191 @@ function trendFrom(prev: number | undefined, curr: number): "↑" | "↓" | "→
   return "→";
 }
 
-function getLastTwoMonthScores(providerHistory: Record<string, number>, currentMonthKey: string) {
-  const keys = Object.keys(providerHistory)
-    .filter((k) => k !== currentMonthKey)
-    .sort();
+function cleanString(v: unknown): string | undefined {
+  if (typeof v !== "string") return undefined;
+  const s = v.trim();
+  return s ? s : undefined;
+}
 
-  const lastKey = keys[keys.length - 1];
-  const prevKey = keys[keys.length - 2];
+function getSubmissionId(req: NextApiRequest): string | undefined {
+  const q = cleanString((req.query as any)?.submission_id);
+  if (q) return q;
 
-  const last = lastKey ? providerHistory[lastKey] : undefined;
-  const prev = prevKey ? providerHistory[prevKey] : undefined;
+  const h = cleanString(req.headers["x-submission-id"]);
+  if (h) return h;
 
-  return { lastKey, prevKey, last, prev };
+  const c1 = cleanString((req as any).cookies?.submission_id);
+  if (c1) return c1;
+
+  const c2 = cleanString((req as any).cookies?.mr_submission_id);
+  if (c2) return c2;
+
+  const c3 = cleanString((req as any).cookies?.medicaidready_submission_id);
+  if (c3) return c3;
+
+  return undefined;
+}
+
+function parsePeriodEndToMs(v: unknown): number | null {
+  if (v == null) return null;
+
+  if (typeof v === "number" && Number.isFinite(v)) {
+    if (v > 1e12) return v;
+    if (v > 1e9) return v * 1000;
+    return null;
+  }
+
+  if (typeof v === "string") {
+    if (/^\d+$/.test(v)) {
+      const n = Number(v);
+      if (n > 1e12) return n;
+      if (n > 1e9) return n * 1000;
+      return null;
+    }
+    const d = new Date(v);
+    return Number.isFinite(d.getTime()) ? d.getTime() : null;
+  }
+
+  return null;
+}
+
+async function revokeSubmissionAccess(submissionId: string, reason: string) {
+  const sb = supabaseAdmin();
+  const t = new Date().toISOString();
+
+  await sb
+    .from("request_access_submissions")
+    .update({
+      access_revoked_at: t,
+      access_revoked_reason: reason,
+    })
+    .eq("id", submissionId)
+    .is("access_revoked_at", null);
+}
+
+async function requireApprovedActiveSubscriber(req: NextApiRequest) {
+  const submissionId = getSubmissionId(req);
+  if (!submissionId) {
+    return { ok: false, status: 403, error: "missing_submission_id" };
+  }
+
+  const sb = supabaseAdmin();
+
+  const { data } = await sb
+    .from("request_access_submissions")
+    .select("status, stripe_subscription_status, stripe_current_period_end, access_revoked_at")
+    .eq("id", submissionId)
+    .maybeSingle();
+
+  if (!data) {
+    return { ok: false, status: 403, error: "submission_not_found", submissionId };
+  }
+
+  if (data.access_revoked_at) {
+    return { ok: false, status: 403, error: "access_revoked", submissionId };
+  }
+
+  if (String(data.status).toLowerCase() !== "approved") {
+    return { ok: false, status: 403, error: "not_approved", submissionId };
+  }
+
+  const subStatus = String(data.stripe_subscription_status).toLowerCase();
+
+  if (subStatus === "active" || subStatus === "trialing") {
+    const periodEndMs = parsePeriodEndToMs(data.stripe_current_period_end);
+    if (periodEndMs && periodEndMs < Date.now()) {
+      await revokeSubmissionAccess(submissionId, "period_end_elapsed");
+      return { ok: false, status: 403, error: "subscription_period_ended", submissionId };
+    }
+  }
+
+  if (!(subStatus === "active" || subStatus === "trialing")) {
+    return { ok: false, status: 403, error: "subscription_inactive", submissionId };
+  }
+
+  return { ok: true, submissionId };
+}
+
+async function writeAccessAudit(submissionId: string, allowed: boolean, reason?: string) {
+  const sb = supabaseAdmin();
+  await sb.from("provider_access_audit").insert({
+    submission_id: submissionId,
+    route: "/api/providers/analytics",
+    method: "GET",
+    allowed,
+    reason: reason ?? null,
+  });
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const gate = requireRole(req, ["viewer", "analyst", "admin"]);
-  if (!gate.ok) return res.status(403).json({ ok: false, error: "forbidden", role: gate.role });
+  if (req.method !== "GET") {
+    res.setHeader("Allow", "GET");
+    return res.status(405).json({ ok: false, error: "method_not_allowed" });
+  }
+
+  const roleGate = requireRole(req, ["viewer", "analyst", "admin"]);
+  if (!roleGate.ok) return res.status(403).json({ ok: false, error: "forbidden" });
+
+  if (roleGate.role !== "admin") {
+    const subGate = await requireApprovedActiveSubscriber(req);
+
+    if ((subGate as any).submissionId) {
+      await writeAccessAudit(
+        (subGate as any).submissionId,
+        subGate.ok,
+        subGate.ok ? "allowed" : (subGate as any).error
+      );
+    }
+
+    if (!subGate.ok) {
+      return res.status(subGate.status).json({ ok: false, error: (subGate as any).error });
+    }
+  }
 
   try {
-    const providersRaw = await readJson(PROVIDERS_FILE);
-    const providers = readProviders(providersRaw);
-
-    const historyData = await readJson(HISTORY_FILE);
-    if (!historyData.history) historyData.history = {};
-
+    const sb = supabaseAdmin();
     const monthKey = getMonthKey();
+
+    const { data: providers } = await sb
+      .from("providers")
+      .select("id, created_at, updated_at, meta, onboard, checklist");
+
     const rows: AnyRecord[] = [];
 
-    for (const p of providers) {
-      const score = computeScore(p);
+    for (const p of providers || []) {
+      const checklist = p.checklist ?? [];
+      const meta = p.meta ?? {};
+      const onboard = p.onboard ?? {};
+
+      const score = computeScore({ checklist });
       const riskLevel = determineRiskLevel(score);
       const status = classifyStatus(riskLevel);
-      const state = p.meta?.jurisdiction_code || "UNASSIGNED";
+      const state = meta?.jurisdiction_code || "UNASSIGNED";
 
-      if (!historyData.history[p.id]) historyData.history[p.id] = {};
-      const providerHistory: Record<string, number> = historyData.history[p.id];
-
-      const { last, prev } = getLastTwoMonthScores(providerHistory, monthKey);
-
-      const trend = trendFrom(last, score);
-
-      const lastTrend = trendFrom(prev, last ?? score);
-      const escalationRisk = last !== undefined && prev !== undefined && lastTrend === "↓" && trend === "↓";
-      const declining = trend === "↓";
-
-      providerHistory[monthKey] = score;
+      await sb.from("compliance_history").upsert(
+        { provider_id: p.id, month_key: monthKey, score },
+        { onConflict: "provider_id,month_key" }
+      );
 
       rows.push({
         id: p.id,
-        name: p.onboard?.org?.name || p.id,
+        name: onboard?.org?.name || p.id,
         status,
         state,
-        updatedAt: p.updatedAt || null,
+        updatedAt: p.updated_at || null,
         score,
         riskLevel,
-        trend,
-        declining,
-        escalationRisk,
-        issuesCount: riskLevel === "high" ? 1 : 0,
       });
     }
 
-    // Atomic write (prevents corruption)
-    await writeJsonAtomic(HISTORY_FILE, historyData);
-
-    const riskSummary = {
-      high: rows.filter((r) => r.riskLevel === "high").length,
-      medium: rows.filter((r) => r.riskLevel === "medium").length,
-      low: rows.filter((r) => r.riskLevel === "low").length,
-    };
-
-    const stateSummary: Record<string, { total: number; high: number; medium: number; low: number }> = {};
-    for (const r of rows) {
-      if (!stateSummary[r.state]) stateSummary[r.state] = { total: 0, high: 0, medium: 0, low: 0 };
-      stateSummary[r.state].total += 1;
-      stateSummary[r.state][r.riskLevel] += 1;
-    }
-
-    const decliningCount = rows.filter((r) => r.declining).length;
-    const escalationRiskCount = rows.filter((r) => r.escalationRisk).length;
-
     return res.status(200).json({
       ok: true,
-      role: gate.role,
+      role: roleGate.role,
       generatedAt: new Date().toISOString(),
-      totals: {
-        providers: rows.length,
-        withScore: rows.length,
-        withUpdates: rows.filter((r) => !!r.updatedAt).length,
-        withIssues: rows.filter((r) => r.issuesCount > 0).length,
-      },
-      riskSummary,
-      stateSummary,
-      trendSummary: { declining: decliningCount, escalationRisk: escalationRiskCount },
+      totals: { providers: rows.length },
       rows,
     });
   } catch (err: any) {
-    return res.status(500).json({
-      ok: false,
-      error: "deterioration_engine_failed",
-      message: err?.message,
-    });
+    return res.status(500).json({ ok: false, error: "analytics_failed", message: err?.message });
   }
 }

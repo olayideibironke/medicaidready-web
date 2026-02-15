@@ -1,542 +1,462 @@
-// pages/pricing.tsx
 import Head from "next/head";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function PricingPage() {
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [msg, setMsg] = useState<string | null>(null);
+
+  async function startCheckout() {
+    setMsg(null);
+    const e = email.trim().toLowerCase();
+
+    if (!e || !e.includes("@")) {
+      setMsg("Enter a valid work email.");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const res = await fetch("/api/stripe/create-checkout-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: e }),
+      });
+
+      const json = await res.json();
+      if (!res.ok || !json?.url) {
+        throw new Error(json?.message || "Unable to start checkout.");
+      }
+
+      window.location.href = json.url;
+    } catch (err: any) {
+      setMsg(err?.message ?? String(err));
+      setLoading(false);
+    }
+  }
+
   return (
     <>
       <Head>
         <title>Pricing | MedicaidReady</title>
         <meta
           name="description"
-          content="Pricing for MedicaidReady — continuous Medicaid compliance monitoring for providers in Maryland, Virginia & Washington DC."
+          content="Subscription pricing for continuous Medicaid compliance monitoring in Maryland, Virginia, and Washington DC."
         />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
       <div className="page">
         <header className="header">
-          <div className="brand">
-            <div className="mark" aria-hidden="true" />
-            <div className="brandText">
-              <div className="brandName">MedicaidReady</div>
-              <div className="brandTag">Continuous Compliance Monitoring — DMV</div>
+          <div className="container headerInner">
+            <div className="brand">
+              <div className="mark" aria-hidden="true" />
+              <div className="brandText">
+                <div className="brandName">MedicaidReady</div>
+                <div className="brandTag">MD • VA • DC</div>
+              </div>
             </div>
-          </div>
 
-          <nav className="nav">
-            <Link className="navLink" href="/">
-              Home
-            </Link>
-            <Link className="navLink" href="/request-access">
-              Request Access
-            </Link>
-            <Link className="navLink" href="/providers">
-              Dashboard
-            </Link>
-          </nav>
+            <nav className="nav">
+              <Link className="navLink" href="/">
+                Home
+              </Link>
+              <Link className="navLink" href="/request-access">
+                Request Access
+              </Link>
+              <Link className="navButton" href="/providers">
+                Sign in
+              </Link>
+            </nav>
+          </div>
         </header>
 
         <main className="main">
           <section className="hero">
-            <div className="heroInner">
-              <h1 className="headline">Pricing built for provider compliance teams.</h1>
-              <p className="subhead">
-                MedicaidReady provides continuous Medicaid compliance monitoring for providers in Maryland, Virginia,
-                and Washington DC — designed for clinical leadership, compliance, and operations.
+            <div className="container">
+              <h1 className="h1">Pricing</h1>
+              <p className="sub">
+                Continuous Medicaid compliance monitoring for provider organizations operating in Maryland, Virginia &amp; Washington DC.
               </p>
 
-              <div className="ctaRow">
-                <Link className="buttonPrimary" href="/request-access">
-                  Request Access
-                </Link>
-                <Link className="buttonSecondary" href="/providers">
-                  View Dashboard
-                </Link>
-              </div>
+              <div className="grid">
+                <div className="card">
+                  <div className="planTop">
+                    <div>
+                      <div className="planName">DMV Plan</div>
+                      <div className="planDesc">Subscription access for credentialed provider organizations.</div>
+                    </div>
+                    <div className="price">
+                      <div className="amt">$249</div>
+                      <div className="per">/ month</div>
+                    </div>
+                  </div>
 
-              <div className="trustRow">
-                <div className="trustItem">DMV focus (MD • VA • DC)</div>
-                <div className="trustDot" aria-hidden="true" />
-                <div className="trustItem">No ads</div>
-                <div className="trustDot" aria-hidden="true" />
-                <div className="trustItem">Clinical, audit-ready presentation</div>
+                  <ul className="list">
+                    <li>Provider roster + compliance overview</li>
+                    <li>Checklist + onboarding tracking</li>
+                    <li>Risk scoring + trends</li>
+                    <li>Escalation signal visibility</li>
+                  </ul>
+
+                  <div className="divider" />
+
+                  <label className="label">
+                    <span>Work email</span>
+                    <input
+                      value={email}
+                      onChange={(ev) => setEmail(ev.target.value)}
+                      placeholder="name@organization.com"
+                      className="input"
+                      autoComplete="email"
+                    />
+                  </label>
+
+                  {msg ? <div className="msg">{msg}</div> : null}
+
+                  <button className="primary" onClick={startCheckout} disabled={loading}>
+                    {loading ? "Redirecting…" : "Subscribe"}
+                  </button>
+
+                  <div className="fine">
+                    After payment, your email is automatically approved for sign-in.
+                  </div>
+                </div>
+
+                <div className="side">
+                  <div className="sideTitle">Prefer to request access first?</div>
+                  <div className="sideBody">
+                    Submit your details and we’ll review and approve your account.
+                  </div>
+                  <Link className="secondary" href="/request-access">
+                    Request access
+                  </Link>
+                </div>
               </div>
             </div>
           </section>
-
-          <section className="grid">
-            <div className="card">
-              <div className="planHeader">
-                <div className="planName">DMV Pilot</div>
-                <div className="planPrice">
-                  <span className="price">$149</span>
-                  <span className="per">/month</span>
-                </div>
-                <div className="planDesc">For a single organization monitoring across one DMV jurisdiction.</div>
-              </div>
-
-              <ul className="list">
-                <li>Provider risk scoring & trend</li>
-                <li>Issue indicators & change detection</li>
-                <li>Dashboard access for internal review</li>
-                <li>Monthly data refresh cadence</li>
-                <li>Email-based onboarding support</li>
-              </ul>
-
-              <div className="cardFooter">
-                <Link className="buttonPrimary full" href="/request-access">
-                  Request Access
-                </Link>
-                <div className="fine">
-                  Access is credentialed. We validate organization details before enabling dashboard login.
-                </div>
-              </div>
-            </div>
-
-            <div className="card featured">
-              <div className="badge">Recommended</div>
-
-              <div className="planHeader">
-                <div className="planName">DMV Professional</div>
-                <div className="planPrice">
-                  <span className="price">$299</span>
-                  <span className="per">/month</span>
-                </div>
-                <div className="planDesc">For compliance teams monitoring multiple provider locations or services.</div>
-              </div>
-
-              <ul className="list">
-                <li>Everything in DMV Pilot</li>
-                <li>Expanded monitoring scope (multi-location)</li>
-                <li>Operational summary views for leadership</li>
-                <li>Priority onboarding support</li>
-                <li>Quarterly review call (by request)</li>
-              </ul>
-
-              <div className="cardFooter">
-                <Link className="buttonPrimary full" href="/request-access">
-                  Request Access
-                </Link>
-                <div className="fine">
-                  No Stripe checkout yet. Access requests are collected and approved before billing is activated.
-                </div>
-              </div>
-            </div>
-
-            <div className="card">
-              <div className="planHeader">
-                <div className="planName">Enterprise</div>
-                <div className="planPrice">
-                  <span className="price">Custom</span>
-                </div>
-                <div className="planDesc">For networks, holding companies, and cross-jurisdiction operations.</div>
-              </div>
-
-              <ul className="list">
-                <li>Multi-state roadmap planning (DMV-first)</li>
-                <li>Custom reporting requirements</li>
-                <li>Dedicated rollout & change management</li>
-                <li>Internal stakeholder enablement</li>
-                <li>Compliance documentation support</li>
-              </ul>
-
-              <div className="cardFooter">
-                <Link className="buttonSecondary full" href="/request-access">
-                  Request Access
-                </Link>
-                <div className="fine">We’ll confirm scope and respond with an onboarding plan.</div>
-              </div>
-            </div>
-          </section>
-
-          <section className="faq">
-            <div className="faqCard">
-              <h2 className="faqTitle">What happens after I request access?</h2>
-              <div className="faqBody">
-                Your submission is stored securely and reviewed for DMV scope alignment and provider legitimacy. If
-                approved, you receive credentialed access to the dashboard.
-              </div>
-            </div>
-
-            <div className="faqCard">
-              <h2 className="faqTitle">Do you offer a free trial?</h2>
-              <div className="faqBody">
-                We currently onboard via credentialed access requests. Trial availability is evaluated during onboarding
-                based on organization type and monitoring scope.
-              </div>
-            </div>
-
-            <div className="faqCard">
-              <h2 className="faqTitle">Is billing enabled today?</h2>
-              <div className="faqBody">
-                Not yet. This phase is revenue frontend completion. Stripe integration will be added after access flow
-                and pricing are finalized.
-              </div>
-            </div>
-          </section>
-
-          <footer className="footer">
-            <div className="footerInner">
-              <div className="footerBrand">
-                <div className="footerName">MedicaidReady</div>
-                <div className="footerTag">Continuous Medicaid Compliance Monitoring — DMV</div>
-              </div>
-
-              <div className="footerLinks">
-                <Link className="footerLink" href="/request-access">
-                  Request Access
-                </Link>
-                <Link className="footerLink" href="/providers">
-                  Dashboard
-                </Link>
-              </div>
-            </div>
-          </footer>
         </main>
-      </div>
 
-      <style jsx>{`
-        .page {
-          min-height: 100vh;
-          background: #f6f8fb;
-          color: #0b1f3a;
-        }
+        <footer className="footer">
+          <div className="container footerInner">
+            <div className="footerLeft">
+              <div className="footerBrand">MedicaidReady</div>
+              <div className="footerSmall">Continuous Medicaid compliance monitoring for MD • VA • DC.</div>
+            </div>
+            <div className="footerRight">
+              <Link className="footerLink" href="/request-access">
+                Request access
+              </Link>
+              <Link className="footerLink" href="/providers">
+                Sign in
+              </Link>
+            </div>
+          </div>
+        </footer>
 
-        .header {
-          max-width: 1040px;
-          margin: 0 auto;
-          padding: 22px 18px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-        }
+        <style jsx>{`
+          .page {
+            min-height: 100vh;
+            background: #ffffff;
+            color: #0b1220;
+          }
+          .container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+          }
 
-        .brand {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-        }
+          .header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #e6e9ef;
+          }
+          .headerInner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+          }
+          .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+          }
+          .mark {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #0b3a66, #0f6aa6);
+          }
+          .brandText {
+            line-height: 1.1;
+          }
+          .brandName {
+            font-weight: 750;
+            letter-spacing: -0.02em;
+          }
+          .brandTag {
+            font-size: 12px;
+            color: #5b6576;
+            margin-top: 3px;
+          }
 
-        .mark {
-          width: 36px;
-          height: 36px;
-          border-radius: 10px;
-          background: #0b2a4a;
-          box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
-        }
+          .nav {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+          }
+          .navLink {
+            color: #243044;
+            text-decoration: none;
+            font-size: 14px;
+            padding: 8px 10px;
+            border-radius: 10px;
+          }
+          .navLink:hover {
+            background: #f3f5f9;
+          }
+          .navButton {
+            text-decoration: none;
+            font-size: 14px;
+            padding: 10px 12px;
+            border-radius: 12px;
+            border: 1px solid #d7dce6;
+            color: #0b1220;
+            background: #fff;
+          }
+          .navButton:hover {
+            background: #f7f9fc;
+          }
 
-        .brandText {
-          display: flex;
-          flex-direction: column;
-          line-height: 1.1;
-        }
+          .hero {
+            padding: 44px 0;
+            background: radial-gradient(
+                900px 500px at 15% 10%,
+                rgba(15, 106, 166, 0.12),
+                transparent 55%
+              ),
+              radial-gradient(900px 500px at 85% 20%, rgba(11, 58, 102, 0.10), transparent 55%);
+          }
+          .h1 {
+            margin: 0;
+            font-size: 40px;
+            letter-spacing: -0.03em;
+          }
+          .sub {
+            margin: 10px 0 0;
+            color: #445065;
+            font-size: 16px;
+            line-height: 1.6;
+            max-width: 820px;
+          }
 
-        .brandName {
-          font-weight: 800;
-          letter-spacing: 0.2px;
-        }
-
-        .brandTag {
-          font-size: 12px;
-          color: rgba(11, 31, 58, 0.72);
-          margin-top: 2px;
-        }
-
-        .nav {
-          display: flex;
-          gap: 14px;
-        }
-
-        .navLink {
-          font-size: 14px;
-          color: rgba(11, 31, 58, 0.82);
-          text-decoration: none;
-          padding: 8px 10px;
-          border-radius: 10px;
-        }
-
-        .navLink:hover {
-          background: rgba(11, 31, 58, 0.06);
-        }
-
-        .main {
-          max-width: 1040px;
-          margin: 0 auto;
-          padding: 10px 18px 44px;
-        }
-
-        .hero {
-          background: linear-gradient(180deg, rgba(11, 42, 74, 0.05), rgba(11, 42, 74, 0));
-          border: 1px solid rgba(11, 31, 58, 0.10);
-          border-radius: 18px;
-          padding: 28px;
-          box-shadow: 0 10px 22px rgba(11, 31, 58, 0.06);
-        }
-
-        .heroInner {
-          max-width: 820px;
-        }
-
-        .headline {
-          margin: 0;
-          font-size: 30px;
-          letter-spacing: 0.2px;
-        }
-
-        .subhead {
-          margin: 10px 0 0;
-          font-size: 15px;
-          color: rgba(11, 31, 58, 0.78);
-          line-height: 1.6;
-        }
-
-        .ctaRow {
-          margin-top: 18px;
-          display: flex;
-          gap: 10px;
-          flex-wrap: wrap;
-        }
-
-        .buttonPrimary {
-          height: 42px;
-          border-radius: 12px;
-          border: 1px solid rgba(11, 31, 58, 0.12);
-          background: #0b2a4a;
-          color: #ffffff;
-          font-weight: 800;
-          padding: 0 14px;
-          cursor: pointer;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          text-decoration: none;
-        }
-
-        .buttonSecondary {
-          height: 42px;
-          border-radius: 12px;
-          border: 1px solid rgba(11, 31, 58, 0.16);
-          background: #ffffff;
-          color: #0b2a4a;
-          font-weight: 800;
-          padding: 0 14px;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          text-decoration: none;
-        }
-
-        .full {
-          width: 100%;
-        }
-
-        .trustRow {
-          margin-top: 16px;
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          flex-wrap: wrap;
-          font-size: 12px;
-          color: rgba(11, 31, 58, 0.70);
-        }
-
-        .trustDot {
-          width: 4px;
-          height: 4px;
-          border-radius: 999px;
-          background: rgba(11, 31, 58, 0.30);
-        }
-
-        .grid {
-          margin-top: 18px;
-          display: grid;
-          grid-template-columns: 1fr 1fr 1fr;
-          gap: 14px;
-        }
-
-        .card {
-          background: #ffffff;
-          border: 1px solid rgba(11, 31, 58, 0.12);
-          border-radius: 16px;
-          box-shadow: 0 8px 18px rgba(11, 31, 58, 0.06);
-          padding: 18px;
-          position: relative;
-        }
-
-        .featured {
-          border-color: rgba(11, 42, 74, 0.28);
-          box-shadow: 0 10px 22px rgba(11, 42, 74, 0.10);
-        }
-
-        .badge {
-          position: absolute;
-          top: 14px;
-          right: 14px;
-          font-size: 12px;
-          font-weight: 800;
-          color: #0b2a4a;
-          background: rgba(11, 42, 74, 0.08);
-          border: 1px solid rgba(11, 42, 74, 0.16);
-          padding: 6px 10px;
-          border-radius: 999px;
-        }
-
-        .planHeader {
-          padding-bottom: 14px;
-          border-bottom: 1px solid rgba(11, 31, 58, 0.08);
-          margin-bottom: 14px;
-        }
-
-        .planName {
-          font-weight: 900;
-          letter-spacing: 0.2px;
-        }
-
-        .planPrice {
-          margin-top: 10px;
-          display: flex;
-          align-items: baseline;
-          gap: 6px;
-        }
-
-        .price {
-          font-size: 28px;
-          font-weight: 900;
-        }
-
-        .per {
-          font-size: 13px;
-          color: rgba(11, 31, 58, 0.70);
-          font-weight: 700;
-        }
-
-        .planDesc {
-          margin-top: 8px;
-          font-size: 13px;
-          color: rgba(11, 31, 58, 0.75);
-          line-height: 1.5;
-        }
-
-        .list {
-          list-style: none;
-          padding: 0;
-          margin: 0;
-          display: flex;
-          flex-direction: column;
-          gap: 10px;
-          font-size: 13px;
-          color: rgba(11, 31, 58, 0.80);
-        }
-
-        .list li {
-          padding-left: 14px;
-          position: relative;
-        }
-
-        .list li:before {
-          content: "";
-          position: absolute;
-          left: 0;
-          top: 8px;
-          width: 6px;
-          height: 6px;
-          border-radius: 999px;
-          background: rgba(11, 42, 74, 0.55);
-        }
-
-        .cardFooter {
-          margin-top: 16px;
-          display: flex;
-          flex-direction: column;
-          gap: 10px;
-        }
-
-        .fine {
-          font-size: 12px;
-          color: rgba(11, 31, 58, 0.65);
-          line-height: 1.5;
-        }
-
-        .faq {
-          margin-top: 16px;
-          display: grid;
-          grid-template-columns: 1fr 1fr 1fr;
-          gap: 14px;
-        }
-
-        .faqCard {
-          background: #ffffff;
-          border: 1px solid rgba(11, 31, 58, 0.12);
-          border-radius: 16px;
-          box-shadow: 0 8px 18px rgba(11, 31, 58, 0.06);
-          padding: 18px;
-        }
-
-        .faqTitle {
-          margin: 0;
-          font-size: 14px;
-          font-weight: 900;
-          letter-spacing: 0.2px;
-        }
-
-        .faqBody {
-          margin-top: 8px;
-          font-size: 13px;
-          color: rgba(11, 31, 58, 0.76);
-          line-height: 1.6;
-        }
-
-        .footer {
-          margin-top: 18px;
-        }
-
-        .footerInner {
-          background: #ffffff;
-          border: 1px solid rgba(11, 31, 58, 0.12);
-          border-radius: 16px;
-          padding: 18px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          box-shadow: 0 8px 18px rgba(11, 31, 58, 0.06);
-        }
-
-        .footerName {
-          font-weight: 900;
-        }
-
-        .footerTag {
-          margin-top: 4px;
-          font-size: 12px;
-          color: rgba(11, 31, 58, 0.70);
-        }
-
-        .footerLinks {
-          display: flex;
-          gap: 14px;
-        }
-
-        .footerLink {
-          font-size: 14px;
-          color: rgba(11, 31, 58, 0.82);
-          text-decoration: none;
-          padding: 8px 10px;
-          border-radius: 10px;
-        }
-
-        .footerLink:hover {
-          background: rgba(11, 31, 58, 0.06);
-        }
-
-        @media (max-width: 980px) {
           .grid {
-            grid-template-columns: 1fr;
+            margin-top: 18px;
+            display: grid;
+            grid-template-columns: 1fr 0.7fr;
+            gap: 14px;
+            align-items: start;
           }
-          .faq {
-            grid-template-columns: 1fr;
+
+          .card {
+            border: 1px solid #e6e9ef;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.92);
+            box-shadow: 0 12px 28px rgba(11, 18, 32, 0.08);
+            padding: 16px;
           }
-        }
-      `}</style>
+          .planTop {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+          }
+          .planName {
+            font-weight: 900;
+            font-size: 18px;
+          }
+          .planDesc {
+            margin-top: 6px;
+            color: #5b6576;
+            line-height: 1.6;
+          }
+          .price {
+            text-align: right;
+          }
+          .amt {
+            font-weight: 950;
+            font-size: 28px;
+            letter-spacing: -0.02em;
+            color: #0b3a66;
+          }
+          .per {
+            margin-top: 2px;
+            font-size: 13px;
+            color: #6b7688;
+          }
+
+          .list {
+            margin: 12px 0 0;
+            padding-left: 18px;
+            color: #445065;
+            line-height: 1.8;
+          }
+          .divider {
+            height: 1px;
+            background: #eef1f6;
+            margin: 14px 0;
+          }
+
+          .label {
+            display: grid;
+            gap: 6px;
+          }
+          .label span {
+            font-size: 12px;
+            color: #5b6576;
+            font-weight: 700;
+          }
+          .input {
+            padding: 12px 12px;
+            border-radius: 12px;
+            border: 1px solid #d7dce6;
+            outline: none;
+            font-size: 14px;
+          }
+          .input:focus {
+            border-color: #0f6aa6;
+            box-shadow: 0 0 0 3px rgba(15, 106, 166, 0.12);
+          }
+
+          .msg {
+            margin-top: 10px;
+            border: 1px solid #f3b6b6;
+            background: #fff1f1;
+            padding: 10px 12px;
+            border-radius: 12px;
+            color: #7a1f1f;
+            font-weight: 650;
+            font-size: 13px;
+          }
+
+          .primary {
+            margin-top: 12px;
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 14px;
+            text-decoration: none;
+            background: #0b3a66;
+            color: #fff;
+            font-weight: 800;
+            border: 1px solid #0b3a66;
+            cursor: pointer;
+          }
+          .primary:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+          }
+          .primary:hover:not(:disabled) {
+            background: #0a345d;
+          }
+
+          .fine {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #6b7688;
+            line-height: 1.5;
+          }
+
+          .side {
+            border: 1px solid #e6e9ef;
+            border-radius: 18px;
+            background: #ffffff;
+            padding: 16px;
+          }
+          .sideTitle {
+            font-weight: 900;
+          }
+          .sideBody {
+            margin-top: 8px;
+            color: #445065;
+            line-height: 1.6;
+          }
+          .secondary {
+            margin-top: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 14px;
+            border-radius: 14px;
+            text-decoration: none;
+            background: #ffffff;
+            color: #0b1220;
+            font-weight: 800;
+            border: 1px solid #d7dce6;
+            width: 100%;
+          }
+          .secondary:hover {
+            background: #f7f9fc;
+          }
+
+          .footer {
+            border-top: 1px solid #eef1f6;
+            padding: 22px 0;
+            background: #ffffff;
+          }
+          .footerInner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+          }
+          .footerBrand {
+            font-weight: 900;
+            letter-spacing: -0.02em;
+          }
+          .footerSmall {
+            margin-top: 6px;
+            color: #6b7688;
+            font-size: 13px;
+            line-height: 1.5;
+          }
+          .footerRight {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+          }
+          .footerLink {
+            color: #243044;
+            text-decoration: none;
+            font-size: 14px;
+            padding: 8px 10px;
+            border-radius: 10px;
+          }
+          .footerLink:hover {
+            background: #f3f5f9;
+          }
+
+          @media (max-width: 980px) {
+            .grid {
+              grid-template-columns: 1fr;
+            }
+          }
+          @media (max-width: 640px) {
+            .navLink {
+              display: none;
+            }
+            .h1 {
+              font-size: 34px;
+            }
+          }
+        `}</style>
+      </div>
     </>
   );
 }

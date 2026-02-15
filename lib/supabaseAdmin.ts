@@ -1,11 +1,20 @@
 import { createClient } from "@supabase/supabase-js";
 
-const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+function mustGet(name: string) {
+  const v = process.env[name];
+  if (!v) throw new Error(`Missing env var: ${name}`);
+  return v;
+}
 
-if (!url) throw new Error("Missing env: NEXT_PUBLIC_SUPABASE_URL");
-if (!serviceKey) throw new Error("Missing env: SUPABASE_SERVICE_ROLE_KEY");
+/**
+ * Server-only Supabase admin client (SERVICE ROLE).
+ * Never import this into browser code.
+ */
+export function supabaseAdmin() {
+  const url = mustGet("NEXT_PUBLIC_SUPABASE_URL");
+  const serviceRole = mustGet("SUPABASE_SERVICE_ROLE_KEY");
 
-export const supabaseAdmin = createClient(url, serviceKey, {
-  auth: { persistSession: false },
-});
+  return createClient(url, serviceRole, {
+    auth: { persistSession: false, autoRefreshToken: false },
+  });
+}
