@@ -47,13 +47,9 @@ function formatDate(iso: string | null | undefined): string {
 function normalizeProviders(payload: ProvidersApiResponse): ProviderRow[] {
   if (Array.isArray(payload)) return payload;
 
-  const candidates = [
-    payload.providers,
-    payload.data,
-    payload.items,
-    payload.rows,
-    payload.results,
-  ].filter(Boolean) as ProviderRow[][];
+  const candidates = [payload.providers, payload.data, payload.items, payload.rows, payload.results].filter(
+    Boolean
+  ) as ProviderRow[][];
 
   if (candidates.length > 0 && Array.isArray(candidates[0])) return candidates[0];
   return [];
@@ -131,6 +127,8 @@ export default function AdminProvidersPage({ initialProviders }: PageProps) {
   const [riskFilter, setRiskFilter] = useState<"all" | "low" | "medium" | "high">("all");
   const [statusFilter, setStatusFilter] = useState<string>("all");
 
+  const [logoOk, setLogoOk] = useState(true);
+
   async function refresh() {
     setLoading(true);
     setError(null);
@@ -149,9 +147,7 @@ export default function AdminProvidersPage({ initialProviders }: PageProps) {
 
       if (!res.ok) {
         const text = await res.text().catch(() => "");
-        throw new Error(
-          `GET /api/providers failed (${res.status})${text ? `: ${text}` : ""}`
-        );
+        throw new Error(`GET /api/providers failed (${res.status})${text ? `: ${text}` : ""}`);
       }
 
       const json = (await res.json()) as ProvidersApiResponse;
@@ -166,7 +162,6 @@ export default function AdminProvidersPage({ initialProviders }: PageProps) {
   // If SSR gave no data, try client load once (still read-only).
   useEffect(() => {
     if (rows.length > 0) return;
-    // don’t auto-refresh if SSR already has an error shown
     refresh();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -193,9 +188,7 @@ export default function AdminProvidersPage({ initialProviders }: PageProps) {
         }
         if (!q) return true;
 
-        const hay = [r.id, r.name || "", r.state || "", r.status || "", r.riskLevel || ""]
-          .join(" ")
-          .toLowerCase();
+        const hay = [r.id, r.name || "", r.state || "", r.status || "", r.riskLevel || ""].join(" ").toLowerCase();
 
         return hay.includes(q);
       })
@@ -225,7 +218,19 @@ export default function AdminProvidersPage({ initialProviders }: PageProps) {
         <header className="topbar">
           <div className="topbar-inner">
             <div className="brand">
-              <div className="brand-mark">MR</div>
+              <div className="brand-mark" aria-hidden="true">
+                {logoOk ? (
+                  <img
+                    src="/favicon.svg"
+                    alt=""
+                    className="brand-logo"
+                    onError={() => setLogoOk(false)}
+                  />
+                ) : (
+                  <span className="brand-fallback">MR</span>
+                )}
+              </div>
+
               <div className="brand-text">
                 <div className="brand-title">MedicaidReady Admin</div>
                 <div className="brand-subtitle">Providers Overview</div>
@@ -291,9 +296,7 @@ export default function AdminProvidersPage({ initialProviders }: PageProps) {
                 <select
                   className="select"
                   value={riskFilter}
-                  onChange={(e) =>
-                    setRiskFilter(e.target.value as "all" | "low" | "medium" | "high")
-                  }
+                  onChange={(e) => setRiskFilter(e.target.value as "all" | "low" | "medium" | "high")}
                 >
                   <option value="all">All</option>
                   <option value="high">High</option>
@@ -304,11 +307,7 @@ export default function AdminProvidersPage({ initialProviders }: PageProps) {
 
               <div className="field span-3">
                 <label className="field-label">Status</label>
-                <select
-                  className="select"
-                  value={statusFilter}
-                  onChange={(e) => setStatusFilter(e.target.value)}
-                >
+                <select className="select" value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
                   {statusOptions.map((s) => (
                     <option key={s} value={s}>
                       {s === "all" ? "All" : s}
@@ -445,10 +444,20 @@ export default function AdminProvidersPage({ initialProviders }: PageProps) {
           height: 40px;
           border-radius: 14px;
           background: var(--primary);
-          color: #fff;
           display: grid;
           place-items: center;
-          font-weight: 800;
+          overflow: hidden;
+        }
+
+        .brand-logo {
+          width: 28px;
+          height: 28px;
+          display: block;
+        }
+
+        .brand-fallback {
+          color: #fff;
+          font-weight: 900;
           letter-spacing: -0.02em;
         }
 
