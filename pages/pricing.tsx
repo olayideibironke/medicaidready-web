@@ -75,10 +75,10 @@ export default function PricingPage() {
         <main className="main">
           <section className="hero">
             <div className="container">
-              <h1 className="h1">Pricing — BUILD TEST 20260215</h1>
+              <h1 className="h1">Pricing</h1>
               <p className="sub">
-                Continuous Medicaid compliance monitoring for provider organizations operating in Maryland,
-                Virginia &amp; Washington DC.
+                Continuous Medicaid compliance monitoring for provider organizations operating in
+                Maryland, Virginia &amp; Washington DC.
               </p>
 
               <div className="grid">
@@ -86,7 +86,9 @@ export default function PricingPage() {
                   <div className="planTop">
                     <div>
                       <div className="planName">DMV Plan</div>
-                      <div className="planDesc">Subscription access for credentialed provider organizations.</div>
+                      <div className="planDesc">
+                        Subscription access for credentialed provider organizations.
+                      </div>
                     </div>
                     <div className="price">
                       <div className="amt">$249</div>
@@ -120,12 +122,16 @@ export default function PricingPage() {
                     {loading ? "Redirecting…" : "Subscribe"}
                   </button>
 
-                  <div className="fine">After payment, your email is automatically approved for sign-in.</div>
+                  <div className="fine">
+                    After payment, your email is automatically approved for sign-in.
+                  </div>
                 </div>
 
                 <div className="side">
                   <div className="sideTitle">Prefer to request access first?</div>
-                  <div className="sideBody">Submit your details and we’ll review and approve your account.</div>
+                  <div className="sideBody">
+                    Submit your details and we’ll review and approve your account.
+                  </div>
 
                   <Link className="sideCta" href="/request-access">
                     Request access
@@ -140,7 +146,9 @@ export default function PricingPage() {
           <div className="container footerInner">
             <div className="footerLeft">
               <div className="footerBrand">MedicaidReady</div>
-              <div className="footerSmall">Continuous Medicaid compliance monitoring for MD • VA • DC.</div>
+              <div className="footerSmall">
+                Continuous Medicaid compliance monitoring for MD • VA • DC.
+              </div>
             </div>
             <div className="footerRight">
               <Link className="footerPill" href="/request-access">
@@ -209,41 +217,45 @@ export default function PricingPage() {
             align-items: center;
             gap: 10px;
           }
-          .navPill {
-            color: #1f2b3d;
-            text-decoration: none;
+
+          /* FORCE anchor appearance (beats global a / a:visited rules) */
+          .nav :global(a.navPill),
+          .nav :global(a.navPill:visited) {
+            color: #1f2b3d !important;
+            text-decoration: none !important;
             font-size: 13px;
             font-weight: 650;
             padding: 9px 12px;
             border-radius: 999px;
             border: 1px solid transparent;
             letter-spacing: 0.01em;
+            display: inline-flex;
+            align-items: center;
           }
-          .navPill:hover {
+          .nav :global(a.navPill:hover) {
             background: rgba(243, 245, 249, 0.9);
             border-color: rgba(230, 233, 239, 0.9);
-          }
-          .navPill:visited {
-            color: #1f2b3d;
+            text-decoration: none !important;
           }
 
-          .navCta {
-            text-decoration: none;
+          .nav :global(a.navCta),
+          .nav :global(a.navCta:visited) {
+            text-decoration: none !important;
             font-size: 13px;
-            font-weight: 750;
+            font-weight: 800;
             padding: 10px 14px;
             border-radius: 999px;
             letter-spacing: 0.01em;
-            color: #ffffff;
+            color: #ffffff !important;
             background: linear-gradient(135deg, #0b3a66, #0f6aa6);
             border: 1px solid rgba(11, 58, 102, 0.35);
             box-shadow: 0 10px 22px rgba(11, 18, 32, 0.12);
+            display: inline-flex;
+            align-items: center;
           }
-          .navCta:hover {
+          .nav :global(a.navCta:hover) {
             filter: brightness(0.98);
-          }
-          .navCta:visited {
-            color: #ffffff;
+            text-decoration: none !important;
           }
 
           .hero {
@@ -253,7 +265,11 @@ export default function PricingPage() {
                 rgba(15, 106, 166, 0.12),
                 transparent 55%
               ),
-              radial-gradient(900px 500px at 85% 20%, rgba(11, 58, 102, 0.1), transparent 55%);
+              radial-gradient(
+                900px 500px at 85% 20%,
+                rgba(11, 58, 102, 0.1),
+                transparent 55%
+              );
           }
           .h1 {
             margin: 0;
@@ -362,7 +378,6 @@ export default function PricingPage() {
             width: 100%;
             padding: 12px 14px;
             border-radius: 14px;
-            text-decoration: none;
             background: #0b3a66;
             color: #fff;
             font-weight: 800;
@@ -398,7 +413,10 @@ export default function PricingPage() {
             color: #445065;
             line-height: 1.6;
           }
-          .sideCta {
+
+          /* FORCE side link to look like a button */
+          :global(a.sideCta),
+          :global(a.sideCta:visited) {
             margin-top: 12px;
             display: inline-flex;
             align-items: center;
@@ -406,17 +424,15 @@ export default function PricingPage() {
             width: 100%;
             padding: 12px 14px;
             border-radius: 14px;
-            text-decoration: none;
+            text-decoration: none !important;
             font-weight: 850;
-            color: #0b3a66;
+            color: #0b3a66 !important;
             background: rgba(11, 58, 102, 0.06);
             border: 1px solid rgba(11, 58, 102, 0.22);
           }
-          .sideCta:hover {
+          :global(a.sideCta:hover) {
             background: rgba(11, 58, 102, 0.09);
-          }
-          .sideCta:visited {
-            color: #0b3a66;
+            text-decoration: none !important;
           }
 
           .footer {
@@ -446,21 +462,24 @@ export default function PricingPage() {
             align-items: center;
             gap: 10px;
           }
-          .footerPill {
-            color: #1f2b3d;
-            text-decoration: none;
+
+          /* FORCE footer links */
+          .footerRight :global(a.footerPill),
+          .footerRight :global(a.footerPill:visited) {
+            color: #1f2b3d !important;
+            text-decoration: none !important;
             font-size: 13px;
             font-weight: 650;
             padding: 9px 12px;
             border-radius: 999px;
             border: 1px solid transparent;
+            display: inline-flex;
+            align-items: center;
           }
-          .footerPill:hover {
+          .footerRight :global(a.footerPill:hover) {
             background: rgba(243, 245, 249, 0.9);
             border-color: rgba(230, 233, 239, 0.9);
-          }
-          .footerPill:visited {
-            color: #1f2b3d;
+            text-decoration: none !important;
           }
 
           @media (max-width: 980px) {
@@ -469,7 +488,7 @@ export default function PricingPage() {
             }
           }
           @media (max-width: 640px) {
-            .navPill {
+            .nav :global(a.navPill) {
               display: none;
             }
             .h1 {
