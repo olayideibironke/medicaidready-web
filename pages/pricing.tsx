@@ -77,7 +77,8 @@ export default function PricingPage() {
             <div className="container">
               <h1 className="h1">Pricing</h1>
               <p className="sub">
-                Continuous Medicaid compliance monitoring for provider organizations operating in Maryland, Virginia &amp; Washington DC.
+                Continuous Medicaid compliance monitoring for provider organizations operating in
+                Maryland, Virginia &amp; Washington DC.
               </p>
 
               <div className="grid">
@@ -85,7 +86,9 @@ export default function PricingPage() {
                   <div className="planTop">
                     <div>
                       <div className="planName">DMV Plan</div>
-                      <div className="planDesc">Subscription access for credentialed provider organizations.</div>
+                      <div className="planDesc">
+                        Subscription access for credentialed provider organizations.
+                      </div>
                     </div>
                     <div className="price">
                       <div className="amt">$249</div>
@@ -126,7 +129,6 @@ export default function PricingPage() {
                   <div className="sideTitle">Prefer to request access first?</div>
                   <div className="sideBody">Submit your details and we’ll review and approve your account.</div>
 
-                  {/* Polished button style (was a basic link) */}
                   <Link className="sideCta" href="/request-access">
                     Request access
                   </Link>
@@ -140,7 +142,9 @@ export default function PricingPage() {
           <div className="container footerInner">
             <div className="footerLeft">
               <div className="footerBrand">MedicaidReady</div>
-              <div className="footerSmall">Continuous Medicaid compliance monitoring for MD • VA • DC.</div>
+              <div className="footerSmall">
+                Continuous Medicaid compliance monitoring for MD • VA • DC.
+              </div>
             </div>
             <div className="footerRight">
               <Link className="footerPill" href="/request-access">
@@ -210,7 +214,7 @@ export default function PricingPage() {
             gap: 10px;
           }
 
-          /* PREMIUM NAV PILLS (replaces default-looking links) */
+          /* PREMIUM NAV PILLS */
           .navPill {
             color: #1f2b3d;
             text-decoration: none;
@@ -251,7 +255,11 @@ export default function PricingPage() {
 
           .hero {
             padding: 44px 0;
-            background: radial-gradient(900px 500px at 15% 10%, rgba(15, 106, 166, 0.12), transparent 55%),
+            background: radial-gradient(
+                900px 500px at 15% 10%,
+                rgba(15, 106, 166, 0.12),
+                transparent 55%
+              ),
               radial-gradient(900px 500px at 85% 20%, rgba(11, 58, 102, 0.1), transparent 55%);
           }
           .h1 {
@@ -398,7 +406,6 @@ export default function PricingPage() {
             line-height: 1.6;
           }
 
-          /* Polished Request Access CTA (replaces default link vibe) */
           .sideCta {
             margin-top: 12px;
             display: inline-flex;
@@ -448,7 +455,6 @@ export default function PricingPage() {
             gap: 10px;
           }
 
-          /* PREMIUM FOOTER PILLS (no default visited purple) */
           .footerPill {
             color: #1f2b3d;
             text-decoration: none;
