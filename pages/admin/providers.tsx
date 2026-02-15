@@ -39,34 +39,6 @@ function formatDate(iso: string | null | undefined): string {
   return d.toLocaleString();
 }
 
-function riskBadge(risk: ProviderRow["riskLevel"]) {
-  const r = (risk || "").toString().toLowerCase();
-  const base =
-    "inline-flex items-center rounded-full border px-2.5 py-1 text-xs font-medium";
-  if (r === "high")
-    return `${base} border-red-200 bg-red-50 text-red-700`;
-  if (r === "medium")
-    return `${base} border-amber-200 bg-amber-50 text-amber-700`;
-  if (r === "low")
-    return `${base} border-emerald-200 bg-emerald-50 text-emerald-700`;
-  return `${base} border-slate-200 bg-slate-50 text-slate-700`;
-}
-
-function statusBadge(status: ProviderRow["status"]) {
-  const s = (status || "").toString().toLowerCase();
-  const base =
-    "inline-flex items-center rounded-full border px-2.5 py-1 text-xs font-medium";
-  if (s.includes("active"))
-    return `${base} border-emerald-200 bg-emerald-50 text-emerald-700`;
-  if (s.includes("pending"))
-    return `${base} border-amber-200 bg-amber-50 text-amber-700`;
-  if (s.includes("paused") || s.includes("hold"))
-    return `${base} border-slate-200 bg-slate-50 text-slate-700`;
-  if (s.includes("inactive") || s.includes("disabled"))
-    return `${base} border-red-200 bg-red-50 text-red-700`;
-  return `${base} border-slate-200 bg-white text-slate-700`;
-}
-
 function normalizeProviders(payload: ProvidersApiResponse): ProviderRow[] {
   if (Array.isArray(payload)) return payload;
 
@@ -78,11 +50,25 @@ function normalizeProviders(payload: ProvidersApiResponse): ProviderRow[] {
     payload.results,
   ].filter(Boolean) as ProviderRow[][];
 
-  if (candidates.length > 0 && Array.isArray(candidates[0])) {
-    return candidates[0];
-  }
-
+  if (candidates.length > 0 && Array.isArray(candidates[0])) return candidates[0];
   return [];
+}
+
+function riskTone(risk: ProviderRow["riskLevel"]) {
+  const r = (risk || "").toString().toLowerCase();
+  if (r === "high") return "badge badge-red";
+  if (r === "medium") return "badge badge-amber";
+  if (r === "low") return "badge badge-green";
+  return "badge badge-gray";
+}
+
+function statusTone(status: ProviderRow["status"]) {
+  const s = (status || "").toString().toLowerCase();
+  if (s.includes("active")) return "badge badge-green";
+  if (s.includes("pending")) return "badge badge-amber";
+  if (s.includes("paused") || s.includes("hold")) return "badge badge-gray";
+  if (s.includes("inactive") || s.includes("disabled")) return "badge badge-red";
+  return "badge badge-gray";
 }
 
 export default function AdminProvidersPage() {
@@ -196,113 +182,81 @@ export default function AdminProvidersPage() {
         <meta name="description" content="Admin providers overview dashboard." />
       </Head>
 
-      <div className="min-h-screen bg-white">
-        {/* Top bar */}
-        <div className="border-b border-slate-200">
-          <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
-            <div className="flex items-center gap-3">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-900 text-white">
-                MR
-              </div>
-              <div>
-                <div className="text-sm font-semibold text-slate-900">
-                  MedicaidReady Admin
-                </div>
-                <div className="text-xs text-slate-500">Providers Overview</div>
+      <div className="page">
+        <header className="topbar">
+          <div className="topbar-inner">
+            <div className="brand">
+              <div className="brand-mark">MR</div>
+              <div className="brand-text">
+                <div className="brand-title">MedicaidReady Admin</div>
+                <div className="brand-subtitle">Providers Overview</div>
               </div>
             </div>
 
-            <div className="flex items-center gap-2">
-              <Link
-                href="/"
-                className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 shadow-sm hover:bg-slate-50"
-              >
+            <nav className="nav">
+              <Link className="btn btn-ghost" href="/">
                 Home
               </Link>
-              <Link
-                href="/pricing"
-                className="rounded-xl bg-slate-900 px-3 py-2 text-sm font-medium text-white shadow-sm hover:bg-slate-800"
-              >
+              <Link className="btn btn-primary" href="/pricing">
                 Pricing
               </Link>
-            </div>
+            </nav>
           </div>
-        </div>
+        </header>
 
-        <main className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6">
-          {/* Header */}
-          <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <main className="container">
+          <div className="header">
             <div>
-              <h1 className="text-2xl font-semibold tracking-tight text-slate-900">
-                Providers
-              </h1>
-              <p className="mt-1 text-sm text-slate-600">
+              <h1 className="h1">Providers</h1>
+              <p className="muted">
                 Read-only operational overview. Click a provider to open the dashboard.
               </p>
             </div>
 
-            <button
-              onClick={() => window.location.reload()}
-              className="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm hover:bg-slate-50"
-              type="button"
-            >
+            <button className="btn btn-ghost" onClick={() => window.location.reload()} type="button">
               Refresh
             </button>
           </div>
 
-          {/* Summary cards */}
-          <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-4">
-            <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-              <div className="text-xs font-medium text-slate-500">Total</div>
-              <div className="mt-1 text-2xl font-semibold text-slate-900">
-                {totals.total}
-              </div>
+          <section className="stats">
+            <div className="card">
+              <div className="label">Total</div>
+              <div className="value">{totals.total}</div>
             </div>
-            <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-              <div className="text-xs font-medium text-slate-500">High Risk</div>
-              <div className="mt-1 text-2xl font-semibold text-slate-900">
-                {totals.high}
-              </div>
+            <div className="card">
+              <div className="label">High Risk</div>
+              <div className="value">{totals.high}</div>
             </div>
-            <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-              <div className="text-xs font-medium text-slate-500">Medium Risk</div>
-              <div className="mt-1 text-2xl font-semibold text-slate-900">
-                {totals.medium}
-              </div>
+            <div className="card">
+              <div className="label">Medium Risk</div>
+              <div className="value">{totals.medium}</div>
             </div>
-            <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-              <div className="text-xs font-medium text-slate-500">Low Risk</div>
-              <div className="mt-1 text-2xl font-semibold text-slate-900">
-                {totals.low}
-              </div>
+            <div className="card">
+              <div className="label">Low Risk</div>
+              <div className="value">{totals.low}</div>
             </div>
-          </div>
+          </section>
 
-          {/* Controls */}
-          <div className="mb-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-12 sm:items-end">
-              <div className="sm:col-span-6">
-                <label className="block text-xs font-medium text-slate-600">
-                  Search
-                </label>
+          <section className="card pad">
+            <div className="controls">
+              <div className="field span-6">
+                <label className="field-label">Search</label>
                 <input
+                  className="input"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder="Search by provider name, id, state, status..."
-                  className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none ring-0 placeholder:text-slate-400 focus:border-slate-300"
                 />
               </div>
 
-              <div className="sm:col-span-3">
-                <label className="block text-xs font-medium text-slate-600">
-                  Risk
-                </label>
+              <div className="field span-3">
+                <label className="field-label">Risk</label>
                 <select
+                  className="select"
                   value={riskFilter}
                   onChange={(e) =>
                     setRiskFilter(e.target.value as "all" | "low" | "medium" | "high")
                   }
-                  className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none focus:border-slate-300"
                 >
                   <option value="all">All</option>
                   <option value="high">High</option>
@@ -311,14 +265,12 @@ export default function AdminProvidersPage() {
                 </select>
               </div>
 
-              <div className="sm:col-span-3">
-                <label className="block text-xs font-medium text-slate-600">
-                  Status
-                </label>
+              <div className="field span-3">
+                <label className="field-label">Status</label>
                 <select
+                  className="select"
                   value={statusFilter}
                   onChange={(e) => setStatusFilter(e.target.value)}
-                  className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none focus:border-slate-300"
                 >
                   {statusOptions.map((s) => (
                     <option key={s} value={s}>
@@ -328,94 +280,70 @@ export default function AdminProvidersPage() {
                 </select>
               </div>
             </div>
-          </div>
+          </section>
 
-          {/* Table */}
-          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-            <div className="border-b border-slate-200 px-4 py-3">
-              <div className="flex items-center justify-between">
-                <div className="text-sm font-semibold text-slate-900">
-                  Providers ({filtered.length})
-                </div>
-                <div className="text-xs text-slate-500">
-                  Data source: <span className="font-medium">GET /api/providers</span>
-                </div>
+          <section className="card">
+            <div className="table-head">
+              <div className="table-title">Providers ({filtered.length})</div>
+              <div className="table-meta">
+                Data source: <span className="mono">GET /api/providers</span>
               </div>
             </div>
 
             {loading ? (
-              <div className="px-4 py-10 text-center text-sm text-slate-600">
-                Loading providers…
-              </div>
+              <div className="empty">Loading providers…</div>
             ) : error ? (
-              <div className="px-4 py-10">
-                <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-800">
-                  <div className="font-semibold">Failed to load providers</div>
-                  <div className="mt-1 break-words">{error}</div>
-                  <div className="mt-3 text-xs text-red-700">
-                    No backend changes were made. This is a read-only page.
-                  </div>
+              <div className="empty">
+                <div className="error-box">
+                  <div className="error-title">Failed to load providers</div>
+                  <div className="error-msg">{error}</div>
+                  <div className="error-note">No backend changes were made. This page is read-only.</div>
                 </div>
               </div>
             ) : filtered.length === 0 ? (
-              <div className="px-4 py-10 text-center text-sm text-slate-600">
-                No providers match your filters.
-              </div>
+              <div className="empty">No providers match your filters.</div>
             ) : (
-              <div className="overflow-x-auto">
-                <table className="w-full min-w-[900px] table-auto">
-                  <thead className="bg-slate-50">
-                    <tr className="text-left text-xs font-semibold text-slate-600">
-                      <th className="px-4 py-3">Provider</th>
-                      <th className="px-4 py-3">State</th>
-                      <th className="px-4 py-3">Status</th>
-                      <th className="px-4 py-3">Risk</th>
-                      <th className="px-4 py-3">Score</th>
-                      <th className="px-4 py-3">Trend</th>
-                      <th className="px-4 py-3">Issues</th>
-                      <th className="px-4 py-3">Last Updated</th>
-                      <th className="px-4 py-3" />
+              <div className="table-wrap">
+                <table className="table">
+                  <thead>
+                    <tr>
+                      <th>Provider</th>
+                      <th>State</th>
+                      <th>Status</th>
+                      <th>Risk</th>
+                      <th>Score</th>
+                      <th>Trend</th>
+                      <th>Issues</th>
+                      <th>Last Updated</th>
+                      <th />
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-200">
+                  <tbody>
                     {filtered.map((r) => (
-                      <tr key={r.id} className="hover:bg-slate-50">
-                        <td className="px-4 py-3">
-                          <div className="flex flex-col">
-                            <span className="text-sm font-semibold text-slate-900">
-                              {safeText(r.name) || "—"}
-                            </span>
-                            <span className="text-xs text-slate-500">{r.id}</span>
+                      <tr key={r.id}>
+                        <td>
+                          <div className="prov">
+                            <div className="prov-name">{safeText(r.name) || "—"}</div>
+                            <div className="prov-id mono">{r.id}</div>
                           </div>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-700">
-                          {safeText(r.state) || "—"}
+                        <td>{safeText(r.state) || "—"}</td>
+                        <td>
+                          <span className={statusTone(r.status)}>
+                            {safeText(r.status) || "—"}
+                          </span>
                         </td>
-                        <td className="px-4 py-3">
-                          <span className={statusBadge(r.status)}>{safeText(r.status) || "—"}</span>
-                        </td>
-                        <td className="px-4 py-3">
-                          <span className={riskBadge(r.riskLevel)}>
+                        <td>
+                          <span className={riskTone(r.riskLevel)}>
                             {safeText(r.riskLevel) || "—"}
                           </span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-700">
-                          {typeof r.score === "number" ? r.score : "—"}
-                        </td>
-                        <td className="px-4 py-3 text-sm text-slate-700">
-                          {safeText(r.trend) || "—"}
-                        </td>
-                        <td className="px-4 py-3 text-sm text-slate-700">
-                          {typeof r.issuesCount === "number" ? r.issuesCount : "—"}
-                        </td>
-                        <td className="px-4 py-3 text-sm text-slate-700">
-                          {formatDate(r.updatedAt)}
-                        </td>
-                        <td className="px-4 py-3 text-right">
-                          <Link
-                            href={`/providers/${encodeURIComponent(r.id)}`}
-                            className="inline-flex items-center justify-center rounded-xl bg-slate-900 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-800"
-                          >
+                        <td>{typeof r.score === "number" ? r.score : "—"}</td>
+                        <td>{safeText(r.trend) || "—"}</td>
+                        <td>{typeof r.issuesCount === "number" ? r.issuesCount : "—"}</td>
+                        <td>{formatDate(r.updatedAt)}</td>
+                        <td className="right">
+                          <Link className="btn btn-primary" href={`/providers/${encodeURIComponent(r.id)}`}>
                             Open
                           </Link>
                         </td>
@@ -425,14 +353,396 @@ export default function AdminProvidersPage() {
                 </table>
               </div>
             )}
-          </div>
+          </section>
 
-          {/* Footer note */}
-          <div className="mt-6 text-xs text-slate-500">
+          <div className="footnote">
             Tip: This page is intentionally read-only to avoid changing backend behavior.
           </div>
         </main>
       </div>
+
+      <style jsx global>{`
+        :root {
+          --bg: #ffffff;
+          --text: #0f172a;
+          --muted: #64748b;
+          --border: #e2e8f0;
+          --shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+          --radius: 16px;
+          --radius-sm: 12px;
+          --primary: #0f172a;
+          --primaryHover: #1f2937;
+          --danger: #b91c1c;
+          --dangerBg: #fef2f2;
+          --amber: #b45309;
+          --amberBg: #fffbeb;
+          --green: #047857;
+          --greenBg: #ecfdf5;
+          --gray: #334155;
+          --grayBg: #f8fafc;
+        }
+
+        .page {
+          min-height: 100vh;
+          background: var(--bg);
+          color: var(--text);
+          font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+            "Apple Color Emoji", "Segoe UI Emoji";
+        }
+
+        .topbar {
+          border-bottom: 1px solid var(--border);
+          background: #fff;
+        }
+
+        .topbar-inner {
+          max-width: 1120px;
+          margin: 0 auto;
+          padding: 16px 20px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 16px;
+        }
+
+        .brand {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+        }
+
+        .brand-mark {
+          width: 40px;
+          height: 40px;
+          border-radius: 14px;
+          background: var(--primary);
+          color: #fff;
+          display: grid;
+          place-items: center;
+          font-weight: 800;
+          letter-spacing: -0.02em;
+        }
+
+        .brand-title {
+          font-size: 14px;
+          font-weight: 700;
+          line-height: 1.1;
+        }
+
+        .brand-subtitle {
+          font-size: 12px;
+          color: var(--muted);
+          margin-top: 2px;
+        }
+
+        .nav {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+
+        .container {
+          max-width: 1120px;
+          margin: 0 auto;
+          padding: 28px 20px 36px;
+        }
+
+        .header {
+          display: flex;
+          align-items: flex-end;
+          justify-content: space-between;
+          gap: 16px;
+          margin-bottom: 18px;
+        }
+
+        .h1 {
+          font-size: 28px;
+          font-weight: 800;
+          letter-spacing: -0.03em;
+          margin: 0;
+        }
+
+        .muted {
+          margin: 6px 0 0;
+          color: var(--muted);
+          font-size: 14px;
+        }
+
+        .stats {
+          display: grid;
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+          gap: 12px;
+          margin-bottom: 14px;
+        }
+
+        .card {
+          border: 1px solid var(--border);
+          border-radius: var(--radius);
+          background: #fff;
+          box-shadow: var(--shadow);
+        }
+
+        .pad {
+          padding: 14px;
+        }
+
+        .label {
+          font-size: 12px;
+          color: var(--muted);
+          font-weight: 700;
+          padding: 14px 14px 0;
+        }
+
+        .value {
+          font-size: 26px;
+          font-weight: 800;
+          padding: 6px 14px 14px;
+          letter-spacing: -0.03em;
+        }
+
+        .controls {
+          display: grid;
+          grid-template-columns: repeat(12, minmax(0, 1fr));
+          gap: 12px;
+        }
+
+        .field {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .span-6 {
+          grid-column: span 6 / span 6;
+        }
+        .span-3 {
+          grid-column: span 3 / span 3;
+        }
+
+        .field-label {
+          font-size: 12px;
+          color: var(--muted);
+          font-weight: 700;
+          margin-bottom: 6px;
+        }
+
+        .input,
+        .select {
+          border: 1px solid var(--border);
+          border-radius: 14px;
+          padding: 10px 12px;
+          font-size: 14px;
+          outline: none;
+          box-shadow: var(--shadow);
+          background: #fff;
+        }
+
+        .input:focus,
+        .select:focus {
+          border-color: #cbd5e1;
+        }
+
+        .btn {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 14px;
+          padding: 10px 12px;
+          font-size: 14px;
+          font-weight: 700;
+          text-decoration: none;
+          border: 1px solid transparent;
+          cursor: pointer;
+          user-select: none;
+          box-shadow: var(--shadow);
+          white-space: nowrap;
+        }
+
+        .btn-ghost {
+          background: #fff;
+          border-color: var(--border);
+          color: var(--text);
+        }
+
+        .btn-ghost:hover {
+          background: #f8fafc;
+        }
+
+        .btn-primary {
+          background: var(--primary);
+          color: #fff;
+        }
+
+        .btn-primary:hover {
+          background: var(--primaryHover);
+        }
+
+        .table-head {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 12px;
+          padding: 12px 14px;
+          border-bottom: 1px solid var(--border);
+        }
+
+        .table-title {
+          font-weight: 800;
+        }
+
+        .table-meta {
+          font-size: 12px;
+          color: var(--muted);
+        }
+
+        .mono {
+          font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+            "Courier New", monospace;
+          font-weight: 600;
+        }
+
+        .table-wrap {
+          overflow-x: auto;
+        }
+
+        .table {
+          width: 100%;
+          min-width: 980px;
+          border-collapse: collapse;
+        }
+
+        .table thead th {
+          text-align: left;
+          font-size: 12px;
+          color: var(--muted);
+          font-weight: 800;
+          background: #f8fafc;
+          padding: 10px 14px;
+          border-bottom: 1px solid var(--border);
+        }
+
+        .table tbody td {
+          padding: 12px 14px;
+          border-bottom: 1px solid var(--border);
+          font-size: 14px;
+          color: var(--text);
+          vertical-align: top;
+        }
+
+        .table tbody tr:hover td {
+          background: #fafcff;
+        }
+
+        .right {
+          text-align: right;
+        }
+
+        .prov {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+
+        .prov-name {
+          font-weight: 800;
+        }
+
+        .prov-id {
+          font-size: 12px;
+          color: var(--muted);
+        }
+
+        .badge {
+          display: inline-flex;
+          align-items: center;
+          border-radius: 999px;
+          padding: 6px 10px;
+          font-size: 12px;
+          font-weight: 800;
+          border: 1px solid var(--border);
+          background: var(--grayBg);
+          color: var(--gray);
+        }
+
+        .badge-red {
+          background: var(--dangerBg);
+          color: var(--danger);
+          border-color: #fecaca;
+        }
+
+        .badge-amber {
+          background: var(--amberBg);
+          color: var(--amber);
+          border-color: #fde68a;
+        }
+
+        .badge-green {
+          background: var(--greenBg);
+          color: var(--green);
+          border-color: #a7f3d0;
+        }
+
+        .badge-gray {
+          background: var(--grayBg);
+          color: var(--gray);
+          border-color: var(--border);
+        }
+
+        .empty {
+          padding: 28px 14px;
+          text-align: center;
+          color: var(--muted);
+          font-size: 14px;
+        }
+
+        .error-box {
+          max-width: 720px;
+          margin: 0 auto;
+          border: 1px solid #fecaca;
+          background: var(--dangerBg);
+          color: var(--danger);
+          border-radius: var(--radius-sm);
+          padding: 14px;
+          text-align: left;
+        }
+
+        .error-title {
+          font-weight: 900;
+        }
+
+        .error-msg {
+          margin-top: 6px;
+          word-break: break-word;
+        }
+
+        .error-note {
+          margin-top: 10px;
+          font-size: 12px;
+          color: #991b1b;
+        }
+
+        .footnote {
+          margin-top: 12px;
+          font-size: 12px;
+          color: var(--muted);
+        }
+
+        @media (max-width: 900px) {
+          .stats {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+          }
+        }
+
+        @media (max-width: 640px) {
+          .header {
+            flex-direction: column;
+            align-items: flex-start;
+          }
+          .span-6,
+          .span-3 {
+            grid-column: span 12 / span 12;
+          }
+        }
+      `}</style>
     </>
   );
 }
