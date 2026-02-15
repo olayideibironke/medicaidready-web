@@ -1,8 +1,89 @@
 // pages/signin.tsx
 import Head from "next/head";
 import Link from "next/link";
+import { useMemo, useState } from "react";
+
+type Status = "idle" | "submitting" | "success" | "error";
 
 export default function SignInPage() {
+  // DO NOT change backend logic elsewhere; this page simply calls the auth login endpoint.
+  // If your project already has a different login endpoint, we’ll adjust next.
+  const LOGIN_ENDPOINT = "/api/auth/login";
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [status, setStatus] = useState<Status>("idle");
+  const [errorMessage, setErrorMessage] = useState<string>("");
+
+  const emailOk = useMemo(() => {
+    const e = email.trim();
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
+  }, [email]);
+
+  const canSubmit = useMemo(() => {
+    return emailOk && password.length >= 1 && status !== "submitting";
+  }, [emailOk, password, status]);
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!canSubmit) return;
+
+    setStatus("submitting");
+    setErrorMessage("");
+
+    try {
+      const res = await fetch(LOGIN_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: email.trim(),
+          password,
+        }),
+      });
+
+      if (!res.ok) {
+        let detail = "";
+        try {
+          const data = await res.json();
+          detail =
+            typeof data?.error === "string"
+              ? data.error
+              : typeof data?.message === "string"
+              ? data.message
+              : "";
+        } catch {
+          // ignore
+        }
+
+        // Helpful default: common when endpoint doesn't exist yet
+        if (res.status === 404) {
+          throw new Error(
+            "Sign-in endpoint not found. Add /api/auth/login or tell me your existing login endpoint."
+          );
+        }
+
+        throw new Error(detail || "Invalid email/password or sign-in failed.");
+      }
+
+      // If backend returns a redirect URL, follow it. Otherwise go home.
+      let redirectTo = "/";
+      try {
+        const data = await res.json();
+        if (typeof data?.redirectTo === "string" && data.redirectTo) {
+          redirectTo = data.redirectTo;
+        }
+      } catch {
+        // ignore
+      }
+
+      setStatus("success");
+      window.location.href = redirectTo;
+    } catch (err: any) {
+      setStatus("error");
+      setErrorMessage(err?.message || "Sign-in failed. Please try again.");
+    }
+  }
+
   return (
     <>
       <Head>
@@ -41,13 +122,13 @@ export default function SignInPage() {
             <div className="mrs-hero">
               <h1 className="mrs-h1">Sign in</h1>
               <p className="mrs-lead">
-                Sign-in is being finalized. If you don’t have access yet, request access first.
+                Enter your credentials to access MedicaidReady.
               </p>
             </div>
 
             <div className="mrs-grid">
               <section className="mrs-card">
-                <h2 className="mrs-card-title">Don’t have access yet?</h2>
+                <h2 className="mrs-card-title">Need access first?</h2>
                 <p className="mrs-card-text">
                   Submit your work email and we’ll review and approve your account.
                 </p>
@@ -62,25 +143,45 @@ export default function SignInPage() {
                 </div>
 
                 <div className="mrs-note">
-                  Already approved? Your sign-in flow will be available here shortly.
+                  If you were approved already, you can sign in on this page.
                 </div>
               </section>
 
               <section className="mrs-card">
-                <h2 className="mrs-card-title">Sign in</h2>
-                <p className="mrs-card-text">
-                  This page exists to prevent 404s and keep the nav consistent while the auth page is wired in.
-                </p>
+                <div className="mrs-formhead">
+                  <h2 className="mrs-card-title">Sign in</h2>
+                  <div className="mrs-badge">Secure</div>
+                </div>
 
-                <div className="mrs-form">
+                {status === "error" && (
+                  <div className="mrs-alert mrs-alert-error" role="alert">
+                    <div className="mrs-alert-title">Sign-in failed</div>
+                    <div className="mrs-alert-text">{errorMessage}</div>
+                  </div>
+                )}
+
+                {status === "success" && (
+                  <div className="mrs-alert mrs-alert-success" role="status">
+                    <div className="mrs-alert-title">Signed in</div>
+                    <div className="mrs-alert-text">Redirecting…</div>
+                  </div>
+                )}
+
+                <form className="mrs-form" onSubmit={handleSubmit}>
                   <div className="mrs-field">
                     <label className="mrs-label">Email</label>
                     <input
-                      className="mrs-input"
+                      className={"mrs-input" + (email && !emailOk ? " mrs-input-invalid" : "")}
                       placeholder="name@organization.com"
                       autoComplete="email"
-                      disabled
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      disabled={status === "submitting"}
+                      required
                     />
+                    {email && !emailOk ? (
+                      <div className="mrs-help">Enter a valid email address.</div>
+                    ) : null}
                   </div>
 
                   <div className="mrs-field">
@@ -90,22 +191,29 @@ export default function SignInPage() {
                       placeholder="••••••••"
                       autoComplete="current-password"
                       type="password"
-                      disabled
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      disabled={status === "submitting"}
+                      required
                     />
                   </div>
 
-                  <button className="mrs-btn-disabled" disabled>
-                    Sign in (coming next)
+                  <button
+                    className={"mrs-btn" + (!canSubmit ? " mrs-btn-disabled" : "")}
+                    type="submit"
+                    disabled={!canSubmit}
+                  >
+                    {status === "submitting" ? "Signing in..." : "Sign in"}
                   </button>
 
                   <div className="mrs-legal">
-                    If you need immediate access, use{" "}
+                    Don’t have access?{" "}
                     <Link href="/request-access" className="mrs-link">
                       Request Access
                     </Link>
                     .
                   </div>
-                </div>
+                </form>
               </section>
             </div>
 
@@ -129,7 +237,6 @@ export default function SignInPage() {
           :root {
             --mrs-ink: #0b1220;
             --mrs-muted: rgba(11, 18, 32, 0.72);
-            --mrs-border: rgba(11, 18, 32, 0.12);
             --mrs-border2: rgba(11, 18, 32, 0.08);
             --mrs-card: rgba(255, 255, 255, 0.92);
             --mrs-shadow: 0 16px 40px rgba(11, 18, 32, 0.08);
@@ -312,6 +419,122 @@ export default function SignInPage() {
             line-height: 1.6;
           }
 
+          .mrs-formhead {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 12px;
+          }
+
+          .mrs-badge {
+            font-size: 12px;
+            font-weight: 800;
+            color: rgba(11, 18, 32, 0.72);
+            background: rgba(11, 58, 103, 0.08);
+            border: 1px solid rgba(11, 58, 103, 0.14);
+            padding: 8px 12px;
+            border-radius: 999px;
+            white-space: nowrap;
+          }
+
+          .mrs-alert {
+            margin: 10px 0 14px;
+            border-radius: 14px;
+            padding: 14px;
+            border: 1px solid rgba(11, 18, 32, 0.12);
+            background: rgba(244, 247, 251, 0.8);
+          }
+
+          .mrs-alert-title {
+            font-weight: 800;
+          }
+
+          .mrs-alert-text {
+            margin-top: 6px;
+            color: rgba(11, 18, 32, 0.78);
+            line-height: 1.5;
+          }
+
+          .mrs-alert-success {
+            border-color: rgba(34, 197, 94, 0.22);
+            background: rgba(34, 197, 94, 0.08);
+          }
+
+          .mrs-alert-error {
+            border-color: rgba(239, 68, 68, 0.22);
+            background: rgba(239, 68, 68, 0.08);
+          }
+
+          .mrs-form {
+            margin-top: 6px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+          }
+
+          .mrs-field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+          }
+
+          .mrs-label {
+            font-weight: 700;
+            color: rgba(11, 18, 32, 0.86);
+          }
+
+          .mrs-input {
+            height: 46px;
+            border-radius: 12px;
+            border: 1px solid rgba(11, 18, 32, 0.16);
+            padding: 0 14px;
+            font-size: 16px;
+            background: white;
+            color: #0b1220;
+            outline: none;
+            transition: border-color 150ms ease, box-shadow 150ms ease;
+          }
+
+          .mrs-input:focus {
+            border-color: rgba(11, 58, 103, 0.42);
+            box-shadow: 0 0 0 4px rgba(11, 58, 103, 0.12);
+          }
+
+          .mrs-input-invalid {
+            border-color: rgba(239, 68, 68, 0.45);
+          }
+
+          .mrs-help {
+            font-size: 13px;
+            color: rgba(239, 68, 68, 0.9);
+          }
+
+          .mrs-btn {
+            height: 56px;
+            border-radius: 14px;
+            border: none;
+            background: var(--mrs-blue);
+            color: white;
+            font-weight: 800;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 0 18px 32px rgba(11, 58, 103, 0.18);
+            transition: background 150ms ease, transform 120ms ease, opacity 120ms ease;
+          }
+
+          .mrs-btn:hover {
+            background: var(--mrs-blue2);
+            transform: translateY(-1px);
+          }
+
+          .mrs-btn-disabled,
+          .mrs-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+          }
+
           .mrs-actions {
             display: flex;
             gap: 12px;
@@ -355,46 +578,6 @@ export default function SignInPage() {
             margin-top: 14px;
             color: rgba(11, 18, 32, 0.62);
             line-height: 1.6;
-          }
-
-          .mrs-form {
-            margin-top: 14px;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-          }
-
-          .mrs-field {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-          }
-
-          .mrs-label {
-            font-weight: 700;
-            color: rgba(11, 18, 32, 0.86);
-          }
-
-          .mrs-input {
-            height: 46px;
-            border-radius: 12px;
-            border: 1px solid rgba(11, 18, 32, 0.16);
-            padding: 0 14px;
-            font-size: 16px;
-            background: white;
-            color: #0b1220;
-            outline: none;
-          }
-
-          .mrs-btn-disabled {
-            height: 56px;
-            border-radius: 14px;
-            border: none;
-            background: rgba(11, 58, 103, 0.22);
-            color: rgba(255, 255, 255, 0.85);
-            font-weight: 800;
-            font-size: 18px;
-            cursor: not-allowed;
           }
 
           .mrs-legal {
