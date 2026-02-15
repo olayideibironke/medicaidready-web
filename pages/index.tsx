@@ -1,3 +1,4 @@
+// pages/index.tsx
 import Head from "next/head";
 import Link from "next/link";
 
@@ -25,7 +26,7 @@ export default function Home() {
               </div>
             </div>
 
-            <nav className="nav">
+            <nav className="nav" aria-label="Primary">
               <Link className="navLink" href="/pricing">
                 Pricing
               </Link>
@@ -322,14 +323,29 @@ export default function Home() {
         </footer>
 
         <style jsx>{`
+          :global(html, body) {
+            margin: 0;
+            padding: 0;
+          }
+          :global(a) {
+            color: inherit;
+            text-decoration: none;
+          }
+
           .page {
             min-height: 100vh;
-            background: #ffffff;
+            background: #fbfcfe;
             color: #0b1220;
+            font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+              "Apple Color Emoji", "Segoe UI Emoji";
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
           }
+
           .container {
             width: 100%;
-            max-width: 1100px;
+            max-width: 1120px;
             margin: 0 auto;
             padding: 0 20px;
           }
@@ -338,87 +354,100 @@ export default function Home() {
             position: sticky;
             top: 0;
             z-index: 50;
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid #e6e9ef;
+            background: rgba(251, 252, 254, 0.78);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(230, 233, 239, 0.9);
+            box-shadow: 0 10px 26px rgba(11, 18, 32, 0.05);
           }
           .headerInner {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            height: 70px;
+            height: 74px;
           }
 
           .brand {
             display: flex;
             align-items: center;
             gap: 12px;
+            user-select: none;
           }
           .mark {
-            width: 38px;
-            height: 38px;
-            border-radius: 10px;
-            background: linear-gradient(135deg, #0b3a66, #0f6aa6);
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: radial-gradient(
+                18px 18px at 30% 30%,
+                rgba(255, 255, 255, 0.55),
+                rgba(255, 255, 255, 0) 55%
+              ),
+              linear-gradient(135deg, #0b3a66, #0f6aa6);
+            box-shadow: 0 10px 22px rgba(11, 58, 102, 0.18);
+            border: 1px solid rgba(11, 58, 102, 0.22);
           }
           .brandText {
             line-height: 1.1;
           }
           .brandName {
-            font-weight: 750;
-            letter-spacing: -0.02em;
+            font-weight: 850;
+            letter-spacing: -0.03em;
+            font-size: 15px;
           }
           .brandTag {
             font-size: 12px;
             color: #5b6576;
-            margin-top: 3px;
+            margin-top: 4px;
+            letter-spacing: 0.02em;
           }
 
           .nav {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 10px;
           }
           .navLink {
-            color: #243044;
-            text-decoration: none;
-            font-size: 14px;
-            padding: 8px 10px;
-            border-radius: 10px;
+            color: #1f2b3d;
+            font-size: 13px;
+            font-weight: 650;
+            padding: 9px 12px;
+            border-radius: 999px;
+            border: 1px solid transparent;
+            letter-spacing: 0.01em;
           }
           .navLink:hover {
-            background: #f3f5f9;
-          }
-          .navButton {
-            text-decoration: none;
-            font-size: 14px;
-            padding: 10px 12px;
-            border-radius: 12px;
-            border: 1px solid #d7dce6;
-            color: #0b1220;
-            background: #fff;
-          }
-          .navButton:hover {
-            background: #f7f9fc;
+            background: rgba(243, 245, 249, 0.9);
+            border-color: rgba(230, 233, 239, 0.9);
           }
 
-          .main {
-            display: block;
+          .navButton {
+            font-size: 13px;
+            font-weight: 750;
+            padding: 10px 14px;
+            border-radius: 999px;
+            letter-spacing: 0.01em;
+            color: #ffffff;
+            background: linear-gradient(135deg, #0b3a66, #0f6aa6);
+            border: 1px solid rgba(11, 58, 102, 0.35);
+            box-shadow: 0 10px 22px rgba(11, 18, 32, 0.12);
+          }
+          .navButton:hover {
+            filter: brightness(0.98);
           }
 
           .hero {
             border-bottom: 1px solid #eef1f6;
             background: radial-gradient(
-                900px 500px at 15% 10%,
-                rgba(15, 106, 166, 0.12),
-                transparent 55%
+                980px 520px at 16% 12%,
+                rgba(15, 106, 166, 0.13),
+                transparent 58%
               ),
-              radial-gradient(900px 500px at 85% 20%, rgba(11, 58, 102, 0.10), transparent 55%);
-            padding: 52px 0 34px;
+              radial-gradient(980px 520px at 86% 20%, rgba(11, 58, 102, 0.11), transparent 58%);
+            padding: 64px 0 42px;
           }
           .heroGrid {
             display: grid;
-            grid-template-columns: 1.15fr 0.85fr;
-            gap: 28px;
+            grid-template-columns: 1.12fr 0.88fr;
+            gap: 30px;
             align-items: start;
           }
 
@@ -428,10 +457,12 @@ export default function Home() {
             gap: 10px;
             padding: 10px 12px;
             border-radius: 999px;
-            border: 1px solid #dbe2ee;
-            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(219, 226, 238, 0.95);
+            background: rgba(255, 255, 255, 0.85);
             font-size: 13px;
+            font-weight: 650;
             color: #243044;
+            box-shadow: 0 10px 22px rgba(11, 18, 32, 0.05);
           }
           .dot {
             width: 8px;
@@ -441,20 +472,21 @@ export default function Home() {
           }
 
           .h1 {
-            margin: 14px 0 10px;
-            font-size: 42px;
-            line-height: 1.1;
-            letter-spacing: -0.03em;
+            margin: 16px 0 12px;
+            font-size: 44px;
+            line-height: 1.08;
+            letter-spacing: -0.045em;
+            max-width: 720px;
           }
           .em {
             color: #0b3a66;
           }
           .sub {
-            margin: 0 0 18px;
+            margin: 0 0 20px;
             color: #445065;
             font-size: 16px;
-            line-height: 1.6;
-            max-width: 640px;
+            line-height: 1.7;
+            max-width: 680px;
           }
 
           .ctaRow {
@@ -469,15 +501,12 @@ export default function Home() {
             justify-content: center;
             padding: 12px 14px;
             border-radius: 14px;
-            text-decoration: none;
-            background: #0b3a66;
+            background: linear-gradient(135deg, #0b3a66, #0f6aa6);
             color: #fff;
-            font-weight: 650;
-            border: 1px solid #0b3a66;
+            font-weight: 750;
+            border: 1px solid rgba(11, 58, 102, 0.35);
             min-width: 180px;
-          }
-          .primary:hover {
-            background: #0a345d;
+            box-shadow: 0 12px 26px rgba(11, 18, 32, 0.12);
           }
           .secondary {
             display: inline-flex;
@@ -485,60 +514,63 @@ export default function Home() {
             justify-content: center;
             padding: 12px 14px;
             border-radius: 14px;
-            text-decoration: none;
-            background: #ffffff;
+            background: rgba(255, 255, 255, 0.92);
             color: #0b1220;
-            font-weight: 650;
-            border: 1px solid #d7dce6;
+            font-weight: 750;
+            border: 1px solid rgba(215, 220, 230, 0.9);
             min-width: 140px;
-          }
-          .secondary:hover {
-            background: #f7f9fc;
+            box-shadow: 0 10px 22px rgba(11, 18, 32, 0.06);
           }
 
           .trustRow {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 10px;
-            margin-top: 8px;
+            margin-top: 10px;
           }
           .trustItem {
-            border: 1px solid #e6e9ef;
-            border-radius: 14px;
+            border: 1px solid rgba(230, 233, 239, 0.95);
+            border-radius: 16px;
             padding: 12px;
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.78);
+            box-shadow: 0 10px 22px rgba(11, 18, 32, 0.05);
           }
           .trustK {
-            font-weight: 700;
+            font-weight: 800;
             font-size: 13px;
             color: #0b1220;
+            letter-spacing: -0.01em;
           }
           .trustV {
             margin-top: 4px;
             font-size: 13px;
             color: #5b6576;
+            line-height: 1.45;
           }
 
           .heroCard {
-            border: 1px solid #e6e9ef;
-            border-radius: 18px;
-            background: rgba(255, 255, 255, 0.92);
-            box-shadow: 0 12px 28px rgba(11, 18, 32, 0.08);
+            border: 1px solid rgba(230, 233, 239, 0.95);
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 18px 44px rgba(11, 18, 32, 0.12);
             overflow: hidden;
           }
           .cardTop {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 14px 14px 10px;
+            padding: 16px 16px 12px;
             border-bottom: 1px solid #eef1f6;
+            background: rgba(255, 255, 255, 0.92);
           }
           .cardTitle {
-            font-weight: 750;
+            font-weight: 850;
             font-size: 14px;
+            letter-spacing: -0.01em;
           }
           .pill {
             font-size: 12px;
+            font-weight: 750;
             color: #0b3a66;
             background: rgba(11, 58, 102, 0.08);
             border: 1px solid rgba(11, 58, 102, 0.18);
@@ -549,13 +581,13 @@ export default function Home() {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 10px;
-            padding: 14px;
+            padding: 16px;
           }
           .metric {
             border: 1px solid #eef1f6;
-            border-radius: 14px;
+            border-radius: 16px;
             padding: 12px;
-            background: #ffffff;
+            background: rgba(255, 255, 255, 0.95);
           }
           .metricLabel {
             font-size: 12px;
@@ -564,20 +596,21 @@ export default function Home() {
           .metricValue {
             margin-top: 6px;
             font-size: 22px;
-            font-weight: 800;
-            letter-spacing: -0.02em;
+            font-weight: 900;
+            letter-spacing: -0.03em;
           }
           .metricHint {
             margin-top: 6px;
             font-size: 12px;
             color: #7a8597;
+            line-height: 1.4;
           }
           .divider {
             height: 1px;
             background: #eef1f6;
           }
           .list {
-            padding: 12px 14px;
+            padding: 12px 16px;
             display: grid;
             gap: 10px;
           }
@@ -587,9 +620,9 @@ export default function Home() {
             align-items: center;
             gap: 10px;
             border: 1px solid #eef1f6;
-            border-radius: 14px;
+            border-radius: 16px;
             padding: 10px 12px;
-            background: #fff;
+            background: rgba(255, 255, 255, 0.96);
           }
           .statusDot {
             width: 10px;
@@ -606,7 +639,7 @@ export default function Home() {
             background: #067647;
           }
           .listTitle {
-            font-weight: 700;
+            font-weight: 800;
             font-size: 13px;
           }
           .listSub {
@@ -616,15 +649,15 @@ export default function Home() {
           }
           .listTag {
             font-size: 12px;
-            font-weight: 700;
+            font-weight: 800;
             color: #243044;
-            background: #f3f5f9;
-            border: 1px solid #e6e9ef;
+            background: rgba(243, 245, 249, 0.95);
+            border: 1px solid rgba(230, 233, 239, 0.95);
             padding: 6px 10px;
             border-radius: 999px;
           }
           .cardFoot {
-            padding: 0 14px 14px;
+            padding: 0 16px 16px;
           }
           .footNote {
             font-size: 12px;
@@ -633,7 +666,7 @@ export default function Home() {
           }
 
           .section {
-            padding: 44px 0;
+            padding: 52px 0;
           }
           .alt {
             background: #f7f9fc;
@@ -643,51 +676,58 @@ export default function Home() {
           .twoCol {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 24px;
+            gap: 26px;
             align-items: start;
           }
           .h2 {
-            margin: 0 0 10px;
+            margin: 0 0 12px;
             font-size: 26px;
-            letter-spacing: -0.02em;
+            letter-spacing: -0.03em;
+            font-weight: 900;
           }
           .p {
             margin: 0 0 12px;
             color: #445065;
-            line-height: 1.65;
+            line-height: 1.75;
+            font-size: 15px;
           }
 
           .panel {
-            border: 1px solid #e6e9ef;
-            border-radius: 18px;
-            background: #ffffff;
-            padding: 16px;
+            border: 1px solid rgba(230, 233, 239, 0.95);
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 18px;
+            box-shadow: 0 14px 30px rgba(11, 18, 32, 0.06);
           }
           .panelTitle {
-            font-weight: 800;
+            font-weight: 900;
             margin-bottom: 10px;
+            letter-spacing: -0.02em;
           }
           .bullets {
             margin: 0;
             padding-left: 18px;
             color: #445065;
-            line-height: 1.7;
+            line-height: 1.8;
+            font-size: 15px;
           }
 
           .callout {
             margin-top: 14px;
             border-left: 4px solid #0f6aa6;
             background: rgba(15, 106, 166, 0.08);
-            border-radius: 14px;
+            border-radius: 16px;
             padding: 12px 14px;
           }
           .calloutTitle {
-            font-weight: 800;
+            font-weight: 900;
             margin-bottom: 4px;
+            letter-spacing: -0.02em;
           }
           .calloutBody {
             color: #445065;
-            line-height: 1.6;
+            line-height: 1.7;
+            font-size: 15px;
           }
 
           .steps {
@@ -697,34 +737,37 @@ export default function Home() {
             margin-top: 14px;
           }
           .step {
-            border: 1px solid #e6e9ef;
-            border-radius: 18px;
-            background: #ffffff;
-            padding: 16px;
+            border: 1px solid rgba(230, 233, 239, 0.95);
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 18px;
+            box-shadow: 0 14px 30px rgba(11, 18, 32, 0.06);
           }
           .stepNum {
-            width: 34px;
-            height: 34px;
-            border-radius: 12px;
+            width: 36px;
+            height: 36px;
+            border-radius: 14px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            font-weight: 900;
+            font-weight: 950;
             color: #0b3a66;
-            background: rgba(11, 58, 102, 0.10);
+            background: rgba(11, 58, 102, 0.1);
             border: 1px solid rgba(11, 58, 102, 0.18);
           }
           .stepTitle {
             margin-top: 10px;
-            font-weight: 850;
+            font-weight: 900;
+            letter-spacing: -0.02em;
           }
           .stepBody {
             margin-top: 6px;
             color: #445065;
-            line-height: 1.6;
+            line-height: 1.7;
+            font-size: 15px;
           }
           .centerCta {
-            margin-top: 18px;
+            margin-top: 20px;
             display: flex;
             justify-content: center;
           }
@@ -736,23 +779,25 @@ export default function Home() {
             gap: 12px;
           }
           .tile {
-            border: 1px solid #e6e9ef;
-            border-radius: 18px;
-            background: #ffffff;
-            padding: 16px;
+            border: 1px solid rgba(230, 233, 239, 0.95);
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 18px;
+            box-shadow: 0 14px 30px rgba(11, 18, 32, 0.06);
           }
           .tileTitle {
-            font-weight: 850;
+            font-weight: 900;
+            letter-spacing: -0.02em;
           }
           .tileBody {
             margin-top: 6px;
             color: #445065;
-            line-height: 1.6;
+            line-height: 1.7;
             font-size: 14px;
           }
 
           .cta {
-            padding: 34px 0;
+            padding: 38px 0;
             background: linear-gradient(135deg, #0b3a66, #0f6aa6);
             color: #fff;
           }
@@ -765,14 +810,15 @@ export default function Home() {
           }
           .ctaTitle {
             font-size: 22px;
-            font-weight: 900;
-            letter-spacing: -0.02em;
+            font-weight: 950;
+            letter-spacing: -0.03em;
           }
           .ctaSub {
             margin-top: 6px;
             color: rgba(255, 255, 255, 0.9);
-            line-height: 1.6;
+            line-height: 1.7;
             max-width: 680px;
+            font-size: 15px;
           }
           .ctaButtons {
             display: flex;
@@ -780,26 +826,22 @@ export default function Home() {
             flex-wrap: wrap;
           }
           .ctaButtons :global(.primary) {
-            background: #ffffff;
+            background: rgba(255, 255, 255, 0.98);
             color: #0b3a66;
             border-color: rgba(255, 255, 255, 0.65);
-          }
-          .ctaButtons :global(.primary:hover) {
-            background: rgba(255, 255, 255, 0.92);
+            box-shadow: 0 12px 26px rgba(0, 0, 0, 0.18);
           }
           .ctaButtons :global(.secondary) {
             background: transparent;
             color: #fff;
             border-color: rgba(255, 255, 255, 0.45);
-          }
-          .ctaButtons :global(.secondary:hover) {
-            background: rgba(255, 255, 255, 0.10);
+            box-shadow: none;
           }
 
           .footer {
             border-top: 1px solid #eef1f6;
-            padding: 22px 0;
-            background: #ffffff;
+            padding: 26px 0;
+            background: #fbfcfe;
           }
           .footerInner {
             display: flex;
@@ -809,29 +851,31 @@ export default function Home() {
             flex-wrap: wrap;
           }
           .footerBrand {
-            font-weight: 900;
-            letter-spacing: -0.02em;
+            font-weight: 950;
+            letter-spacing: -0.03em;
           }
           .footerSmall {
             margin-top: 6px;
             color: #6b7688;
             font-size: 13px;
-            line-height: 1.5;
+            line-height: 1.6;
           }
           .footerRight {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 10px;
           }
           .footerLink {
-            color: #243044;
-            text-decoration: none;
-            font-size: 14px;
-            padding: 8px 10px;
-            border-radius: 10px;
+            color: #1f2b3d;
+            font-size: 13px;
+            font-weight: 650;
+            padding: 9px 12px;
+            border-radius: 999px;
+            border: 1px solid transparent;
           }
           .footerLink:hover {
-            background: #f3f5f9;
+            background: rgba(243, 245, 249, 0.9);
+            border-color: rgba(230, 233, 239, 0.9);
           }
 
           @media (max-width: 980px) {
@@ -851,7 +895,7 @@ export default function Home() {
               grid-template-columns: 1fr;
             }
             .h1 {
-              font-size: 36px;
+              font-size: 38px;
             }
           }
 
@@ -861,6 +905,9 @@ export default function Home() {
             }
             .h1 {
               font-size: 32px;
+            }
+            .hero {
+              padding: 52px 0 34px;
             }
           }
         `}</style>
