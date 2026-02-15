@@ -58,14 +58,14 @@ export default function PricingPage() {
               </div>
             </div>
 
-            <nav className="nav">
-              <Link className="navLink" href="/">
+            <nav className="nav" aria-label="Primary">
+              <Link className="navPill" href="/">
                 Home
               </Link>
-              <Link className="navLink" href="/request-access">
+              <Link className="navPill" href="/request-access">
                 Request Access
               </Link>
-              <Link className="navButton" href="/providers">
+              <Link className="navCta" href="/providers">
                 Sign in
               </Link>
             </nav>
@@ -119,17 +119,15 @@ export default function PricingPage() {
                     {loading ? "Redirecting…" : "Subscribe"}
                   </button>
 
-                  <div className="fine">
-                    After payment, your email is automatically approved for sign-in.
-                  </div>
+                  <div className="fine">After payment, your email is automatically approved for sign-in.</div>
                 </div>
 
                 <div className="side">
                   <div className="sideTitle">Prefer to request access first?</div>
-                  <div className="sideBody">
-                    Submit your details and we’ll review and approve your account.
-                  </div>
-                  <Link className="secondary" href="/request-access">
+                  <div className="sideBody">Submit your details and we’ll review and approve your account.</div>
+
+                  {/* Polished button style (was a basic link) */}
+                  <Link className="sideCta" href="/request-access">
                     Request access
                   </Link>
                 </div>
@@ -145,10 +143,10 @@ export default function PricingPage() {
               <div className="footerSmall">Continuous Medicaid compliance monitoring for MD • VA • DC.</div>
             </div>
             <div className="footerRight">
-              <Link className="footerLink" href="/request-access">
+              <Link className="footerPill" href="/request-access">
                 Request access
               </Link>
-              <Link className="footerLink" href="/providers">
+              <Link className="footerPill" href="/providers">
                 Sign in
               </Link>
             </div>
@@ -209,39 +207,52 @@ export default function PricingPage() {
           .nav {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 10px;
           }
-          .navLink {
-            color: #243044;
+
+          /* PREMIUM NAV PILLS (replaces default-looking links) */
+          .navPill {
+            color: #1f2b3d;
             text-decoration: none;
-            font-size: 14px;
-            padding: 8px 10px;
-            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 650;
+            padding: 9px 12px;
+            border-radius: 999px;
+            border: 1px solid transparent;
+            letter-spacing: 0.01em;
           }
-          .navLink:hover {
-            background: #f3f5f9;
+          .navPill:hover {
+            background: rgba(243, 245, 249, 0.9);
+            border-color: rgba(230, 233, 239, 0.9);
           }
-          .navButton {
+          .navPill:visited {
+            color: #1f2b3d;
+          }
+
+          /* PREMIUM CTA BUTTON */
+          .navCta {
             text-decoration: none;
-            font-size: 14px;
-            padding: 10px 12px;
-            border-radius: 12px;
-            border: 1px solid #d7dce6;
-            color: #0b1220;
-            background: #fff;
+            font-size: 13px;
+            font-weight: 750;
+            padding: 10px 14px;
+            border-radius: 999px;
+            letter-spacing: 0.01em;
+            color: #ffffff;
+            background: linear-gradient(135deg, #0b3a66, #0f6aa6);
+            border: 1px solid rgba(11, 58, 102, 0.35);
+            box-shadow: 0 10px 22px rgba(11, 18, 32, 0.12);
           }
-          .navButton:hover {
-            background: #f7f9fc;
+          .navCta:hover {
+            filter: brightness(0.98);
+          }
+          .navCta:visited {
+            color: #ffffff;
           }
 
           .hero {
             padding: 44px 0;
-            background: radial-gradient(
-                900px 500px at 15% 10%,
-                rgba(15, 106, 166, 0.12),
-                transparent 55%
-              ),
-              radial-gradient(900px 500px at 85% 20%, rgba(11, 58, 102, 0.10), transparent 55%);
+            background: radial-gradient(900px 500px at 15% 10%, rgba(15, 106, 166, 0.12), transparent 55%),
+              radial-gradient(900px 500px at 85% 20%, rgba(11, 58, 102, 0.1), transparent 55%);
           }
           .h1 {
             margin: 0;
@@ -386,22 +397,27 @@ export default function PricingPage() {
             color: #445065;
             line-height: 1.6;
           }
-          .secondary {
+
+          /* Polished Request Access CTA (replaces default link vibe) */
+          .sideCta {
             margin-top: 12px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
+            width: 100%;
             padding: 12px 14px;
             border-radius: 14px;
             text-decoration: none;
-            background: #ffffff;
-            color: #0b1220;
-            font-weight: 800;
-            border: 1px solid #d7dce6;
-            width: 100%;
+            font-weight: 850;
+            color: #0b3a66;
+            background: rgba(11, 58, 102, 0.06);
+            border: 1px solid rgba(11, 58, 102, 0.22);
           }
-          .secondary:hover {
-            background: #f7f9fc;
+          .sideCta:hover {
+            background: rgba(11, 58, 102, 0.09);
+          }
+          .sideCta:visited {
+            color: #0b3a66;
           }
 
           .footer {
@@ -429,17 +445,25 @@ export default function PricingPage() {
           .footerRight {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 10px;
           }
-          .footerLink {
-            color: #243044;
+
+          /* PREMIUM FOOTER PILLS (no default visited purple) */
+          .footerPill {
+            color: #1f2b3d;
             text-decoration: none;
-            font-size: 14px;
-            padding: 8px 10px;
-            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 650;
+            padding: 9px 12px;
+            border-radius: 999px;
+            border: 1px solid transparent;
           }
-          .footerLink:hover {
-            background: #f3f5f9;
+          .footerPill:hover {
+            background: rgba(243, 245, 249, 0.9);
+            border-color: rgba(230, 233, 239, 0.9);
+          }
+          .footerPill:visited {
+            color: #1f2b3d;
           }
 
           @media (max-width: 980px) {
@@ -448,7 +472,7 @@ export default function PricingPage() {
             }
           }
           @media (max-width: 640px) {
-            .navLink {
+            .navPill {
               display: none;
             }
             .h1 {
