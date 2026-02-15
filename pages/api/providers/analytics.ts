@@ -180,7 +180,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     if (!subGate.ok) {
-      return res.status(subGate.status).json({ ok: false, error: (subGate as any).error });
+      return res.status((subGate as any).status ?? 403).json({
+        ok: false,
+        error: (subGate as any).error,
+      });
     }
   }
 

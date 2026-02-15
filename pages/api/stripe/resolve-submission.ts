@@ -11,9 +11,10 @@ function pickString(v: unknown): string {
   return (v ?? "").toString().trim();
 }
 
-const stripe = new Stripe(mustGet("STRIPE_SECRET_KEY"), {
-  apiVersion: "2023-10-16",
-});
+// NOTE: Do NOT hardcode apiVersion here.
+// The installed Stripe SDK pins the allowed apiVersion type, and overriding it can break builds.
+// Let the Stripe library default/pinned version apply.
+const stripe = new Stripe(mustGet("STRIPE_SECRET_KEY"));
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "GET") {
@@ -28,7 +29,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(400).json({ ok: false, error: "invalid_session_id" });
     }
 
-    // Expand subscription/customer for easier future use (optional but handy)
+    // Expand subscription/customer for easier future use
     const session = await stripe.checkout.sessions.retrieve(sessionId, {
       expand: ["subscription", "customer"],
     });

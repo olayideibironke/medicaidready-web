@@ -30,9 +30,10 @@ const DEFAULTS = {
   provider_type: "home_health",
 };
 
-const stripe = new Stripe(mustGet("STRIPE_SECRET_KEY"), {
-  apiVersion: "2023-10-16",
-});
+// NOTE: Do NOT hardcode apiVersion here.
+// The installed Stripe SDK pins the allowed apiVersion type, and overriding it can break builds.
+// Let the Stripe library default/pinned version apply.
+const stripe = new Stripe(mustGet("STRIPE_SECRET_KEY"));
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") {
@@ -56,12 +57,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const name = pickString(body.name) || fallback.name;
     const organization = pickString(body.organization) || fallback.organization;
     const state = pickString(body.state) || DEFAULTS.state;
-    const provider_type =
-      pickString(body.provider_type) || DEFAULTS.provider_type;
+    const provider_type = pickString(body.provider_type) || DEFAULTS.provider_type;
 
     const origin =
-      (req.headers.origin as string | undefined) ||
-      `http://${req.headers.host}`;
+      (req.headers.origin as string | undefined) || `http://${req.headers.host}`;
 
     const sb = supabaseAdmin();
 
@@ -107,7 +106,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         product: "medicaidready_dmv_plan",
       },
 
-      // 🔥 POLISH: Also attach metadata to the Subscription object itself
+      // Attach metadata to the Subscription object itself
       subscription_data: {
         metadata: {
           email,

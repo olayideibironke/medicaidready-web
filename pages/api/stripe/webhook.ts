@@ -33,7 +33,6 @@ function toIsoOrNull(unixSeconds?: number | null): string | null {
 }
 
 function isGoodSubStatus(status?: string | null): boolean {
-  // allow access when subscription is in a "good" state
   return status === "active" || status === "trialing";
 }
 
@@ -62,7 +61,6 @@ async function revokeByStripeSubscriptionId(
 ) {
   const sb = supabaseAdmin();
 
-  // Revoke ONLY currently approved rows for this subscription id
   const { error } = await sb
     .from("request_access_submissions")
     .update({
@@ -125,9 +123,9 @@ async function revokeByEmailLatest(email: string, reason: string, patch: Record<
   }
 }
 
-const stripe = new Stripe(mustGet("STRIPE_SECRET_KEY"), {
-  apiVersion: "2023-10-16",
-});
+// NOTE: Do NOT hardcode apiVersion here.
+// Stripe SDK types pin allowed apiVersion; overriding can break builds.
+const stripe = new Stripe(mustGet("STRIPE_SECRET_KEY"));
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") {
@@ -155,7 +153,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (event.type === "checkout.session.completed") {
       const session = event.data.object as Stripe.Checkout.Session;
 
-      // Only approve if paid (or no payment required)
       const paymentStatus = session.payment_status;
       const isPaid = paymentStatus === "paid" || paymentStatus === "no_payment_required";
       if (!isPaid) {
@@ -172,21 +169,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         session.customer_details?.email || session.customer_email || session.metadata?.email || ""
       );
 
-      // In subscription mode, session.subscription should exist
-      const stripeSubscriptionId =
-        (typeof session.subscription === "string" ? session.subscription : "") || "";
-      const stripeCustomerId =
-        (typeof session.customer === "string" ? session.customer : "") || "";
+      const stripeSubscriptionId = (typeof session.subscription === "string" ? session.subscription : "") || "";
+      const stripeCustomerId = (typeof session.customer === "string" ? session.customer : "") || "";
 
-      // Pull subscription status + period_end from Stripe if we have an id
       let subStatus: string | null = null;
       let periodEndIso: string | null = null;
 
       if (stripeSubscriptionId) {
         try {
-          const sub = await stripe.subscriptions.retrieve(stripeSubscriptionId);
-          subStatus = (sub.status ?? null) as string | null;
-          periodEndIso = toIsoOrNull(sub.current_period_end ?? null);
+          const subResp = await stripe.subscriptions.retrieve(stripeSubscriptionId);
+          const subAny = (subResp as any)?.data ?? subResp;
+
+          subStatus = (subAny?.status ?? null) as string | null;
+          periodEndIso = toIsoOrNull((subAny?.current_period_end ?? null) as any);
         } catch (e: any) {
           // eslint-disable-next-line no-console
           console.error("Stripe subscription retrieve failed:", e?.message ?? String(e), {
@@ -207,9 +202,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(200).json({ received: true });
       }
 
-      // Email fallback ONLY if submission_id missing (older sessions)
       if (email) {
-        // best-effort approve latest for email + set stripe ids
         const sb = supabaseAdmin();
         const { data: rows, error: selectErr } = await sb
           .from("request_access_submissions")
@@ -248,7 +241,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       const stripeSubscriptionId = (sub.id ?? "").toString();
       const status = (sub.status ?? "").toString();
-      const periodEndIso = toIsoOrNull(sub.current_period_end ?? null);
+      const periodEndIso = toIsoOrNull((sub as any).current_period_end ?? null);
 
       const patch = {
         stripe_subscription_status: status,
@@ -258,7 +251,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       if (!stripeSubscriptionId) return res.status(200).json({ received: true });
 
       if (isGoodSubStatus(status)) {
-        // Reactivate if recovered
         const sb = supabaseAdmin();
         const { error } = await sb
           .from("request_access_submissions")
@@ -281,12 +273,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(200).json({ received: true });
       }
 
-      await revokeByStripeSubscriptionId(
-        stripeSubscriptionId,
-        `subscription_${status || "not_active"}`,
-        patch
-      );
-
+      await revokeByStripeSubscriptionId(stripeSubscriptionId, `subscription_${status || "not_active"}`, patch);
       return res.status(200).json({ received: true });
     }
 
@@ -299,18 +286,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       await revokeByStripeSubscriptionId(stripeSubscriptionId, "subscription_deleted", {
         stripe_subscription_status: "canceled",
-        stripe_current_period_end: toIsoOrNull(sub.current_period_end ?? null),
+        stripe_current_period_end: toIsoOrNull((sub as any).current_period_end ?? null),
       });
 
       return res.status(200).json({ received: true });
     }
 
-    // D) invoice.payment_failed -> revoke (best effort via subscription id)
+    // D) invoice.payment_failed -> revoke
     if (event.type === "invoice.payment_failed") {
       const invoice = event.data.object as Stripe.Invoice;
 
-      const stripeSubscriptionId =
-        (typeof invoice.subscription === "string" ? invoice.subscription : "") || "";
+      const subField = (invoice as any)?.subscription;
+      const stripeSubscriptionId = (typeof subField === "string" ? subField : "") || "";
 
       if (stripeSubscriptionId) {
         await revokeByStripeSubscriptionId(stripeSubscriptionId, "invoice_payment_failed", {
@@ -320,7 +307,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
 
       // fallback if needed
-      const email = normalizeEmail((invoice.customer_email as any) || "");
+      const email = normalizeEmail((invoice as any)?.customer_email || "");
       if (email) {
         await revokeByEmailLatest(email, "invoice_payment_failed_no_subscription_id", {
           stripe_subscription_status: "past_due",
@@ -330,12 +317,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(200).json({ received: true });
     }
 
-    // E) invoice.paid -> re-approve (recovered payments)
+    // E) invoice.paid -> re-approve
     if (event.type === "invoice.paid") {
       const invoice = event.data.object as Stripe.Invoice;
 
-      const stripeSubscriptionId =
-        (typeof invoice.subscription === "string" ? invoice.subscription : "") || "";
+      const subField = (invoice as any)?.subscription;
+      const stripeSubscriptionId = (typeof subField === "string" ? subField : "") || "";
 
       const patch = {
         stripe_subscription_status: "active",
@@ -364,7 +351,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
 
       // fallback if needed
-      const email = normalizeEmail((invoice.customer_email as any) || "");
+      const email = normalizeEmail((invoice as any)?.customer_email || "");
       if (email) {
         const sb = supabaseAdmin();
         const { data: rows, error: selectErr } = await sb
