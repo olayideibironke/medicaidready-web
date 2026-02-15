@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import type { GetServerSideProps } from "next";
 
 type ProviderRow = {
   id: string;
@@ -24,6 +25,10 @@ type ProvidersApiResponse =
       results?: ProviderRow[];
       [key: string]: unknown;
     };
+
+type PageProps = {
+  initialProviders: ProviderRow[];
+};
 
 function safeText(v: unknown): string {
   if (v === null || v === undefined) return "";
@@ -71,56 +76,99 @@ function statusTone(status: ProviderRow["status"]) {
   return "badge badge-gray";
 }
 
-export default function AdminProvidersPage() {
-  const [loading, setLoading] = useState(true);
-  const [rows, setRows] = useState<ProviderRow[]>([]);
+/**
+ * Admin route protection (frontend-only):
+ * We check /api/providers server-side using the incoming cookies.
+ * If the API is protected and returns 401/403, we redirect to /signin.
+ * No backend logic changes.
+ */
+export const getServerSideProps: GetServerSideProps<PageProps> = async (ctx) => {
+  const req = ctx.req;
+  const host = req.headers["x-forwarded-host"] || req.headers.host || "localhost:3000";
+  const proto = (req.headers["x-forwarded-proto"] as string) || "http";
+
+  const url = `${proto}://${host}/api/providers`;
+
+  try {
+    const res = await fetch(url, {
+      method: "GET",
+      headers: {
+        // pass cookies through so the API can auth the request
+        cookie: req.headers.cookie || "",
+      },
+    });
+
+    if (res.status === 401 || res.status === 403) {
+      return {
+        redirect: {
+          destination: `/signin?next=${encodeURIComponent("/admin/providers")}`,
+          permanent: false,
+        },
+      };
+    }
+
+    // If API is down or returns unexpected error, allow page to render
+    // (still read-only) and client fetch will show error box.
+    if (!res.ok) {
+      return { props: { initialProviders: [] } };
+    }
+
+    const json = (await res.json()) as ProvidersApiResponse;
+    const providers = normalizeProviders(json);
+
+    return { props: { initialProviders: providers } };
+  } catch {
+    return { props: { initialProviders: [] } };
+  }
+};
+
+export default function AdminProvidersPage({ initialProviders }: PageProps) {
+  const [loading, setLoading] = useState(false);
+  const [rows, setRows] = useState<ProviderRow[]>(initialProviders || []);
   const [error, setError] = useState<string | null>(null);
 
   const [query, setQuery] = useState("");
-  const [riskFilter, setRiskFilter] = useState<"all" | "low" | "medium" | "high">(
-    "all"
-  );
+  const [riskFilter, setRiskFilter] = useState<"all" | "low" | "medium" | "high">("all");
   const [statusFilter, setStatusFilter] = useState<string>("all");
 
-  useEffect(() => {
-    let alive = true;
+  async function refresh() {
+    setLoading(true);
+    setError(null);
 
-    async function load() {
-      setLoading(true);
-      setError(null);
+    try {
+      const res = await fetch("/api/providers", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
 
-      try {
-        const res = await fetch("/api/providers", {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-        });
-
-        if (!res.ok) {
-          const text = await res.text().catch(() => "");
-          throw new Error(
-            `GET /api/providers failed (${res.status})${text ? `: ${text}` : ""}`
-          );
-        }
-
-        const json = (await res.json()) as ProvidersApiResponse;
-        const providers = normalizeProviders(json);
-
-        if (!alive) return;
-        setRows(providers);
-      } catch (e: unknown) {
-        if (!alive) return;
-        setError(e instanceof Error ? e.message : "Failed to load providers.");
-        setRows([]);
-      } finally {
-        if (!alive) return;
-        setLoading(false);
+      // If someone loses session while on page, send them to sign in.
+      if (res.status === 401 || res.status === 403) {
+        window.location.href = `/signin?next=${encodeURIComponent("/admin/providers")}`;
+        return;
       }
-    }
 
-    load();
-    return () => {
-      alive = false;
-    };
+      if (!res.ok) {
+        const text = await res.text().catch(() => "");
+        throw new Error(
+          `GET /api/providers failed (${res.status})${text ? `: ${text}` : ""}`
+        );
+      }
+
+      const json = (await res.json()) as ProvidersApiResponse;
+      setRows(normalizeProviders(json));
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : "Failed to load providers.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  // If SSR gave no data, try client load once (still read-only).
+  useEffect(() => {
+    if (rows.length > 0) return;
+    // don’t auto-refresh if SSR already has an error shown
+    refresh();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const statusOptions = useMemo(() => {
@@ -145,13 +193,7 @@ export default function AdminProvidersPage() {
         }
         if (!q) return true;
 
-        const hay = [
-          r.id,
-          r.name || "",
-          r.state || "",
-          r.status || "",
-          r.riskLevel || "",
-        ]
+        const hay = [r.id, r.name || "", r.state || "", r.status || "", r.riskLevel || ""]
           .join(" ")
           .toLowerCase();
 
@@ -166,12 +208,9 @@ export default function AdminProvidersPage() {
 
   const totals = useMemo(() => {
     const total = rows.length;
-    const high = rows.filter((r) => (r.riskLevel || "").toString().toLowerCase() === "high")
-      .length;
-    const medium = rows.filter((r) => (r.riskLevel || "").toString().toLowerCase() === "medium")
-      .length;
-    const low = rows.filter((r) => (r.riskLevel || "").toString().toLowerCase() === "low")
-      .length;
+    const high = rows.filter((r) => (r.riskLevel || "").toString().toLowerCase() === "high").length;
+    const medium = rows.filter((r) => (r.riskLevel || "").toString().toLowerCase() === "medium").length;
+    const low = rows.filter((r) => (r.riskLevel || "").toString().toLowerCase() === "low").length;
     return { total, high, medium, low };
   }, [rows]);
 
@@ -208,13 +247,11 @@ export default function AdminProvidersPage() {
           <div className="header">
             <div>
               <h1 className="h1">Providers</h1>
-              <p className="muted">
-                Read-only operational overview. Click a provider to open the dashboard.
-              </p>
+              <p className="muted">Read-only operational overview. Click a provider to open the dashboard.</p>
             </div>
 
-            <button className="btn btn-ghost" onClick={() => window.location.reload()} type="button">
-              Refresh
+            <button className="btn btn-ghost" onClick={refresh} type="button" disabled={loading}>
+              {loading ? "Refreshing…" : "Refresh"}
             </button>
           </div>
 
@@ -290,9 +327,7 @@ export default function AdminProvidersPage() {
               </div>
             </div>
 
-            {loading ? (
-              <div className="empty">Loading providers…</div>
-            ) : error ? (
+            {error ? (
               <div className="empty">
                 <div className="error-box">
                   <div className="error-title">Failed to load providers</div>
@@ -301,7 +336,7 @@ export default function AdminProvidersPage() {
                 </div>
               </div>
             ) : filtered.length === 0 ? (
-              <div className="empty">No providers match your filters.</div>
+              <div className="empty">{loading ? "Loading providers…" : "No providers match your filters."}</div>
             ) : (
               <div className="table-wrap">
                 <table className="table">
@@ -329,14 +364,10 @@ export default function AdminProvidersPage() {
                         </td>
                         <td>{safeText(r.state) || "—"}</td>
                         <td>
-                          <span className={statusTone(r.status)}>
-                            {safeText(r.status) || "—"}
-                          </span>
+                          <span className={statusTone(r.status)}>{safeText(r.status) || "—"}</span>
                         </td>
                         <td>
-                          <span className={riskTone(r.riskLevel)}>
-                            {safeText(r.riskLevel) || "—"}
-                          </span>
+                          <span className={riskTone(r.riskLevel)}>{safeText(r.riskLevel) || "—"}</span>
                         </td>
                         <td>{typeof r.score === "number" ? r.score : "—"}</td>
                         <td>{safeText(r.trend) || "—"}</td>
@@ -355,9 +386,7 @@ export default function AdminProvidersPage() {
             )}
           </section>
 
-          <div className="footnote">
-            Tip: This page is intentionally read-only to avoid changing backend behavior.
-          </div>
+          <div className="footnote">Tip: This page is intentionally read-only to avoid changing backend behavior.</div>
         </main>
       </div>
 
