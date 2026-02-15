@@ -475,12 +475,15 @@ export default function Home() {
             width: 40px;
             height: 40px;
             border-radius: 12px;
-            background: radial-gradient(
-                18px 18px at 30% 30%,
-                rgba(255, 255, 255, 0.55),
-                rgba(255, 255, 255, 0) 55%
-              ),
-              linear-gradient(135deg, #0b3a66, #0f6aa6);
+
+            /* ✅ Always load the real logo from /public */
+            background-image: url("/favicon.svg");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+
+            /* keep the premium frame */
+            background-color: #0b3a66;
             box-shadow: 0 10px 22px rgba(11, 58, 102, 0.18);
             border: 1px solid rgba(11, 58, 102, 0.22);
           }
