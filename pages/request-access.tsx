@@ -176,7 +176,9 @@ export default function RequestAccessPage() {
                   <div className="mrw-field">
                     <label className="mrw-label">Work email</label>
                     <input
-                      className={"mrw-input" + (workEmail && !emailOk ? " mrw-input-invalid" : "")}
+                      className={
+                        "mrw-input" + (workEmail && !emailOk ? " mrw-input-invalid" : "")
+                      }
                       value={workEmail}
                       onChange={(e) => setWorkEmail(e.target.value)}
                       placeholder="name@organization.com"
@@ -195,7 +197,7 @@ export default function RequestAccessPage() {
                         className="mrw-input"
                         value={fullName}
                         onChange={(e) => setFullName(e.target.value)}
-                        placeholder="e.g., Olayide Ibironke"
+                        placeholder="e.g., John Doe"
                         autoComplete="name"
                       />
                     </div>
@@ -290,7 +292,7 @@ export default function RequestAccessPage() {
             --mrw-border2: rgba(11, 18, 32, 0.08);
             --mrw-card: rgba(255, 255, 255, 0.92);
             --mrw-shadow: 0 16px 40px rgba(11, 18, 32, 0.08);
-            --mrw-blue: #0b3a67; /* matches your pricing button vibe */
+            --mrw-blue: #0b3a67;
             --mrw-blue2: #0a2f55;
           }
 
@@ -305,9 +307,16 @@ export default function RequestAccessPage() {
             color: var(--mrw-ink);
             font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
               Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-            background:
-              radial-gradient(900px 340px at 44% 18%, rgba(11, 58, 103, 0.10), rgba(244, 247, 251, 0) 60%),
-              radial-gradient(900px 340px at 72% 22%, rgba(11, 58, 103, 0.07), rgba(244, 247, 251, 0) 62%),
+            background: radial-gradient(
+                900px 340px at 44% 18%,
+                rgba(11, 58, 103, 0.10),
+                rgba(244, 247, 251, 0) 60%
+              ),
+              radial-gradient(
+                900px 340px at 72% 22%,
+                rgba(11, 58, 103, 0.07),
+                rgba(244, 247, 251, 0) 62%
+              ),
               linear-gradient(#f4f7fb, #f4f7fb);
           }
 
