@@ -630,13 +630,13 @@ export default function Home() {
             border-radius: 999px;
           }
           .sHigh {
-            background: #b42318;
+            background: #dc2626;
           }
           .sMed {
-            background: #b54708;
+            background: #f59e0b;
           }
           .sLow {
-            background: #067647;
+            background: #16a34a;
           }
           .listTitle {
             font-weight: 800;
