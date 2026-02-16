@@ -1,13 +1,11 @@
-// pages/api/stripe/webhook.ts
 import type { NextApiRequest, NextApiResponse } from "next";
 import Stripe from "stripe";
+import { Resend } from "resend";
 import { supabaseAdmin } from "../../../lib/supabaseAdmin";
 
 export const config = {
   api: { bodyParser: false },
 };
-
-const OWNER_EMAIL = "medicaidready@hotmail.com";
 
 function mustGet(name: string) {
   const v = process.env[name];
@@ -39,116 +37,76 @@ function isGoodSubStatus(status?: string | null): boolean {
   return status === "active" || status === "trialing";
 }
 
-function safeText(v: unknown): string {
-  if (v === null || v === undefined) return "";
-  if (typeof v === "string") return v;
-  if (typeof v === "number" || typeof v === "boolean") return String(v);
-  try {
-    return JSON.stringify(v);
-  } catch {
-    return String(v);
-  }
-}
-
-function fmtMoney(amount?: number | null, currency?: string | null) {
-  if (typeof amount !== "number" || !Number.isFinite(amount)) return "—";
-  const cur = (currency || "usd").toUpperCase();
-  return `${(amount / 100).toFixed(2)} ${cur}`;
+function safeString(v: unknown): string {
+  if (v == null) return "";
+  return String(v);
 }
 
 /**
- * Owner email notifications (Resend REST).
- * Requires:
- * - RESEND_API_KEY
- * - RESEND_FROM_EMAIL (verified sender)
+ * Owner email notifications
+ * - Always emails the owner (medicaidready@hotmail.com) for key subscription lifecycle events.
+ * - Uses RESEND_FROM_EMAIL if available; falls back to onboarding@resend.dev (works without domain verification).
  */
 async function notifyOwner(args: {
   subject: string;
-  heading: string;
-  lines: Array<string>;
-  meta?: Record<string, unknown>;
+  title: string;
+  lines: string[];
+  meta?: Record<string, any>;
 }) {
-  const apiKey = process.env.RESEND_API_KEY;
-  const from = process.env.RESEND_FROM_EMAIL;
+  const ownerTo = "medicaidready@hotmail.com";
 
-  // Don't break the webhook if email isn't configured.
-  if (!apiKey || !from) {
-    // eslint-disable-next-line no-console
-    console.warn("Owner email notification skipped (missing RESEND_API_KEY or RESEND_FROM_EMAIL).", {
-      hasApiKey: !!apiKey,
-      hasFrom: !!from,
-      subject: args.subject,
-    });
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    console.error("notifyOwner: missing RESEND_API_KEY");
     return;
   }
 
-  const metaBlock =
-    args.meta && Object.keys(args.meta).length > 0
-      ? `<pre style="margin:12px 0 0;padding:12px;border:1px solid rgba(15,23,42,0.12);border-radius:12px;background:#f8fafc;white-space:pre-wrap;word-break:break-word;font-size:12px;line-height:1.4;">${escapeHtml(
-          JSON.stringify(args.meta, null, 2)
-        )}</pre>`
-      : "";
+  const from =
+    process.env.RESEND_FROM_EMAIL?.trim() ||
+    "MedicaidReady <onboarding@resend.dev>"; // safe fallback for testing
+
+  const resend = new Resend(apiKey);
 
   const html = `
-  <div style="font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; color:#0f172a;">
-    <div style="max-width:680px;margin:0 auto;padding:18px;">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
-        <div style="width:40px;height:40px;border-radius:14px;background:#0f172a;color:#fff;display:grid;place-items:center;font-weight:800;">MR</div>
-        <div>
-          <div style="font-weight:800;line-height:1.1;">MedicaidReady</div>
-          <div style="color:#64748b;font-size:12px;margin-top:2px;">Owner notification</div>
-        </div>
-      </div>
-
-      <h2 style="margin:0 0 10px;font-size:18px;">${escapeHtml(args.heading)}</h2>
-
-      <div style="border:1px solid rgba(15,23,42,0.12);border-radius:16px;padding:14px;background:#fff;">
-        ${args.lines
-          .map(
-            (l) =>
-              `<div style="margin:6px 0;font-size:13px;line-height:1.5;color:#0f172a;">${escapeHtml(
-                l
-              )}</div>`
-          )
-          .join("")}
-        ${metaBlock}
-      </div>
-
-      <div style="margin-top:12px;color:#64748b;font-size:12px;">
-        Timestamp: <strong style="color:#0f172a;">${new Date().toLocaleString()}</strong>
+    <div style="font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; color:#0f172a;">
+      <h2 style="margin:0 0 10px 0;">${args.title}</h2>
+      <div style="margin:0 0 14px 0; color:#475569;">${args.subject}</div>
+      <ul style="margin:0; padding-left:18px;">
+        ${args.lines.map((l) => `<li style="margin:6px 0;">${l}</li>`).join("")}
+      </ul>
+      ${
+        args.meta
+          ? `<pre style="margin-top:14px; background:#f8fafc; border:1px solid #e2e8f0; padding:12px; border-radius:12px; overflow:auto;">${escapeHtml(
+              JSON.stringify(args.meta, null, 2)
+            )}</pre>`
+          : ""
+      }
+      <div style="margin-top:16px; font-size:12px; color:#64748b;">
+        MedicaidReady • automated notification
       </div>
     </div>
-  </div>
   `.trim();
 
   try {
-    const r = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from,
-        to: [OWNER_EMAIL],
-        subject: args.subject,
-        html,
-      }),
+    const resp = await resend.emails.send({
+      from,
+      to: ownerTo,
+      subject: args.subject,
+      html,
     });
 
-    if (!r.ok) {
-      const txt = await r.text().catch(() => "");
-      // eslint-disable-next-line no-console
-      console.error("Resend email failed:", r.status, txt);
+    if ((resp as any)?.error) {
+      console.error("Resend send error:", (resp as any).error);
+    } else {
+      console.log("Resend email sent:", resp);
     }
   } catch (e: any) {
-    // eslint-disable-next-line no-console
-    console.error("Resend email crashed:", e?.message ?? String(e));
+    console.error("Resend crashed:", e?.message ?? String(e));
   }
 }
 
-function escapeHtml(input: string) {
-  return input
+function escapeHtml(s: string) {
+  return s
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
@@ -169,7 +127,6 @@ async function approveById(submissionId: string, patch: Record<string, any>) {
     .eq("id", submissionId);
 
   if (error) {
-    // eslint-disable-next-line no-console
     console.error("Supabase approveById failed:", error.message, { submissionId });
   }
 }
@@ -192,7 +149,6 @@ async function revokeByStripeSubscriptionId(
     .eq("stripe_subscription_id", stripeSubscriptionId);
 
   if (error) {
-    // eslint-disable-next-line no-console
     console.error("Supabase revokeByStripeSubscriptionId failed:", error.message, {
       stripeSubscriptionId,
       reason,
@@ -211,14 +167,12 @@ async function revokeByEmailLatest(email: string, reason: string, patch: Record<
     .limit(1);
 
   if (selectErr) {
-    // eslint-disable-next-line no-console
     console.error("Supabase revokeByEmailLatest select failed:", selectErr.message, { email });
     return;
   }
 
   const row = rows?.[0];
   if (!row?.id) {
-    // eslint-disable-next-line no-console
     console.warn("revokeByEmailLatest: no row found for email", { email, reason });
     return;
   }
@@ -234,7 +188,6 @@ async function revokeByEmailLatest(email: string, reason: string, patch: Record<
     .eq("id", row.id);
 
   if (updateErr) {
-    // eslint-disable-next-line no-console
     console.error("Supabase revokeByEmailLatest update failed:", updateErr.message, {
       email,
       rowId: row.id,
@@ -244,7 +197,6 @@ async function revokeByEmailLatest(email: string, reason: string, patch: Record<
 }
 
 // NOTE: Do NOT hardcode apiVersion here.
-// Stripe SDK types pin allowed apiVersion; overriding can break builds.
 const stripe = new Stripe(mustGet("STRIPE_SECRET_KEY"));
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -276,29 +228,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const paymentStatus = session.payment_status;
       const isPaid = paymentStatus === "paid" || paymentStatus === "no_payment_required";
       if (!isPaid) {
-        // eslint-disable-next-line no-console
         console.warn("checkout.session.completed but not paid:", {
           id: session.id,
           payment_status: paymentStatus,
         });
-
-        await notifyOwner({
-          subject: "MedicaidReady — Checkout completed (NOT paid)",
-          heading: "Checkout completed, but payment not confirmed",
-          lines: [
-            `Stripe session: ${session.id}`,
-            `Payment status: ${paymentStatus}`,
-            `Customer email: ${normalizeEmail(
-              session.customer_details?.email || session.customer_email || session.metadata?.email || ""
-            ) || "—"}`,
-          ],
-          meta: {
-            eventType: event.type,
-            sessionId: session.id,
-            payment_status: paymentStatus,
-          },
-        });
-
         return res.status(200).json({ received: true });
       }
 
@@ -321,7 +254,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           subStatus = (subAny?.status ?? null) as string | null;
           periodEndIso = toIsoOrNull((subAny?.current_period_end ?? null) as any);
         } catch (e: any) {
-          // eslint-disable-next-line no-console
           console.error("Stripe subscription retrieve failed:", e?.message ?? String(e), {
             stripeSubscriptionId,
           });
@@ -335,6 +267,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         stripe_current_period_end: periodEndIso,
       };
 
+      // DB approve
       if (submissionId) {
         await approveById(submissionId, patch);
       } else if (email) {
@@ -348,41 +281,32 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         if (!selectErr && rows?.[0]?.id) {
           await approveById(rows[0].id, patch);
-        } else if (selectErr) {
-          // eslint-disable-next-line no-console
-          console.error("Supabase select failed:", selectErr.message, { email });
         } else {
-          // eslint-disable-next-line no-console
           console.warn("No request_access_submissions row found for email:", email);
         }
       } else {
-        // eslint-disable-next-line no-console
         console.warn("checkout.session.completed missing submission_id and email", {
           stripeSessionId: session.id,
         });
       }
 
+      // OWNER EMAIL
       await notifyOwner({
-        subject: "MedicaidReady — New subscription payment succeeded",
-        heading: "New subscription created (payment succeeded)",
+        subject: "MedicaidReady • New subscription (checkout completed)",
+        title: "New subscription / checkout completed",
         lines: [
-          `Customer email: ${email || "—"}`,
-          `Submission ID: ${submissionId || "—"}`,
-          `Stripe customer: ${stripeCustomerId || "—"}`,
-          `Stripe subscription: ${stripeSubscriptionId || "—"}`,
-          `Subscription status: ${subStatus || "—"}`,
-          `Current period end: ${periodEndIso || "—"}`,
-          `Stripe session: ${session.id}`,
+          `Customer email: <strong>${escapeHtml(email || "—")}</strong>`,
+          `Submission ID: <strong>${escapeHtml(submissionId || "—")}</strong>`,
+          `Stripe customer: <strong>${escapeHtml(stripeCustomerId || "—")}</strong>`,
+          `Stripe subscription: <strong>${escapeHtml(stripeSubscriptionId || "—")}</strong>`,
+          `Subscription status: <strong>${escapeHtml(subStatus || "—")}</strong>`,
+          `Period end: <strong>${escapeHtml(periodEndIso || "—")}</strong>`,
+          `Stripe session: <strong>${escapeHtml(session.id)}</strong>`,
         ],
         meta: {
           eventType: event.type,
           sessionId: session.id,
-          submission_id: submissionId || null,
-          email: email || null,
-          stripe_customer_id: stripeCustomerId || null,
-          stripe_subscription_id: stripeSubscriptionId || null,
-          stripe_subscription_status: subStatus || null,
-          stripe_current_period_end: periodEndIso,
+          paymentStatus,
         },
       });
 
@@ -393,8 +317,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (event.type === "customer.subscription.updated") {
       const sub = event.data.object as Stripe.Subscription;
 
-      const stripeSubscriptionId = (sub.id ?? "").toString();
-      const status = (sub.status ?? "").toString();
+      const stripeSubscriptionId = safeString(sub.id);
+      const status = safeString(sub.status);
       const periodEndIso = toIsoOrNull((sub as any).current_period_end ?? null);
 
       const patch = {
@@ -417,7 +341,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           .eq("stripe_subscription_id", stripeSubscriptionId);
 
         if (error) {
-          // eslint-disable-next-line no-console
           console.error("Supabase subscription.updated approve failed:", error.message, {
             stripeSubscriptionId,
             status,
@@ -428,21 +351,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
 
       await notifyOwner({
-        subject: `MedicaidReady — Subscription updated (${status || "unknown"})`,
-        heading: "Subscription status updated",
+        subject: "MedicaidReady • Subscription updated",
+        title: "Subscription updated",
         lines: [
-          `Stripe subscription: ${stripeSubscriptionId}`,
-          `Status: ${status || "—"}`,
-          `Current period end: ${periodEndIso || "—"}`,
+          `Stripe subscription: <strong>${escapeHtml(stripeSubscriptionId)}</strong>`,
+          `Status: <strong>${escapeHtml(status || "—")}</strong>`,
+          `Period end: <strong>${escapeHtml(periodEndIso || "—")}</strong>`,
+          `Action: <strong>${escapeHtml(isGoodSubStatus(status) ? "approved" : "revoked")}</strong>`,
         ],
-        meta: {
-          eventType: event.type,
-          stripe_subscription_id: stripeSubscriptionId,
-          status,
-          current_period_end: periodEndIso,
-          cancel_at_period_end: (sub as any)?.cancel_at_period_end ?? null,
-          canceled_at: toIsoOrNull((sub as any)?.canceled_at ?? null),
-        },
+        meta: { eventType: event.type },
       });
 
       return res.status(200).json({ received: true });
@@ -452,7 +369,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (event.type === "customer.subscription.deleted") {
       const sub = event.data.object as Stripe.Subscription;
 
-      const stripeSubscriptionId = (sub.id ?? "").toString();
+      const stripeSubscriptionId = safeString(sub.id);
       if (!stripeSubscriptionId) return res.status(200).json({ received: true });
 
       const periodEndIso = toIsoOrNull((sub as any).current_period_end ?? null);
@@ -463,17 +380,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       });
 
       await notifyOwner({
-        subject: "MedicaidReady — Subscription canceled",
-        heading: "Subscription canceled / deleted",
-        lines: [`Stripe subscription: ${stripeSubscriptionId}`, `Current period end: ${periodEndIso || "—"}`],
-        meta: {
-          eventType: event.type,
-          stripe_subscription_id: stripeSubscriptionId,
-          status: safeText((sub as any)?.status),
-          canceled_at: toIsoOrNull((sub as any)?.canceled_at ?? null),
-          ended_at: toIsoOrNull((sub as any)?.ended_at ?? null),
-          current_period_end: periodEndIso,
-        },
+        subject: "MedicaidReady • Subscription canceled",
+        title: "Subscription canceled",
+        lines: [
+          `Stripe subscription: <strong>${escapeHtml(stripeSubscriptionId)}</strong>`,
+          `Period end: <strong>${escapeHtml(periodEndIso || "—")}</strong>`,
+          `Action: <strong>revoked</strong>`,
+        ],
+        meta: { eventType: event.type },
       });
 
       return res.status(200).json({ received: true });
@@ -486,59 +400,42 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const subField = (invoice as any)?.subscription;
       const stripeSubscriptionId = (typeof subField === "string" ? subField : "") || "";
 
-      const email = normalizeEmail((invoice as any)?.customer_email || "");
-      const amountDue = (invoice as any)?.amount_due ?? null;
-      const currency = (invoice as any)?.currency ?? null;
-
       if (stripeSubscriptionId) {
         await revokeByStripeSubscriptionId(stripeSubscriptionId, "invoice_payment_failed", {
           stripe_subscription_status: "past_due",
         });
-      } else if (email) {
-        await revokeByEmailLatest(email, "invoice_payment_failed_no_subscription_id", {
-          stripe_subscription_status: "past_due",
-        });
+      } else {
+        const email = normalizeEmail((invoice as any)?.customer_email || "");
+        if (email) {
+          await revokeByEmailLatest(email, "invoice_payment_failed_no_subscription_id", {
+            stripe_subscription_status: "past_due",
+          });
+        }
       }
 
       await notifyOwner({
-        subject: "MedicaidReady — Payment failed (subscription at risk)",
-        heading: "Invoice payment failed",
+        subject: "MedicaidReady • Payment failed",
+        title: "Invoice payment failed",
         lines: [
-          `Customer email: ${email || "—"}`,
-          `Stripe subscription: ${stripeSubscriptionId || "—"}`,
-          `Amount due: ${fmtMoney(amountDue, currency)}`,
-          `Invoice: ${invoice.id}`,
+          `Invoice: <strong>${escapeHtml(safeString((invoice as any)?.id || "—"))}</strong>`,
+          `Stripe subscription: <strong>${escapeHtml(stripeSubscriptionId || "—")}</strong>`,
+          `Customer email: <strong>${escapeHtml(normalizeEmail((invoice as any)?.customer_email || "") || "—")}</strong>`,
+          `Action: <strong>revoked / past_due</strong>`,
         ],
-        meta: {
-          eventType: event.type,
-          invoiceId: invoice.id,
-          subscription: stripeSubscriptionId || null,
-          customer_email: email || null,
-          amount_due: amountDue,
-          currency,
-          hosted_invoice_url: (invoice as any)?.hosted_invoice_url ?? null,
-          attempt_count: (invoice as any)?.attempt_count ?? null,
-        },
+        meta: { eventType: event.type },
       });
 
       return res.status(200).json({ received: true });
     }
 
-    // E) invoice.paid -> re-approve (includes renewals)
+    // E) invoice.paid -> re-approve
     if (event.type === "invoice.paid") {
       const invoice = event.data.object as Stripe.Invoice;
 
       const subField = (invoice as any)?.subscription;
       const stripeSubscriptionId = (typeof subField === "string" ? subField : "") || "";
 
-      const email = normalizeEmail((invoice as any)?.customer_email || "");
-      const amountPaid = (invoice as any)?.amount_paid ?? null;
-      const currency = (invoice as any)?.currency ?? null;
-      const billingReason = safeText((invoice as any)?.billing_reason);
-
-      const patch = {
-        stripe_subscription_status: "active",
-      };
+      const patch = { stripe_subscription_status: "active" };
 
       if (stripeSubscriptionId) {
         const sb = supabaseAdmin();
@@ -553,67 +450,45 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           .eq("stripe_subscription_id", stripeSubscriptionId);
 
         if (error) {
-          // eslint-disable-next-line no-console
           console.error("Supabase invoice.paid approve failed:", error.message, {
             stripeSubscriptionId,
           });
         }
-      } else if (email) {
-        const sb = supabaseAdmin();
-        const { data: rows, error: selectErr } = await sb
-          .from("request_access_submissions")
-          .select("id, created_at")
-          .eq("email", email)
-          .order("created_at", { ascending: false })
-          .limit(1);
+      } else {
+        const email = normalizeEmail((invoice as any)?.customer_email || "");
+        if (email) {
+          const sb = supabaseAdmin();
+          const { data: rows, error: selectErr } = await sb
+            .from("request_access_submissions")
+            .select("id, created_at")
+            .eq("email", email)
+            .order("created_at", { ascending: false })
+            .limit(1);
 
-        if (!selectErr && rows?.[0]?.id) {
-          await approveById(rows[0].id, patch);
+          if (!selectErr && rows?.[0]?.id) {
+            await approveById(rows[0].id, patch);
+          }
         }
       }
 
       await notifyOwner({
-        subject: "MedicaidReady — Payment received (invoice paid)",
-        heading: "Invoice paid (includes monthly renewals)",
+        subject: "MedicaidReady • Payment received",
+        title: "Invoice paid",
         lines: [
-          `Customer email: ${email || "—"}`,
-          `Stripe subscription: ${stripeSubscriptionId || "—"}`,
-          `Amount paid: ${fmtMoney(amountPaid, currency)}`,
-          `Billing reason: ${billingReason || "—"}`,
-          `Invoice: ${invoice.id}`,
+          `Invoice: <strong>${escapeHtml(safeString((invoice as any)?.id || "—"))}</strong>`,
+          `Stripe subscription: <strong>${escapeHtml(stripeSubscriptionId || "—")}</strong>`,
+          `Customer email: <strong>${escapeHtml(normalizeEmail((invoice as any)?.customer_email || "") || "—")}</strong>`,
+          `Action: <strong>approved</strong>`,
         ],
-        meta: {
-          eventType: event.type,
-          invoiceId: invoice.id,
-          subscription: stripeSubscriptionId || null,
-          customer_email: email || null,
-          amount_paid: amountPaid,
-          currency,
-          billing_reason: billingReason || null,
-          hosted_invoice_url: (invoice as any)?.hosted_invoice_url ?? null,
-        },
+        meta: { eventType: event.type },
       });
 
       return res.status(200).json({ received: true });
     }
 
-    // default
     return res.status(200).json({ received: true });
   } catch (e: any) {
-    // eslint-disable-next-line no-console
     console.error("Webhook handler error:", e?.message ?? String(e));
-
-    // Best-effort owner email (do not block Stripe ACK)
-    await notifyOwner({
-      subject: "MedicaidReady — Webhook handler error",
-      heading: "Webhook handler crashed",
-      lines: [`Event type: ${event?.type || "—"}`, `Error: ${e?.message ?? String(e)}`],
-      meta: {
-        eventType: event?.type || null,
-        eventId: (event as any)?.id || null,
-      },
-    });
-
     return res.status(500).send("Webhook handler failed");
   }
 }
