@@ -90,95 +90,68 @@ export default function RequestAccessPage() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      <div className="mrw-root">
-        {/* Top header matching Pricing */}
-        <header className="mrw-header">
-          <div className="mrw-shell mrw-header-inner">
-            <Link href="/" className="mrw-brand" aria-label="Go to home">
-              <span className="mrw-logo" aria-hidden="true" />
-              <span className="mrw-brand-text">
-                <span className="mrw-brand-title">MedicaidReady</span>
-                <span className="mrw-brand-sub">MD • VA • DC</span>
-              </span>
-            </Link>
-
-            <nav className="mrw-nav" aria-label="Primary navigation">
-              <Link href="/" className="mrw-nav-link">
-                Home
-              </Link>
-              <Link href="/request-access" className="mrw-nav-link mrw-active">
-                Request Access
-              </Link>
-              <Link href="/signin" className="mrw-nav-cta">
-                Sign in
-              </Link>
-            </nav>
-          </div>
-        </header>
-
-        <main className="mrw-main">
-          <div className="mrw-shell">
-            <div className="mrw-hero">
-              <h1 className="mrw-h1">Request access</h1>
-              <p className="mrw-lead">
+      <div className="ra-root">
+        <main className="ra-main">
+          <div className="ra-shell">
+            <div className="ra-hero">
+              <h1 className="ra-h1">Request access</h1>
+              <p className="ra-lead">
                 Submit your details and we’ll review and approve your account.
               </p>
             </div>
 
-            <div className="mrw-grid">
-              {/* Left card: simple explanation like pricing */}
-              <section className="mrw-card">
-                <h2 className="mrw-card-title">Prefer to request access first?</h2>
-                <p className="mrw-card-text">
+            <div className="ra-grid">
+              {/* Left card */}
+              <section className="ra-card">
+                <h2 className="ra-card-title">Prefer to request access first?</h2>
+                <p className="ra-card-text">
                   Use your work email. Optional details help speed approval.
                 </p>
 
-                <ul className="mrw-bullets">
+                <ul className="ra-bullets">
                   <li>Reviewed within 1–2 business days</li>
                   <li>No spam — we only contact you about access</li>
                   <li>Once approved, you can sign in immediately</li>
                 </ul>
 
-                <div className="mrw-mini-note">
+                <div className="ra-mini-note">
                   Already comparing plans?{" "}
-                  <Link href="/pricing" className="mrw-link">
+                  <Link href="/pricing" className="ra-link">
                     View pricing
                   </Link>
                 </div>
               </section>
 
-              {/* Right card: the form (white, premium) */}
-              <section className="mrw-card">
-                <div className="mrw-formhead">
-                  <h2 className="mrw-card-title">Request access</h2>
-                  <div className="mrw-badge">Reviewed quickly</div>
+              {/* Right card: form */}
+              <section className="ra-card">
+                <div className="ra-formhead">
+                  <h2 className="ra-card-title">Request access</h2>
+                  <div className="ra-badge">Reviewed quickly</div>
                 </div>
 
                 {submitState === "success" && (
-                  <div className="mrw-alert mrw-alert-success" role="status">
-                    <div className="mrw-alert-title">Request received.</div>
-                    <div className="mrw-alert-text">
+                  <div className="ra-alert ra-alert-success" role="status">
+                    <div className="ra-alert-title">Request received.</div>
+                    <div className="ra-alert-text">
                       We’ll follow up by email with next steps.
                     </div>
                   </div>
                 )}
 
                 {submitState === "error" && (
-                  <div className="mrw-alert mrw-alert-error" role="alert">
-                    <div className="mrw-alert-title">Submission failed.</div>
-                    <div className="mrw-alert-text">
+                  <div className="ra-alert ra-alert-error" role="alert">
+                    <div className="ra-alert-title">Submission failed.</div>
+                    <div className="ra-alert-text">
                       {errorMessage || "Please try again."}
                     </div>
                   </div>
                 )}
 
-                <form onSubmit={handleSubmit} className="mrw-form">
-                  <div className="mrw-field">
-                    <label className="mrw-label">Work email</label>
+                <form onSubmit={handleSubmit} className="ra-form">
+                  <div className="ra-field">
+                    <label className="ra-label">Work email</label>
                     <input
-                      className={
-                        "mrw-input" + (workEmail && !emailOk ? " mrw-input-invalid" : "")
-                      }
+                      className={"ra-input" + (workEmail && !emailOk ? " ra-input-invalid" : "")}
                       value={workEmail}
                       onChange={(e) => setWorkEmail(e.target.value)}
                       placeholder="name@organization.com"
@@ -186,15 +159,15 @@ export default function RequestAccessPage() {
                       required
                     />
                     {workEmail && !emailOk ? (
-                      <div className="mrw-help">Enter a valid email address.</div>
+                      <div className="ra-help">Enter a valid email address.</div>
                     ) : null}
                   </div>
 
-                  <div className="mrw-2col">
-                    <div className="mrw-field">
-                      <label className="mrw-label">Full name (optional)</label>
+                  <div className="ra-2col">
+                    <div className="ra-field">
+                      <label className="ra-label">Full name (optional)</label>
                       <input
-                        className="mrw-input"
+                        className="ra-input"
                         value={fullName}
                         onChange={(e) => setFullName(e.target.value)}
                         placeholder="e.g., John Doe"
@@ -202,10 +175,10 @@ export default function RequestAccessPage() {
                       />
                     </div>
 
-                    <div className="mrw-field">
-                      <label className="mrw-label">Primary state (optional)</label>
+                    <div className="ra-field">
+                      <label className="ra-label">Primary state (optional)</label>
                       <input
-                        className="mrw-input"
+                        className="ra-input"
                         value={stateCode}
                         onChange={(e) => setStateCode(e.target.value.toUpperCase())}
                         placeholder="e.g., MD"
@@ -214,11 +187,11 @@ export default function RequestAccessPage() {
                     </div>
                   </div>
 
-                  <div className="mrw-2col">
-                    <div className="mrw-field">
-                      <label className="mrw-label">Organization (optional)</label>
+                  <div className="ra-2col">
+                    <div className="ra-field">
+                      <label className="ra-label">Organization (optional)</label>
                       <input
-                        className="mrw-input"
+                        className="ra-input"
                         value={organization}
                         onChange={(e) => setOrganization(e.target.value)}
                         placeholder="e.g., ACME Health"
@@ -226,10 +199,10 @@ export default function RequestAccessPage() {
                       />
                     </div>
 
-                    <div className="mrw-field">
-                      <label className="mrw-label">Role / title (optional)</label>
+                    <div className="ra-field">
+                      <label className="ra-label">Role / title (optional)</label>
                       <input
-                        className="mrw-input"
+                        className="ra-input"
                         value={roleTitle}
                         onChange={(e) => setRoleTitle(e.target.value)}
                         placeholder="e.g., Program Analyst"
@@ -238,10 +211,10 @@ export default function RequestAccessPage() {
                     </div>
                   </div>
 
-                  <div className="mrw-field">
-                    <label className="mrw-label">Notes (optional)</label>
+                  <div className="ra-field">
+                    <label className="ra-label">Notes (optional)</label>
                     <textarea
-                      className="mrw-textarea"
+                      className="ra-textarea"
                       value={notes}
                       onChange={(e) => setNotes(e.target.value)}
                       rows={4}
@@ -251,7 +224,7 @@ export default function RequestAccessPage() {
 
                   <button
                     type="submit"
-                    className={"mrw-btn" + (!canSubmit ? " mrw-btn-disabled" : "")}
+                    className={"ra-btn" + (!canSubmit ? " ra-btn-disabled" : "")}
                     disabled={!canSubmit}
                   >
                     {submitState === "submitting"
@@ -261,50 +234,44 @@ export default function RequestAccessPage() {
                       : "Request access"}
                   </button>
 
-                  <div className="mrw-legal">
+                  <div className="ra-legal">
                     By submitting, you agree we can contact you about access.
                   </div>
                 </form>
               </section>
             </div>
 
-            <footer className="mrw-footer">
-              <div className="mrw-footer-inner">
-                <div>© {new Date().getFullYear()} MedicaidReady</div>
-                <div className="mrw-footer-links">
-                  <Link href="/pricing" className="mrw-footer-link">
-                    Pricing
-                  </Link>
-                  <Link href="/" className="mrw-footer-link">
-                    Home
-                  </Link>
-                </div>
-              </div>
-            </footer>
+            <div className="ra-bottom-links">
+              <Link href="/pricing" className="ra-bottom-link">
+                View pricing
+              </Link>
+              <Link href="/signin" className="ra-bottom-link">
+                Sign in
+              </Link>
+            </div>
           </div>
         </main>
 
         <style jsx global>{`
           :root {
-            --mrw-ink: #0b1220;
-            --mrw-muted: rgba(11, 18, 32, 0.72);
-            --mrw-border: rgba(11, 18, 32, 0.12);
-            --mrw-border2: rgba(11, 18, 32, 0.08);
-            --mrw-card: rgba(255, 255, 255, 0.92);
-            --mrw-shadow: 0 16px 40px rgba(11, 18, 32, 0.08);
-            --mrw-blue: #0b3a67;
-            --mrw-blue2: #0a2f55;
+            --ra-ink: #0b1220;
+            --ra-muted: rgba(11, 18, 32, 0.72);
+            --ra-border: rgba(11, 18, 32, 0.12);
+            --ra-card: rgba(255, 255, 255, 0.92);
+            --ra-shadow: 0 16px 40px rgba(11, 18, 32, 0.08);
+            --ra-blue: #0b3a67;
+            --ra-blue2: #0a2f55;
           }
 
           html,
           body {
             background: #f4f7fb;
-            color: var(--mrw-ink);
+            color: var(--ra-ink);
           }
 
-          .mrw-root {
+          .ra-root {
             min-height: 100vh;
-            color: var(--mrw-ink);
+            color: var(--ra-ink);
             font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
               Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
             background: radial-gradient(
@@ -320,117 +287,18 @@ export default function RequestAccessPage() {
               linear-gradient(#f4f7fb, #f4f7fb);
           }
 
-          .mrw-shell {
+          .ra-shell {
             max-width: 1180px;
             margin: 0 auto;
-            padding: 0 18px;
+            padding: 26px 18px 28px;
           }
 
-          .mrw-header {
-            position: sticky;
-            top: 0;
-            z-index: 30;
-            background: rgba(255, 255, 255, 0.86);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--mrw-border2);
-          }
-
-          .mrw-header-inner {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 16px 0;
-            gap: 14px;
-          }
-
-          .mrw-brand {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            color: var(--mrw-ink);
-          }
-
-          .mrw-brand:focus-visible {
-            outline: none;
-            box-shadow: 0 0 0 4px rgba(11, 58, 103, 0.18);
-            border-radius: 14px;
-          }
-
-          .mrw-logo {
-            width: 52px;
-            height: 52px;
-            border-radius: 14px;
-            background: var(--mrw-blue);
-            box-shadow: 0 10px 20px rgba(11, 58, 103, 0.18);
-          }
-
-          .mrw-brand-text {
-            display: flex;
-            flex-direction: column;
-            line-height: 1.1;
-          }
-
-          .mrw-brand-title {
-            font-family: ui-serif, Georgia, "Times New Roman", Times, serif;
-            font-weight: 700;
-            font-size: 20px;
-            letter-spacing: 0.2px;
-          }
-
-          .mrw-brand-sub {
-            margin-top: 4px;
-            font-size: 13px;
-            color: rgba(11, 18, 32, 0.65);
-          }
-
-          .mrw-nav {
-            display: flex;
-            align-items: center;
-            gap: 22px;
-          }
-
-          .mrw-nav-link {
-            text-decoration: none;
-            color: rgba(11, 18, 32, 0.78);
-            font-weight: 600;
-          }
-
-          .mrw-nav-link:hover {
-            color: var(--mrw-ink);
-            text-decoration: underline;
-            text-decoration-color: rgba(11, 18, 32, 0.18);
-            text-underline-offset: 4px;
-          }
-
-          .mrw-active {
-            color: var(--mrw-ink);
-          }
-
-          .mrw-nav-cta {
-            text-decoration: none;
-            background: var(--mrw-blue);
-            color: white;
-            padding: 12px 18px;
-            border-radius: 999px;
-            font-weight: 700;
-            box-shadow: 0 14px 24px rgba(11, 58, 103, 0.18);
-          }
-
-          .mrw-nav-cta:hover {
-            background: var(--mrw-blue2);
-          }
-
-          .mrw-main {
-            padding: 34px 0 22px;
-          }
-
-          .mrw-hero {
-            padding: 12px 0 26px;
+          .ra-hero {
+            padding: 10px 0 22px;
             border-bottom: 1px solid rgba(11, 18, 32, 0.08);
           }
 
-          .mrw-h1 {
+          .ra-h1 {
             margin: 0;
             font-family: ui-serif, Georgia, "Times New Roman", Times, serif;
             font-weight: 700;
@@ -439,30 +307,30 @@ export default function RequestAccessPage() {
             color: #0b1220;
           }
 
-          .mrw-lead {
+          .ra-lead {
             margin: 14px 0 0;
             font-size: 18px;
-            color: var(--mrw-muted);
+            color: var(--ra-muted);
             max-width: 70ch;
             line-height: 1.6;
           }
 
-          .mrw-grid {
+          .ra-grid {
             display: grid;
             grid-template-columns: 1fr;
             gap: 20px;
-            margin-top: 26px;
+            margin-top: 22px;
           }
 
-          .mrw-card {
-            background: var(--mrw-card);
+          .ra-card {
+            background: var(--ra-card);
             border: 1px solid rgba(11, 18, 32, 0.10);
             border-radius: 18px;
-            box-shadow: var(--mrw-shadow);
+            box-shadow: var(--ra-shadow);
             padding: 22px;
           }
 
-          .mrw-card-title {
+          .ra-card-title {
             margin: 0;
             font-family: ui-serif, Georgia, "Times New Roman", Times, serif;
             font-weight: 700;
@@ -470,34 +338,34 @@ export default function RequestAccessPage() {
             color: #0b1220;
           }
 
-          .mrw-card-text {
+          .ra-card-text {
             margin: 10px 0 0;
-            color: var(--mrw-muted);
+            color: var(--ra-muted);
             font-size: 16px;
             line-height: 1.6;
           }
 
-          .mrw-bullets {
+          .ra-bullets {
             margin: 14px 0 0;
             padding-left: 18px;
             color: rgba(11, 18, 32, 0.80);
             line-height: 1.9;
           }
 
-          .mrw-mini-note {
+          .ra-mini-note {
             margin-top: 16px;
             color: rgba(11, 18, 32, 0.72);
           }
 
-          .mrw-link {
-            color: var(--mrw-blue);
+          .ra-link {
+            color: var(--ra-blue);
             font-weight: 700;
             text-decoration: underline;
             text-decoration-color: rgba(11, 58, 103, 0.25);
             text-underline-offset: 4px;
           }
 
-          .mrw-formhead {
+          .ra-formhead {
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -505,7 +373,7 @@ export default function RequestAccessPage() {
             margin-bottom: 12px;
           }
 
-          .mrw-badge {
+          .ra-badge {
             font-size: 12px;
             font-weight: 800;
             color: rgba(11, 18, 32, 0.72);
@@ -516,7 +384,7 @@ export default function RequestAccessPage() {
             white-space: nowrap;
           }
 
-          .mrw-alert {
+          .ra-alert {
             margin: 10px 0 14px;
             border-radius: 14px;
             padding: 14px;
@@ -524,44 +392,44 @@ export default function RequestAccessPage() {
             background: rgba(244, 247, 251, 0.8);
           }
 
-          .mrw-alert-title {
+          .ra-alert-title {
             font-weight: 800;
           }
 
-          .mrw-alert-text {
+          .ra-alert-text {
             margin-top: 6px;
             color: rgba(11, 18, 32, 0.78);
           }
 
-          .mrw-alert-success {
+          .ra-alert-success {
             border-color: rgba(34, 197, 94, 0.22);
             background: rgba(34, 197, 94, 0.08);
           }
 
-          .mrw-alert-error {
+          .ra-alert-error {
             border-color: rgba(239, 68, 68, 0.22);
             background: rgba(239, 68, 68, 0.08);
           }
 
-          .mrw-form {
+          .ra-form {
             margin-top: 6px;
             display: flex;
             flex-direction: column;
             gap: 14px;
           }
 
-          .mrw-field {
+          .ra-field {
             display: flex;
             flex-direction: column;
             gap: 8px;
           }
 
-          .mrw-label {
+          .ra-label {
             font-weight: 700;
             color: rgba(11, 18, 32, 0.86);
           }
 
-          .mrw-input {
+          .ra-input {
             height: 46px;
             border-radius: 12px;
             border: 1px solid rgba(11, 18, 32, 0.16);
@@ -572,27 +440,27 @@ export default function RequestAccessPage() {
             outline: none;
           }
 
-          .mrw-input:focus {
+          .ra-input:focus {
             border-color: rgba(11, 58, 103, 0.42);
             box-shadow: 0 0 0 4px rgba(11, 58, 103, 0.12);
           }
 
-          .mrw-input-invalid {
+          .ra-input-invalid {
             border-color: rgba(239, 68, 68, 0.45);
           }
 
-          .mrw-help {
+          .ra-help {
             font-size: 13px;
             color: rgba(239, 68, 68, 0.9);
           }
 
-          .mrw-2col {
+          .ra-2col {
             display: grid;
             grid-template-columns: 1fr;
             gap: 14px;
           }
 
-          .mrw-textarea {
+          .ra-textarea {
             border-radius: 12px;
             border: 1px solid rgba(11, 18, 32, 0.16);
             padding: 12px 14px;
@@ -604,16 +472,16 @@ export default function RequestAccessPage() {
             min-height: 112px;
           }
 
-          .mrw-textarea:focus {
+          .ra-textarea:focus {
             border-color: rgba(11, 58, 103, 0.42);
             box-shadow: 0 0 0 4px rgba(11, 58, 103, 0.12);
           }
 
-          .mrw-btn {
+          .ra-btn {
             height: 56px;
             border-radius: 14px;
             border: none;
-            background: var(--mrw-blue);
+            background: var(--ra-blue);
             color: white;
             font-weight: 800;
             font-size: 18px;
@@ -621,50 +489,37 @@ export default function RequestAccessPage() {
             box-shadow: 0 18px 32px rgba(11, 58, 103, 0.18);
           }
 
-          .mrw-btn:hover {
-            background: var(--mrw-blue2);
+          .ra-btn:hover {
+            background: var(--ra-blue2);
           }
 
-          .mrw-btn-disabled,
-          .mrw-btn:disabled {
+          .ra-btn-disabled,
+          .ra-btn:disabled {
             opacity: 0.6;
             cursor: not-allowed;
           }
 
-          .mrw-legal {
+          .ra-legal {
             font-size: 13px;
             color: rgba(11, 18, 32, 0.62);
             line-height: 1.5;
           }
 
-          .mrw-footer {
-            margin-top: 26px;
-            border-top: 1px solid rgba(11, 18, 32, 0.08);
-            padding: 18px 0 26px;
-            color: rgba(11, 18, 32, 0.6);
-          }
-
-          .mrw-footer-inner {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            align-items: flex-start;
-            justify-content: space-between;
-          }
-
-          .mrw-footer-links {
+          .ra-bottom-links {
             display: flex;
             gap: 14px;
-            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 18px;
+            color: rgba(11, 18, 32, 0.72);
           }
 
-          .mrw-footer-link {
+          .ra-bottom-link {
             text-decoration: none;
-            color: rgba(11, 18, 32, 0.7);
-            font-weight: 700;
+            color: rgba(11, 18, 32, 0.78);
+            font-weight: 800;
           }
 
-          .mrw-footer-link:hover {
+          .ra-bottom-link:hover {
             color: rgba(11, 18, 32, 0.95);
             text-decoration: underline;
             text-decoration-color: rgba(11, 18, 32, 0.18);
@@ -672,30 +527,19 @@ export default function RequestAccessPage() {
           }
 
           @media (min-width: 900px) {
-            .mrw-grid {
+            .ra-grid {
               grid-template-columns: 1.05fr 1fr;
               gap: 22px;
               align-items: start;
             }
-            .mrw-2col {
+            .ra-2col {
               grid-template-columns: 1fr 1fr;
-            }
-            .mrw-footer-inner {
-              flex-direction: row;
-              align-items: center;
             }
           }
 
           @media (max-width: 560px) {
-            .mrw-h1 {
+            .ra-h1 {
               font-size: 44px;
-            }
-            .mrw-nav {
-              gap: 14px;
-            }
-            .mrw-logo {
-              width: 46px;
-              height: 46px;
             }
           }
         `}</style>
