@@ -1,154 +1,25 @@
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { useEffect, useMemo, useState } from "react";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
+  const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // Close menu on route changes / navigation clicks (simple + safe)
+  // Close menu on route change (real Next.js navigation, not just popstate)
   useEffect(() => {
     const close = () => setMenuOpen(false);
-    window.addEventListener("popstate", close);
-    return () => window.removeEventListener("popstate", close);
-  }, []);
+    router.events.on("routeChangeStart", close);
+    router.events.on("hashChangeStart", close);
+    return () => {
+      router.events.off("routeChangeStart", close);
+      router.events.off("hashChangeStart", close);
+    };
+  }, [router.events]);
 
-  const shellStyle: React.CSSProperties = {
-    minHeight: "100vh",
-    display: "flex",
-    flexDirection: "column",
-    background: "#ffffff",
-    color: "#0b1220",
-    fontFamily:
-      'ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"',
-  };
-
-  const headerStyle: React.CSSProperties = {
-    position: "sticky",
-    top: 0,
-    zIndex: 50,
-    background: "rgba(255, 255, 255, 0.92)",
-    backdropFilter: "blur(10px)",
-    borderBottom: "1px solid rgba(15, 23, 42, 0.10)",
-  };
-
-  const headerInnerStyle: React.CSSProperties = {
-    maxWidth: 1100,
-    margin: "0 auto",
-    padding: "12px 16px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    gap: 12,
-    flexWrap: "nowrap", // IMPORTANT: stop wrapping causing the wiggle
-  };
-
-  const brandStyle: React.CSSProperties = {
-    display: "inline-flex",
-    alignItems: "center",
-    gap: 10,
-    textDecoration: "none",
-    color: "#0b1220",
-    fontWeight: 900,
-    letterSpacing: -0.2,
-    whiteSpace: "nowrap",
-    flex: "0 0 auto",
-  };
-
-  const navStyle: React.CSSProperties = {
-    display: "flex",
-    alignItems: "center",
-    gap: 10,
-    flexWrap: "nowrap",
-    justifyContent: "flex-end",
-    flex: "1 1 auto",
-    minWidth: 0,
-  };
-
-  const navLinkStyle: React.CSSProperties = {
-    textDecoration: "none",
-    color: "#0b1220",
-    fontWeight: 800,
-    fontSize: 13,
-    padding: "8px 10px",
-    borderRadius: 999,
-    border: "1px solid rgba(15, 23, 42, 0.10)",
-    background: "#ffffff",
-    whiteSpace: "nowrap",
-  };
-
-  const primaryLinkStyle: React.CSSProperties = {
-    ...navLinkStyle,
-    color: "#ffffff",
-    border: "1px solid rgba(11, 58, 102, 0.35)",
-    background: "linear-gradient(135deg, #0b3a66, #0f6aa6)",
-    boxShadow: "0 10px 22px rgba(11, 18, 32, 0.10)",
-  };
-
-  const menuButtonStyle: React.CSSProperties = {
-    padding: "10px 12px",
-    borderRadius: 999,
-    border: "1px solid rgba(15, 23, 42, 0.10)",
-    background: "#ffffff",
-    color: "#0b1220",
-    fontWeight: 900,
-    cursor: "pointer",
-    whiteSpace: "nowrap",
-  };
-
-  const menuPanelStyle: React.CSSProperties = {
-    maxWidth: 1100,
-    margin: "0 auto",
-    padding: "0 16px 14px",
-  };
-
-  const menuCardStyle: React.CSSProperties = {
-    border: "1px solid rgba(15, 23, 42, 0.10)",
-    borderRadius: 16,
-    background: "rgba(255,255,255,0.98)",
-    boxShadow: "0 12px 30px rgba(2, 6, 23, 0.10)",
-    overflow: "hidden",
-  };
-
-  const menuItemStyle: React.CSSProperties = {
-    display: "block",
-    padding: "12px 14px",
-    textDecoration: "none",
-    color: "#0b1220",
-    fontWeight: 900,
-    borderTop: "1px solid rgba(15, 23, 42, 0.08)",
-  };
-
-  const footerStyle: React.CSSProperties = {
-    borderTop: "1px solid rgba(15, 23, 42, 0.10)",
-    background: "#ffffff",
-  };
-
-  const footerInnerStyle: React.CSSProperties = {
-    maxWidth: 1100,
-    margin: "0 auto",
-    padding: "18px 16px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    gap: 12,
-    flexWrap: "wrap",
-    color: "#475569",
-    fontSize: 13,
-  };
-
-  const footerLinksStyle: React.CSSProperties = {
-    display: "flex",
-    gap: 12,
-    flexWrap: "wrap",
-    alignItems: "center",
-  };
-
-  const footerLinkStyle: React.CSSProperties = {
-    textDecoration: "none",
-    color: "#0b1220",
-    fontWeight: 800,
-  };
+  const year = useMemo(() => new Date().getFullYear(), []);
 
   return (
     <>
@@ -156,74 +27,244 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      {/* Mobile/desktop visibility rules */}
       <style jsx global>{`
-        .mr-desktop-nav {
+        /* Global hardening to stop mobile "wiggle" */
+        * {
+          box-sizing: border-box;
+        }
+        html,
+        body {
+          width: 100%;
+          max-width: 100%;
+          overflow-x: hidden;
+          margin: 0;
+          padding: 0;
+          background: #ffffff;
+          color: #0b1220;
+          font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+            Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+          -webkit-text-size-adjust: 100%;
+        }
+
+        /* Layout shell */
+        .mr-shell {
+          min-height: 100vh;
           display: flex;
+          flex-direction: column;
+          background: #ffffff;
         }
-        .mr-mobile-menu-btn {
+
+        /* Header: stable height, no wrap, no shifting */
+        .mr-header {
+          position: sticky;
+          top: 0;
+          z-index: 50;
+          background: #ffffff; /* solid background = less Safari repaint jitter */
+          border-bottom: 1px solid rgba(15, 23, 42, 0.10);
+        }
+
+        .mr-header-inner {
+          max-width: 1100px;
+          margin: 0 auto;
+          padding: 10px 16px;
+          height: 58px; /* fixed height prevents reflow */
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 12px;
+        }
+
+        .mr-brand {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          text-decoration: none;
+          color: #0b1220;
+          font-weight: 900;
+          letter-spacing: -0.2px;
+          white-space: nowrap;
+          flex: 0 0 auto;
+          min-width: 0;
+        }
+
+        .mr-brand-dot {
+          width: 12px;
+          height: 12px;
+          border-radius: 999px;
+          background: #0b3a66;
+          box-shadow: 0 8px 18px rgba(11, 58, 102, 0.18);
+          flex: 0 0 auto;
+        }
+
+        .mr-brand-text {
+          font-size: 16px;
+          line-height: 1;
+        }
+
+        /* Desktop nav */
+        .mr-nav {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          justify-content: flex-end;
+          flex: 1 1 auto;
+          min-width: 0;
+        }
+
+        .mr-link {
+          text-decoration: none;
+          color: #0b1220;
+          font-weight: 800;
+          font-size: 13px;
+          padding: 8px 10px;
+          border-radius: 999px;
+          border: 1px solid rgba(15, 23, 42, 0.10);
+          background: #ffffff;
+          white-space: nowrap;
+        }
+
+        .mr-link-primary {
+          color: #ffffff;
+          border: 1px solid rgba(11, 58, 102, 0.35);
+          background: linear-gradient(135deg, #0b3a66, #0f6aa6);
+          box-shadow: 0 10px 22px rgba(11, 18, 32, 0.10);
+        }
+
+        /* Mobile menu button */
+        .mr-menu-btn {
           display: none;
+          align-items: center;
+          justify-content: center;
+          height: 40px;
+          padding: 0 12px;
+          border-radius: 999px;
+          border: 1px solid rgba(15, 23, 42, 0.10);
+          background: #ffffff;
+          color: #0b1220;
+          font-weight: 900;
+          cursor: pointer;
+          white-space: nowrap;
+          flex: 0 0 auto;
         }
+
+        /* Mobile dropdown panel */
+        .mr-mobile-panel {
+          max-width: 1100px;
+          margin: 0 auto;
+          padding: 0 16px 12px;
+        }
+
+        .mr-mobile-card {
+          border: 1px solid rgba(15, 23, 42, 0.10);
+          border-radius: 16px;
+          background: #ffffff;
+          box-shadow: 0 12px 30px rgba(2, 6, 23, 0.10);
+          overflow: hidden;
+        }
+
+        .mr-mobile-item {
+          display: block;
+          padding: 12px 14px;
+          text-decoration: none;
+          color: #0b1220;
+          font-weight: 900;
+          border-top: 1px solid rgba(15, 23, 42, 0.08);
+        }
+
+        .mr-mobile-item:first-child {
+          border-top: none;
+        }
+
+        /* Footer */
+        .mr-footer {
+          border-top: 1px solid rgba(15, 23, 42, 0.10);
+          background: #ffffff;
+        }
+
+        .mr-footer-inner {
+          max-width: 1100px;
+          margin: 0 auto;
+          padding: 18px 16px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 12px;
+          flex-wrap: wrap;
+          color: #475569;
+          font-size: 13px;
+        }
+
+        .mr-footer-links {
+          display: flex;
+          gap: 12px;
+          flex-wrap: wrap;
+          align-items: center;
+        }
+
+        .mr-footer-link {
+          text-decoration: none;
+          color: #0b1220;
+          font-weight: 800;
+        }
+
+        /* Responsive rules: hard switch — no overlap, no reflow */
         @media (max-width: 720px) {
-          .mr-desktop-nav {
+          .mr-nav {
             display: none;
           }
-          .mr-mobile-menu-btn {
+          .mr-menu-btn {
             display: inline-flex;
           }
         }
       `}</style>
 
-      <div style={shellStyle}>
-        <header style={headerStyle}>
-          <div style={headerInnerStyle}>
-            <Link href="/" style={brandStyle} aria-label="MedicaidReady Home" onClick={() => setMenuOpen(false)}>
-              <span style={{ fontSize: 16 }}>MedicaidReady</span>
+      <div className="mr-shell">
+        <header className="mr-header">
+          <div className="mr-header-inner">
+            <Link href="/" className="mr-brand" aria-label="MedicaidReady Home" onClick={() => setMenuOpen(false)}>
+              <span className="mr-brand-dot" aria-hidden="true" />
+              <span className="mr-brand-text">MedicaidReady</span>
             </Link>
 
-            {/* Desktop nav */}
-            <nav className="mr-desktop-nav" style={navStyle} aria-label="Primary navigation">
-              <Link href="/pricing" style={navLinkStyle}>
+            <nav className="mr-nav" aria-label="Primary navigation">
+              <Link href="/pricing" className="mr-link">
                 Pricing
               </Link>
-              <Link href="/request-access" style={primaryLinkStyle}>
+              <Link href="/request-access" className="mr-link mr-link-primary">
                 Request access
               </Link>
-              <Link href="/signin" style={navLinkStyle}>
+              <Link href="/signin" className="mr-link">
                 Sign in
               </Link>
-              <Link href="/providers" style={navLinkStyle}>
+              <Link href="/providers" className="mr-link">
                 Providers
               </Link>
             </nav>
 
-            {/* Mobile menu button */}
             <button
               type="button"
-              className="mr-mobile-menu-btn"
+              className="mr-menu-btn"
               aria-label={menuOpen ? "Close menu" : "Open menu"}
               aria-expanded={menuOpen}
               onClick={() => setMenuOpen((v) => !v)}
-              style={menuButtonStyle}
             >
               {menuOpen ? "Close" : "Menu"}
             </button>
           </div>
 
-          {/* Mobile dropdown */}
           {menuOpen ? (
-            <div style={menuPanelStyle}>
-              <div style={menuCardStyle}>
-                <Link href="/pricing" style={{ ...menuItemStyle, borderTop: "none" }} onClick={() => setMenuOpen(false)}>
+            <div className="mr-mobile-panel">
+              <div className="mr-mobile-card" role="menu" aria-label="Mobile navigation">
+                <Link href="/pricing" className="mr-mobile-item" onClick={() => setMenuOpen(false)}>
                   Pricing
                 </Link>
-                <Link href="/request-access" style={menuItemStyle} onClick={() => setMenuOpen(false)}>
+                <Link href="/request-access" className="mr-mobile-item" onClick={() => setMenuOpen(false)}>
                   Request access
                 </Link>
-                <Link href="/signin" style={menuItemStyle} onClick={() => setMenuOpen(false)}>
+                <Link href="/signin" className="mr-mobile-item" onClick={() => setMenuOpen(false)}>
                   Sign in
                 </Link>
-                <Link href="/providers" style={menuItemStyle} onClick={() => setMenuOpen(false)}>
+                <Link href="/providers" className="mr-mobile-item" onClick={() => setMenuOpen(false)}>
                   Providers
                 </Link>
               </div>
@@ -235,18 +276,18 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           <Component {...pageProps} />
         </main>
 
-        <footer style={footerStyle}>
-          <div style={footerInnerStyle}>
-            <div>© {new Date().getFullYear()} MedicaidReady</div>
+        <footer className="mr-footer">
+          <div className="mr-footer-inner">
+            <div>© {year} MedicaidReady</div>
 
-            <div style={footerLinksStyle} aria-label="Legal links">
-              <Link href="/privacy" style={footerLinkStyle}>
+            <div className="mr-footer-links" aria-label="Legal links">
+              <Link href="/privacy" className="mr-footer-link">
                 Privacy
               </Link>
-              <Link href="/terms" style={footerLinkStyle}>
+              <Link href="/terms" className="mr-footer-link">
                 Terms
               </Link>
-              <Link href="/security" style={footerLinkStyle}>
+              <Link href="/security" className="mr-footer-link">
                 Security
               </Link>
             </div>
