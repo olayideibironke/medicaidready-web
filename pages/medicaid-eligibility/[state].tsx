@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
 import { GetStaticPaths, GetStaticProps } from "next";
-import { STATES, getStateBySlug, getAllSlugs, State } from "../../data/states";
+import { STATES, getStateBySlug, getAllSlugs, State } from "@/data/states";
 
 type Props = { state: State };
 
