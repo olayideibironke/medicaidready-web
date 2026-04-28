@@ -12,10 +12,10 @@ const GUIDE_INCLUDES = [
 ];
 
 const CARD_INCLUDES = [
-  { label: "Personalized for your state" },
-  { label: "PDF — instant download" },
-  { label: "30-day money-back guarantee" },
-  { label: "Email copy sent automatically" },
+  "Personalized for your state",
+  "PDF — instant download",
+  "30-day money-back guarantee",
+  "Email copy sent automatically",
 ];
 
 export default function Pricing() {
@@ -31,7 +31,6 @@ export default function Pricing() {
     }
     setEmailError("");
     setLoading(true);
-
     try {
       const res = await fetch("/api/stripe/create-guide-checkout", {
         method: "POST",
@@ -60,19 +59,19 @@ export default function Pricing() {
 
       <div className="page">
 
-        {/* Page header */}
-        <div className="page-header">
+        {/* Hero */}
+        <div className="hero">
           <div className="container">
             <div className="breadcrumb">
               <Link href="/" className="breadcrumb-link">Home</Link>
-              <span className="breadcrumb-sep" aria-hidden="true">›</span>
-              <span className="breadcrumb-current">Application Guide</span>
+              <span className="breadcrumb-sep">›</span>
+              <span className="breadcrumb-cur">Application Guide</span>
             </div>
-            <div className="tag">One-time purchase &middot; Instant download</div>
-            <h1 className="h1">The Complete Medicaid<br /><span className="h1-em">Application Guide</span></h1>
-            <p className="page-sub">
-              We check your eligibility for free. If you qualify, this guide walks you through
-              the application — step by step, in plain English, for your specific state.
+            <div className="hero-tag">One-time purchase &middot; Instant download &middot; All 50 states</div>
+            <h1 className="h1">The Complete Medicaid <span className="h1-em">Application Guide</span></h1>
+            <p className="hero-sub">
+              Check your eligibility free — then get the step-by-step guide to actually apply.
+              Plain English. State-specific. No guesswork.
             </p>
           </div>
         </div>
@@ -80,576 +79,254 @@ export default function Pricing() {
         {/* Main */}
         <div className="main">
           <div className="container">
-            <div className="main-grid">
+            <div className="grid">
 
-              {/* Left: What's included */}
-              <div className="includes-col">
-                <h2 className="h2">What&apos;s inside</h2>
-
-                <ul className="includes-list">
-                  {GUIDE_INCLUDES.map((item) => (
-                    <li key={item} className="includes-item">
-                      <span className="check-icon" aria-hidden="true">
-                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                          <path d="M2 7l4 4 6-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
-                      </span>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="divider" />
-
-                <div className="free-note">
-                  <div className="free-note-header">
-                    <span className="free-badge">Free</span>
-                    <span className="free-note-title">Eligibility check</span>
+              {/* LEFT */}
+              <div className="left-col">
+                <div className="includes-card">
+                  <div className="includes-header">
+                    <div className="includes-icon">
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M4 4h12v12a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" stroke="white" strokeWidth="1.5" strokeLinejoin="round"/>
+                        <path d="M8 4V2M12 4V2M4 8h12" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
+                        <path d="M7 12l2 2 4-4" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </div>
+                    <div>
+                      <div className="includes-title">What&apos;s inside the guide</div>
+                      <div className="includes-sub">Everything you need to apply successfully</div>
+                    </div>
                   </div>
-                  <p className="free-note-body">
-                    Not sure if you qualify yet? Run the free eligibility checker first — no account needed, results in 2 minutes.
-                  </p>
-                  <Link href="/quiz" className="free-note-link">
+                  <ul className="includes-list">
+                    {GUIDE_INCLUDES.map((item) => (
+                      <li key={item} className="includes-item">
+                        <span className="check-wrap">
+                          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                            <path d="M2 6l3 3 5-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                          </svg>
+                        </span>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="free-card">
+                  <span className="free-pill">Free</span>
+                  <div className="free-title">Haven&apos;t checked eligibility yet?</div>
+                  <p className="free-body">Run the free eligibility check first — 5 questions, 2 minutes, no account needed.</p>
+                  <Link href="/quiz" className="free-link">
                     Check eligibility free
-                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                       <path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </Link>
                 </div>
 
-                {/* FAQ */}
-                <div className="faq-section">
-                  <h3 className="faq-heading">Questions</h3>
-                  <div className="faq-list">
-                    {[
-                      { q: "Do I need to check eligibility first?", a: "Nope — you can buy the guide directly. But if you haven't checked yet, the free checker takes 2 minutes." },
-                      { q: "Is this a subscription?", a: "No. $9.99 is a one-time payment. Nothing else is ever charged." },
-                      { q: "What if I don't like it?", a: "Email us within 30 days for a full refund, no questions asked." },
-                      { q: "Does it work for my state?", a: "The guide covers all 50 states and DC, with state-specific sections for income limits, portals, and contacts." },
-                    ].map((item) => (
-                      <div key={item.q} className="faq-item">
-                        <div className="faq-q">{item.q}</div>
-                        <div className="faq-a">{item.a}</div>
-                      </div>
-                    ))}
-                  </div>
+                <div className="faq-wrap">
+                  <div className="faq-title">Common questions</div>
+                  {[
+                    { q: "Do I need to check eligibility first?", a: "Nope — you can buy the guide directly. But the free check takes 2 minutes if you haven't done it yet." },
+                    { q: "Is this a subscription?", a: "No. $9.99 is a one-time payment. Nothing else is ever charged to you." },
+                    { q: "What if I don't like it?", a: "Email us within 30 days for a full refund. No questions asked." },
+                    { q: "Does it work for my state?", a: "The guide covers all 50 states and DC, with state-specific income limits, portals, and contacts." },
+                  ].map((faq) => (
+                    <div key={faq.q} className="faq-item">
+                      <div className="faq-q">{faq.q}</div>
+                      <div className="faq-a">{faq.a}</div>
+                    </div>
+                  ))}
                 </div>
               </div>
 
-              {/* Right: Purchase card */}
-              <div className="card-col">
+              {/* RIGHT */}
+              <div className="right-col">
                 <div className="purchase-card">
-                  <div className="price-section">
+                  <div className="price-block">
                     <div className="price-row">
                       <div className="price">$9.99</div>
-                      <div className="price-badge">Best value</div>
+                      <div className="price-tag">One-time</div>
                     </div>
-                    <div className="price-label">one-time &middot; no subscription</div>
+                    <div className="price-note">No subscription &middot; No hidden fees</div>
                   </div>
 
-                  <div className="card-divider" />
+                  <div className="card-rule" />
 
-                  <div className="card-includes">
-                    <div className="card-includes-label">What you get</div>
+                  <div className="card-gets">
+                    <div className="card-gets-label">What you get</div>
                     {CARD_INCLUDES.map((item) => (
-                      <div key={item.label} className="card-includes-item">
-                        <span className="card-check" aria-hidden="true">
-                          <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-                            <path d="M2 6.5l3.5 3.5 5.5-6.5" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"/>
+                      <div key={item} className="card-get-item">
+                        <span className="card-check">
+                          <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+                            <path d="M1.5 5.5l3 3 5-6" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"/>
                           </svg>
                         </span>
-                        {item.label}
+                        {item}
                       </div>
                     ))}
                   </div>
 
-                  <div className="card-divider" />
+                  <div className="card-rule" />
 
-                  <div className="email-field">
-                    <label htmlFor="checkout-email" className="email-label">
+                  <div className="email-block">
+                    <label htmlFor="guide-email" className="email-label">
                       Your email — we&apos;ll send the guide here
                     </label>
                     <input
-                      id="checkout-email"
+                      id="guide-email"
                       type="email"
-                      className={`email-input ${emailError ? "email-input-error" : ""}`}
+                      className={`email-input${emailError ? " email-input-err" : ""}`}
                       placeholder="you@example.com"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       onKeyDown={(e) => { if (e.key === "Enter") handleCheckout(); }}
                       autoComplete="email"
                     />
-                    {emailError && <p className="email-error" role="alert">{emailError}</p>}
+                    {emailError && <p className="email-err">{emailError}</p>}
                   </div>
 
-                  <button
-                    type="button"
-                    className="buy-btn"
-                    onClick={handleCheckout}
-                    disabled={loading}
-                    aria-busy={loading}
-                  >
+                  <button type="button" className="cta-btn" onClick={handleCheckout} disabled={loading}>
                     {loading ? "Redirecting to checkout…" : "Get the Guide — $9.99"}
                   </button>
 
-                  <div className="secure-row">
-                    <span className="secure-item">
-                      <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
-                        <rect x="2" y="5.5" width="9" height="6" rx="1.5" stroke="currentColor" strokeWidth="1.25"/>
-                        <path d="M4.5 5.5V4a2 2 0 014 0v1.5" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round"/>
+                  <div className="trust-row">
+                    <span className="trust-item">
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                        <rect x="1.5" y="5" width="9" height="6" rx="1.5" stroke="currentColor" strokeWidth="1.25"/>
+                        <path d="M4 5V3.5a2 2 0 014 0V5" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round"/>
                       </svg>
                       Secured by Stripe
                     </span>
-                    <span className="secure-sep" aria-hidden="true">&middot;</span>
-                    <span className="secure-item">SSL encrypted</span>
-                    <span className="secure-sep" aria-hidden="true">&middot;</span>
-                    <span className="secure-item">Instant delivery</span>
+                    <span className="trust-dot" />
+                    <span className="trust-item">SSL encrypted</span>
+                    <span className="trust-dot" />
+                    <span className="trust-item">Instant delivery</span>
                   </div>
 
-                  <div className="guarantee-row">
-                    <div className="guarantee-icon" aria-hidden="true">
-                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                        <path d="M8 1.5L2 4.5v4c0 3.31 2.687 6.41 6 7.16 3.313-.75 6-3.85 6-7.16v-4L8 1.5z" stroke="currentColor" strokeWidth="1.25" strokeLinejoin="round"/>
-                        <path d="M5 8l2 2 4-4" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round"/>
+                  <div className="guarantee">
+                    <div className="guarantee-icon">
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                        <path d="M7 1.5L2 4v3.5c0 2.9 2.1 5.6 5 6.23 2.9-.63 5-3.33 5-6.23V4L7 1.5z" stroke="currentColor" strokeWidth="1.25" strokeLinejoin="round"/>
+                        <path d="M4.5 7l2 2 3-3.5" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     </div>
-                    <span>30-day money-back guarantee. No questions asked.</span>
+                    <span>30-day money-back guarantee — no questions asked</span>
                   </div>
                 </div>
               </div>
+
             </div>
           </div>
         </div>
       </div>
 
       <style jsx>{`
-        .page { background: var(--bg); color: var(--ink); min-height: 100vh; }
+        * { box-sizing: border-box; }
 
-        .container {
-          max-width: 1100px;
-          margin: 0 auto;
-          padding: 0 24px;
+        .page {
+          background: #f8fafc;
+          color: #0f172a;
+          min-height: 100vh;
+          font-family: 'DM Sans', ui-sans-serif, system-ui, -apple-system, sans-serif;
         }
 
-        /* Page header */
-        .page-header {
-          background: var(--surface);
-          border-bottom: 1px solid var(--border);
-          padding: 48px 0 52px;
-        }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
 
-        .breadcrumb {
-          display: flex;
-          align-items: center;
-          gap: 6px;
-          font-size: 13px;
-          color: var(--muted);
-          margin-bottom: 20px;
-        }
+        .hero { background: #ffffff; border-bottom: 1px solid #e2e8f0; padding: 52px 0 56px; }
 
-        .breadcrumb-link {
-          color: var(--muted);
-          transition: color 120ms;
-        }
+        .breadcrumb { display: flex; align-items: center; gap: 6px; font-size: 13px; color: #64748b; margin-bottom: 20px; }
+        .breadcrumb-link { color: #64748b; text-decoration: none; }
+        .breadcrumb-link:hover { color: #0f172a; }
+        .breadcrumb-sep { color: #cbd5e1; }
+        .breadcrumb-cur { color: #475569; }
 
-        .breadcrumb-link:hover { color: var(--ink); }
-        .breadcrumb-sep { color: var(--border-strong); }
-        .breadcrumb-current { color: var(--text); }
+        .hero-tag { display: inline-block; padding: 5px 14px; border-radius: 999px; border: 1px solid #e2e8f0; background: #f8fafc; font-size: 12px; font-weight: 500; color: #64748b; margin-bottom: 18px; }
 
-        .tag {
-          display: inline-block;
-          padding: 5px 12px;
-          border-radius: 999px;
-          border: 1px solid var(--border);
-          background: var(--bg);
-          font-size: 12px;
-          font-weight: 500;
-          color: var(--muted);
-          margin-bottom: 16px;
-        }
+        .h1 { font-size: 44px; font-weight: 700; letter-spacing: -0.04em; line-height: 1.1; margin: 0 0 16px; color: #0f172a; }
+        .h1-em { color: #0a3d6b; }
+        .hero-sub { font-size: 17px; line-height: 1.7; color: #475569; max-width: 540px; margin: 0; }
 
-        .h1 {
-          font-size: 42px;
-          font-weight: 700;
-          letter-spacing: -0.04em;
-          line-height: 1.1;
-          margin-bottom: 16px;
-          color: var(--ink);
-        }
-
-        .h1-em { color: var(--navy); }
-
-        .page-sub {
-          font-size: 17px;
-          line-height: 1.65;
-          color: var(--text);
-          max-width: 560px;
-        }
-
-        /* Main */
         .main { padding: 52px 0 80px; }
 
-        .main-grid {
-          display: grid;
-          grid-template-columns: 1fr 360px;
-          gap: 48px;
-          align-items: start;
-        }
+        .grid { display: grid; grid-template-columns: 1fr 360px; gap: 40px; align-items: start; }
 
-        /* Includes */
-        .h2 {
-          font-size: 22px;
-          font-weight: 700;
-          letter-spacing: -0.025em;
-          color: var(--ink);
-          margin-bottom: 20px;
-        }
+        .includes-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 28px; box-shadow: 0 1px 3px rgba(15,23,42,0.06); margin-bottom: 20px; }
 
-        .includes-list {
-          list-style: none;
-          display: flex;
-          flex-direction: column;
-          gap: 12px;
-          margin-bottom: 28px;
-        }
+        .includes-header { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid #f1f5f9; }
 
-        .includes-item {
-          display: flex;
-          align-items: flex-start;
-          gap: 12px;
-          font-size: 15px;
-          color: var(--text);
-          line-height: 1.6;
-        }
+        .includes-icon { width: 44px; height: 44px; border-radius: 12px; background: #0a3d6b; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 
-        .check-icon {
-          width: 22px;
-          height: 22px;
-          border-radius: 50%;
-          background: var(--green-bg);
-          border: 1px solid var(--green-border);
-          color: var(--green);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-shrink: 0;
-          margin-top: 1px;
-        }
+        .includes-title { font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 2px; }
+        .includes-sub { font-size: 13px; color: #64748b; }
 
-        .divider {
-          height: 1px;
-          background: var(--border);
-          margin: 28px 0;
-        }
+        .includes-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 14px; }
 
-        /* Free note */
-        .free-note {
-          border: 1px solid var(--border);
-          border-radius: var(--radius-lg);
-          background: var(--surface);
-          padding: 20px;
-          box-shadow: var(--shadow-sm);
-        }
+        .includes-item { display: flex; align-items: flex-start; gap: 12px; font-size: 15px; color: #334155; line-height: 1.6; }
 
-        .free-note-header {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          margin-bottom: 8px;
-        }
+        .check-wrap { width: 22px; height: 22px; min-width: 22px; border-radius: 50%; background: #f0fdf4; border: 1px solid #bbf7d0; color: #15803d; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
 
-        .free-badge {
-          display: inline-block;
-          padding: 2px 8px;
-          border-radius: 999px;
-          background: var(--green-bg);
-          border: 1px solid var(--green-border);
-          font-size: 11px;
-          font-weight: 600;
-          color: var(--green);
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
-        }
+        .free-card { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 14px; padding: 20px 22px; margin-bottom: 20px; }
 
-        .free-note-title {
-          font-size: 14px;
-          font-weight: 600;
-          color: var(--ink);
-        }
+        .free-pill { display: inline-block; padding: 2px 10px; border-radius: 999px; background: #f0fdf4; border: 1px solid #bbf7d0; font-size: 11px; font-weight: 700; color: #15803d; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
 
-        .free-note-body {
-          font-size: 14px;
-          color: var(--text);
-          line-height: 1.65;
-          margin-bottom: 12px;
-        }
+        .free-title { font-size: 15px; font-weight: 700; color: #1e3a5f; margin-bottom: 6px; }
+        .free-body { font-size: 14px; color: #3b5998; line-height: 1.65; margin: 0 0 12px; }
+        .free-link { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; color: #1d4ed8; text-decoration: none; }
+        .free-link:hover { text-decoration: underline; }
 
-        .free-note-link {
-          display: inline-flex;
-          align-items: center;
-          gap: 6px;
-          font-size: 14px;
-          font-weight: 600;
-          color: var(--navy);
-          transition: gap 120ms;
-        }
+        .faq-wrap { }
+        .faq-title { font-size: 17px; font-weight: 700; color: #0f172a; margin-bottom: 14px; letter-spacing: -0.02em; }
+        .faq-item { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px 20px; margin-bottom: 8px; }
+        .faq-q { font-size: 14px; font-weight: 600; color: #0f172a; margin-bottom: 6px; }
+        .faq-a { font-size: 14px; color: #475569; line-height: 1.7; }
 
-        .free-note-link:hover { gap: 8px; }
+        .right-col { position: sticky; top: 80px; }
 
-        /* FAQ inside col */
-        .faq-section { margin-top: 36px; }
+        .purchase-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 20px; box-shadow: 0 8px 32px rgba(15,23,42,0.10), 0 2px 8px rgba(15,23,42,0.04); padding: 28px; }
 
-        .faq-heading {
-          font-size: 18px;
-          font-weight: 700;
-          letter-spacing: -0.02em;
-          color: var(--ink);
-          margin-bottom: 16px;
-        }
+        .price-block { margin-bottom: 4px; }
+        .price-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+        .price { font-size: 52px; font-weight: 700; letter-spacing: -0.05em; color: #0f172a; line-height: 1; }
+        .price-tag { display: inline-block; padding: 5px 12px; border-radius: 999px; background: #eff6ff; border: 1px solid #bfdbfe; font-size: 12px; font-weight: 600; color: #1d4ed8; }
+        .price-note { font-size: 13px; color: #64748b; }
 
-        .faq-list {
-          display: flex;
-          flex-direction: column;
-          gap: 1px;
-          background: var(--border);
-          border: 1px solid var(--border);
-          border-radius: var(--radius-lg);
-          overflow: hidden;
-        }
+        .card-rule { height: 1px; background: #f1f5f9; margin: 20px 0; }
 
-        .faq-item {
-          background: var(--surface);
-          padding: 20px 22px;
-        }
+        .card-gets { display: flex; flex-direction: column; gap: 10px; }
+        .card-gets-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #94a3b8; margin-bottom: 2px; }
+        .card-get-item { display: flex; align-items: center; gap: 10px; font-size: 14px; color: #334155; font-weight: 500; }
+        .card-check { width: 20px; height: 20px; min-width: 20px; border-radius: 50%; background: #f0fdf4; border: 1px solid #bbf7d0; color: #15803d; display: flex; align-items: center; justify-content: center; }
 
-        .faq-q {
-          font-size: 14px;
-          font-weight: 600;
-          color: var(--ink);
-          margin-bottom: 6px;
-        }
+        .email-block { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+        .email-label { font-size: 13px; font-weight: 500; color: #475569; }
+        .email-input { width: 100%; padding: 13px 14px; border: 1.5px solid #e2e8f0; border-radius: 10px; font-size: 15px; color: #0f172a; background: #ffffff; outline: none; transition: border-color 140ms, box-shadow 140ms; font-family: inherit; }
+        .email-input:focus { border-color: #0a3d6b; box-shadow: 0 0 0 3px rgba(10,61,107,0.10); }
+        .email-input-err { border-color: #dc2626 !important; }
+        .email-err { font-size: 12px; color: #dc2626; font-weight: 500; margin: 0; }
 
-        .faq-a {
-          font-size: 14px;
-          color: var(--text);
-          line-height: 1.7;
-        }
+        .cta-btn { width: 100%; padding: 15px; border-radius: 12px; background: #0a3d6b; color: #ffffff; font-size: 15px; font-weight: 600; border: 1px solid #072d52; box-shadow: 0 4px 12px rgba(10,61,107,0.25); cursor: pointer; font-family: inherit; transition: background 140ms, transform 100ms; margin-bottom: 14px; }
+        .cta-btn:hover:not(:disabled) { background: #072d52; transform: translateY(-1px); }
+        .cta-btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
-        /* Purchase card */
-        .card-col { position: sticky; top: 80px; }
+        .trust-row { display: flex; align-items: center; justify-content: center; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+        .trust-item { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; color: #94a3b8; }
+        .trust-dot { width: 3px; height: 3px; border-radius: 50%; background: #cbd5e1; }
 
-        .purchase-card {
-          background: var(--surface);
-          border: 1px solid var(--border);
-          border-radius: var(--radius-xl);
-          box-shadow: var(--shadow-lg);
-          padding: 28px;
-        }
+        .guarantee { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 10px; background: #f8fafc; border: 1px solid #e2e8f0; font-size: 13px; color: #475569; line-height: 1.5; }
+        .guarantee-icon { width: 30px; height: 30px; min-width: 30px; border-radius: 8px; background: #f0fdf4; border: 1px solid #bbf7d0; color: #15803d; display: flex; align-items: center; justify-content: center; }
 
-        .price-section { margin-bottom: 2px; }
-
-        .price-row {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          margin-bottom: 4px;
-        }
-
-        .price {
-          font-size: 48px;
-          font-weight: 700;
-          letter-spacing: -0.05em;
-          color: var(--ink);
-          line-height: 1;
-        }
-
-        .price-badge {
-          display: inline-block;
-          padding: 4px 10px;
-          border-radius: 999px;
-          background: #eff6ff;
-          border: 1px solid #bfdbfe;
-          font-size: 12px;
-          font-weight: 600;
-          color: #1d4ed8;
-        }
-
-        .price-label {
-          font-size: 13px;
-          color: var(--muted);
-        }
-
-        .card-divider {
-          height: 1px;
-          background: var(--border);
-          margin: 20px 0;
-        }
-
-        .card-includes {
-          display: flex;
-          flex-direction: column;
-          gap: 10px;
-        }
-
-        .card-includes-label {
-          font-size: 11px;
-          font-weight: 600;
-          text-transform: uppercase;
-          letter-spacing: 0.08em;
-          color: var(--muted);
-          margin-bottom: 2px;
-        }
-
-        .card-includes-item {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          font-size: 14px;
-          color: var(--text);
-        }
-
-        .card-check {
-          width: 20px;
-          height: 20px;
-          border-radius: 50%;
-          background: var(--green-bg);
-          border: 1px solid var(--green-border);
-          color: var(--green);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-shrink: 0;
-        }
-
-        /* Email */
-        .email-field {
-          display: flex;
-          flex-direction: column;
-          gap: 6px;
-          margin-bottom: 14px;
-        }
-
-        .email-label {
-          font-size: 13px;
-          font-weight: 500;
-          color: var(--text);
-        }
-
-        .email-input {
-          width: 100%;
-          padding: 12px 14px;
-          border: 1.5px solid var(--border);
-          border-radius: var(--radius-md);
-          font-size: 15px;
-          color: var(--ink);
-          background: var(--surface);
-          outline: none;
-          transition: border-color 140ms, box-shadow 140ms;
-          box-sizing: border-box;
-        }
-
-        .email-input:focus {
-          border-color: var(--blue);
-          box-shadow: 0 0 0 3px rgba(21,101,192,0.12);
-        }
-
-        .email-input-error { border-color: var(--red) !important; }
-
-        .email-error {
-          font-size: 12px;
-          color: var(--red);
-          font-weight: 500;
-        }
-
-        /* Buy button */
-        .buy-btn {
-          width: 100%;
-          padding: 15px;
-          border-radius: var(--radius-md);
-          background: var(--navy);
-          color: #fff;
-          font-size: 15px;
-          font-weight: 600;
-          border: 1px solid var(--navy-dark);
-          box-shadow: var(--shadow-md);
-          cursor: pointer;
-          transition: background 140ms, transform 100ms;
-          margin-bottom: 14px;
-          font-family: inherit;
-        }
-
-        .buy-btn:hover:not(:disabled) {
-          background: var(--navy-dark);
-          transform: translateY(-1px);
-        }
-
-        .buy-btn:disabled {
-          opacity: 0.6;
-          cursor: not-allowed;
-        }
-
-        /* Secure */
-        .secure-row {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 6px;
-          flex-wrap: wrap;
-          margin-bottom: 14px;
-        }
-
-        .secure-item {
-          display: inline-flex;
-          align-items: center;
-          gap: 4px;
-          font-size: 12px;
-          color: var(--muted);
-        }
-
-        .secure-sep {
-          color: var(--border-strong);
-          font-size: 12px;
-        }
-
-        /* Guarantee */
-        .guarantee-row {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          padding: 12px 14px;
-          border-radius: var(--radius-sm);
-          background: var(--bg);
-          border: 1px solid var(--border);
-          font-size: 13px;
-          color: var(--text);
-          line-height: 1.4;
-        }
-
-        .guarantee-icon {
-          width: 28px;
-          height: 28px;
-          border-radius: var(--radius-sm);
-          background: var(--green-bg);
-          border: 1px solid var(--green-border);
-          color: var(--green);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-shrink: 0;
-        }
-
-        /* Responsive */
         @media (max-width: 860px) {
-          .main-grid { grid-template-columns: 1fr; }
-          .card-col { position: static; }
-          .h1 { font-size: 32px; }
+          .grid { grid-template-columns: 1fr; }
+          .right-col { position: static; }
+          .h1 { font-size: 34px; }
         }
 
-        @media (max-width: 480px) {
-          .h1 { font-size: 26px; }
-          .price { font-size: 40px; }
-          .page-header { padding: 36px 0 40px; }
+        @media (max-width: 520px) {
+          .h1 { font-size: 28px; }
+          .price { font-size: 44px; }
+          .hero { padding: 36px 0 40px; }
           .container { padding: 0 16px; }
+          .main { padding: 32px 0 60px; }
         }
       `}</style>
     </>
