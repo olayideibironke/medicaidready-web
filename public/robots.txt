@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /providers/
+Disallow: /admin/
+Disallow: /checkout/
+
+Sitemap: https://medicaidready.org/sitemap.xml

@@ -1,1201 +1,688 @@
-// pages/index.tsx
 import Head from "next/head";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
 
-type HeroSlide = {
-  badge: string;
-  titleEmphasis: string;
-  sub: string;
-  highlights: { k: string; v: string }[];
-  list: { level: "high" | "med" | "low"; title: string; sub: string; tag: string }[];
-};
+const STATS = [
+  { value: "90M+", label: "Americans on Medicaid" },
+  { value: "50", label: "States covered" },
+  { value: "2 min", label: "Average check time" },
+  { value: "Free", label: "No account needed" },
+];
+
+const HOW_STEPS = [
+  {
+    num: "01",
+    title: "Answer 5 quick questions",
+    body: "Tell us your state, household size, monthly income, age, and employment status. Plain English — no jargon.",
+  },
+  {
+    num: "02",
+    title: "Enter your email",
+    body: "Your personalized eligibility summary is delivered straight to your inbox within seconds.",
+  },
+  {
+    num: "03",
+    title: "Get your result",
+    body: "Our AI reviews your answers against your state's current Medicaid rules and gives you a clear, honest assessment.",
+  },
+];
+
+const WHO_ITEMS = [
+  {
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M10 11a4 4 0 100-8 4 4 0 000 8zM3 17c0-3.314 3.134-6 7-6s7 2.686 7 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    ),
+    title: "Working families",
+    body: "Income limits are higher than most people think, especially with children in the household.",
+  },
+  {
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M10 3v2M10 15v2M3 10H1M19 10h-2M4.93 4.93l1.41 1.41M13.66 13.66l1.41 1.41M4.93 15.07l1.41-1.41M13.66 6.34l1.41-1.41M10 13a3 3 0 100-6 3 3 0 000 6z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+      </svg>
+    ),
+    title: "Recently unemployed",
+    body: "Losing a job often makes you eligible immediately. Employment is not required to qualify.",
+  },
+  {
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <rect x="3" y="6" width="14" height="11" rx="2" stroke="currentColor" strokeWidth="1.5"/>
+        <path d="M7 6V4a3 3 0 016 0v2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+        <path d="M10 11v2M9 12h2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+      </svg>
+    ),
+    title: "Adults without children",
+    body: "Many states expanded Medicaid under the ACA — adults qualify based on income alone.",
+  },
+  {
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M10 2L2 6v5c0 4.418 3.582 8 8 8s8-3.582 8-8V6l-8-4z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
+        <path d="M10 7v4M8 10h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+      </svg>
+    ),
+    title: "Seniors & people with disabilities",
+    body: "Special eligibility rules apply for adults 65+ and those with qualifying disabilities.",
+  },
+];
+
+const FAQ_ITEMS = [
+  {
+    q: "Is this free?",
+    a: "Yes — checking your eligibility is completely free and always will be. We offer an optional $9.99 Application Guide PDF for people who want step-by-step help applying.",
+  },
+  {
+    q: "Will this affect my credit or create an account?",
+    a: "No. The quiz does not create an account, run a credit check, or share your data with any government agency.",
+  },
+  {
+    q: "How accurate is the eligibility check?",
+    a: "The check is based on current Medicaid income and categorical rules for your state. It is not a final determination — only your state Medicaid office can officially approve or deny you.",
+  },
+  {
+    q: "What states do you cover?",
+    a: "All 50 states plus Washington, DC. Each state has different rules, and we account for whether your state has expanded Medicaid under the ACA.",
+  },
+];
 
 export default function Home() {
-  const slides: HeroSlide[] = useMemo(
-    () => [
-      {
-        badge: "Continuous Compliance Monitoring",
-        titleEmphasis: "Maryland, Virginia & Washington, DC",
-        sub:
-          "Track readiness, score risk, and surface escalation signals before audits and corrective action plans force urgent response.",
-        highlights: [
-          { k: "Risk scoring", v: "Monthly trend visibility" },
-          { k: "Audit readiness", v: "Checklist + onboarding tracking" },
-          { k: "Operational clarity", v: "Provider-level reporting" },
-        ],
-        list: [
-          { level: "high", title: "High risk provider", sub: "Declining trend detected", tag: "Review" },
-          { level: "med", title: "Medium risk provider", sub: "Checklist in progress", tag: "Track" },
-          { level: "low", title: "Low risk provider", sub: "Stable month-over-month", tag: "OK" },
-        ],
-      },
-      {
-        badge: "Audit Readiness + Checklist Tracking",
-        titleEmphasis: "smaller provider teams",
-        sub:
-          "Replace manual check-ins with structured readiness tracking, due dates, and consistent status visibility across the roster.",
-        highlights: [
-          { k: "Checklists", v: "Assigned + tracked to completion" },
-          { k: "Onboarding", v: "Credentialing + documentation" },
-          { k: "Visibility", v: "Team-wide readiness posture" },
-        ],
-        list: [
-          { level: "med", title: "Checklist overdue", sub: "Missing documentation item", tag: "Fix" },
-          { level: "low", title: "Onboarding complete", sub: "Ready for review", tag: "OK" },
-          { level: "high", title: "Escalation risk", sub: "Multiple late items detected", tag: "Review" },
-        ],
-      },
-      {
-        badge: "Risk + Trend Visibility",
-        titleEmphasis: "early warning signals",
-        sub:
-          "See month-over-month risk movement and prioritize intervention before problems become audit findings or corrective action plans.",
-        highlights: [
-          { k: "Trends", v: "Up / down / stable movement" },
-          { k: "Signals", v: "Decline + escalation indicators" },
-          { k: "Focus", v: "Prioritize attention where needed" },
-        ],
-        list: [
-          { level: "low", title: "Stable month", sub: "No major changes detected", tag: "OK" },
-          { level: "med", title: "Moderate change", sub: "Small decline in readiness", tag: "Track" },
-          { level: "high", title: "Rapid decline", sub: "Immediate review recommended", tag: "Review" },
-        ],
-      },
-    ],
-    []
-  );
-
-  const [active, setActive] = useState(0);
-  const [paused, setPaused] = useState(false);
-
-  // Auto-rotate hero "collections"
-  useEffect(() => {
-    if (paused) return;
-    const id = window.setInterval(() => {
-      setActive((i) => (i + 1) % slides.length);
-    }, 5200);
-    return () => window.clearInterval(id);
-  }, [paused, slides.length]);
-
-  const slide = slides[active];
-
-  // Auto-rotate the list rows inside the preview to feel alive
-  const [listShift, setListShift] = useState(0);
-  useEffect(() => {
-    if (paused) return;
-    const id = window.setInterval(() => {
-      setListShift((n) => (n + 1) % 3);
-    }, 3600);
-    return () => window.clearInterval(id);
-  }, [paused]);
-
-  const rotatedList = useMemo(() => {
-    const base = slide.list;
-    const s = listShift % base.length;
-    return [...base.slice(s), ...base.slice(0, s)];
-  }, [slide.list, listShift]);
-
   return (
     <>
       <Head>
-        <title>MedicaidReady | Continuous Medicaid Compliance Monitoring (MD • VA • DC)</title>
-        <meta
-          name="description"
-          content="Continuous Medicaid compliance monitoring and risk scoring for providers in Maryland, Virginia, and Washington, DC. Audit readiness. Escalation signals. Operational visibility."
-        />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>MedicaidReady — Free Medicaid Eligibility Check | Find Out in 2 Minutes</title>
+        <meta name="description" content="Find out if you qualify for Medicaid in 2 minutes. Free eligibility check. No jargon. No confusion. Covers all 50 states." />
+        <meta property="og:title" content="MedicaidReady — Free Medicaid Eligibility Check" />
+        <meta property="og:description" content="Find out if you qualify for Medicaid in 2 minutes. Free eligibility check. No jargon. No confusion." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://medicaidready.org/" />
+        <meta property="og:image" content="https://medicaidready.org/medicaidready-header.png" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="MedicaidReady — Free Medicaid Eligibility Check" />
+        <meta name="twitter:description" content="Find out if you qualify for Medicaid in 2 minutes. Free eligibility check. No jargon." />
+        <meta name="twitter:image" content="https://medicaidready.org/medicaidready-header.png" />
+        <link rel="canonical" href="https://medicaidready.org/" />
       </Head>
 
       <div className="page">
-        {/* Top Bar */}
-        <header className="header">
-          <div className="container headerInner">
-            <div className="brand">
-              <div className="mark" aria-hidden="true" />
-              <div className="brandText">
-                <div className="brandName">MedicaidReady</div>
-                <div className="brandTag">MD • VA • DC</div>
-              </div>
-            </div>
-
-            <nav className="nav" aria-label="Primary">
-              <Link className="navLink" href="/pricing">
-                Pricing
-              </Link>
-              <Link className="navLink" href="/request-access">
-                Request Access
-              </Link>
-              <Link className="navButton" href="/signin">
-                Sign in
-              </Link>
-            </nav>
-          </div>
-        </header>
 
         {/* Hero */}
-        <main className="main">
-          <section
-            className="hero"
-            onMouseEnter={() => setPaused(true)}
-            onMouseLeave={() => setPaused(false)}
-          >
-            <div className="container heroGrid">
-              <div className="left">
-                <div className="badge" aria-live="polite">
-                  <span className="dot" aria-hidden="true" />
-                  <span className="fadeSwap" key={`badge-${active}`}>
-                    {slide.badge}
-                  </span>
-                </div>
-
-                <h1 className="h1" aria-live="polite">
-                  Continuous Medicaid compliance monitoring for providers in{" "}
-                  <span className="em fadeSwap" key={`title-${active}`}>
-                    {slide.titleEmphasis}
-                  </span>
-                  .
-                </h1>
-
-                <p className="sub fadeSwap" key={`sub-${active}`}>
-                  {slide.sub}
-                </p>
-
-                <div className="ctaRow">
-                  <Link className="primary" href="/request-access">
-                    Request early access
-                  </Link>
-                  <Link className="secondary" href="/pricing">
-                    View pricing
-                  </Link>
-                </div>
-
-                <div className="trustRow" aria-label="Key benefits">
-                  {slide.highlights.map((h, idx) => (
-                    <div className="trustItem" key={`${active}-h-${idx}`}>
-                      <div className="trustK">{h.k}</div>
-                      <div className="trustV">{h.v}</div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Dots: “collections” control */}
-                <div className="dots" aria-label="Hero collections">
-                  {slides.map((_, i) => (
-                    <button
-                      key={`dot-${i}`}
-                      className={`dotBtn ${i === active ? "on" : ""}`}
-                      onClick={() => setActive(i)}
-                      aria-label={`Show collection ${i + 1}`}
-                      type="button"
-                    />
-                  ))}
-                  <div className="dotsHint">Hover to pause</div>
-                </div>
+        <section className="hero">
+          <div className="container">
+            <div className="hero-inner">
+              <div className="hero-badge">
+                <span className="hero-badge-dot" aria-hidden="true" />
+                Free eligibility check &middot; No account needed &middot; All 50 states
               </div>
 
-              <div className="heroCard" role="region" aria-label="Platform preview">
-                <div className="sweep" aria-hidden="true" />
-                <div className="cardTop">
-                  <div className="cardTitle">Compliance Overview</div>
-                  <div className="pill">DMV Region</div>
-                </div>
+              <h1 className="h1">
+                Find out if you qualify<br />
+                for <span className="h1-em">Medicaid</span> in 2 minutes
+              </h1>
 
-                <div className="cardGrid">
-                  <div className="metric">
-                    <div className="metricLabel">Providers monitored</div>
-                    <div className="metricValue shimmer">—</div>
-                    <div className="metricHint">Connected to your roster</div>
-                  </div>
-                  <div className="metric">
-                    <div className="metricLabel">Risk level</div>
-                    <div className="metricValue shimmer">—</div>
-                    <div className="metricHint">Low • Medium • High</div>
-                  </div>
-                  <div className="metric">
-                    <div className="metricLabel">Trend</div>
-                    <div className="metricValue shimmer">—</div>
-                    <div className="metricHint">Improving • Stable • Declining</div>
-                  </div>
-                  <div className="metric">
-                    <div className="metricLabel">Escalation signals</div>
-                    <div className="metricValue shimmer">—</div>
-                    <div className="metricHint">Flags that require attention</div>
-                  </div>
-                </div>
+              <p className="hero-sub">
+                Millions of Americans qualify for Medicaid and don&apos;t know it. Our free tool checks your eligibility
+                against your state&apos;s current rules — no jargon, no confusion.
+              </p>
 
-                <div className="divider" />
-
-                <div className="list" aria-live="polite">
-                  {rotatedList.map((row, idx) => (
-                    <div className="listRow liftIn" key={`${active}-row-${idx}`}>
-                      <div
-                        className={`statusDot ${
-                          row.level === "high" ? "sHigh" : row.level === "med" ? "sMed" : "sLow"
-                        }`}
-                        aria-hidden="true"
-                      />
-                      <div className="listText">
-                        <div className="listTitle">{row.title}</div>
-                        <div className="listSub">{row.sub}</div>
-                      </div>
-                      <div className="listTag">{row.tag}</div>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="cardFoot">
-                  <div className="footNote">
-                    Designed for small-to-mid providers that need continuous oversight without
-                    enterprise compliance overhead.
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Problem */}
-          <section className="section">
-            <div className="container twoCol">
-              <div>
-                <h2 className="h2">The problem</h2>
-                <p className="p">
-                  Many Medicaid providers operate with compliance checks that are periodic, manual,
-                  or reactive. That gap creates exposure: missed documentation, incomplete
-                  onboarding, inconsistent training records, and late detection of declining
-                  performance.
-                </p>
-                <p className="p">
-                  When oversight arrives, the response becomes urgent—pulling staff away from
-                  operations and increasing risk of escalation.
-                </p>
-              </div>
-
-              <div className="panel">
-                <div className="panelTitle">What MedicaidReady prevents</div>
-                <ul className="bullets">
-                  <li>Reactive “fire drill” audit preparation</li>
-                  <li>Untracked onboarding and credentialing tasks</li>
-                  <li>Silent performance decline across months</li>
-                  <li>Unclear provider readiness status</li>
-                </ul>
-              </div>
-            </div>
-          </section>
-
-          {/* Solution */}
-          <section className="section alt">
-            <div className="container twoCol">
-              <div className="panel">
-                <div className="panelTitle">What the platform does</div>
-                <ul className="bullets">
-                  <li>Maintains a provider roster with status + timestamps</li>
-                  <li>Tracks checklist and onboarding completion</li>
-                  <li>Calculates compliance score history and trends</li>
-                  <li>Flags declining trajectories and escalation risk</li>
-                </ul>
-              </div>
-
-              <div>
-                <h2 className="h2">The solution</h2>
-                <p className="p">
-                  MedicaidReady provides continuous compliance monitoring built for DMV-region
-                  providers. The system is designed to make readiness measurable, trackable, and
-                  reportable—without enterprise complexity.
-                </p>
-
-                <div className="callout">
-                  <div className="calloutTitle">Regional focus</div>
-                  <div className="calloutBody">
-                    Maryland • Virginia • Washington, DC — built for organizations operating within
-                    DMV oversight realities.
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* How it works */}
-          <section className="section">
-            <div className="container">
-              <h2 className="h2">How it works</h2>
-              <div className="steps">
-                <div className="step">
-                  <div className="stepNum">1</div>
-                  <div className="stepTitle">Add providers</div>
-                  <div className="stepBody">
-                    Create and manage your provider roster with standardized metadata.
-                  </div>
-                </div>
-                <div className="step">
-                  <div className="stepNum">2</div>
-                  <div className="stepTitle">Track readiness</div>
-                  <div className="stepBody">
-                    Monitor onboarding and checklist status across teams and time.
-                  </div>
-                </div>
-                <div className="step">
-                  <div className="stepNum">3</div>
-                  <div className="stepTitle">Measure risk</div>
-                  <div className="stepBody">
-                    Review monthly score trends and prioritize high-risk providers first.
-                  </div>
-                </div>
-              </div>
-
-              <div className="centerCta">
-                <Link className="primary" href="/request-access">
-                  Request early access
+              <div className="hero-actions">
+                <Link href="/quiz" className="btn-primary">
+                  Check My Eligibility — It&apos;s Free
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </Link>
+                <Link href="/pricing" className="btn-ghost">
+                  View pricing
                 </Link>
               </div>
-            </div>
-          </section>
 
-          {/* Who it's for */}
-          <section className="section alt">
-            <div className="container">
-              <h2 className="h2">Who it’s for</h2>
-              <div className="tiles">
-                <div className="tile">
-                  <div className="tileTitle">Home Health Agencies</div>
-                  <div className="tileBody">Track readiness, training, and documentation status.</div>
+              <div className="trust-row" aria-label="Key benefits">
+                <div className="trust-item">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                    <path d="M2 7l4 4 6-7" stroke="#15803d" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  No credit check
                 </div>
-                <div className="tile">
-                  <div className="tileTitle">Behavioral Health Providers</div>
-                  <div className="tileBody">Monitor compliance signals and operational risk.</div>
+                <div className="trust-sep" aria-hidden="true" />
+                <div className="trust-item">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                    <path d="M2 7l4 4 6-7" stroke="#15803d" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  No data shared with government
                 </div>
-                <div className="tile">
-                  <div className="tileTitle">DME Providers</div>
-                  <div className="tileBody">Maintain provider-level visibility and audit posture.</div>
-                </div>
-                <div className="tile">
-                  <div className="tileTitle">Small Group Practices</div>
-                  <div className="tileBody">Get continuous oversight without enterprise tooling.</div>
+                <div className="trust-sep" aria-hidden="true" />
+                <div className="trust-item">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                    <path d="M2 7l4 4 6-7" stroke="#15803d" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  Results in under 2 minutes
                 </div>
               </div>
             </div>
-          </section>
+          </div>
+        </section>
 
-          {/* CTA */}
-          <section className="cta">
-            <div className="container ctaInner">
-              <div>
-                <div className="ctaTitle">Ready to operationalize compliance monitoring?</div>
-                <div className="ctaSub">
-                  Request early access for Maryland, Virginia, and Washington, DC provider
-                  organizations.
+        {/* Stats bar */}
+        <div className="stats-bar">
+          <div className="container">
+            <div className="stats-grid">
+              {STATS.map((stat) => (
+                <div className="stat-item" key={stat.label}>
+                  <div className="stat-value">{stat.value}</div>
+                  <div className="stat-label">{stat.label}</div>
                 </div>
-              </div>
-              <div className="ctaButtons">
-                <Link className="primary" href="/request-access">
-                  Request access
-                </Link>
-                <Link className="secondary" href="/pricing">
-                  Pricing
-                </Link>
-              </div>
+              ))}
             </div>
-          </section>
-        </main>
+          </div>
+        </div>
 
-        {/* Footer */}
-        <footer className="footer">
-          <div className="container footerInner">
-            <div className="footerLeft">
-              <div className="footerBrand">MedicaidReady</div>
-              <div className="footerSmall">
-                Continuous Medicaid compliance monitoring for MD • VA • DC.
-              </div>
+        {/* How it works */}
+        <section className="section" id="how-it-works">
+          <div className="container">
+            <div className="section-header">
+              <div className="section-eyebrow">How it works</div>
+              <h2 className="h2">Three steps. No paperwork. No waiting rooms.</h2>
             </div>
-            <div className="footerRight">
-              <Link className="footerLink" href="/pricing">
-                Pricing
-              </Link>
-              <Link className="footerLink" href="/request-access">
-                Request access
-              </Link>
-              <Link className="footerLink" href="/signin">
-                Sign in
+
+            <div className="steps">
+              {HOW_STEPS.map((step, i) => (
+                <div className="step-card" key={step.num}>
+                  <div className="step-connector" aria-hidden="true">
+                    {i < HOW_STEPS.length - 1 && <span className="step-line" />}
+                  </div>
+                  <div className="step-num" aria-hidden="true">{step.num}</div>
+                  <div className="step-content">
+                    <div className="step-title">{step.title}</div>
+                    <div className="step-body">{step.body}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="section-cta">
+              <Link href="/quiz" className="btn-primary">
+                Start Free Check
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
               </Link>
             </div>
           </div>
-        </footer>
+        </section>
 
-        <style jsx>{`
-          :global(html, body) {
-            margin: 0;
-            padding: 0;
-          }
-          :global(a) {
-            color: inherit;
-            text-decoration: none;
-          }
+        {/* Who it helps */}
+        <section className="section-alt">
+          <div className="container">
+            <div className="section-header">
+              <div className="section-eyebrow">Who this is for</div>
+              <h2 className="h2">Medicaid covers more people than you think</h2>
+              <p className="section-sub">
+                You might qualify and not know it. Here&apos;s who Medicaid is designed to help.
+              </p>
+            </div>
+            <div className="who-grid">
+              {WHO_ITEMS.map((item) => (
+                <div className="who-card" key={item.title}>
+                  <div className="who-icon" aria-hidden="true">{item.icon}</div>
+                  <div className="who-title">{item.title}</div>
+                  <div className="who-body">{item.body}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
-          .page {
-            min-height: 100vh;
-            background: #fbfcfe;
-            color: #0b1220;
-            font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
-              "Apple Color Emoji", "Segoe UI Emoji";
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            text-rendering: optimizeLegibility;
-          }
+        {/* FAQ */}
+        <section className="section">
+          <div className="container">
+            <div className="section-header">
+              <div className="section-eyebrow">FAQ</div>
+              <h2 className="h2">Common questions</h2>
+            </div>
+            <div className="faq-grid">
+              {FAQ_ITEMS.map((faq) => (
+                <div className="faq-card" key={faq.q}>
+                  <div className="faq-q">{faq.q}</div>
+                  <div className="faq-a">{faq.a}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
-          .container {
-            width: 100%;
-            max-width: 1120px;
-            margin: 0 auto;
-            padding: 0 20px;
-          }
-
-          .header {
-            position: sticky;
-            top: 0;
-            z-index: 50;
-            background: rgba(251, 252, 254, 0.78);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(230, 233, 239, 0.9);
-            box-shadow: 0 10px 26px rgba(11, 18, 32, 0.05);
-          }
-          .headerInner {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            height: 74px;
-          }
-
-          .brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            user-select: none;
-          }
-          .mark {
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-
-            /* ✅ Always load the real logo from /public */
-            background-image: url("/favicon.svg");
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: cover;
-
-            /* keep the premium frame */
-            background-color: #0b3a66;
-            box-shadow: 0 10px 22px rgba(11, 58, 102, 0.18);
-            border: 1px solid rgba(11, 58, 102, 0.22);
-          }
-          .brandText {
-            line-height: 1.1;
-          }
-          .brandName {
-            font-weight: 850;
-            letter-spacing: -0.03em;
-            font-size: 15px;
-          }
-          .brandTag {
-            font-size: 12px;
-            color: #5b6576;
-            margin-top: 4px;
-            letter-spacing: 0.02em;
-          }
-
-          .nav {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-          }
-          .navLink {
-            color: #1f2b3d;
-            font-size: 13px;
-            font-weight: 650;
-            padding: 9px 12px;
-            border-radius: 999px;
-            border: 1px solid transparent;
-            letter-spacing: 0.01em;
-          }
-          .navLink:hover {
-            background: rgba(243, 245, 249, 0.9);
-            border-color: rgba(230, 233, 239, 0.9);
-          }
-
-          .navButton {
-            font-size: 13px;
-            font-weight: 750;
-            padding: 10px 14px;
-            border-radius: 999px;
-            letter-spacing: 0.01em;
-            color: #ffffff;
-            background: linear-gradient(135deg, #0b3a66, #0f6aa6);
-            border: 1px solid rgba(11, 58, 102, 0.35);
-            box-shadow: 0 10px 22px rgba(11, 18, 32, 0.12);
-          }
-          .navButton:hover {
-            filter: brightness(0.98);
-          }
-
-          .hero {
-            border-bottom: 1px solid #eef1f6;
-            background: radial-gradient(
-                980px 520px at 16% 12%,
-                rgba(15, 106, 166, 0.13),
-                transparent 58%
-              ),
-              radial-gradient(980px 520px at 86% 20%, rgba(11, 58, 102, 0.11), transparent 58%);
-            padding: 64px 0 42px;
-            overflow: hidden;
-          }
-          .heroGrid {
-            display: grid;
-            grid-template-columns: 1.12fr 0.88fr;
-            gap: 30px;
-            align-items: start;
-          }
-
-          .left {
-            position: relative;
-          }
-
-          .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 12px;
-            border-radius: 999px;
-            border: 1px solid rgba(219, 226, 238, 0.95);
-            background: rgba(255, 255, 255, 0.85);
-            font-size: 13px;
-            font-weight: 650;
-            color: #243044;
-            box-shadow: 0 10px 22px rgba(11, 18, 32, 0.05);
-          }
-          .dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 999px;
-            background: #0f6aa6;
-          }
-
-          .fadeSwap {
-            display: inline-block;
-            animation: fadeSwap 520ms ease both;
-          }
-          @keyframes fadeSwap {
-            from {
-              opacity: 0;
-              transform: translateY(4px);
-              filter: blur(1px);
-            }
-            to {
-              opacity: 1;
-              transform: translateY(0);
-              filter: blur(0);
-            }
-          }
-
-          .h1 {
-            margin: 16px 0 12px;
-            font-size: 44px;
-            line-height: 1.08;
-            letter-spacing: -0.045em;
-            max-width: 720px;
-          }
-          .em {
-            color: #0b3a66;
-          }
-          .sub {
-            margin: 0 0 20px;
-            color: #445065;
-            font-size: 16px;
-            line-height: 1.7;
-            max-width: 680px;
-          }
-
-          .ctaRow {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin-bottom: 18px;
-          }
-          .primary {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 12px 14px;
-            border-radius: 14px;
-            background: linear-gradient(135deg, #0b3a66, #0f6aa6);
-            color: #fff;
-            font-weight: 750;
-            border: 1px solid rgba(11, 58, 102, 0.35);
-            min-width: 180px;
-            box-shadow: 0 12px 26px rgba(11, 18, 32, 0.12);
-            transition: transform 140ms ease, box-shadow 140ms ease;
-          }
-          .primary:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 16px 32px rgba(11, 18, 32, 0.14);
-          }
-          .secondary {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 12px 14px;
-            border-radius: 14px;
-            background: rgba(255, 255, 255, 0.92);
-            color: #0b1220;
-            font-weight: 750;
-            border: 1px solid rgba(215, 220, 230, 0.9);
-            min-width: 140px;
-            box-shadow: 0 10px 22px rgba(11, 18, 32, 0.06);
-            transition: transform 140ms ease;
-          }
-          .secondary:hover {
-            transform: translateY(-1px);
-          }
-
-          .trustRow {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 10px;
-            margin-top: 10px;
-          }
-          .trustItem {
-            border: 1px solid rgba(230, 233, 239, 0.95);
-            border-radius: 16px;
-            padding: 12px;
-            background: rgba(255, 255, 255, 0.78);
-            box-shadow: 0 10px 22px rgba(11, 18, 32, 0.05);
-            transition: transform 160ms ease;
-          }
-          .trustItem:hover {
-            transform: translateY(-2px);
-          }
-          .trustK {
-            font-weight: 800;
-            font-size: 13px;
-            color: #0b1220;
-            letter-spacing: -0.01em;
-          }
-          .trustV {
-            margin-top: 4px;
-            font-size: 13px;
-            color: #5b6576;
-            line-height: 1.45;
-          }
-
-          .dots {
-            margin-top: 16px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-          }
-          .dotBtn {
-            width: 10px;
-            height: 10px;
-            border-radius: 999px;
-            border: 1px solid rgba(11, 58, 102, 0.22);
-            background: rgba(255, 255, 255, 0.85);
-            cursor: pointer;
-            padding: 0;
-            transition: transform 140ms ease, background 140ms ease;
-          }
-          .dotBtn:hover {
-            transform: scale(1.08);
-          }
-          .dotBtn.on {
-            background: #0f6aa6;
-            border-color: rgba(11, 58, 102, 0.35);
-          }
-          .dotsHint {
-            margin-left: 10px;
-            font-size: 12px;
-            color: #6b7688;
-          }
-
-          .heroCard {
-            border: 1px solid rgba(230, 233, 239, 0.95);
-            border-radius: 20px;
-            background: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 18px 44px rgba(11, 18, 32, 0.12);
-            overflow: hidden;
-            position: relative;
-            animation: float 6.5s ease-in-out infinite;
-          }
-          @keyframes float {
-            0% {
-              transform: translateY(0px);
-            }
-            50% {
-              transform: translateY(-6px);
-            }
-            100% {
-              transform: translateY(0px);
-            }
-          }
-
-          .sweep {
-            position: absolute;
-            inset: -40%;
-            background: radial-gradient(
-                420px 240px at 35% 30%,
-                rgba(15, 106, 166, 0.16),
-                rgba(255, 255, 255, 0) 60%
-              ),
-              radial-gradient(
-                420px 240px at 70% 60%,
-                rgba(11, 58, 102, 0.12),
-                rgba(255, 255, 255, 0) 62%
-              );
-            transform: rotate(10deg);
-            animation: sweep 10.5s ease-in-out infinite;
-            pointer-events: none;
-          }
-          @keyframes sweep {
-            0% {
-              transform: translateX(-2%) translateY(0%) rotate(10deg);
-            }
-            50% {
-              transform: translateX(2%) translateY(-2%) rotate(10deg);
-            }
-            100% {
-              transform: translateX(-2%) translateY(0%) rotate(10deg);
-            }
-          }
-
-          .cardTop {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 16px 16px 12px;
-            border-bottom: 1px solid #eef1f6;
-            background: rgba(255, 255, 255, 0.92);
-            position: relative;
-            z-index: 1;
-          }
-          .cardTitle {
-            font-weight: 850;
-            font-size: 14px;
-            letter-spacing: -0.01em;
-          }
-          .pill {
-            font-size: 12px;
-            font-weight: 750;
-            color: #0b3a66;
-            background: rgba(11, 58, 102, 0.08);
-            border: 1px solid rgba(11, 58, 102, 0.18);
-            padding: 6px 10px;
-            border-radius: 999px;
-          }
-          .cardGrid {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 10px;
-            padding: 16px;
-            position: relative;
-            z-index: 1;
-          }
-          .metric {
-            border: 1px solid #eef1f6;
-            border-radius: 16px;
-            padding: 12px;
-            background: rgba(255, 255, 255, 0.95);
-          }
-          .metricLabel {
-            font-size: 12px;
-            color: #5b6576;
-          }
-          .metricValue {
-            margin-top: 6px;
-            font-size: 22px;
-            font-weight: 900;
-            letter-spacing: -0.03em;
-          }
-          .metricHint {
-            margin-top: 6px;
-            font-size: 12px;
-            color: #7a8597;
-            line-height: 1.4;
-          }
-
-          .shimmer {
-            position: relative;
-            color: rgba(11, 18, 32, 0.68);
-          }
-          .shimmer::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            transform: translateX(-120%);
-            background: linear-gradient(
-              90deg,
-              rgba(255, 255, 255, 0) 0%,
-              rgba(11, 58, 102, 0.10) 50%,
-              rgba(255, 255, 255, 0) 100%
-            );
-            animation: shimmer 2.8s ease-in-out infinite;
-            border-radius: 10px;
-          }
-          @keyframes shimmer {
-            0% {
-              transform: translateX(-120%);
-            }
-            60% {
-              transform: translateX(120%);
-            }
-            100% {
-              transform: translateX(120%);
-            }
-          }
-
-          .divider {
-            height: 1px;
-            background: #eef1f6;
-            position: relative;
-            z-index: 1;
-          }
-          .list {
-            padding: 12px 16px;
-            display: grid;
-            gap: 10px;
-            position: relative;
-            z-index: 1;
-          }
-          .listRow {
-            display: grid;
-            grid-template-columns: 14px 1fr auto;
-            align-items: center;
-            gap: 10px;
-            border: 1px solid #eef1f6;
-            border-radius: 16px;
-            padding: 10px 12px;
-            background: rgba(255, 255, 255, 0.96);
-          }
-          .liftIn {
-            animation: liftIn 420ms ease both;
-          }
-          @keyframes liftIn {
-            from {
-              opacity: 0;
-              transform: translateY(6px);
-            }
-            to {
-              opacity: 1;
-              transform: translateY(0);
-            }
-          }
-
-          .statusDot {
-            width: 10px;
-            height: 10px;
-            border-radius: 999px;
-          }
-          .sHigh {
-            background: #dc2626;
-          }
-          .sMed {
-            background: #f59e0b;
-          }
-          .sLow {
-            background: #16a34a;
-          }
-          .listTitle {
-            font-weight: 800;
-            font-size: 13px;
-          }
-          .listSub {
-            margin-top: 2px;
-            font-size: 12px;
-            color: #6b7688;
-          }
-          .listTag {
-            font-size: 12px;
-            font-weight: 800;
-            color: #243044;
-            background: rgba(243, 245, 249, 0.95);
-            border: 1px solid rgba(230, 233, 239, 0.95);
-            padding: 6px 10px;
-            border-radius: 999px;
-          }
-          .cardFoot {
-            padding: 0 16px 16px;
-            position: relative;
-            z-index: 1;
-          }
-          .footNote {
-            font-size: 12px;
-            color: #6b7688;
-            line-height: 1.5;
-          }
-
-          .section {
-            padding: 52px 0;
-          }
-          .alt {
-            background: #f7f9fc;
-            border-top: 1px solid #eef1f6;
-            border-bottom: 1px solid #eef1f6;
-          }
-          .twoCol {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 26px;
-            align-items: start;
-          }
-          .h2 {
-            margin: 0 0 12px;
-            font-size: 26px;
-            letter-spacing: -0.03em;
-            font-weight: 900;
-          }
-          .p {
-            margin: 0 0 12px;
-            color: #445065;
-            line-height: 1.75;
-            font-size: 15px;
-          }
-
-          .panel {
-            border: 1px solid rgba(230, 233, 239, 0.95);
-            border-radius: 20px;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 18px;
-            box-shadow: 0 14px 30px rgba(11, 18, 32, 0.06);
-          }
-          .panelTitle {
-            font-weight: 900;
-            margin-bottom: 10px;
-            letter-spacing: -0.02em;
-          }
-          .bullets {
-            margin: 0;
-            padding-left: 18px;
-            color: #445065;
-            line-height: 1.8;
-            font-size: 15px;
-          }
-
-          .callout {
-            margin-top: 14px;
-            border-left: 4px solid #0f6aa6;
-            background: rgba(15, 106, 166, 0.08);
-            border-radius: 16px;
-            padding: 12px 14px;
-          }
-          .calloutTitle {
-            font-weight: 900;
-            margin-bottom: 4px;
-            letter-spacing: -0.02em;
-          }
-          .calloutBody {
-            color: #445065;
-            line-height: 1.7;
-            font-size: 15px;
-          }
-
-          .steps {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 12px;
-            margin-top: 14px;
-          }
-          .step {
-            border: 1px solid rgba(230, 233, 239, 0.95);
-            border-radius: 20px;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 18px;
-            box-shadow: 0 14px 30px rgba(11, 18, 32, 0.06);
-          }
-          .stepNum {
-            width: 36px;
-            height: 36px;
-            border-radius: 14px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 950;
-            color: #0b3a66;
-            background: rgba(11, 58, 102, 0.1);
-            border: 1px solid rgba(11, 58, 102, 0.18);
-          }
-          .stepTitle {
-            margin-top: 10px;
-            font-weight: 900;
-            letter-spacing: -0.02em;
-          }
-          .stepBody {
-            margin-top: 6px;
-            color: #445065;
-            line-height: 1.7;
-            font-size: 15px;
-          }
-          .centerCta {
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
-          }
-
-          .tiles {
-            margin-top: 12px;
-            display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 12px;
-          }
-          .tile {
-            border: 1px solid rgba(230, 233, 239, 0.95);
-            border-radius: 20px;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 18px;
-            box-shadow: 0 14px 30px rgba(11, 18, 32, 0.06);
-            transition: transform 160ms ease;
-          }
-          .tile:hover {
-            transform: translateY(-2px);
-          }
-          .tileTitle {
-            font-weight: 900;
-            letter-spacing: -0.02em;
-          }
-          .tileBody {
-            margin-top: 6px;
-            color: #445065;
-            line-height: 1.7;
-            font-size: 14px;
-          }
-
-          .cta {
-            padding: 38px 0;
-            background: linear-gradient(135deg, #0b3a66, #0f6aa6);
-            color: #fff;
-          }
-          .ctaInner {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 14px;
-            flex-wrap: wrap;
-          }
-          .ctaTitle {
-            font-size: 22px;
-            font-weight: 950;
-            letter-spacing: -0.03em;
-          }
-          .ctaSub {
-            margin-top: 6px;
-            color: rgba(255, 255, 255, 0.9);
-            line-height: 1.7;
-            max-width: 680px;
-            font-size: 15px;
-          }
-          .ctaButtons {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-          }
-          .ctaButtons :global(.primary) {
-            background: rgba(255, 255, 255, 0.98);
-            color: #0b3a66;
-            border-color: rgba(255, 255, 255, 0.65);
-            box-shadow: 0 12px 26px rgba(0, 0, 0, 0.18);
-          }
-          .ctaButtons :global(.secondary) {
-            background: transparent;
-            color: #fff;
-            border-color: rgba(255, 255, 255, 0.45);
-            box-shadow: none;
-          }
-
-          .footer {
-            border-top: 1px solid #eef1f6;
-            padding: 26px 0;
-            background: #fbfcfe;
-          }
-          .footerInner {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            flex-wrap: wrap;
-          }
-          .footerBrand {
-            font-weight: 950;
-            letter-spacing: -0.03em;
-          }
-          .footerSmall {
-            margin-top: 6px;
-            color: #6b7688;
-            font-size: 13px;
-            line-height: 1.6;
-          }
-          .footerRight {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-          }
-          .footerLink {
-            color: #1f2b3d;
-            font-size: 13px;
-            font-weight: 650;
-            padding: 9px 12px;
-            border-radius: 999px;
-            border: 1px solid transparent;
-          }
-          .footerLink:hover {
-            background: rgba(243, 245, 249, 0.9);
-            border-color: rgba(230, 233, 239, 0.9);
-          }
-
-          @media (prefers-reduced-motion: reduce) {
-            .fadeSwap,
-            .heroCard,
-            .sweep,
-            .shimmer::after,
-            .liftIn,
-            .trustItem,
-            .tile,
-            .primary,
-            .secondary {
-              animation: none !important;
-              transition: none !important;
-              transform: none !important;
-            }
-          }
-
-          @media (max-width: 980px) {
-            .heroGrid {
-              grid-template-columns: 1fr;
-            }
-            .trustRow {
-              grid-template-columns: 1fr;
-            }
-            .twoCol {
-              grid-template-columns: 1fr;
-            }
-            .steps {
-              grid-template-columns: 1fr;
-            }
-            .tiles {
-              grid-template-columns: 1fr;
-            }
-            .h1 {
-              font-size: 38px;
-            }
-          }
-
-          @media (max-width: 640px) {
-            .navLink {
-              display: none;
-            }
-            .h1 {
-              font-size: 32px;
-            }
-            .hero {
-              padding: 52px 0 34px;
-            }
-          }
-        `}</style>
+        {/* Bottom CTA */}
+        <section className="cta-section">
+          <div className="container">
+            <div className="cta-inner">
+              <div className="cta-icon" aria-hidden="true">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                  <path d="M14 3L3 8.5v7c0 5.799 4.802 11.195 11 12.5C20.198 26.695 25 21.299 25 15.5v-7L14 3z" stroke="white" strokeWidth="2" strokeLinejoin="round"/>
+                  <path d="M14 10v7M11 14h6" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+                </svg>
+              </div>
+              <h2 className="cta-title">Ready to check your eligibility?</h2>
+              <p className="cta-sub">It takes about 2 minutes and it&apos;s completely free. No account required.</p>
+              <Link href="/quiz" className="btn-white">
+                Check My Eligibility — It&apos;s Free
+              </Link>
+              <p className="cta-note">No credit card &middot; No account &middot; Instant results</p>
+            </div>
+          </div>
+        </section>
       </div>
+
+      <style jsx>{`
+        .page { background: var(--bg); color: var(--ink); }
+
+        .container {
+          width: 100%;
+          max-width: 1100px;
+          margin: 0 auto;
+          padding: 0 24px;
+        }
+
+        /* Hero */
+        .hero {
+          background: var(--surface);
+          border-bottom: 1px solid var(--border);
+          padding: 80px 0 72px;
+        }
+
+        .hero-inner { max-width: 700px; }
+
+        .hero-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 6px 14px;
+          border-radius: 999px;
+          border: 1px solid #bfdbfe;
+          background: #eff6ff;
+          font-size: 13px;
+          font-weight: 500;
+          color: #1d4ed8;
+          margin-bottom: 24px;
+        }
+
+        .hero-badge-dot {
+          display: inline-block;
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: #3b82f6;
+          flex-shrink: 0;
+        }
+
+        .h1 {
+          font-size: 52px;
+          line-height: 1.07;
+          letter-spacing: -0.04em;
+          font-weight: 700;
+          margin-bottom: 20px;
+          color: var(--ink);
+        }
+
+        .h1-em { color: var(--navy); }
+
+        .hero-sub {
+          font-size: 18px;
+          line-height: 1.7;
+          color: var(--text);
+          margin-bottom: 32px;
+          max-width: 580px;
+        }
+
+        .hero-actions {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          margin-bottom: 24px;
+          flex-wrap: wrap;
+        }
+
+        .btn-primary {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 14px 24px;
+          border-radius: var(--radius-md);
+          background: var(--navy);
+          color: #fff;
+          font-size: 15px;
+          font-weight: 600;
+          border: 1px solid var(--navy-dark);
+          box-shadow: var(--shadow-md);
+          transition: background 140ms, transform 100ms, box-shadow 140ms;
+          cursor: pointer;
+          text-decoration: none;
+        }
+
+        .btn-primary:hover {
+          background: var(--navy-dark);
+          transform: translateY(-1px);
+          box-shadow: var(--shadow-lg);
+        }
+
+        .btn-ghost {
+          display: inline-flex;
+          align-items: center;
+          padding: 14px 20px;
+          border-radius: var(--radius-md);
+          background: transparent;
+          color: var(--text);
+          font-size: 15px;
+          font-weight: 500;
+          border: 1px solid var(--border);
+          transition: background 140ms, border-color 140ms;
+          text-decoration: none;
+        }
+
+        .btn-ghost:hover {
+          background: var(--bg-alt);
+          border-color: var(--border-strong);
+        }
+
+        .trust-row {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          flex-wrap: wrap;
+        }
+
+        .trust-item {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          font-size: 13px;
+          font-weight: 500;
+          color: var(--text);
+        }
+
+        .trust-sep {
+          width: 3px;
+          height: 3px;
+          border-radius: 50%;
+          background: var(--border-strong);
+        }
+
+        /* Stats */
+        .stats-bar {
+          background: var(--navy);
+          padding: 24px 0;
+        }
+
+        .stats-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 1px;
+        }
+
+        .stat-item {
+          padding: 8px 24px;
+          border-right: 1px solid rgba(255,255,255,0.12);
+          text-align: center;
+        }
+
+        .stat-item:last-child { border-right: none; }
+        .stat-item:first-child { padding-left: 0; }
+
+        .stat-value {
+          font-size: 26px;
+          font-weight: 700;
+          color: #fff;
+          letter-spacing: -0.03em;
+          line-height: 1.2;
+        }
+
+        .stat-label {
+          font-size: 13px;
+          color: rgba(255,255,255,0.65);
+          margin-top: 3px;
+        }
+
+        /* Sections */
+        .section { padding: 80px 0; background: var(--surface); }
+        .section-alt { padding: 80px 0; background: var(--bg); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+        .section-header { margin-bottom: 48px; }
+
+        .section-eyebrow {
+          font-size: 12px;
+          font-weight: 600;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: var(--blue);
+          margin-bottom: 10px;
+        }
+
+        .h2 {
+          font-size: 32px;
+          font-weight: 700;
+          letter-spacing: -0.035em;
+          color: var(--ink);
+          line-height: 1.2;
+        }
+
+        .section-sub {
+          margin-top: 12px;
+          font-size: 16px;
+          color: var(--text);
+          line-height: 1.7;
+          max-width: 540px;
+        }
+
+        /* Steps */
+        .steps {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 2px;
+          background: var(--border);
+          border: 1px solid var(--border);
+          border-radius: var(--radius-lg);
+          overflow: hidden;
+          margin-bottom: 40px;
+        }
+
+        .step-card {
+          background: var(--surface);
+          padding: 32px 28px;
+          position: relative;
+        }
+
+        .step-connector { display: none; }
+
+        .step-num {
+          font-size: 13px;
+          font-weight: 700;
+          color: var(--blue);
+          letter-spacing: 0.05em;
+          margin-bottom: 16px;
+          font-variant-numeric: tabular-nums;
+        }
+
+        .step-title {
+          font-size: 17px;
+          font-weight: 600;
+          color: var(--ink);
+          margin-bottom: 10px;
+          letter-spacing: -0.01em;
+        }
+
+        .step-body {
+          font-size: 14px;
+          color: var(--text);
+          line-height: 1.7;
+        }
+
+        .section-cta { display: flex; }
+
+        /* Who */
+        .who-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 16px;
+        }
+
+        .who-card {
+          background: var(--surface);
+          border: 1px solid var(--border);
+          border-radius: var(--radius-lg);
+          padding: 24px;
+          box-shadow: var(--shadow-sm);
+        }
+
+        .who-icon {
+          width: 40px;
+          height: 40px;
+          border-radius: var(--radius-sm);
+          background: #eff6ff;
+          color: var(--navy);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 14px;
+        }
+
+        .who-title {
+          font-size: 15px;
+          font-weight: 600;
+          color: var(--ink);
+          margin-bottom: 8px;
+          letter-spacing: -0.01em;
+        }
+
+        .who-body {
+          font-size: 14px;
+          color: var(--text);
+          line-height: 1.7;
+        }
+
+        /* FAQ */
+        .faq-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 2px;
+          background: var(--border);
+          border: 1px solid var(--border);
+          border-radius: var(--radius-lg);
+          overflow: hidden;
+        }
+
+        .faq-card {
+          background: var(--surface);
+          padding: 28px;
+        }
+
+        .faq-q {
+          font-size: 15px;
+          font-weight: 600;
+          color: var(--ink);
+          margin-bottom: 8px;
+          letter-spacing: -0.01em;
+        }
+
+        .faq-a {
+          font-size: 14px;
+          color: var(--text);
+          line-height: 1.75;
+        }
+
+        /* CTA Section */
+        .cta-section {
+          background: var(--navy);
+          padding: 80px 0;
+        }
+
+        .cta-inner {
+          text-align: center;
+          max-width: 520px;
+          margin: 0 auto;
+        }
+
+        .cta-icon {
+          width: 64px;
+          height: 64px;
+          border-radius: 20px;
+          background: rgba(255,255,255,0.12);
+          border: 1px solid rgba(255,255,255,0.2);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0 auto 24px;
+        }
+
+        .cta-title {
+          font-size: 32px;
+          font-weight: 700;
+          color: #fff;
+          letter-spacing: -0.035em;
+          margin-bottom: 12px;
+          line-height: 1.2;
+        }
+
+        .cta-sub {
+          font-size: 16px;
+          color: rgba(255,255,255,0.75);
+          line-height: 1.65;
+          margin-bottom: 32px;
+        }
+
+        .btn-white {
+          display: inline-flex;
+          align-items: center;
+          padding: 14px 28px;
+          border-radius: var(--radius-md);
+          background: #fff;
+          color: var(--navy);
+          font-size: 15px;
+          font-weight: 600;
+          border: 1px solid rgba(255,255,255,0.4);
+          box-shadow: var(--shadow-md);
+          transition: transform 120ms, box-shadow 120ms;
+          text-decoration: none;
+        }
+
+        .btn-white:hover {
+          transform: translateY(-1px);
+          box-shadow: var(--shadow-lg);
+        }
+
+        .cta-note {
+          margin-top: 14px;
+          font-size: 13px;
+          color: rgba(255,255,255,0.5);
+        }
+
+        /* Responsive */
+        @media (max-width: 960px) {
+          .h1 { font-size: 40px; }
+          .who-grid { grid-template-columns: 1fr 1fr; }
+          .stats-grid { grid-template-columns: repeat(2, 1fr); }
+          .stat-item:nth-child(2) { border-right: none; }
+          .stat-item:nth-child(3) { border-right: 1px solid rgba(255,255,255,0.12); }
+          .stat-item { padding: 12px 16px; }
+        }
+
+        @media (max-width: 700px) {
+          .hero { padding: 56px 0 48px; }
+          .h1 { font-size: 32px; }
+          .hero-sub { font-size: 16px; }
+          .h2 { font-size: 26px; }
+          .steps { grid-template-columns: 1fr; }
+          .who-grid { grid-template-columns: 1fr; }
+          .faq-grid { grid-template-columns: 1fr; }
+          .stats-grid { grid-template-columns: repeat(2, 1fr); }
+          .btn-primary, .btn-ghost, .btn-white { width: 100%; justify-content: center; }
+          .hero-actions { flex-direction: column; }
+          .section { padding: 56px 0; }
+          .section-alt { padding: 56px 0; }
+          .cta-section { padding: 56px 0; }
+          .cta-title { font-size: 26px; }
+          .container { padding: 0 16px; }
+        }
+      `}</style>
     </>
   );
 }

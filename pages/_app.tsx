@@ -8,7 +8,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // Close menu on route change (real Next.js navigation, not just popstate)
   useEffect(() => {
     const close = () => setMenuOpen(false);
     router.events.on("routeChangeStart", close);
@@ -25,272 +24,404 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap"
+          rel="stylesheet"
+        />
       </Head>
 
       <style jsx global>{`
-        /* Global hardening to stop mobile "wiggle" */
-        * {
+        *, *::before, *::after {
           box-sizing: border-box;
+          margin: 0;
+          padding: 0;
         }
-        html,
-        body {
+
+        :root {
+          --navy: #0a3d6b;
+          --navy-dark: #072d52;
+          --blue: #1565c0;
+          --blue-light: #1976d2;
+          --ink: #0f172a;
+          --text: #334155;
+          --muted: #64748b;
+          --subtle: #94a3b8;
+          --bg: #f8fafc;
+          --bg-alt: #f1f5f9;
+          --surface: #ffffff;
+          --border: #e2e8f0;
+          --border-strong: #cbd5e1;
+          --green: #15803d;
+          --green-bg: #f0fdf4;
+          --green-border: #bbf7d0;
+          --amber: #b45309;
+          --amber-bg: #fffbeb;
+          --amber-border: #fde68a;
+          --red: #dc2626;
+          --shadow-sm: 0 1px 3px rgba(15,23,42,0.08), 0 1px 2px rgba(15,23,42,0.04);
+          --shadow-md: 0 4px 12px rgba(15,23,42,0.08), 0 2px 4px rgba(15,23,42,0.04);
+          --shadow-lg: 0 12px 32px rgba(15,23,42,0.10), 0 4px 8px rgba(15,23,42,0.04);
+          --radius-sm: 8px;
+          --radius-md: 12px;
+          --radius-lg: 16px;
+          --radius-xl: 24px;
+        }
+
+        html, body {
           width: 100%;
           max-width: 100%;
           overflow-x: hidden;
-          margin: 0;
-          padding: 0;
-          background: #ffffff;
-          color: #0b1220;
-          font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
-            Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+          background: var(--bg);
+          color: var(--ink);
+          font-family: 'DM Sans', ui-sans-serif, system-ui, -apple-system, sans-serif;
+          font-size: 16px;
+          line-height: 1.6;
           -webkit-text-size-adjust: 100%;
+          -webkit-font-smoothing: antialiased;
         }
 
-        /* Layout shell */
-        .mr-shell {
+        a { color: inherit; text-decoration: none; }
+        button { font-family: inherit; }
+        input, select, textarea { font-family: inherit; }
+
+        /* Shell */
+        .shell {
           min-height: 100vh;
           display: flex;
           flex-direction: column;
-          background: #ffffff;
+          background: var(--bg);
         }
 
-        /* Header: stable height, no wrap, no shifting */
-        .mr-header {
+        /* Header */
+        .header {
           position: sticky;
           top: 0;
-          z-index: 50;
-          background: #ffffff; /* solid background = less Safari repaint jitter */
-          border-bottom: 1px solid rgba(15, 23, 42, 0.10);
+          z-index: 100;
+          background: rgba(255,255,255,0.97);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          border-bottom: 1px solid var(--border);
         }
 
-        .mr-header-inner {
-          max-width: 1100px;
+        .header-inner {
+          max-width: 1120px;
           margin: 0 auto;
-          padding: 10px 16px;
-          height: 58px; /* fixed height prevents reflow */
+          padding: 0 24px;
+          height: 64px;
           display: flex;
           align-items: center;
           justify-content: space-between;
-          gap: 12px;
+          gap: 16px;
         }
 
-        .mr-brand {
+        /* Brand */
+        .brand {
           display: inline-flex;
           align-items: center;
           gap: 10px;
-          text-decoration: none;
-          color: #0b1220;
-          font-weight: 900;
-          letter-spacing: -0.2px;
+          color: var(--ink);
+          font-weight: 700;
+          font-size: 17px;
+          letter-spacing: -0.3px;
           white-space: nowrap;
-          flex: 0 0 auto;
-          min-width: 0;
+          flex-shrink: 0;
         }
 
-        .mr-brand-dot {
-          width: 12px;
-          height: 12px;
-          border-radius: 999px;
-          background: #0b3a66;
-          box-shadow: 0 8px 18px rgba(11, 58, 102, 0.18);
-          flex: 0 0 auto;
-        }
-
-        .mr-brand-text {
-          font-size: 16px;
-          line-height: 1;
-        }
-
-        /* Desktop nav */
-        .mr-nav {
+        .brand-icon {
+          width: 32px;
+          height: 32px;
+          border-radius: 8px;
+          background: var(--navy);
           display: flex;
           align-items: center;
-          gap: 10px;
-          justify-content: flex-end;
-          flex: 1 1 auto;
-          min-width: 0;
+          justify-content: center;
+          flex-shrink: 0;
         }
 
-        .mr-link {
-          text-decoration: none;
-          color: #0b1220;
-          font-weight: 800;
-          font-size: 13px;
-          padding: 8px 10px;
-          border-radius: 999px;
-          border: 1px solid rgba(15, 23, 42, 0.10);
-          background: #ffffff;
+        .brand-icon svg {
+          display: block;
+        }
+
+        .brand-name {
+          display: inline-flex;
+          align-items: baseline;
+          gap: 0;
+        }
+
+        .brand-name-main {
+          color: var(--navy);
+        }
+
+        .brand-name-accent {
+          color: var(--blue-light);
+        }
+
+        /* Nav */
+        .nav {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          margin-left: auto;
+        }
+
+        .nav-link {
+          display: inline-flex;
+          align-items: center;
+          padding: 8px 16px;
+          border-radius: var(--radius-sm);
+          font-size: 14px;
+          font-weight: 500;
+          color: var(--text);
+          transition: background 140ms, color 140ms;
           white-space: nowrap;
         }
 
-        .mr-link-primary {
-          color: #ffffff;
-          border: 1px solid rgba(11, 58, 102, 0.35);
-          background: linear-gradient(135deg, #0b3a66, #0f6aa6);
-          box-shadow: 0 10px 22px rgba(11, 18, 32, 0.10);
+        .nav-link:hover {
+          background: var(--bg-alt);
+          color: var(--ink);
         }
 
-        /* Mobile menu button */
-        .mr-menu-btn {
+        .nav-cta {
+          display: inline-flex;
+          align-items: center;
+          padding: 9px 20px;
+          border-radius: var(--radius-sm);
+          font-size: 14px;
+          font-weight: 600;
+          color: #fff;
+          background: var(--navy);
+          white-space: nowrap;
+          transition: background 140ms, transform 100ms;
+          border: 1px solid var(--navy-dark);
+          box-shadow: var(--shadow-sm);
+        }
+
+        .nav-cta:hover {
+          background: var(--navy-dark);
+          transform: translateY(-1px);
+        }
+
+        /* Mobile button */
+        .menu-btn {
           display: none;
           align-items: center;
           justify-content: center;
+          width: 40px;
           height: 40px;
-          padding: 0 12px;
-          border-radius: 999px;
-          border: 1px solid rgba(15, 23, 42, 0.10);
-          background: #ffffff;
-          color: #0b1220;
-          font-weight: 900;
+          border-radius: var(--radius-sm);
+          border: 1px solid var(--border);
+          background: var(--surface);
+          color: var(--ink);
           cursor: pointer;
-          white-space: nowrap;
-          flex: 0 0 auto;
+          flex-shrink: 0;
         }
 
-        /* Mobile dropdown panel */
-        .mr-mobile-panel {
-          max-width: 1100px;
-          margin: 0 auto;
-          padding: 0 16px 12px;
-        }
-
-        .mr-mobile-card {
-          border: 1px solid rgba(15, 23, 42, 0.10);
-          border-radius: 16px;
-          background: #ffffff;
-          box-shadow: 0 12px 30px rgba(2, 6, 23, 0.10);
-          overflow: hidden;
-        }
-
-        .mr-mobile-item {
+        .menu-btn svg {
           display: block;
-          padding: 12px 14px;
-          text-decoration: none;
-          color: #0b1220;
-          font-weight: 900;
-          border-top: 1px solid rgba(15, 23, 42, 0.08);
         }
 
-        .mr-mobile-item:first-child {
-          border-top: none;
+        /* Mobile panel */
+        .mobile-panel {
+          border-top: 1px solid var(--border);
+          background: var(--surface);
+        }
+
+        .mobile-panel-inner {
+          max-width: 1120px;
+          margin: 0 auto;
+          padding: 12px 16px 16px;
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+
+        .mobile-link {
+          display: block;
+          padding: 12px 16px;
+          border-radius: var(--radius-sm);
+          font-size: 15px;
+          font-weight: 500;
+          color: var(--text);
+        }
+
+        .mobile-link:hover {
+          background: var(--bg-alt);
+        }
+
+        .mobile-cta {
+          display: block;
+          padding: 13px 16px;
+          border-radius: var(--radius-sm);
+          font-size: 15px;
+          font-weight: 600;
+          color: #fff;
+          background: var(--navy);
+          text-align: center;
+          margin-top: 4px;
         }
 
         /* Footer */
-        .mr-footer {
-          border-top: 1px solid rgba(15, 23, 42, 0.10);
-          background: #ffffff;
+        .footer {
+          background: var(--surface);
+          border-top: 1px solid var(--border);
+          margin-top: auto;
         }
 
-        .mr-footer-inner {
-          max-width: 1100px;
+        .footer-inner {
+          max-width: 1120px;
           margin: 0 auto;
-          padding: 18px 16px;
+          padding: 28px 24px;
           display: flex;
           align-items: center;
           justify-content: space-between;
-          gap: 12px;
+          gap: 16px;
           flex-wrap: wrap;
-          color: #475569;
-          font-size: 13px;
         }
 
-        .mr-footer-links {
+        .footer-left {
           display: flex;
-          gap: 12px;
-          flex-wrap: wrap;
+          flex-direction: column;
+          gap: 4px;
+        }
+
+        .footer-brand {
+          display: flex;
           align-items: center;
+          gap: 8px;
+          font-size: 14px;
+          font-weight: 600;
+          color: var(--ink);
         }
 
-        .mr-footer-link {
-          text-decoration: none;
-          color: #0b1220;
-          font-weight: 800;
+        .footer-brand-dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: var(--navy);
+          flex-shrink: 0;
         }
 
-        /* Responsive rules: hard switch — no overlap, no reflow */
-        @media (max-width: 720px) {
-          .mr-nav {
-            display: none;
-          }
-          .mr-menu-btn {
-            display: inline-flex;
+        .footer-copy {
+          font-size: 13px;
+          color: var(--muted);
+          padding-left: 16px;
+        }
+
+        .footer-links {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+          flex-wrap: wrap;
+        }
+
+        .footer-link {
+          padding: 6px 12px;
+          border-radius: var(--radius-sm);
+          font-size: 13px;
+          font-weight: 500;
+          color: var(--muted);
+          transition: color 120ms, background 120ms;
+        }
+
+        .footer-link:hover {
+          color: var(--ink);
+          background: var(--bg-alt);
+        }
+
+        .footer-divider {
+          width: 1px;
+          height: 14px;
+          background: var(--border);
+        }
+
+        /* Responsive */
+        @media (max-width: 680px) {
+          .nav { display: none; }
+          .menu-btn { display: flex; }
+          .header-inner { padding: 0 16px; }
+          .footer-inner { padding: 20px 16px; flex-direction: column; align-items: flex-start; gap: 12px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          *, *::before, *::after {
+            transition-duration: 0ms !important;
+            animation-duration: 0ms !important;
           }
         }
       `}</style>
 
-      <div className="mr-shell">
-        <header className="mr-header">
-          <div className="mr-header-inner">
-            <Link href="/" className="mr-brand" aria-label="MedicaidReady Home" onClick={() => setMenuOpen(false)}>
-              <span className="mr-brand-dot" aria-hidden="true" />
-              <span className="mr-brand-text">MedicaidReady</span>
+      <div className="shell">
+        <header className="header">
+          <div className="header-inner">
+            <Link href="/" className="brand" aria-label="MedicaidReady Home" onClick={() => setMenuOpen(false)}>
+              <span className="brand-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                  <path d="M9 2L15 5v4c0 3.31-2.5 6.41-6 7.16C5.5 15.41 3 12.31 3 9V5l6-3z" fill="white" fillOpacity="0.2" stroke="white" strokeWidth="1.5" strokeLinejoin="round"/>
+                  <path d="M9 6v6M6 9h6" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
+                </svg>
+              </span>
+              <span className="brand-name">
+                <span className="brand-name-main">Medicaid</span>
+                <span className="brand-name-accent">Ready</span>
+              </span>
             </Link>
 
-            <nav className="mr-nav" aria-label="Primary navigation">
-              <Link href="/pricing" className="mr-link">
-                Pricing
-              </Link>
-              <Link href="/request-access" className="mr-link mr-link-primary">
-                Request access
-              </Link>
-              <Link href="/signin" className="mr-link">
-                Sign in
-              </Link>
-              <Link href="/providers" className="mr-link">
-                Providers
-              </Link>
+            <nav className="nav" aria-label="Primary navigation">
+              <Link href="/pricing" className="nav-link">Pricing</Link>
+              <Link href="/quiz" className="nav-cta">Check Eligibility — Free</Link>
             </nav>
 
             <button
               type="button"
-              className="mr-menu-btn"
+              className="menu-btn"
               aria-label={menuOpen ? "Close menu" : "Open menu"}
               aria-expanded={menuOpen}
               onClick={() => setMenuOpen((v) => !v)}
             >
-              {menuOpen ? "Close" : "Menu"}
+              {menuOpen ? (
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                  <path d="M4 4l10 10M14 4L4 14" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round"/>
+                </svg>
+              ) : (
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                  <path d="M3 5h12M3 9h12M3 13h12" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round"/>
+                </svg>
+              )}
             </button>
           </div>
 
-          {menuOpen ? (
-            <div className="mr-mobile-panel">
-              <div className="mr-mobile-card" role="menu" aria-label="Mobile navigation">
-                <Link href="/pricing" className="mr-mobile-item" onClick={() => setMenuOpen(false)}>
-                  Pricing
-                </Link>
-                <Link href="/request-access" className="mr-mobile-item" onClick={() => setMenuOpen(false)}>
-                  Request access
-                </Link>
-                <Link href="/signin" className="mr-mobile-item" onClick={() => setMenuOpen(false)}>
-                  Sign in
-                </Link>
-                <Link href="/providers" className="mr-mobile-item" onClick={() => setMenuOpen(false)}>
-                  Providers
-                </Link>
+          {menuOpen && (
+            <div className="mobile-panel">
+              <div className="mobile-panel-inner" role="menu">
+                <Link href="/pricing" className="mobile-link" onClick={() => setMenuOpen(false)}>Pricing</Link>
+                <Link href="/quiz" className="mobile-cta" onClick={() => setMenuOpen(false)}>Check My Eligibility — Free</Link>
               </div>
             </div>
-          ) : null}
+          )}
         </header>
 
         <main style={{ flex: 1 }}>
           <Component {...pageProps} />
         </main>
 
-        <footer className="mr-footer">
-          <div className="mr-footer-inner">
-            <div>© {year} MedicaidReady</div>
-
-            <div className="mr-footer-links" aria-label="Legal links">
-              <Link href="/privacy" className="mr-footer-link">
-                Privacy
-              </Link>
-              <Link href="/terms" className="mr-footer-link">
-                Terms
-              </Link>
-              <Link href="/security" className="mr-footer-link">
-                Security
-              </Link>
+        <footer className="footer">
+          <div className="footer-inner">
+            <div className="footer-left">
+              <div className="footer-brand">
+                <span className="footer-brand-dot" aria-hidden="true" />
+                MedicaidReady
+              </div>
+              <div className="footer-copy">© {year} MedicaidReady. All rights reserved.</div>
             </div>
+            <nav className="footer-links" aria-label="Legal links">
+              <Link href="/privacy" className="footer-link">Privacy</Link>
+              <span className="footer-divider" aria-hidden="true" />
+              <Link href="/terms" className="footer-link">Terms</Link>
+              <span className="footer-divider" aria-hidden="true" />
+              <Link href="/security" className="footer-link">Security</Link>
+            </nav>
           </div>
         </footer>
       </div>

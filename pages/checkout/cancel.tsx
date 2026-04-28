@@ -5,48 +5,114 @@ export default function CheckoutCancel() {
   return (
     <>
       <Head>
-        <title>Payment canceled | MedicaidReady</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Payment canceled — MedicaidReady</title>
+        <meta name="robots" content="noindex" />
       </Head>
 
-      <main style={{ maxWidth: 860, margin: "0 auto", padding: 24, fontFamily: "system-ui, sans-serif" }}>
-        <h1 style={{ margin: 0 }}>Payment canceled</h1>
-        <p style={{ marginTop: 10, color: "#444", lineHeight: 1.6 }}>
-          No charge was made. You can try again any time.
-        </p>
+      <div className="page">
+        <div className="container">
+          <div className="card">
+            <div className="icon" aria-hidden="true">↩️</div>
+            <h1 className="title">No charge was made</h1>
+            <p className="body">
+              Your payment was canceled and nothing was charged to your card.
+              You can try again any time — your eligibility results are still saved.
+            </p>
 
-        <div style={{ marginTop: 18, display: "flex", gap: 10, flexWrap: "wrap" }}>
-          <Link
-            href="/pricing"
-            style={{
-              padding: "10px 12px",
-              borderRadius: 12,
-              border: "1px solid #0b3a66",
-              background: "#0b3a66",
-              color: "white",
-              textDecoration: "none",
-              fontWeight: 700,
-            }}
-          >
-            Back to Pricing
-          </Link>
-
-          <Link
-            href="/"
-            style={{
-              padding: "10px 12px",
-              borderRadius: 12,
-              border: "1px solid #d7dce6",
-              background: "white",
-              color: "#111",
-              textDecoration: "none",
-              fontWeight: 700,
-            }}
-          >
-            Return home
-          </Link>
+            <div className="actions">
+              <Link href="/pricing" className="btnPrimary">
+                Back to pricing
+              </Link>
+              <Link href="/" className="btnSecondary">
+                Return home
+              </Link>
+            </div>
+          </div>
         </div>
-      </main>
+      </div>
+
+      <style jsx>{`
+        .page {
+          background: #f3f6fb;
+          padding: 72px 0;
+          min-height: 60vh;
+          display: flex;
+          align-items: center;
+        }
+
+        .container {
+          max-width: 480px;
+          margin: 0 auto;
+          padding: 0 20px;
+          width: 100%;
+        }
+
+        .card {
+          background: #ffffff;
+          border: 1px solid rgba(230, 233, 239, 0.95);
+          border-radius: 24px;
+          box-shadow: 0 16px 40px rgba(11, 18, 32, 0.09);
+          padding: 40px 36px;
+          text-align: center;
+        }
+
+        .icon {
+          font-size: 40px;
+          margin-bottom: 14px;
+        }
+
+        .title {
+          margin: 0 0 12px;
+          font-size: 26px;
+          font-weight: 900;
+          letter-spacing: -0.035em;
+          color: #0b1220;
+        }
+
+        .body {
+          margin: 0;
+          color: #445065;
+          font-size: 15px;
+          line-height: 1.7;
+        }
+
+        .actions {
+          display: flex;
+          gap: 10px;
+          margin-top: 24px;
+          justify-content: center;
+          flex-wrap: wrap;
+        }
+
+        .btnPrimary {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          padding: 13px 22px;
+          border-radius: 12px;
+          background: linear-gradient(135deg, #0b3a66, #0f6aa6);
+          color: #ffffff;
+          font-weight: 800;
+          font-size: 14px;
+          border: 1px solid rgba(11, 58, 102, 0.3);
+          box-shadow: 0 8px 20px rgba(11, 18, 32, 0.14);
+          text-decoration: none;
+        }
+
+        .btnSecondary {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          padding: 13px 22px;
+          border-radius: 12px;
+          background: #ffffff;
+          color: #0b1220;
+          font-weight: 700;
+          font-size: 14px;
+          border: 1.5px solid rgba(11, 58, 102, 0.18);
+          text-decoration: none;
+        }
+      `}</style>
     </>
   );
 }
