@@ -388,9 +388,7 @@ export default function StatePage({ state }: Props) {
 
         .h1 { font-size: 42px; font-weight: 700; letter-spacing: -0.04em; line-height: 1.1; margin: 0 0 16px; color: #0f172a; }
         .h1-em { color: #0a3d6b; }
-
         .hero-sub { font-size: 17px; line-height: 1.7; color: #475569; max-width: 600px; margin: 0 0 28px; }
-
         .hero-cta { display: inline-flex; align-items: center; gap: 8px; padding: 14px 24px; border-radius: 12px; background: #0a3d6b; color: #fff; font-size: 15px; font-weight: 600; border: 1px solid #072d52; box-shadow: 0 4px 12px rgba(10,61,107,0.25); text-decoration: none; transition: background 140ms, transform 100ms; }
         .hero-cta:hover { background: #072d52; transform: translateY(-1px); }
 
@@ -402,14 +400,11 @@ export default function StatePage({ state }: Props) {
         .answer-text { font-size: 15px; color: #334155; line-height: 1.7; margin: 0; }
 
         .main { padding: 40px 0 60px; }
-
         .content-grid { display: grid; grid-template-columns: 1fr 300px; gap: 48px; align-items: start; }
-
         .article { min-width: 0; }
 
         .h2 { font-size: 26px; font-weight: 700; letter-spacing: -0.03em; color: #0f172a; margin: 40px 0 14px; line-height: 1.3; }
         .h2:first-child { margin-top: 0; }
-
         .p { font-size: 16px; color: #334155; line-height: 1.8; margin: 0 0 16px; }
 
         .group-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0 32px; }
