@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
 import { GetStaticPaths, GetStaticProps } from "next";
-import { STATES, getStateBySlug, getAllSlugs, State } from "./states";
+import { STATES, getStateBySlug, getAllSlugs, State } from "../../lib/medicaidEligibilityStates";
 
 type Props = { state: State };
 
