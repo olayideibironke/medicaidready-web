@@ -8,7 +8,7 @@ export const config = {
 };
 
 const GUIDE_DOWNLOAD_URL =
-  "https://www.medicaidready.org/guides/complete-medicaid-application-guide.pdf";
+  "https://www.medicaidready.org/guides/complete-medicaid-application-guide-v2.pdf";
 
 function mustGet(name: string) {
   const v = process.env[name];
