@@ -150,6 +150,9 @@ export default function Home() {
           content="Find out if you qualify for Medicaid in 2 minutes. Free eligibility check. No jargon."
         />
         <meta name="twitter:image" content="https://medicaidready.org/medicaidready-header.png" />
+        <meta name="theme-color" content="#0a3d6b" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=6" />
+        <link rel="shortcut icon" href="/favicon.svg?v=6" />
         <link rel="canonical" href="https://medicaidready.org/" />
       </Head>
 
