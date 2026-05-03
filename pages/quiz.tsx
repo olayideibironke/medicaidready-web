@@ -76,11 +76,18 @@ const TOTAL_QUIZ_STEPS = 5;
 
 function ProgressBar({ current, total }: { current: number; total: number }) {
   const pct = Math.round((current / total) * 100);
+
   return (
-    <div className="progress-wrap" role="progressbar" aria-valuenow={current} aria-valuemax={total} aria-label={`Step ${current} of ${total}`}>
+    <div
+      className="progress-wrap"
+      role="progressbar"
+      aria-valuenow={current}
+      aria-valuemin={1}
+      aria-valuemax={total}
+      aria-label={`Step ${current} of ${total}`}
+    >
       <div className="progress-top">
         <span className="progress-label">Step {current} of {total}</span>
-        <span className="progress-pct">{pct}% complete</span>
       </div>
       <div className="progress-track">
         <div className="progress-fill" style={{ width: `${pct}%` }} />
@@ -121,20 +128,36 @@ export default function Quiz() {
 
   function handleNext() {
     if (!canAdvance()) return;
-    if (step < TOTAL_QUIZ_STEPS) { setStep((s) => s + 1); return; }
+
+    if (step < TOTAL_QUIZ_STEPS) {
+      setStep((s) => s + 1);
+      return;
+    }
+
     setPhase("email");
   }
 
   function handleBack() {
-    if (phase === "email") { setPhase("quiz"); setStep(TOTAL_QUIZ_STEPS); return; }
+    if (phase === "email") {
+      setPhase("quiz");
+      setStep(TOTAL_QUIZ_STEPS);
+      return;
+    }
+
     if (step > 1) setStep((s) => s - 1);
   }
 
   async function handleEmailSubmit() {
     const trimmed = email.trim().toLowerCase();
-    if (!trimmed || !trimmed.includes("@")) { setEmailError("Please enter a valid email address."); return; }
+
+    if (!trimmed || !trimmed.includes("@")) {
+      setEmailError("Please enter a valid email address.");
+      return;
+    }
+
     setEmailError("");
     setPhase("loading");
+
     try {
       const res = await fetch("/api/check-eligibility", {
         method: "POST",
@@ -148,9 +171,24 @@ export default function Quiz() {
           employed: answers.employed === true,
         }),
       });
-      const json = (await res.json()) as { ok: boolean; id?: string; qualified?: boolean; summary?: string; error?: string };
-      if (!res.ok || !json.ok) throw new Error(json.error ?? "Something went wrong. Please try again.");
-      setResult({ id: json.id ?? null, qualified: Boolean(json.qualified), summary: String(json.summary ?? "") });
+
+      const json = (await res.json()) as {
+        ok: boolean;
+        id?: string;
+        qualified?: boolean;
+        summary?: string;
+        error?: string;
+      };
+
+      if (!res.ok || !json.ok) {
+        throw new Error(json.error ?? "Something went wrong. Please try again.");
+      }
+
+      setResult({
+        id: json.id ?? null,
+        qualified: Boolean(json.qualified),
+        summary: String(json.summary ?? ""),
+      });
       setPhase("result");
     } catch (e: unknown) {
       setApiError(e instanceof Error ? e.message : "Something went wrong. Please try again.");
@@ -160,14 +198,20 @@ export default function Quiz() {
 
   async function handleGuideCheckout() {
     setGuideLoading(true);
+
     try {
       const res = await fetch("/api/stripe/create-guide-checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: email.trim(), submissionId: result?.id }),
       });
+
       const json = (await res.json()) as { ok: boolean; url?: string; error?: string };
-      if (!res.ok || !json.ok || !json.url) throw new Error(json.error ?? "Checkout failed.");
+
+      if (!res.ok || !json.ok || !json.url) {
+        throw new Error(json.error ?? "Checkout failed.");
+      }
+
       window.location.href = json.url;
     } catch (e: unknown) {
       alert(e instanceof Error ? e.message : "Checkout failed. Please try again.");
@@ -177,28 +221,43 @@ export default function Quiz() {
 
   function resetQuiz() {
     setStep(1);
-    setAnswers({ state: "", householdSize: 1, monthlyIncome: "", age: "", employed: null });
-    setEmail(""); setEmailError(""); setApiError(""); setResult(null); setPhase("quiz");
+    setAnswers({
+      state: "",
+      householdSize: 1,
+      monthlyIncome: "",
+      age: "",
+      employed: null,
+    });
+    setEmail("");
+    setEmailError("");
+    setApiError("");
+    setResult(null);
+    setPhase("quiz");
   }
 
   return (
     <>
       <Head>
         <title>Free Medicaid Eligibility Check — MedicaidReady</title>
-        <meta name="description" content="Answer 5 quick questions to find out if you may qualify for Medicaid in your state." />
+        <meta
+          name="description"
+          content="Answer 5 quick questions to find out if you may qualify for Medicaid in your state."
+        />
         <meta property="og:title" content="Free Medicaid Eligibility Check — MedicaidReady" />
-        <meta property="og:description" content="Answer 5 quick questions to find out if you may qualify for Medicaid." />
+        <meta
+          property="og:description"
+          content="Answer 5 quick questions to find out if you may qualify for Medicaid."
+        />
         <meta name="robots" content="noindex" />
       </Head>
 
       <div className="quiz-page">
         <div className="quiz-container">
-
-          {/* Page title */}
           <div className="quiz-header">
             <h1 className="quiz-title">
               {phase === "result" ? "Your Eligibility Results" : "Free Medicaid Eligibility Check"}
             </h1>
+
             {(phase === "quiz" || phase === "email") && (
               <p className="quiz-desc">
                 Answer 5 quick questions. We check your eligibility against your state&apos;s current Medicaid rules.
@@ -206,14 +265,15 @@ export default function Quiz() {
             )}
           </div>
 
-          {/* Quiz step */}
           {phase === "quiz" && (
             <div className="card">
               <ProgressBar current={step} total={TOTAL_QUIZ_STEPS} />
 
               {step === 1 && (
                 <div className="field-group">
-                  <label className="field-label" htmlFor="state-select">What state do you live in?</label>
+                  <label className="field-label" htmlFor="state-select">
+                    What state do you live in?
+                  </label>
                   <p className="field-hint">Select your current state of residence.</p>
                   <select
                     id="state-select"
@@ -224,7 +284,9 @@ export default function Quiz() {
                   >
                     <option value="">Select a state</option>
                     {US_STATES.map((s) => (
-                      <option key={s.code} value={s.code}>{s.name}</option>
+                      <option key={s.code} value={s.code}>
+                        {s.name}
+                      </option>
                     ))}
                   </select>
                 </div>
@@ -233,7 +295,9 @@ export default function Quiz() {
               {step === 2 && (
                 <div className="field-group">
                   <div className="field-label">How many people are in your household?</div>
-                  <p className="field-hint">Include yourself, a spouse, and any dependents living with you.</p>
+                  <p className="field-hint">
+                    Include yourself, a spouse, and any dependents living with you.
+                  </p>
                   <div className="size-grid">
                     {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
                       <button
@@ -252,10 +316,16 @@ export default function Quiz() {
 
               {step === 3 && (
                 <div className="field-group">
-                  <label className="field-label" htmlFor="income-input">What is your monthly household income?</label>
-                  <p className="field-hint">Include all income sources for everyone in your household before taxes.</p>
+                  <label className="field-label" htmlFor="income-input">
+                    What is your monthly household income?
+                  </label>
+                  <p className="field-hint">
+                    Include all income sources for everyone in your household before taxes.
+                  </p>
                   <div className="input-wrap">
-                    <span className="input-prefix" aria-hidden="true">$</span>
+                    <span className="input-prefix" aria-hidden="true">
+                      $
+                    </span>
                     <input
                       id="income-input"
                       type="number"
@@ -274,8 +344,12 @@ export default function Quiz() {
 
               {step === 4 && (
                 <div className="field-group">
-                  <label className="field-label" htmlFor="age-input">What is your age?</label>
-                  <p className="field-hint">Age affects eligibility — children, seniors, and adults qualify under different rules.</p>
+                  <label className="field-label" htmlFor="age-input">
+                    What is your age?
+                  </label>
+                  <p className="field-hint">
+                    Age affects eligibility — children, seniors, and adults qualify under different rules.
+                  </p>
                   <input
                     id="age-input"
                     type="number"
@@ -294,20 +368,26 @@ export default function Quiz() {
               {step === 5 && (
                 <div className="field-group">
                   <div className="field-label">Are you currently employed?</div>
-                  <p className="field-hint">Being employed does not automatically disqualify you. Medicaid is mainly based on income and household size.</p>
+                  <p className="field-hint">
+                    Being employed does not automatically disqualify you. Medicaid is mainly based on income and household size.
+                  </p>
                   <div className="yesno-row">
                     <button
                       type="button"
                       className={`yesno-btn ${answers.employed === true ? "yesno-btn-active" : ""}`}
                       onClick={() => setAnswers((a) => ({ ...a, employed: true }))}
                       aria-pressed={answers.employed === true}
-                    >Yes</button>
+                    >
+                      Yes
+                    </button>
                     <button
                       type="button"
                       className={`yesno-btn ${answers.employed === false ? "yesno-btn-active" : ""}`}
                       onClick={() => setAnswers((a) => ({ ...a, employed: false }))}
                       aria-pressed={answers.employed === false}
-                    >No</button>
+                    >
+                      No
+                    </button>
                   </div>
                 </div>
               )}
@@ -316,7 +396,13 @@ export default function Quiz() {
                 {step > 1 && (
                   <button type="button" className="btn-back" onClick={handleBack}>
                     <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                      <path d="M9 2L4 7l5 5" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path
+                        d="M9 2L4 7l5 5"
+                        stroke="currentColor"
+                        strokeWidth="1.75"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
                     </svg>
                     Back
                   </button>
@@ -329,29 +415,38 @@ export default function Quiz() {
                 >
                   {step === TOTAL_QUIZ_STEPS ? "See My Results" : "Continue"}
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                    <path d="M5 2l5 5-5 5" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path
+                      d="M5 2l5 5-5 5"
+                      stroke="currentColor"
+                      strokeWidth="1.75"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
                   </svg>
                 </button>
               </div>
             </div>
           )}
 
-          {/* Email capture */}
           {phase === "email" && (
             <div className="card">
               <div className="email-header">
                 <div className="email-icon" aria-hidden="true">
                   <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                    <rect x="2" y="5" width="18" height="13" rx="2.5" stroke="currentColor" strokeWidth="1.5"/>
-                    <path d="M2 8l9 6 9-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                    <rect x="2" y="5" width="18" height="13" rx="2.5" stroke="currentColor" strokeWidth="1.5" />
+                    <path d="M2 8l9 6 9-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                   </svg>
                 </div>
                 <h2 className="email-title">Almost there</h2>
-                <p className="email-sub">Enter your email to receive your personalized eligibility assessment. We will not spam you.</p>
+                <p className="email-sub">
+                  Enter your email to receive your personalized eligibility assessment. We will not spam you.
+                </p>
               </div>
 
               <div className="field-group">
-                <label className="field-label" htmlFor="email-input">Your email address</label>
+                <label className="field-label" htmlFor="email-input">
+                  Your email address
+                </label>
                 <input
                   id="email-input"
                   type="email"
@@ -359,37 +454,56 @@ export default function Quiz() {
                   placeholder="you@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  onKeyDown={(e) => { if (e.key === "Enter") void handleEmailSubmit(); }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") void handleEmailSubmit();
+                  }}
                   autoComplete="email"
                   autoFocus
                 />
-                {emailError && <p className="field-error" role="alert">{emailError}</p>}
+                {emailError && (
+                  <p className="field-error" role="alert">
+                    {emailError}
+                  </p>
+                )}
               </div>
 
               <div className="nav-row">
                 <button type="button" className="btn-back" onClick={handleBack}>
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                    <path d="M9 2L4 7l5 5" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path
+                      d="M9 2L4 7l5 5"
+                      stroke="currentColor"
+                      strokeWidth="1.75"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
                   </svg>
                   Back
                 </button>
                 <button type="button" className="btn-next" onClick={() => void handleEmailSubmit()}>
                   Get My Results
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                    <path d="M5 2l5 5-5 5" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path
+                      d="M5 2l5 5-5 5"
+                      stroke="currentColor"
+                      strokeWidth="1.75"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
                   </svg>
                 </button>
               </div>
 
               <p className="privacy-note">
                 By continuing, you agree to our{" "}
-                <Link href="/privacy" className="privacy-link">Privacy Policy</Link>.
-                We do not share your information with any government agency.
+                <Link href="/privacy" className="privacy-link">
+                  Privacy Policy
+                </Link>
+                . We do not share your information with any government agency.
               </p>
             </div>
           )}
 
-          {/* Loading */}
           {phase === "loading" && (
             <div className="card card-centered">
               <div className="spinner" aria-label="Analyzing your eligibility" />
@@ -400,18 +514,23 @@ export default function Quiz() {
             </div>
           )}
 
-          {/* Result */}
           {phase === "result" && result && (
             <div className="card">
               <div className={`result-banner ${result.qualified ? "result-banner-positive" : "result-banner-neutral"}`}>
                 <div className="result-banner-icon" aria-hidden="true">
                   {result.qualified ? (
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                      <path d="M4 10l5 5 7-8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path
+                        d="M4 10l5 5 7-8"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
                     </svg>
                   ) : (
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                      <path d="M10 6v5M10 14v.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                      <path d="M10 6v5M10 14v.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                     </svg>
                   )}
                 </div>
@@ -425,7 +544,9 @@ export default function Quiz() {
 
               <div className="result-body">
                 {result.summary.split("\n\n").map((para, i) => (
-                  <p key={i} className="result-para">{para}</p>
+                  <p key={i} className="result-para">
+                    {para}
+                  </p>
                 ))}
               </div>
 
@@ -435,7 +556,8 @@ export default function Quiz() {
                   <div className="upgrade-title">Want step-by-step help applying?</div>
                 </div>
                 <p className="upgrade-sub">
-                  Our <strong>Complete Application Guide</strong> walks you through how to apply for Medicaid in {selectedStateName} — documents, forms, deadlines, and what to expect.
+                  Our <strong>Complete Application Guide</strong> walks you through how to apply for Medicaid in{" "}
+                  {selectedStateName} — documents, forms, deadlines, and what to expect.
                 </p>
                 <button
                   type="button"
@@ -445,7 +567,9 @@ export default function Quiz() {
                 >
                   {guideLoading ? "Redirecting to checkout…" : "Get Your Complete Application Guide — $9.99"}
                 </button>
-                <p className="upgrade-note">One-time payment &middot; Instant download &middot; 30-day money-back guarantee</p>
+                <p className="upgrade-note">
+                  One-time payment &middot; Instant download &middot; 30-day money-back guarantee
+                </p>
               </div>
 
               <div className="result-footer">
@@ -456,26 +580,37 @@ export default function Quiz() {
             </div>
           )}
 
-          {/* Error */}
           {phase === "error" && (
             <div className="card card-centered">
               <div className="error-icon" aria-hidden="true">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path d="M12 8v5M12 16v.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                  <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
+                  <path d="M12 8v5M12 16v.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                  <path
+                    d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinejoin="round"
+                  />
                 </svg>
               </div>
               <h2 className="loading-title">Something went wrong</h2>
               <p className="loading-sub" style={{ marginBottom: 24 }}>
                 {apiError || "An unexpected error occurred. Please try again."}
               </p>
-              <button type="button" className="btn-next" style={{ margin: "0 auto" }} onClick={() => { setApiError(""); setPhase("email"); }}>
+              <button
+                type="button"
+                className="btn-next"
+                style={{ margin: "0 auto" }}
+                onClick={() => {
+                  setApiError("");
+                  setPhase("email");
+                }}
+              >
                 Try Again
               </button>
             </div>
           )}
 
-          {/* Disclaimer */}
           {(phase === "quiz" || phase === "email") && (
             <p className="disclaimer">
               This tool provides a preliminary assessment only and is not an official Medicaid determination.
@@ -520,7 +655,6 @@ export default function Quiz() {
           margin: 0 auto;
         }
 
-        /* Card */
         .card {
           background: var(--surface);
           border: 1px solid var(--border);
@@ -534,20 +668,22 @@ export default function Quiz() {
           padding: 52px 32px;
         }
 
-        /* Progress */
-        .progress-wrap { margin-bottom: 32px; }
+        .progress-wrap {
+          margin-bottom: 32px;
+        }
 
         .progress-top {
           display: flex;
-          justify-content: space-between;
+          justify-content: flex-start;
           font-size: 13px;
           font-weight: 500;
           color: var(--muted);
           margin-bottom: 8px;
         }
 
-        .progress-label { color: var(--text); }
-        .progress-pct { color: var(--muted); }
+        .progress-label {
+          color: var(--text);
+        }
 
         .progress-track {
           width: 100%;
@@ -561,10 +697,9 @@ export default function Quiz() {
           height: 100%;
           background: var(--navy);
           border-radius: 999px;
-          transition: width 280ms cubic-bezier(0.4,0,0.2,1);
+          transition: width 280ms cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Fields */
         .field-group {
           display: flex;
           flex-direction: column;
@@ -605,10 +740,12 @@ export default function Quiz() {
         .field-select:focus,
         .field-input:focus {
           border-color: var(--navy);
-          box-shadow: 0 0 0 3px rgba(10,61,107,0.10);
+          box-shadow: 0 0 0 3px rgba(10, 61, 107, 0.1);
         }
 
-        .field-input-error { border-color: var(--red) !important; }
+        .field-input-error {
+          border-color: var(--red) !important;
+        }
 
         .field-note {
           font-size: 13px;
@@ -621,8 +758,10 @@ export default function Quiz() {
           font-weight: 500;
         }
 
-        /* Input with prefix */
-        .input-wrap { position: relative; margin-top: 6px; }
+        .input-wrap {
+          position: relative;
+          margin-top: 6px;
+        }
 
         .input-prefix {
           position: absolute;
@@ -636,9 +775,10 @@ export default function Quiz() {
           z-index: 1;
         }
 
-        .input-with-prefix { padding-left: 30px !important; }
+        .input-with-prefix {
+          padding-left: 30px !important;
+        }
 
-        /* Size grid */
         .size-grid {
           display: grid;
           grid-template-columns: repeat(4, 1fr);
@@ -659,16 +799,18 @@ export default function Quiz() {
           font-family: inherit;
         }
 
-        .size-btn:hover { border-color: var(--border-strong); background: var(--bg); }
+        .size-btn:hover {
+          border-color: var(--border-strong);
+          background: var(--bg);
+        }
 
         .size-btn-active {
           border: 2px solid var(--navy);
-          background: rgba(10,61,107,0.06);
+          background: rgba(10, 61, 107, 0.06);
           color: var(--navy);
-          box-shadow: 0 0 0 3px rgba(10,61,107,0.08);
+          box-shadow: 0 0 0 3px rgba(10, 61, 107, 0.08);
         }
 
-        /* Yes/No */
         .yesno-row {
           display: grid;
           grid-template-columns: 1fr 1fr;
@@ -689,16 +831,18 @@ export default function Quiz() {
           font-family: inherit;
         }
 
-        .yesno-btn:hover { border-color: var(--border-strong); background: var(--bg); }
+        .yesno-btn:hover {
+          border-color: var(--border-strong);
+          background: var(--bg);
+        }
 
         .yesno-btn-active {
           border: 2px solid var(--navy);
-          background: rgba(10,61,107,0.06);
+          background: rgba(10, 61, 107, 0.06);
           color: var(--navy);
-          box-shadow: 0 0 0 3px rgba(10,61,107,0.08);
+          box-shadow: 0 0 0 3px rgba(10, 61, 107, 0.08);
         }
 
-        /* Nav */
         .nav-row {
           display: flex;
           gap: 10px;
@@ -722,7 +866,9 @@ export default function Quiz() {
           transition: background 120ms;
         }
 
-        .btn-back:hover { background: var(--bg); }
+        .btn-back:hover {
+          background: var(--bg);
+        }
 
         .btn-next {
           flex: 1;
@@ -740,7 +886,9 @@ export default function Quiz() {
           box-shadow: var(--shadow-md);
           cursor: pointer;
           font-family: inherit;
-          transition: background 140ms, transform 100ms;
+          transition:
+            background 140ms,
+            transform 100ms;
         }
 
         .btn-next:hover:not(:disabled) {
@@ -748,14 +896,17 @@ export default function Quiz() {
           transform: translateY(-1px);
         }
 
-        .btn-next-disabled, .btn-next:disabled {
+        .btn-next-disabled,
+        .btn-next:disabled {
           opacity: 0.45;
           cursor: not-allowed;
           transform: none !important;
         }
 
-        /* Email capture */
-        .email-header { text-align: center; margin-bottom: 28px; }
+        .email-header {
+          text-align: center;
+          margin-bottom: 28px;
+        }
 
         .email-icon {
           width: 52px;
@@ -792,20 +943,26 @@ export default function Quiz() {
           line-height: 1.6;
         }
 
-        .privacy-link { color: var(--navy); text-decoration: underline; }
+        .privacy-link {
+          color: var(--navy);
+          text-decoration: underline;
+        }
 
-        /* Loading */
         .spinner {
           width: 48px;
           height: 48px;
-          border: 3px solid rgba(10,61,107,0.12);
+          border: 3px solid rgba(10, 61, 107, 0.12);
           border-top-color: var(--navy);
           border-radius: 50%;
           margin: 0 auto 24px;
           animation: spin 0.8s linear infinite;
         }
 
-        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes spin {
+          to {
+            transform: rotate(360deg);
+          }
+        }
 
         .loading-title {
           font-size: 22px;
@@ -823,7 +980,6 @@ export default function Quiz() {
           margin: 0 auto;
         }
 
-        /* Result */
         .result-banner {
           display: flex;
           align-items: flex-start;
@@ -880,7 +1036,9 @@ export default function Quiz() {
           color: var(--muted);
         }
 
-        .result-body { margin-bottom: 24px; }
+        .result-body {
+          margin-bottom: 24px;
+        }
 
         .result-para {
           font-size: 15px;
@@ -889,9 +1047,10 @@ export default function Quiz() {
           margin-bottom: 12px;
         }
 
-        .result-para:last-child { margin-bottom: 0; }
+        .result-para:last-child {
+          margin-bottom: 0;
+        }
 
-        /* Upgrade */
         .upgrade-card {
           border: 1px solid var(--border);
           border-radius: var(--radius-lg);
@@ -900,7 +1059,9 @@ export default function Quiz() {
           margin-bottom: 16px;
         }
 
-        .upgrade-header { margin-bottom: 10px; }
+        .upgrade-header {
+          margin-bottom: 10px;
+        }
 
         .upgrade-badge {
           display: inline-block;
@@ -944,8 +1105,15 @@ export default function Quiz() {
           margin-bottom: 10px;
         }
 
-        .upgrade-btn:hover:not(:disabled) { background: var(--navy-dark); }
-        .upgrade-btn-disabled, .upgrade-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+        .upgrade-btn:hover:not(:disabled) {
+          background: var(--navy-dark);
+        }
+
+        .upgrade-btn-disabled,
+        .upgrade-btn:disabled {
+          opacity: 0.55;
+          cursor: not-allowed;
+        }
 
         .upgrade-note {
           font-size: 12px;
@@ -953,8 +1121,9 @@ export default function Quiz() {
           text-align: center;
         }
 
-        /* Result footer */
-        .result-footer { text-align: center; }
+        .result-footer {
+          text-align: center;
+        }
 
         .restart-btn {
           background: none;
@@ -967,9 +1136,10 @@ export default function Quiz() {
           font-family: inherit;
         }
 
-        .restart-btn:hover { color: var(--text); }
+        .restart-btn:hover {
+          color: var(--text);
+        }
 
-        /* Error */
         .error-icon {
           width: 56px;
           height: 56px;
@@ -983,7 +1153,6 @@ export default function Quiz() {
           margin: 0 auto 20px;
         }
 
-        /* Disclaimer */
         .disclaimer {
           margin: 20px auto 0;
           font-size: 12px;
@@ -994,12 +1163,30 @@ export default function Quiz() {
         }
 
         @media (max-width: 480px) {
-          .quiz-page { padding: 32px 12px 60px; }
-          .card { padding: 24px; }
-          .card-centered { padding: 40px 24px; }
-          .quiz-title { font-size: 24px; }
-          .field-label { font-size: 18px; }
-          .size-grid { grid-template-columns: repeat(4, 1fr); gap: 8px; }
+          .quiz-page {
+            padding: 32px 12px 60px;
+          }
+
+          .card {
+            padding: 24px;
+          }
+
+          .card-centered {
+            padding: 40px 24px;
+          }
+
+          .quiz-title {
+            font-size: 24px;
+          }
+
+          .field-label {
+            font-size: 18px;
+          }
+
+          .size-grid {
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+          }
         }
       `}</style>
     </>
