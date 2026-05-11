@@ -1,10 +1,21 @@
 import Head from "next/head";
 import Link from "next/link";
+import type { GetStaticProps } from "next";
 import { useMemo, useState } from "react";
 import CareersShell from "../../components/careers/CareersShell";
-import { SAMPLE_JOBS, type CareersJob, type CareersJobMode } from "../../lib/careers/sampleJobs";
+import { listApprovedJobs } from "../../lib/careers/db";
+import type { CareersJob, CareersJobMode } from "../../lib/careers/sampleJobs";
 
 type ModeFilter = "any" | CareersJobMode;
+type Props = { jobs: CareersJob[] };
+
+export const getStaticProps: GetStaticProps<Props> = async () => {
+  const jobs = await listApprovedJobs();
+  return {
+    props: { jobs },
+    revalidate: 60,
+  };
+};
 
 function formatPostedAt(iso: string): string {
   const then = new Date(iso).getTime();
@@ -17,19 +28,19 @@ function formatPostedAt(iso: string): string {
   return `Posted ${months} month${months === 1 ? "" : "s"} ago`;
 }
 
-export default function CareersJobs() {
+export default function CareersJobs({ jobs }: Props) {
   const [query, setQuery] = useState("");
   const [mode, setMode] = useState<ModeFilter>("any");
 
   const filtered = useMemo<CareersJob[]>(() => {
     const q = query.trim().toLowerCase();
-    return SAMPLE_JOBS.filter((j) => {
+    return jobs.filter((j) => {
       if (mode !== "any" && j.remote !== mode) return false;
       if (!q) return true;
       const haystack = `${j.title} ${j.company} ${j.location} ${j.summary}`.toLowerCase();
       return haystack.includes(q);
     });
-  }, [query, mode]);
+  }, [query, mode, jobs]);
 
   return (
     <>
@@ -48,7 +59,7 @@ export default function CareersJobs() {
             <div className="careers-eyebrow">Find jobs</div>
             <h1 className="careers-h1">Open roles in the Medicaid space</h1>
             <p className="careers-lead">
-              {SAMPLE_JOBS.length} sample roles below — full board launches soon.
+              {jobs.length} {jobs.length === 1 ? "role" : "roles"} currently listed.
             </p>
 
             <div className="careers-jobs-toolbar" style={{ marginTop: 32, marginBottom: 24 }}>

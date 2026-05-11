@@ -2,30 +2,30 @@ import Head from "next/head";
 import Link from "next/link";
 import type { GetStaticPaths, GetStaticProps } from "next";
 import CareersShell from "../../../components/careers/CareersShell";
-import {
-  SAMPLE_JOBS,
-  getJobById,
-  type CareersJob,
-} from "../../../lib/careers/sampleJobs";
+import { getApprovedJobBySlug, listApprovedJobSlugs } from "../../../lib/careers/db";
+import type { CareersJob } from "../../../lib/careers/sampleJobs";
 
 type Props = { job: CareersJob };
 
-export const getStaticPaths: GetStaticPaths = async () => ({
-  paths: SAMPLE_JOBS.map((j) => ({ params: { id: j.id } })),
-  fallback: false,
-});
+export const getStaticPaths: GetStaticPaths = async () => {
+  const slugs = await listApprovedJobSlugs();
+  return {
+    paths: slugs.map((slug) => ({ params: { id: slug } })),
+    fallback: "blocking",
+  };
+};
 
 export const getStaticProps: GetStaticProps<Props, { id: string }> = async (ctx) => {
   const id = ctx.params?.id ?? "";
-  const job = getJobById(id);
-  if (!job) return { notFound: true };
-  return { props: { job } };
+  const job = await getApprovedJobBySlug(id);
+  if (!job) return { notFound: true, revalidate: 60 };
+  return { props: { job }, revalidate: 60 };
 };
 
 function handleApply() {
   if (typeof window !== "undefined") {
     window.alert(
-      "Applications are not yet enabled. This is a Phase 1 preview — applying will open in a future release."
+      "Applications are not yet enabled. Apply flow opens in a future release."
     );
   }
 }
@@ -82,28 +82,34 @@ export default function JobDetail({ job }: Props) {
               </div>
             </div>
 
-            <div className="careers-detail-section">
-              <h3>About the role</h3>
-              <p>{job.description}</p>
-            </div>
+            {job.description && (
+              <div className="careers-detail-section">
+                <h3>About the role</h3>
+                <p>{job.description}</p>
+              </div>
+            )}
 
-            <div className="careers-detail-section">
-              <h3>What you&apos;ll do</h3>
-              <ul>
-                {job.responsibilities.map((r) => (
-                  <li key={r}>{r}</li>
-                ))}
-              </ul>
-            </div>
+            {job.responsibilities.length > 0 && (
+              <div className="careers-detail-section">
+                <h3>What you&apos;ll do</h3>
+                <ul>
+                  {job.responsibilities.map((r) => (
+                    <li key={r}>{r}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
-            <div className="careers-detail-section">
-              <h3>Requirements</h3>
-              <ul>
-                {job.requirements.map((r) => (
-                  <li key={r}>{r}</li>
-                ))}
-              </ul>
-            </div>
+            {job.requirements.length > 0 && (
+              <div className="careers-detail-section">
+                <h3>Requirements</h3>
+                <ul>
+                  {job.requirements.map((r) => (
+                    <li key={r}>{r}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
             {job.benefits.length > 0 && (
               <div className="careers-detail-section">
