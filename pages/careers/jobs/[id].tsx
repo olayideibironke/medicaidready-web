@@ -7,8 +7,14 @@ import type { CareersJob } from "../../../lib/careers/sampleJobs";
 
 type Props = { job: CareersJob };
 
+type JobWithApplyUrl = CareersJob & {
+  applyUrl?: string | null;
+  apply_url?: string | null;
+};
+
 export const getStaticPaths: GetStaticPaths = async () => {
   const slugs = await listApprovedJobSlugs();
+
   return {
     paths: slugs.map((slug) => ({ params: { id: slug } })),
     fallback: "blocking",
@@ -18,19 +24,40 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps<Props, { id: string }> = async (ctx) => {
   const id = ctx.params?.id ?? "";
   const job = await getApprovedJobBySlug(id);
-  if (!job) return { notFound: true, revalidate: 60 };
+
+  if (!job) {
+    return { notFound: true, revalidate: 60 };
+  }
+
   return { props: { job }, revalidate: 60 };
 };
 
-function handleApply() {
+function getApplyUrl(job: CareersJob): string | null {
+  const jobWithUrl = job as JobWithApplyUrl;
+  const value = jobWithUrl.applyUrl ?? jobWithUrl.apply_url ?? null;
+
+  if (typeof value !== "string") {
+    return null;
+  }
+
+  const trimmed = value.trim();
+
+  if (!trimmed) {
+    return null;
+  }
+
+  return trimmed;
+}
+
+function handleMissingApplyUrl() {
   if (typeof window !== "undefined") {
-    window.alert(
-      "Applications are not yet enabled. Apply flow opens in a future release."
-    );
+    window.alert("Application link is not available yet for this listing.");
   }
 }
 
 export default function JobDetail({ job }: Props) {
+  const applyUrl = getApplyUrl(job);
+
   return (
     <>
       <Head>
@@ -57,10 +84,13 @@ export default function JobDetail({ job }: Props) {
                 </svg>
                 Back to all jobs
               </Link>
+
               <h1 className="careers-detail-title">{job.title}</h1>
+
               <p className="careers-detail-company">
                 {job.company} &middot; {job.location}
               </p>
+
               <div className="careers-job-meta">
                 <span className="careers-pill careers-pill-blue">{job.type}</span>
                 <span className="careers-pill">{job.remote}</span>
@@ -68,14 +98,27 @@ export default function JobDetail({ job }: Props) {
                   <span className="careers-pill careers-pill-green">{job.salary}</span>
                 )}
               </div>
+
               <div className="careers-actions" style={{ marginTop: 20 }}>
-                <button
-                  type="button"
-                  className="careers-btn-primary"
-                  onClick={handleApply}
-                >
-                  Apply for this role
-                </button>
+                {applyUrl ? (
+                  <a
+                    href={applyUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="careers-btn-primary"
+                  >
+                    Apply for this role
+                  </a>
+                ) : (
+                  <button
+                    type="button"
+                    className="careers-btn-primary"
+                    onClick={handleMissingApplyUrl}
+                  >
+                    Apply for this role
+                  </button>
+                )}
+
                 <Link href="/careers/jobs" className="careers-btn-ghost">
                   View other openings
                 </Link>
@@ -93,8 +136,8 @@ export default function JobDetail({ job }: Props) {
               <div className="careers-detail-section">
                 <h3>What you&apos;ll do</h3>
                 <ul>
-                  {job.responsibilities.map((r) => (
-                    <li key={r}>{r}</li>
+                  {job.responsibilities.map((responsibility) => (
+                    <li key={responsibility}>{responsibility}</li>
                   ))}
                 </ul>
               </div>
@@ -104,8 +147,8 @@ export default function JobDetail({ job }: Props) {
               <div className="careers-detail-section">
                 <h3>Requirements</h3>
                 <ul>
-                  {job.requirements.map((r) => (
-                    <li key={r}>{r}</li>
+                  {job.requirements.map((requirement) => (
+                    <li key={requirement}>{requirement}</li>
                   ))}
                 </ul>
               </div>
@@ -115,8 +158,8 @@ export default function JobDetail({ job }: Props) {
               <div className="careers-detail-section">
                 <h3>Benefits</h3>
                 <ul>
-                  {job.benefits.map((b) => (
-                    <li key={b}>{b}</li>
+                  {job.benefits.map((benefit) => (
+                    <li key={benefit}>{benefit}</li>
                   ))}
                 </ul>
               </div>
