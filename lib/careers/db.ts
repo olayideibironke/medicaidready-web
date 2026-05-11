@@ -35,6 +35,13 @@ type CareersJobRow = {
   updated_at: string;
 };
 
+type CareersJobWithApplyUrl = CareersJob & {
+  applyUrl: string | null;
+  apply_url: string | null;
+  sourceType: string | null;
+  source_type: string | null;
+};
+
 const TYPE_MAP: Record<string, CareersJobType> = {
   full_time: "Full-time",
   part_time: "Part-time",
@@ -79,7 +86,9 @@ const SELECT_FIELDS = [
 
 function toNumberOrNull(v: number | string | null | undefined): number | null {
   if (v == null) return null;
+
   const n = typeof v === "number" ? v : Number(v);
+
   return Number.isFinite(n) ? n : null;
 }
 
@@ -90,7 +99,10 @@ function formatSalary(row: CareersJobRow): string {
 
   const min = toNumberOrNull(row.salary_min);
   const max = toNumberOrNull(row.salary_max);
-  if (min == null && max == null) return "";
+
+  if (min == null && max == null) {
+    return "";
+  }
 
   const currency = row.salary_currency ?? "USD";
   const symbol = currency === "USD" ? "$" : `${currency} `;
@@ -103,14 +115,25 @@ function formatSalary(row: CareersJobRow): string {
 
   const fmt = (n: number) => `${symbol}${n.toLocaleString()}`;
 
-  if (min != null && max != null) return `${fmt(min)} – ${fmt(max)} ${periodLabel}`;
-  if (min != null) return `${fmt(min)}+ ${periodLabel}`;
-  if (max != null) return `up to ${fmt(max)} ${periodLabel}`;
+  if (min != null && max != null) {
+    return `${fmt(min)} – ${fmt(max)} ${periodLabel}`;
+  }
+
+  if (min != null) {
+    return `${fmt(min)}+ ${periodLabel}`;
+  }
+
+  if (max != null) {
+    return `up to ${fmt(max)} ${periodLabel}`;
+  }
+
   return "";
 }
 
 export function rowToCareersJob(row: CareersJobRow): CareersJob {
-  return {
+  const applyUrl = typeof row.apply_url === "string" ? row.apply_url.trim() : "";
+
+  const job: CareersJobWithApplyUrl = {
     id: row.slug,
     title: row.title,
     company: row.company,
@@ -124,7 +147,13 @@ export function rowToCareersJob(row: CareersJobRow): CareersJob {
     responsibilities: row.responsibilities ?? [],
     requirements: row.requirements ?? [],
     benefits: row.benefits ?? [],
+    applyUrl: applyUrl || null,
+    apply_url: applyUrl || null,
+    sourceType: row.source_type ?? null,
+    source_type: row.source_type ?? null,
   };
+
+  return job;
 }
 
 export async function listApprovedJobs(): Promise<CareersJob[]> {
@@ -160,6 +189,7 @@ export async function listApprovedJobs(): Promise<CareersJob[]> {
 export async function getApprovedJobBySlug(slug: string): Promise<CareersJob | null> {
   try {
     const sb = supabaseAdmin();
+
     const { data, error } = await sb
       .from("careers_jobs")
       .select(SELECT_FIELDS)
@@ -185,6 +215,7 @@ export async function getApprovedJobBySlug(slug: string): Promise<CareersJob | n
 export async function listApprovedJobSlugs(): Promise<string[]> {
   try {
     const sb = supabaseAdmin();
+
     const { data, error } = await sb
       .from("careers_jobs")
       .select("slug")
