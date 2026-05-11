@@ -3,8 +3,12 @@ import Link from "next/link";
 import type { GetStaticProps } from "next";
 import { useMemo, useState } from "react";
 import CareersShell from "../../components/careers/CareersShell";
+import CategoryGrid from "../../components/careers/CategoryGrid";
+import JobAlertCapture from "../../components/careers/JobAlertCapture";
 import { listApprovedJobs } from "../../lib/careers/db";
 import type { CareersJob, CareersJobMode } from "../../lib/careers/sampleJobs";
+
+const SITE_URL = "https://www.medicaidready.org";
 
 type ModeFilter = "any" | CareersJobMode;
 type Props = { jobs: CareersJob[] };
@@ -42,15 +46,22 @@ export default function CareersJobs({ jobs }: Props) {
     });
   }, [query, mode, jobs]);
 
+  const url = `${SITE_URL}/careers/jobs`;
+  const metaTitle = "Find Medicaid Jobs — Curated Roles in Medicaid, Medicare, and ACA | MedicaidReady Careers";
+  const metaDescription =
+    "Browse curated Medicaid jobs in eligibility, compliance, care management, and analytics. Updated weekly. Apply directly through the employer's official site.";
+
   return (
     <>
       <Head>
-        <title>Find Jobs — MedicaidReady Careers</title>
-        <meta
-          name="description"
-          content="Browse open Medicaid roles: eligibility, compliance, billing, care management, and policy."
-        />
-        <meta name="robots" content="noindex" />
+        <title>{metaTitle}</title>
+        <meta name="description" content={metaDescription} />
+        <link rel="canonical" href={url} />
+        <meta property="og:title" content={metaTitle} />
+        <meta property="og:description" content={metaDescription} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={url} />
+        <meta property="og:site_name" content="MedicaidReady" />
       </Head>
 
       <CareersShell>
@@ -60,6 +71,7 @@ export default function CareersJobs({ jobs }: Props) {
             <h1 className="careers-h1">Open roles in the Medicaid space</h1>
             <p className="careers-lead">
               {jobs.length} {jobs.length === 1 ? "role" : "roles"} currently listed.
+              Curated weekly. Apply through each employer&apos;s official site.
             </p>
 
             <div className="careers-jobs-toolbar" style={{ marginTop: 32, marginBottom: 24 }}>
@@ -113,6 +125,12 @@ export default function CareersJobs({ jobs }: Props) {
                 ))}
               </div>
             )}
+
+            <CategoryGrid />
+
+            <div style={{ marginTop: 32 }}>
+              <JobAlertCapture source="careers_jobs_page" />
+            </div>
           </div>
         </section>
       </CareersShell>

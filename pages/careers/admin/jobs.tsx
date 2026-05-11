@@ -27,6 +27,14 @@ type Job = {
   featured: boolean;
   expires_at: string | null;
   published_at: string | null;
+  contact_name: string | null;
+  contact_email: string | null;
+  payment_status: string;
+  payment_tier: string;
+  stripe_session_id: string | null;
+  stripe_payment_intent_id: string | null;
+  paid_at: string | null;
+  submitted_via: string | null;
   created_at: string;
   updated_at: string;
 };
@@ -72,9 +80,18 @@ const SALARY_PERIOD_OPTIONS = [
   { value: "hour", label: "Hour" },
 ];
 
-const STATUS_LABEL: Record<string, string> = Object.fromEntries(
-  STATUS_OPTIONS.map((o) => [o.value, o.label])
-);
+const PAYMENT_STATUS_OPTIONS = [
+  { value: "free", label: "Free" },
+  { value: "unpaid", label: "Unpaid" },
+  { value: "paid", label: "Paid" },
+  { value: "refunded", label: "Refunded" },
+];
+
+const PAYMENT_TIER_OPTIONS = [
+  { value: "free", label: "Free" },
+  { value: "standard", label: "Standard" },
+  { value: "featured", label: "Featured" },
+];
 
 type FormShape = {
   slug: string;
@@ -100,6 +117,10 @@ type FormShape = {
   featured: boolean;
   expires_at: string;
   published_at: string;
+  contact_name: string;
+  contact_email: string;
+  payment_status: string;
+  payment_tier: string;
 };
 
 const EMPTY_FORM: FormShape = {
@@ -126,6 +147,10 @@ const EMPTY_FORM: FormShape = {
   featured: false,
   expires_at: "",
   published_at: "",
+  contact_name: "",
+  contact_email: "",
+  payment_status: "free",
+  payment_tier: "free",
 };
 
 function toDateTimeLocal(iso: string | null): string {
@@ -161,6 +186,10 @@ function jobToForm(j: Job): FormShape {
     featured: Boolean(j.featured),
     expires_at: toDateTimeLocal(j.expires_at),
     published_at: toDateTimeLocal(j.published_at),
+    contact_name: j.contact_name ?? "",
+    contact_email: j.contact_email ?? "",
+    payment_status: j.payment_status ?? "free",
+    payment_tier: j.payment_tier ?? "free",
   };
 }
 
@@ -169,6 +198,28 @@ function formatTimestamp(iso: string): string {
   if (Number.isNaN(d.getTime())) return "—";
   const pad = (n: number) => String(n).padStart(2, "0");
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
+function paymentBadge(j: Job): { label: string; tone: "ok" | "warn" | "neutral" | "info" } {
+  const tier =
+    j.payment_tier === "featured"
+      ? "Featured"
+      : j.payment_tier === "standard"
+        ? "Standard"
+        : "Free";
+  if (j.payment_status === "paid") {
+    return { label: `Paid · ${tier}`, tone: "ok" };
+  }
+  if (j.payment_status === "free") {
+    return { label: "Free", tone: "neutral" };
+  }
+  if (j.payment_status === "unpaid") {
+    return { label: `Unpaid · ${tier}`, tone: "warn" };
+  }
+  if (j.payment_status === "refunded") {
+    return { label: "Refunded", tone: "info" };
+  }
+  return { label: j.payment_status, tone: "neutral" };
 }
 
 export default function AdminJobs() {
@@ -185,6 +236,7 @@ export default function AdminJobs() {
   const [saving, setSaving] = useState(false);
   const [formError, setFormError] = useState("");
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
+  const [unpaidOnly, setUnpaidOnly] = useState(false);
 
   const refresh = useCallback(async () => {
     try {
@@ -292,7 +344,10 @@ export default function AdminJobs() {
     try {
       const res = await fetch(`/api/careers/admin/jobs/${id}`, { method: "DELETE" });
       if (!res.ok) {
-        const json = (await res.json().catch(() => ({}))) as { error?: string; message?: string };
+        const json = (await res.json().catch(() => ({}))) as {
+          error?: string;
+          message?: string;
+        };
         throw new Error(json.message ?? json.error ?? `status_${res.status}`);
       }
       setJobs((curr) => curr.filter((j) => j.id !== id));
@@ -335,6 +390,10 @@ export default function AdminJobs() {
       featured: Boolean(form.featured),
       expires_at: form.expires_at || null,
       published_at: form.published_at || null,
+      contact_name: form.contact_name.trim(),
+      contact_email: form.contact_email.trim(),
+      payment_status: form.payment_status || "free",
+      payment_tier: form.payment_tier || "free",
     };
 
     try {
@@ -349,7 +408,12 @@ export default function AdminJobs() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-      const json = (await res.json()) as { ok: boolean; job?: Job; error?: string; message?: string };
+      const json = (await res.json()) as {
+        ok: boolean;
+        job?: Job;
+        error?: string;
+        message?: string;
+      };
       if (!res.ok || !json.ok || !json.job) {
         throw new Error(json.message ?? json.error ?? `status_${res.status}`);
       }
@@ -367,13 +431,20 @@ export default function AdminJobs() {
   }
 
   const filteredJobs = useMemo(() => {
-    if (statusFilter === "all") return jobs;
-    return jobs.filter((j) => j.status === statusFilter);
-  }, [jobs, statusFilter]);
+    return jobs.filter((j) => {
+      if (statusFilter !== "all" && j.status !== statusFilter) return false;
+      if (unpaidOnly && j.payment_status !== "unpaid") return false;
+      return true;
+    });
+  }, [jobs, statusFilter, unpaidOnly]);
 
   const counts = useMemo(() => {
-    const map: Record<string, number> = { all: jobs.length };
-    for (const j of jobs) map[j.status] = (map[j.status] ?? 0) + 1;
+    const map: Record<string, number> = { all: jobs.length, unpaid: 0, paid: 0 };
+    for (const j of jobs) {
+      map[j.status] = (map[j.status] ?? 0) + 1;
+      if (j.payment_status === "unpaid") map.unpaid += 1;
+      if (j.payment_status === "paid") map.paid += 1;
+    }
     return map;
   }, [jobs]);
 
@@ -408,8 +479,8 @@ export default function AdminJobs() {
             <div className="ca-card ca-card-narrow">
               <h1 className="ca-h1">Careers admin is disabled</h1>
               <p className="ca-text">
-                Set <code className="ca-code">CAREERS_ADMIN_KEY</code> (12+ characters) in your
-                environment and redeploy to enable this page.
+                Set <code className="ca-code">CAREERS_ADMIN_KEY</code> (12+ characters) in
+                your environment and redeploy to enable this page.
               </p>
             </div>
           )}
@@ -418,8 +489,8 @@ export default function AdminJobs() {
             <div className="ca-card ca-card-narrow">
               <h1 className="ca-h1">Enter admin key</h1>
               <p className="ca-text">
-                This area manages MedicaidReady Careers job listings. Enter the shared admin key to
-                continue.
+                This area manages MedicaidReady Careers job listings. Enter the shared
+                admin key to continue.
               </p>
               <form onSubmit={handleLogin} className="ca-login-form">
                 <input
@@ -469,6 +540,14 @@ export default function AdminJobs() {
                       {o.label} <span className="ca-chip-count">{counts[o.value] ?? 0}</span>
                     </button>
                   ))}
+                  <button
+                    type="button"
+                    className={`ca-chip${unpaidOnly ? " is-active" : ""}`}
+                    onClick={() => setUnpaidOnly((v) => !v)}
+                    title="Show only unpaid submissions"
+                  >
+                    Unpaid only <span className="ca-chip-count">{counts.unpaid ?? 0}</span>
+                  </button>
                 </div>
                 <button type="button" className="ca-btn-primary" onClick={openCreate}>
                   + New job
@@ -483,7 +562,8 @@ export default function AdminJobs() {
 
               {jobs.length === 0 ? (
                 <div className="ca-empty">
-                  No jobs yet. Click <strong>New job</strong> to create the first listing.
+                  No jobs yet. Click <strong>New job</strong> to create the first
+                  listing.
                 </div>
               ) : filteredJobs.length === 0 ? (
                 <div className="ca-empty">No jobs match this filter.</div>
@@ -494,70 +574,104 @@ export default function AdminJobs() {
                       <tr>
                         <th>Title</th>
                         <th>Status</th>
+                        <th>Payment</th>
                         <th>Featured</th>
+                        <th>Contact</th>
                         <th>Updated</th>
                         <th aria-label="Actions" />
                       </tr>
                     </thead>
                     <tbody>
-                      {filteredJobs.map((job) => (
-                        <tr key={job.id}>
-                          <td>
-                            <div className="ca-job-title">{job.title}</div>
-                            <div className="ca-job-sub">
-                              {job.company}
-                              {job.location ? ` · ${job.location}` : ""}
-                            </div>
-                            <div className="ca-job-slug">/{job.slug}</div>
-                          </td>
-                          <td>
-                            <select
-                              className="ca-select-inline"
-                              value={job.status}
-                              onChange={(e) =>
-                                void quickPatch(job.id, { status: e.target.value })
-                              }
-                              aria-label={`Status for ${job.title}`}
-                            >
-                              {STATUS_OPTIONS.map((o) => (
-                                <option key={o.value} value={o.value}>
-                                  {o.label}
-                                </option>
-                              ))}
-                            </select>
-                          </td>
-                          <td>
-                            <label className="ca-toggle">
-                              <input
-                                type="checkbox"
-                                checked={job.featured}
+                      {filteredJobs.map((job) => {
+                        const pb = paymentBadge(job);
+                        return (
+                          <tr key={job.id}>
+                            <td>
+                              <div className="ca-job-title">{job.title}</div>
+                              <div className="ca-job-sub">
+                                {job.company}
+                                {job.location ? ` · ${job.location}` : ""}
+                              </div>
+                              <div className="ca-job-slug">/{job.slug}</div>
+                            </td>
+                            <td>
+                              <select
+                                className="ca-select-inline"
+                                value={job.status}
                                 onChange={(e) =>
-                                  void quickPatch(job.id, { featured: e.target.checked })
+                                  void quickPatch(job.id, { status: e.target.value })
                                 }
-                                aria-label={`Featured: ${job.title}`}
-                              />
-                              <span>{job.featured ? "Yes" : "No"}</span>
-                            </label>
-                          </td>
-                          <td className="ca-cell-time">{formatTimestamp(job.updated_at)}</td>
-                          <td className="ca-cell-actions">
-                            <button
-                              type="button"
-                              className="ca-btn-ghost-sm"
-                              onClick={() => openEdit(job)}
-                            >
-                              Edit
-                            </button>
-                            <button
-                              type="button"
-                              className="ca-btn-danger-sm"
-                              onClick={() => void handleDelete(job.id)}
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
+                                aria-label={`Status for ${job.title}`}
+                              >
+                                {STATUS_OPTIONS.map((o) => (
+                                  <option key={o.value} value={o.value}>
+                                    {o.label}
+                                  </option>
+                                ))}
+                              </select>
+                            </td>
+                            <td>
+                              <span className={`ca-pay-badge ca-pay-${pb.tone}`}>
+                                {pb.label}
+                              </span>
+                              <div className="ca-source-sub">
+                                {job.source_type === "self_serve"
+                                  ? "self-serve"
+                                  : job.source_type}
+                              </div>
+                            </td>
+                            <td>
+                              <label className="ca-toggle">
+                                <input
+                                  type="checkbox"
+                                  checked={job.featured}
+                                  onChange={(e) =>
+                                    void quickPatch(job.id, { featured: e.target.checked })
+                                  }
+                                  aria-label={`Featured: ${job.title}`}
+                                />
+                                <span>{job.featured ? "Yes" : "No"}</span>
+                              </label>
+                            </td>
+                            <td className="ca-cell-contact">
+                              {job.contact_email ? (
+                                <>
+                                  <div className="ca-contact-name">
+                                    {job.contact_name || "—"}
+                                  </div>
+                                  <a
+                                    className="ca-contact-email"
+                                    href={`mailto:${job.contact_email}`}
+                                  >
+                                    {job.contact_email}
+                                  </a>
+                                </>
+                              ) : (
+                                <span className="ca-contact-empty">—</span>
+                              )}
+                            </td>
+                            <td className="ca-cell-time">
+                              {formatTimestamp(job.updated_at)}
+                            </td>
+                            <td className="ca-cell-actions">
+                              <button
+                                type="button"
+                                className="ca-btn-ghost-sm"
+                                onClick={() => openEdit(job)}
+                              >
+                                Edit
+                              </button>
+                              <button
+                                type="button"
+                                className="ca-btn-danger-sm"
+                                onClick={() => void handleDelete(job.id)}
+                              >
+                                Delete
+                              </button>
+                            </td>
+                          </tr>
+                        );
+                      })}
                     </tbody>
                   </table>
                 </div>
@@ -654,7 +768,9 @@ export default function AdminJobs() {
                       id="f-emp"
                       className="ca-input"
                       value={form.employment_type}
-                      onChange={(e) => setForm({ ...form, employment_type: e.target.value })}
+                      onChange={(e) =>
+                        setForm({ ...form, employment_type: e.target.value })
+                      }
                     >
                       {EMPLOYMENT_OPTIONS.map((o) => (
                         <option key={o.value} value={o.value}>
@@ -700,7 +816,10 @@ export default function AdminJobs() {
                       maxLength={3}
                       value={form.salary_currency}
                       onChange={(e) =>
-                        setForm({ ...form, salary_currency: e.target.value.toUpperCase() })
+                        setForm({
+                          ...form,
+                          salary_currency: e.target.value.toUpperCase(),
+                        })
                       }
                     />
                   </div>
@@ -710,7 +829,9 @@ export default function AdminJobs() {
                       id="f-per"
                       className="ca-input"
                       value={form.salary_period}
-                      onChange={(e) => setForm({ ...form, salary_period: e.target.value })}
+                      onChange={(e) =>
+                        setForm({ ...form, salary_period: e.target.value })
+                      }
                     >
                       {SALARY_PERIOD_OPTIONS.map((o) => (
                         <option key={o.value} value={o.value}>
@@ -760,7 +881,9 @@ export default function AdminJobs() {
                   id="f-resp"
                   className="ca-input ca-textarea"
                   value={form.responsibilities}
-                  onChange={(e) => setForm({ ...form, responsibilities: e.target.value })}
+                  onChange={(e) =>
+                    setForm({ ...form, responsibilities: e.target.value })
+                  }
                 />
               </div>
 
@@ -833,7 +956,9 @@ export default function AdminJobs() {
                     <input
                       type="checkbox"
                       checked={form.featured}
-                      onChange={(e) => setForm({ ...form, featured: e.target.checked })}
+                      onChange={(e) =>
+                        setForm({ ...form, featured: e.target.checked })
+                      }
                     />
                     <span>Featured</span>
                   </label>
@@ -860,6 +985,71 @@ export default function AdminJobs() {
                     value={form.expires_at}
                     onChange={(e) => setForm({ ...form, expires_at: e.target.value })}
                   />
+                </div>
+              </div>
+
+              <div className="ca-section-divider">Contact &amp; payment</div>
+
+              <div className="ca-form-row">
+                <div className="ca-field">
+                  <label htmlFor="f-cname">Contact name</label>
+                  <input
+                    id="f-cname"
+                    className="ca-input"
+                    value={form.contact_name}
+                    onChange={(e) =>
+                      setForm({ ...form, contact_name: e.target.value })
+                    }
+                  />
+                </div>
+                <div className="ca-field">
+                  <label htmlFor="f-cemail">Contact email</label>
+                  <input
+                    id="f-cemail"
+                    type="email"
+                    className="ca-input"
+                    value={form.contact_email}
+                    onChange={(e) =>
+                      setForm({ ...form, contact_email: e.target.value })
+                    }
+                  />
+                </div>
+              </div>
+
+              <div className="ca-form-row">
+                <div className="ca-field">
+                  <label htmlFor="f-pstatus">Payment status</label>
+                  <select
+                    id="f-pstatus"
+                    className="ca-input"
+                    value={form.payment_status}
+                    onChange={(e) =>
+                      setForm({ ...form, payment_status: e.target.value })
+                    }
+                  >
+                    {PAYMENT_STATUS_OPTIONS.map((o) => (
+                      <option key={o.value} value={o.value}>
+                        {o.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="ca-field">
+                  <label htmlFor="f-ptier">Payment tier</label>
+                  <select
+                    id="f-ptier"
+                    className="ca-input"
+                    value={form.payment_tier}
+                    onChange={(e) =>
+                      setForm({ ...form, payment_tier: e.target.value })
+                    }
+                  >
+                    {PAYMENT_TIER_OPTIONS.map((o) => (
+                      <option key={o.value} value={o.value}>
+                        {o.label}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </div>
 
@@ -902,7 +1092,7 @@ export default function AdminJobs() {
           border-bottom: 1px solid #e2e8f0;
         }
         .careers-admin .ca-header-inner {
-          max-width: 1180px;
+          max-width: 1280px;
           margin: 0 auto;
           padding: 14px 24px;
           display: flex;
@@ -937,7 +1127,7 @@ export default function AdminJobs() {
           font-weight: 500;
         }
         .careers-admin .ca-main {
-          max-width: 1180px;
+          max-width: 1280px;
           margin: 0 auto;
           padding: 32px 24px 80px;
         }
@@ -1180,7 +1370,7 @@ export default function AdminJobs() {
           background: #ffffff;
           border: 1px solid #e2e8f0;
           border-radius: 14px;
-          overflow: hidden;
+          overflow: auto;
           box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
         }
         .careers-admin .ca-table {
@@ -1198,6 +1388,7 @@ export default function AdminJobs() {
           padding: 12px 16px;
           background: #f8fafc;
           border-bottom: 1px solid #e2e8f0;
+          white-space: nowrap;
         }
         .careers-admin .ca-table td {
           padding: 14px 16px;
@@ -1252,6 +1443,57 @@ export default function AdminJobs() {
         .careers-admin .ca-cell-actions > * + * {
           margin-left: 6px;
         }
+        .careers-admin .ca-cell-contact {
+          max-width: 200px;
+          font-size: 13px;
+        }
+        .careers-admin .ca-contact-name {
+          color: #0f172a;
+          font-weight: 500;
+        }
+        .careers-admin .ca-contact-email {
+          color: #1d4ed8;
+          font-size: 12px;
+          word-break: break-all;
+        }
+        .careers-admin .ca-contact-empty {
+          color: #94a3b8;
+        }
+        .careers-admin .ca-pay-badge {
+          display: inline-flex;
+          align-items: center;
+          padding: 3px 10px;
+          border-radius: 999px;
+          font-size: 12px;
+          font-weight: 600;
+          white-space: nowrap;
+        }
+        .careers-admin .ca-pay-ok {
+          background: #f0fdf4;
+          color: #15803d;
+          border: 1px solid #bbf7d0;
+        }
+        .careers-admin .ca-pay-warn {
+          background: #fffbeb;
+          color: #b45309;
+          border: 1px solid #fde68a;
+        }
+        .careers-admin .ca-pay-info {
+          background: #eff6ff;
+          color: #1d4ed8;
+          border: 1px solid #bfdbfe;
+        }
+        .careers-admin .ca-pay-neutral {
+          background: #f1f5f9;
+          color: #475569;
+          border: 1px solid #e2e8f0;
+        }
+        .careers-admin .ca-source-sub {
+          font-size: 11px;
+          color: #94a3b8;
+          margin-top: 4px;
+          text-transform: lowercase;
+        }
         .careers-admin .ca-form {
           margin: 0;
         }
@@ -1267,6 +1509,16 @@ export default function AdminJobs() {
           grid-template-columns: 1fr 1fr;
           gap: 16px;
           margin-bottom: 4px;
+        }
+        .careers-admin .ca-section-divider {
+          margin: 16px 0 10px;
+          padding-top: 16px;
+          border-top: 1px solid #e2e8f0;
+          font-size: 12px;
+          font-weight: 700;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+          color: #64748b;
         }
         .careers-admin .ca-field {
           display: flex;

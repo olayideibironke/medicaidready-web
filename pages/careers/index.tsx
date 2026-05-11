@@ -1,17 +1,28 @@
 import Head from "next/head";
 import Link from "next/link";
 import CareersShell from "../../components/careers/CareersShell";
+import CategoryGrid from "../../components/careers/CategoryGrid";
+import JobAlertCapture from "../../components/careers/JobAlertCapture";
+
+const SITE_URL = "https://www.medicaidready.org";
 
 export default function CareersHome() {
+  const url = `${SITE_URL}/careers`;
+  const metaTitle = "MedicaidReady Careers — Jobs in Medicaid, Medicare, and ACA";
+  const metaDescription =
+    "Curated Medicaid, Medicare, and ACA jobs: eligibility, compliance, care management, and analytics. Updated weekly. Apply directly through the employer's official site.";
+
   return (
     <>
       <Head>
-        <title>MedicaidReady Careers — Jobs in the Medicaid Ecosystem</title>
-        <meta
-          name="description"
-          content="Find your next role in Medicaid: eligibility specialists, compliance, billing, care management, and policy. New jobs added every week."
-        />
-        <meta name="robots" content="noindex" />
+        <title>{metaTitle}</title>
+        <meta name="description" content={metaDescription} />
+        <link rel="canonical" href={url} />
+        <meta property="og:title" content={metaTitle} />
+        <meta property="og:description" content={metaDescription} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={url} />
+        <meta property="og:site_name" content="MedicaidReady" />
       </Head>
 
       <CareersShell>
@@ -24,9 +35,9 @@ export default function CareersHome() {
               Medicaid ecosystem.
             </h1>
             <p className="careers-lead">
-              MedicaidReady Careers is a focused job board for Medicaid eligibility, compliance,
-              billing, care management, and policy roles. Built for the people doing the work — by
-              people doing the work.
+              MedicaidReady Careers is a focused job board for Medicaid eligibility,
+              compliance, billing, care management, and policy roles. Built for the people
+              doing the work — by people doing the work.
             </p>
 
             <div className="careers-actions">
@@ -63,8 +74,8 @@ export default function CareersHome() {
                 </div>
                 <h3 className="careers-feature-title">Medicaid-only roles</h3>
                 <p className="careers-feature-body">
-                  No noise. Every listing is in the Medicaid ecosystem — providers, MCOs, advocacy,
-                  policy, and tech.
+                  No noise. Every listing is in the Medicaid ecosystem — providers, MCOs,
+                  advocacy, policy, and tech.
                 </p>
               </div>
 
@@ -82,8 +93,8 @@ export default function CareersHome() {
                 </div>
                 <h3 className="careers-feature-title">Updated weekly</h3>
                 <p className="careers-feature-body">
-                  Fresh listings added every week from agencies, providers, and partners we already
-                  work with.
+                  Fresh listings added every week from agencies, providers, and partners we
+                  already work with.
                 </p>
               </div>
 
@@ -106,10 +117,31 @@ export default function CareersHome() {
                 </div>
                 <h3 className="careers-feature-title">Built for the field</h3>
                 <p className="careers-feature-body">
-                  From front-line enrollment specialists to policy directors. Real titles, real
-                  salary ranges, real next steps.
+                  From front-line enrollment specialists to policy directors. Real titles,
+                  real salary ranges, real next steps.
                 </p>
               </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="careers-section">
+          <div className="careers-container">
+            <CategoryGrid heading="Browse by category" />
+          </div>
+        </section>
+
+        <section
+          className="careers-section-tight"
+          style={{
+            background: "#ffffff",
+            borderTop: "1px solid #e2e8f0",
+            borderBottom: "1px solid #e2e8f0",
+          }}
+        >
+          <div className="careers-container">
+            <div style={{ maxWidth: 640 }}>
+              <JobAlertCapture source="careers_home" />
             </div>
           </div>
         </section>
@@ -119,15 +151,15 @@ export default function CareersHome() {
             <div className="careers-eyebrow">For employers</div>
             <h2 className="careers-h2">Hire from a pool that already knows Medicaid.</h2>
             <p className="careers-lead">
-              Reach candidates who understand eligibility, MCO dynamics, and state-by-state policy
-              nuance. No generic job-board sprawl.
+              Reach candidates who understand eligibility, MCO dynamics, and state-by-state
+              policy nuance. No generic job-board sprawl.
             </p>
             <div className="careers-actions">
               <Link href="/careers/post-a-job" className="careers-btn-primary">
                 Post a job
               </Link>
               <Link href="/careers/employers" className="careers-btn-ghost">
-                Learn more
+                See pricing
               </Link>
             </div>
           </div>

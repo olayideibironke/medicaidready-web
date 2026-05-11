@@ -25,6 +25,14 @@ export type AdminJobRow = {
   featured: boolean;
   expires_at: string | null;
   published_at: string | null;
+  contact_name: string | null;
+  contact_email: string | null;
+  payment_status: string;
+  payment_tier: string;
+  stripe_session_id: string | null;
+  stripe_payment_intent_id: string | null;
+  paid_at: string | null;
+  submitted_via: string | null;
   created_at: string;
   updated_at: string;
 };
@@ -56,6 +64,14 @@ const FIELDS = [
   "featured",
   "expires_at",
   "published_at",
+  "contact_name",
+  "contact_email",
+  "payment_status",
+  "payment_tier",
+  "stripe_session_id",
+  "stripe_payment_intent_id",
+  "paid_at",
+  "submitted_via",
   "created_at",
   "updated_at",
 ].join(", ");
@@ -72,6 +88,8 @@ const VALID_STATUS = new Set([
   "expired",
 ]);
 const VALID_SOURCE = new Set(["manual", "self_serve", "imported", "partner", "sample"]);
+const VALID_PAYMENT_STATUS = new Set(["unpaid", "paid", "refunded", "free"]);
+const VALID_PAYMENT_TIER = new Set(["free", "standard", "featured"]);
 
 function trimOrNull(v: unknown): string | null {
   if (typeof v !== "string") return null;
@@ -140,7 +158,8 @@ function sanitizeForWrite(input: JobInput): Record<string, unknown> {
   if ("salary_currency" in input) {
     const v = trimOrNull(input.salary_currency)?.toUpperCase();
     if (v && v.length === 3) patch.salary_currency = v;
-    else if (input.salary_currency === "" || input.salary_currency == null) patch.salary_currency = "USD";
+    else if (input.salary_currency === "" || input.salary_currency == null)
+      patch.salary_currency = "USD";
   }
 
   if ("salary_period" in input) {
@@ -168,6 +187,21 @@ function sanitizeForWrite(input: JobInput): Record<string, unknown> {
 
   if ("expires_at" in input) patch.expires_at = isoOrNull(input.expires_at);
   if ("published_at" in input) patch.published_at = isoOrNull(input.published_at);
+
+  if ("contact_name" in input) patch.contact_name = trimOrNull(input.contact_name);
+  if ("contact_email" in input) {
+    const v = trimOrNull(input.contact_email);
+    patch.contact_email = v ? v.toLowerCase() : null;
+  }
+  if ("payment_status" in input) {
+    const v = trimOrNull(input.payment_status);
+    if (v && VALID_PAYMENT_STATUS.has(v)) patch.payment_status = v;
+  }
+  if ("payment_tier" in input) {
+    const v = trimOrNull(input.payment_tier);
+    if (v && VALID_PAYMENT_TIER.has(v)) patch.payment_tier = v;
+  }
+  if ("paid_at" in input) patch.paid_at = isoOrNull(input.paid_at);
 
   return patch;
 }
@@ -208,6 +242,8 @@ export async function adminCreateJob(input: JobInput): Promise<AdminJobRow> {
   if (!patch.source_type) patch.source_type = "manual";
   if (!patch.salary_currency) patch.salary_currency = "USD";
   if (!patch.salary_period) patch.salary_period = "year";
+  if (!patch.payment_status) patch.payment_status = "free";
+  if (!patch.payment_tier) patch.payment_tier = "free";
 
   const sb = supabaseAdmin();
   const { data, error } = await sb
