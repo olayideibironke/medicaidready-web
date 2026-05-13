@@ -25,6 +25,23 @@ export type CategoryConfig = {
   matcher: CategoryMatcher;
 };
 
+function makeFaq(role: string, work: string): CategoryFAQ[] {
+  return [
+    {
+      q: `What kind of ${role} jobs are listed here?`,
+      a: work,
+    },
+    {
+      q: "Are these jobs reviewed before appearing?",
+      a: "Yes. MedicaidReady Careers is curated around healthcare coverage, care workforce, healthcare operations, analytics, compliance, and healthcare technology roles. Listings link to employer career pages whenever possible.",
+    },
+    {
+      q: "How often are jobs updated?",
+      a: "The board is designed for frequent updates. Older, duplicate, or broken-link postings can be archived so the public board stays useful and current.",
+    },
+  ];
+}
+
 export const CATEGORY_CONFIGS: CategoryConfig[] = [
   {
     slug: "medicaid-analyst-jobs",
@@ -33,34 +50,24 @@ export const CATEGORY_CONFIGS: CategoryConfig[] = [
     metaTitle:
       "Medicaid Analyst Jobs — Policy, Program, and Operations Roles | MedicaidReady Careers",
     metaDescription:
-      "Open Medicaid analyst jobs across policy, program operations, and compliance. Curated weekly from health plans, providers, state agencies, and federal contractors.",
+      "Open Medicaid analyst jobs across policy, program operations, compliance, and reporting. Curated weekly from health plans, providers, agencies, and healthcare organizations.",
     intro:
-      "Open analyst roles across the Medicaid space — policy, program operations, compliance, and reporting.",
+      "Open analyst roles across Medicaid policy, program operations, compliance, reporting, and healthcare administration.",
     about: [
-      "Medicaid analyst roles span policy research, program management, finance, and operations work. Most positions ask for one to five years of relevant experience and strong written communication. Some are remote; others require time on-site at a state Medicaid agency, managed care organization, or provider.",
-      "Common titles in this category include Medicaid Policy Analyst, Program Analyst, Compliance Analyst, Reporting Analyst, Operations Analyst, and Healthcare Data Analyst. Many transitions into Medicaid analyst work come from public health, consulting, or other healthcare-adjacent backgrounds.",
-      "Salary ranges vary widely. Entry-level analyst positions often start around $55K, while senior analysts at large MCOs and consulting firms can clear $100K. Federal contractors and state agencies typically pay close to GS-11 / GS-12 equivalents.",
+      "Medicaid analyst roles support policy research, reporting, operations, compliance, finance, and program management work.",
+      "Common titles include Medicaid Policy Analyst, Program Analyst, Compliance Analyst, Operations Analyst, Reporting Analyst, and Healthcare Data Analyst.",
+      "These roles are a strong fit for people with SQL, Excel, reporting, stakeholder communication, policy, compliance, or healthcare operations experience.",
     ],
     emptyStateCopy:
-      "We do not have an open Medicaid analyst role in the board this week. New roles are added regularly — check back soon, or browse all current jobs.",
-    faq: [
-      {
-        q: "What does a Medicaid analyst do?",
-        a: "Medicaid analysts study program data, policy changes, and operational performance. Day-to-day work can include reviewing legislation, building reports for leadership, auditing claims and eligibility decisions, or supporting state agency communications.",
-      },
-      {
-        q: "Do I need a Medicaid background to apply?",
-        a: "Some roles require it; many do not. Strong analyst fundamentals — SQL, Excel, clear writing, working with stakeholders — transfer well from other healthcare or public-sector domains.",
-      },
-      {
-        q: "Are these jobs remote?",
-        a: "Some are. Use the work-mode filter on the main jobs page, or browse the dedicated remote Medicaid jobs category.",
-      },
-    ],
+      "We do not have an open Medicaid analyst role this week. New roles are added regularly — check back soon, or browse all current jobs.",
+    faq: makeFaq(
+      "Medicaid analyst",
+      "This category includes policy analyst, program analyst, compliance analyst, operations analyst, reporting analyst, and healthcare data analyst roles connected to Medicaid, Medicare, ACA, and healthcare operations."
+    ),
     related: [
       "medicaid-analytics-jobs",
       "healthcare-compliance-jobs",
-      "remote-medicaid-jobs",
+      "healthcare-data-analyst-jobs",
     ],
     matcher: {
       titleKeywords: ["analyst"],
@@ -79,39 +86,25 @@ export const CATEGORY_CONFIGS: CategoryConfig[] = [
     metaTitle:
       "Medicaid Eligibility Specialist Jobs — Enrollment & Renewal Roles | MedicaidReady Careers",
     metaDescription:
-      "Open Medicaid eligibility specialist and enrollment roles at health systems, FQHCs, and managed care plans. Help individuals and families qualify, apply, and renew.",
+      "Open Medicaid eligibility specialist and enrollment roles at health systems, FQHCs, managed care plans, public programs, and healthcare organizations.",
     intro:
-      "Eligibility specialist, enrollment counselor, and benefits navigator roles across the Medicaid ecosystem.",
+      "Eligibility specialist, enrollment counselor, benefits navigator, and patient access roles across the Medicaid ecosystem.",
     about: [
-      "Eligibility specialists are the front line of the Medicaid system. They screen patients and members, complete state applications, gather supporting documentation, and track renewals so coverage does not lapse.",
-      "Common titles include Medicaid Eligibility Specialist, Enrollment Counselor, Benefits Navigator, Patient Access Coordinator, and Outreach Coordinator. Most require one or more years of public-benefits experience and strong empathy. Bilingual English / Spanish is a frequent plus.",
-      "These roles are typically hybrid or on-site at FQHCs, hospitals, and county social-service agencies. Pay typically ranges from $40K to $60K depending on geography and certifications.",
+      "Eligibility specialists help individuals and families apply for Medicaid, complete renewals, gather documents, and avoid coverage gaps.",
+      "Common titles include Medicaid Eligibility Specialist, Enrollment Counselor, Benefits Navigator, Patient Access Coordinator, and Outreach Coordinator.",
+      "Many roles value public benefits experience, bilingual communication, strong documentation, and patient-facing support skills.",
     ],
     emptyStateCopy:
       "We do not have an open eligibility specialist role this week. New roles are added regularly — check back soon, or browse all current jobs.",
-    faq: [
-      {
-        q: "What is the difference between an eligibility specialist and a navigator?",
-        a: "They overlap heavily. Specialists usually focus on Medicaid and CHIP applications; navigators (under ACA programs) help with marketplace plans too. Both roles support enrollment and renewal end-to-end.",
-      },
-      {
-        q: "Do I need a certification?",
-        a: "Some states certify eligibility specialists or require navigator training. Most employers will sponsor or provide training as part of onboarding.",
-      },
-      {
-        q: "Is this work remote?",
-        a: "Most eligibility work is hybrid or on-site, since members often need in-person help with documents. Some MCO-side roles are remote.",
-      },
-    ],
-    related: [
-      "medicaid-care-management-jobs",
-      "medicaid-analyst-jobs",
-      "remote-medicaid-jobs",
-    ],
+    faq: makeFaq(
+      "Medicaid eligibility",
+      "This category includes eligibility specialist, enrollment, renewal, navigator, patient access, and benefits support roles."
+    ),
+    related: ["medicaid-care-management-jobs", "cna-jobs", "caregiver-jobs"],
     matcher: {
       categories: ["eligibility"],
       titleKeywords: ["eligibility", "enrollment", "navigator", "patient access"],
-      keywords: ["medicaid eligibility", "enrollment specialist"],
+      keywords: ["medicaid eligibility", "enrollment specialist", "benefits navigator"],
     },
   },
   {
@@ -121,35 +114,21 @@ export const CATEGORY_CONFIGS: CategoryConfig[] = [
     metaTitle:
       "Medicaid Care Management Jobs — RN, Care Coordinator, and Case Manager Roles | MedicaidReady Careers",
     metaDescription:
-      "Open Medicaid care management roles for RNs, social workers, and care coordinators. Support high-risk members through care plans and transitions of care.",
+      "Open Medicaid care management roles for RNs, social workers, care coordinators, LTSS teams, and case managers.",
     intro:
-      "RN care managers, care coordinators, and social-work-led case management for Medicaid members.",
+      "RN care managers, care coordinators, social workers, and case management roles supporting Medicaid members.",
     about: [
-      "Care management connects high-risk Medicaid members to the right level of care, helps them avoid avoidable hospitalizations, and addresses the social drivers of health — housing, food, and transportation.",
-      "Common titles include RN Care Manager, Care Coordinator, Case Manager, Social Worker, and Community Health Worker. Many roles are with managed care plans (MCOs) and are partially or fully remote with occasional field visits.",
-      "RN care managers usually need an active state license; social-work tracks typically require an LSW, LMSW, or LCSW. Pay ranges from $55K (entry coordinator) to $95K+ (senior RN at a national plan).",
+      "Care management connects members to the right care, supports care plans, and coordinates resources across providers and community services.",
+      "Common titles include RN Care Manager, Care Coordinator, Case Manager, Social Worker, Community Health Worker, and LTSS Coordinator.",
+      "These roles often connect directly to Medicaid managed care, LTSS, behavioral health, waiver programs, and member support.",
     ],
     emptyStateCopy:
       "We do not have an open care management role this week. New roles are added regularly — check back soon, or browse all current jobs.",
-    faq: [
-      {
-        q: "Are care management jobs remote?",
-        a: "Many MCO care management roles are mostly remote with occasional field visits. Provider-based roles are typically hybrid or on-site.",
-      },
-      {
-        q: "Do I need an RN license?",
-        a: "RN-titled roles need an active state license. Coordinator and case-manager titles often accept LSW / LCSW or relevant bachelor's-level experience.",
-      },
-      {
-        q: "What is the difference between care management and case management?",
-        a: "The terms are largely interchangeable. Both involve assessing members, building care plans, and coordinating across providers and community resources.",
-      },
-    ],
-    related: [
-      "medicaid-eligibility-jobs",
-      "remote-medicaid-jobs",
-      "healthcare-compliance-jobs",
-    ],
+    faq: makeFaq(
+      "care management",
+      "This category includes RN care manager, case manager, social worker, care coordinator, LTSS coordinator, and community health roles."
+    ),
+    related: ["ltss-care-jobs", "direct-support-professional-jobs", "home-health-aide-jobs"],
     matcher: {
       categories: ["care_management"],
       titleKeywords: [
@@ -167,81 +146,51 @@ export const CATEGORY_CONFIGS: CategoryConfig[] = [
     eyebrow: "Remote Medicaid jobs",
     heading: "Remote Medicaid jobs",
     metaTitle:
-      "Remote Medicaid Jobs — Work-from-Home Roles in the Medicaid Ecosystem | MedicaidReady Careers",
+      "Remote Medicaid Jobs — Work-from-Home Roles in Healthcare Coverage | MedicaidReady Careers",
     metaDescription:
-      "Open remote Medicaid jobs across policy, eligibility, care management, compliance, and analytics. All roles are remote-eligible at the time of posting.",
+      "Open remote Medicaid, Medicare, ACA, healthcare operations, compliance, analytics, and care management jobs.",
     intro:
-      "Remote-friendly roles across policy, eligibility, care management, compliance, and analytics.",
+      "Remote-friendly roles across Medicaid, Medicare, ACA, care management, analytics, compliance, and healthcare operations.",
     about: [
-      "Remote Medicaid work has expanded significantly at managed care plans, federal contractors, policy shops, and analytics firms. Many roles are fully remote within the US; some require time-zone overlap or occasional state-agency travel.",
-      "Common remote titles include Policy Analyst, Compliance Analyst, RN Care Manager, Healthcare Data Analyst, Program Manager, and Quality Improvement Specialist. Front-line eligibility work tends to remain hybrid or on-site.",
-      "Confirm specifics in each listing — work-from-home status, state restrictions, and travel expectations vary by employer.",
+      "Remote Medicaid and healthcare operations roles are common at managed care plans, vendors, contractors, and consulting teams.",
+      "Common remote roles include analyst, compliance, reporting, care management, provider operations, data, and program management jobs.",
+      "Some roles still have state residence requirements, market travel, or time-zone expectations, so always confirm details with the employer.",
     ],
     emptyStateCopy:
-      "We do not have an open fully-remote Medicaid role this week. Many of our hybrid roles allow significant work-from-home time — browse all current jobs to see what is available.",
-    faq: [
-      {
-        q: "Are these roles fully remote?",
-        a: "Each listing is tagged 'Remote' at the time it was posted. Some may have state-of-residence restrictions or expect occasional travel. Always confirm specifics with the employer.",
-      },
-      {
-        q: "Do remote roles pay less?",
-        a: "Compensation varies by employer. Many MCOs and policy firms pay national rates regardless of location, while some adjust for cost of living.",
-      },
-      {
-        q: "What roles are typically remote?",
-        a: "Policy, analytics, compliance, MCO care management, program management, and many provider-side back-office roles. Front-line eligibility and member-facing work is more often hybrid or on-site.",
-      },
-    ],
-    related: [
-      "medicaid-analyst-jobs",
-      "medicaid-care-management-jobs",
-      "medicaid-analytics-jobs",
-    ],
-    matcher: {
-      workMode: "remote",
-    },
+      "We do not have an open fully remote Medicaid role this week. Browse all current jobs to see remote and hybrid options.",
+    faq: makeFaq(
+      "remote Medicaid",
+      "This category includes remote Medicaid, Medicare, ACA, payer operations, care management, compliance, analytics, and healthcare administration roles."
+    ),
+    related: ["medicaid-analyst-jobs", "healthcare-it-jobs", "healthcare-data-analyst-jobs"],
+    matcher: { workMode: "remote" },
   },
   {
     slug: "healthcare-compliance-jobs",
     eyebrow: "Healthcare compliance jobs",
     heading: "Healthcare compliance jobs",
     metaTitle:
-      "Healthcare Compliance Jobs — Medicaid Compliance Analyst, Officer, and Auditor Roles | MedicaidReady Careers",
+      "Healthcare Compliance Jobs — Medicaid, HIPAA, Audit, and Regulatory Roles | MedicaidReady Careers",
     metaDescription:
-      "Open healthcare compliance jobs in the Medicaid ecosystem: compliance analysts, compliance officers, auditors, and regulatory specialists at MCOs and providers.",
+      "Open healthcare compliance jobs, Medicaid compliance analyst roles, audit roles, HIPAA roles, regulatory roles, and compliance officer jobs.",
     intro:
-      "Compliance, audit, and regulatory roles at Medicaid managed care organizations and providers.",
+      "Compliance, audit, regulatory, HIPAA, and risk roles across Medicaid, Medicare, ACA, payer, and provider organizations.",
     about: [
-      "Healthcare compliance is one of the most stable career tracks in the Medicaid ecosystem. Compliance professionals interpret CMS rules, monitor state Medicaid manuals, run internal audits, and prepare organizations for external review.",
-      "Common titles include Compliance Analyst, Compliance Officer, Regulatory Specialist, Internal Auditor, and Privacy / HIPAA Specialist. Many roles require two to eight years of healthcare compliance experience; senior roles often look for CHC, CCEP, or HCCA credentials.",
-      "Compliance work tends to be remote-friendly and pays well — typical ranges run from $65K (analyst) to $140K+ (director).",
+      "Healthcare compliance roles help organizations follow CMS, state Medicaid, HIPAA, privacy, audit, and regulatory requirements.",
+      "Common titles include Compliance Analyst, Compliance Officer, Regulatory Specialist, Auditor, Privacy Specialist, and Risk Manager.",
+      "Compliance jobs are often remote-friendly and fit people with policy, quality, audit, documentation, and healthcare operations experience.",
     ],
     emptyStateCopy:
       "We do not have an open healthcare compliance role this week. New roles are added regularly — check back soon, or browse all current jobs.",
-    faq: [
-      {
-        q: "Do I need a compliance certification?",
-        a: "Helpful but not always required. CHC and CCEP are commonly preferred for senior roles. Many employers will sponsor certification once you are on the team.",
-      },
-      {
-        q: "Is healthcare compliance remote-friendly?",
-        a: "Yes — many compliance, audit, and regulatory roles at MCOs, federal contractors, and consulting firms are fully remote.",
-      },
-      {
-        q: "Is this the same as billing compliance?",
-        a: "Billing compliance is a sub-area of healthcare compliance focused on coding accuracy, denials, and revenue integrity. Most healthcare compliance teams cover broader regulatory work too.",
-      },
-    ],
-    related: [
-      "medicaid-analyst-jobs",
-      "remote-medicaid-jobs",
-      "medicaid-analytics-jobs",
-    ],
+    faq: makeFaq(
+      "healthcare compliance",
+      "This category includes compliance analyst, compliance officer, audit, regulatory, privacy, HIPAA, and risk roles in healthcare."
+    ),
+    related: ["medicaid-analyst-jobs", "claims-systems-jobs", "provider-data-jobs"],
     matcher: {
       categories: ["compliance"],
-      titleKeywords: ["compliance", "regulatory", "auditor", "audit"],
-      keywords: ["compliance officer", "compliance analyst", "hipaa"],
+      titleKeywords: ["compliance", "regulatory", "auditor", "audit", "hipaa", "risk"],
+      keywords: ["compliance officer", "compliance analyst", "hipaa", "regulatory"],
     },
   },
   {
@@ -251,35 +200,21 @@ export const CATEGORY_CONFIGS: CategoryConfig[] = [
     metaTitle:
       "Medicaid Analytics Jobs — Healthcare Data Analyst, BI, and Reporting Roles | MedicaidReady Careers",
     metaDescription:
-      "Open Medicaid analytics and data jobs: healthcare data analysts, reporting specialists, BI developers, and data scientists at health plans, providers, and contractors.",
+      "Open Medicaid analytics and healthcare data jobs, including reporting analyst, BI developer, data scientist, and claims analytics roles.",
     intro:
-      "Data analyst, reporting, BI, and analytics engineering roles in the Medicaid space.",
+      "Data analyst, reporting, BI, SQL, analytics engineering, and data science roles in Medicaid and healthcare operations.",
     about: [
-      "Medicaid analytics roles work with claims, eligibility, and care management data to inform program design, monitor quality, and support value-based contracts. SQL fluency is universal; many teams also use Python, R, or BI tools like Tableau and Power BI.",
-      "Common titles include Healthcare Data Analyst, Reporting Analyst, BI Developer, Data Scientist, and Analytics Engineer. Some roles sit on payer / MCO teams; others at state contractors, FQHCs, and health-policy think tanks.",
-      "Pay typically ranges from $65K (analyst) to $160K+ (senior data scientist at a national MCO).",
+      "Medicaid analytics roles work with claims, eligibility, quality, care management, finance, provider, and utilization data.",
+      "Common tools include SQL, Excel, Power BI, Tableau, Python, R, Snowflake, Databricks, and healthcare reporting systems.",
+      "This category overlaps with healthcare data analyst jobs, but focuses more strongly on Medicaid, Medicare, payer, and health plan analytics.",
     ],
     emptyStateCopy:
       "We do not have an open Medicaid analytics role this week. New roles are added regularly — check back soon, or browse all current jobs.",
-    faq: [
-      {
-        q: "What technical skills are typical?",
-        a: "SQL is universal. Python or R is common for senior roles. Familiarity with claims data (CPT, ICD-10, HCPCS) and quality measures (HEDIS) is a strong advantage.",
-      },
-      {
-        q: "Can I switch in from a non-healthcare analytics role?",
-        a: "Yes — strong SQL and Python fundamentals transfer well, and most teams will train on Medicaid-specific data models.",
-      },
-      {
-        q: "Are analytics roles remote?",
-        a: "Most are remote-friendly, especially at MCOs and consulting firms. Some state-contractor roles require a local presence.",
-      },
-    ],
-    related: [
-      "medicaid-analyst-jobs",
-      "healthcare-compliance-jobs",
-      "remote-medicaid-jobs",
-    ],
+    faq: makeFaq(
+      "Medicaid analytics",
+      "This category includes healthcare data analyst, reporting, BI, data engineering, claims analytics, quality analytics, and Medicaid analytics roles."
+    ),
+    related: ["healthcare-data-analyst-jobs", "claims-systems-jobs", "provider-data-jobs"],
     matcher: {
       categories: ["analytics", "data"],
       titleKeywords: [
@@ -291,8 +226,446 @@ export const CATEGORY_CONFIGS: CategoryConfig[] = [
         "bi analyst",
         "bi developer",
         "business intelligence",
+        "analytics",
       ],
-      keywords: ["healthcare data", "claims data", "data scientist"],
+      keywords: ["medicaid analytics", "healthcare data", "claims data", "data scientist"],
+    },
+  },
+  {
+    slug: "cna-jobs",
+    eyebrow: "CNA jobs",
+    heading: "CNA jobs",
+    metaTitle: "CNA Jobs — Certified Nursing Assistant Roles | MedicaidReady Careers",
+    metaDescription:
+      "Browse CNA jobs in nursing homes, hospitals, assisted living, home care, long-term care, and healthcare support settings.",
+    intro:
+      "Certified nursing assistant roles in long-term care, assisted living, hospitals, home care, and clinical support settings.",
+    about: [
+      "CNA jobs are some of the fastest-moving healthcare jobs because nursing homes, hospitals, assisted living facilities, and home care agencies hire continuously.",
+      "CNAs support patients and residents with daily activities, vital signs, mobility, meals, hygiene, comfort, and communication with nursing teams.",
+      "These roles help MedicaidReady Careers serve the real care workforce, not only administrative and analyst roles.",
+    ],
+    emptyStateCopy:
+      "We do not have open CNA roles this week. New frontline care roles are added regularly — browse all current jobs or check back soon.",
+    faq: makeFaq(
+      "CNA",
+      "This category includes certified nursing assistant, nursing assistant, long-term care CNA, hospital CNA, rehab CNA, and care facility CNA jobs."
+    ),
+    related: ["gna-jobs", "home-health-aide-jobs", "caregiver-jobs"],
+    matcher: {
+      titleKeywords: ["cna", "certified nursing assistant", "nursing assistant"],
+      keywords: ["certified nursing assistant", "cna license", "nursing assistant"],
+    },
+  },
+  {
+    slug: "gna-jobs",
+    eyebrow: "GNA jobs",
+    heading: "GNA jobs",
+    metaTitle: "GNA Jobs — Geriatric Nursing Assistant Roles | MedicaidReady Careers",
+    metaDescription:
+      "Browse GNA jobs in long-term care, skilled nursing, assisted living, rehabilitation, and elder care settings.",
+    intro:
+      "Geriatric nursing assistant roles serving older adults in long-term care, rehabilitation, and skilled nursing settings.",
+    about: [
+      "GNA jobs are especially important in Maryland and other markets where geriatric care staffing is a major part of long-term care.",
+      "GNAs help older adults with daily living needs, mobility, hygiene, meals, comfort, and communication with nursing teams.",
+      "These roles move quickly and fit the MedicaidReady Careers focus on care access, long-term care, and the direct care workforce.",
+    ],
+    emptyStateCopy:
+      "We do not have open GNA roles this week. New care workforce jobs are added regularly — browse all current jobs or check back soon.",
+    faq: makeFaq(
+      "GNA",
+      "This category includes geriatric nursing assistant, long-term care, skilled nursing, rehab, assisted living, and elder care support roles."
+    ),
+    related: ["cna-jobs", "caregiver-jobs", "home-health-aide-jobs"],
+    matcher: {
+      titleKeywords: ["gna", "geriatric nursing assistant"],
+      keywords: ["geriatric nursing assistant", "gna license", "long-term care"],
+    },
+  },
+  {
+    slug: "caregiver-jobs",
+    eyebrow: "Caregiver jobs",
+    heading: "Caregiver jobs",
+    metaTitle:
+      "Caregiver Jobs — Home Care, Companion, and Personal Care Roles | MedicaidReady Careers",
+    metaDescription:
+      "Browse caregiver jobs, companion care jobs, personal care aide roles, direct care roles, and home care support jobs.",
+    intro:
+      "Caregiver, companion, personal care aide, and direct care roles supporting people at home and in community settings.",
+    about: [
+      "Caregiver jobs help older adults, people with disabilities, and families with daily living support, companionship, meals, errands, and safety.",
+      "These jobs move quickly because home care and community-based care providers frequently need reliable staff across many shifts.",
+      "Caregiver roles fit MedicaidReady Careers because many are connected to Medicaid waiver, home care, aging-in-place, and long-term services programs.",
+    ],
+    emptyStateCopy:
+      "We do not have open caregiver roles this week. New direct care jobs are added regularly — browse all current jobs or check back soon.",
+    faq: makeFaq(
+      "caregiver",
+      "This category includes caregiver, companion, personal care aide, direct care, home care, and community support roles."
+    ),
+    related: ["home-health-aide-jobs", "cna-jobs", "direct-support-professional-jobs"],
+    matcher: {
+      titleKeywords: [
+        "caregiver",
+        "companion",
+        "personal care aide",
+        "pca",
+        "care aide",
+        "direct care",
+      ],
+      keywords: ["caregiver", "companion care", "personal care aide", "home care"],
+    },
+  },
+  {
+    slug: "home-health-aide-jobs",
+    eyebrow: "Home health aide jobs",
+    heading: "Home health aide jobs",
+    metaTitle:
+      "Home Health Aide Jobs — HHA and Home Care Support Roles | MedicaidReady Careers",
+    metaDescription:
+      "Browse home health aide jobs, HHA roles, home care aide jobs, and personal care support roles.",
+    intro:
+      "HHA and home care support roles helping clients remain safe, supported, and independent at home.",
+    about: [
+      "Home health aides support clients with personal care, daily living needs, mobility, meals, light household tasks, and care plan follow-through.",
+      "Many HHA roles are connected to Medicaid waiver, long-term services and supports, aging-in-place, and home care programs.",
+      "Employers may require state training, HHA certification, CNA certification, CPR, background checks, or reliable transportation.",
+    ],
+    emptyStateCopy:
+      "We do not have open home health aide roles this week. New care jobs are added regularly — browse all current jobs or check back soon.",
+    faq: makeFaq(
+      "home health aide",
+      "This category includes HHA, home health aide, home care aide, personal care, and in-home support roles."
+    ),
+    related: ["caregiver-jobs", "cna-jobs", "direct-support-professional-jobs"],
+    matcher: {
+      titleKeywords: ["home health aide", "hha", "home care aide", "homecare aide"],
+      keywords: ["home health aide", "home care", "hha", "personal care"],
+    },
+  },
+  {
+    slug: "patient-care-tech-jobs",
+    eyebrow: "Patient care tech jobs",
+    heading: "Patient care tech jobs",
+    metaTitle:
+      "Patient Care Tech Jobs — PCT and Clinical Support Roles | MedicaidReady Careers",
+    metaDescription:
+      "Browse patient care technician jobs, PCT roles, clinical support roles, hospital patient care jobs, and unit support roles.",
+    intro:
+      "Patient care technician and clinical support roles in hospitals, clinics, dialysis centers, rehab, and care facilities.",
+    about: [
+      "Patient care techs support nurses and clinical teams with patient care tasks, vital signs, mobility, transport, documentation, and unit support.",
+      "PCT roles are common in hospitals, emergency departments, dialysis centers, rehabilitation centers, and long-term care settings.",
+      "Many employers prefer CNA, PCT, phlebotomy, EKG, dialysis, or clinical support experience depending on the setting.",
+    ],
+    emptyStateCopy:
+      "We do not have open patient care tech roles this week. New clinical support jobs are added regularly — browse all current jobs or check back soon.",
+    faq: makeFaq(
+      "patient care tech",
+      "This category includes patient care technician, PCT, clinical support, hospital support, dialysis support, and unit care roles."
+    ),
+    related: ["cna-jobs", "home-health-aide-jobs", "caregiver-jobs"],
+    matcher: {
+      titleKeywords: ["patient care tech", "patient care technician", "pct"],
+      keywords: ["patient care technician", "patient care tech", "clinical support"],
+    },
+  },
+  {
+    slug: "direct-support-professional-jobs",
+    eyebrow: "Direct support professional jobs",
+    heading: "Direct support professional jobs",
+    metaTitle:
+      "Direct Support Professional Jobs — DSP and Disability Support Roles | MedicaidReady Careers",
+    metaDescription:
+      "Browse direct support professional jobs, DSP roles, residential support jobs, waiver support jobs, and disability services roles.",
+    intro:
+      "DSP and disability support roles helping people with daily living, independence, community participation, and care routines.",
+    about: [
+      "Direct support professionals help people with intellectual and developmental disabilities, behavioral health needs, or daily living support needs.",
+      "DSP roles are closely connected to Medicaid waiver programs, community-based services, residential support, and long-term care systems.",
+      "Many employers provide training. Some roles require CPR, medication administration training, valid driver's license, background checks, or prior direct support experience.",
+    ],
+    emptyStateCopy:
+      "We do not have open direct support professional roles this week. New care workforce jobs are added regularly — browse all current jobs or check back soon.",
+    faq: makeFaq(
+      "direct support professional",
+      "This category includes DSP, direct support, disability support, residential support, waiver support, and community care roles."
+    ),
+    related: ["caregiver-jobs", "home-health-aide-jobs", "ltss-care-jobs"],
+    matcher: {
+      titleKeywords: [
+        "direct support professional",
+        "dsp",
+        "direct support",
+        "residential counselor",
+        "residential support",
+      ],
+      keywords: ["direct support professional", "dsp", "developmental disabilities", "waiver"],
+    },
+  },
+  {
+    slug: "ltss-care-jobs",
+    eyebrow: "LTSS care jobs",
+    heading: "LTSS and long-term care jobs",
+    metaTitle:
+      "LTSS Care Jobs — Long-Term Services, Waiver, and Care Support Roles | MedicaidReady Careers",
+    metaDescription:
+      "Browse LTSS, waiver, long-term care, care coordination, home care, and community-based care roles connected to Medicaid programs.",
+    intro:
+      "Long-term services and supports roles across waiver programs, community care, care coordination, and member support.",
+    about: [
+      "LTSS roles support people who need long-term help with daily living, disability support, community services, home care, and care coordination.",
+      "These jobs include service coordinators, care coordinators, waiver support roles, direct care staff, community health workers, and care managers.",
+      "LTSS work is deeply connected to Medicaid because many long-term services are funded or coordinated through Medicaid waiver programs.",
+    ],
+    emptyStateCopy:
+      "We do not have open LTSS care roles this week. New long-term care and waiver-related jobs are added regularly — browse all current jobs or check back soon.",
+    faq: makeFaq(
+      "LTSS",
+      "This category includes long-term services and supports, waiver, community care, care coordination, home care, and long-term care roles."
+    ),
+    related: ["medicaid-care-management-jobs", "direct-support-professional-jobs", "home-health-aide-jobs"],
+    matcher: {
+      titleKeywords: ["ltss", "long term services", "long-term services", "waiver"],
+      keywords: ["ltss", "long-term services", "waiver", "community-based services"],
+    },
+  },
+  {
+    slug: "healthcare-it-jobs",
+    eyebrow: "Healthcare IT jobs",
+    heading: "Healthcare IT jobs",
+    metaTitle:
+      "Healthcare IT Jobs — Health Systems, Payer Technology, and IT Operations | MedicaidReady Careers",
+    metaDescription:
+      "Browse healthcare IT jobs across EHR systems, payer systems, claims platforms, healthcare data, interoperability, and IT operations.",
+    intro:
+      "Healthcare IT roles across health systems, payer technology, EHR platforms, claims systems, and data operations.",
+    about: [
+      "Healthcare IT jobs support the technology behind hospitals, clinics, health plans, public programs, healthcare vendors, and payer operations.",
+      "Common titles include Healthcare IT Analyst, Clinical Systems Analyst, Application Analyst, Systems Analyst, IT Project Manager, Integration Analyst, and Technical Program Manager.",
+      "Many roles require knowledge of HIPAA, clinical workflows, payer operations, EHR systems, claims platforms, SQL, reporting, or healthcare data exchange.",
+    ],
+    emptyStateCopy:
+      "We do not have open healthcare IT roles this week. New health technology jobs are added regularly — browse all current jobs or check back soon.",
+    faq: makeFaq(
+      "healthcare IT",
+      "This category includes healthcare IT analyst, clinical systems, application support, technical program, health systems, payer technology, and implementation roles."
+    ),
+    related: ["ehr-analyst-jobs", "claims-systems-jobs", "healthcare-data-analyst-jobs"],
+    matcher: {
+      titleKeywords: [
+        "healthcare it",
+        "systems analyst",
+        "application analyst",
+        "clinical systems",
+        "it analyst",
+        "technical analyst",
+        "information systems",
+        "technical program",
+      ],
+      keywords: [
+        "healthcare technology",
+        "clinical systems",
+        "health information system",
+        "system implementation",
+      ],
+    },
+  },
+  {
+    slug: "ehr-analyst-jobs",
+    eyebrow: "EHR analyst jobs",
+    heading: "EHR analyst jobs",
+    metaTitle:
+      "EHR Analyst Jobs — Epic, Cerner, and Clinical Systems Roles | MedicaidReady Careers",
+    metaDescription:
+      "Browse EHR analyst jobs for Epic, Cerner, clinical systems, application support, implementation, and workflow optimization.",
+    intro:
+      "Epic, Cerner, clinical application, and EHR support roles across healthcare organizations.",
+    about: [
+      "EHR analysts support electronic health record systems used by hospitals, clinics, health systems, and providers.",
+      "Common responsibilities include build support, workflow analysis, testing, training, upgrades, implementation support, reporting, and issue resolution.",
+      "Epic, Cerner, Meditech, eClinicalWorks, Athena, and other clinical systems experience can help depending on the employer.",
+    ],
+    emptyStateCopy:
+      "We do not have open EHR analyst roles this week. New EHR and clinical systems jobs are added regularly — browse all current jobs or check back soon.",
+    faq: makeFaq(
+      "EHR analyst",
+      "This category includes Epic, Cerner, clinical systems, application analyst, implementation, workflow, training, and EHR support roles."
+    ),
+    related: ["healthcare-it-jobs", "healthcare-data-analyst-jobs", "claims-systems-jobs"],
+    matcher: {
+      titleKeywords: [
+        "ehr",
+        "epic",
+        "cerner",
+        "clinical application analyst",
+        "clinical applications analyst",
+        "clinical systems analyst",
+        "application analyst",
+      ],
+      keywords: ["ehr", "electronic health record", "epic", "cerner", "clinical systems"],
+    },
+  },
+  {
+    slug: "healthcare-data-analyst-jobs",
+    eyebrow: "Healthcare data analyst jobs",
+    heading: "Healthcare data analyst jobs",
+    metaTitle:
+      "Healthcare Data Analyst Jobs — BI, Reporting, SQL, and Analytics Roles | MedicaidReady Careers",
+    metaDescription:
+      "Browse healthcare data analyst jobs, BI analyst roles, reporting analyst roles, SQL analyst jobs, and healthcare analytics positions.",
+    intro:
+      "Healthcare data, reporting, BI, SQL, and analytics roles across payers, providers, vendors, and public programs.",
+    about: [
+      "Healthcare data analyst jobs use claims, clinical, enrollment, quality, finance, utilization, and operations data to support better decisions.",
+      "Common tools include SQL, Excel, Tableau, Power BI, Python, R, Snowflake, Databricks, and healthcare reporting systems.",
+      "These roles support Medicaid programs, health plans, provider operations, compliance, care outcomes, and healthcare technology teams.",
+    ],
+    emptyStateCopy:
+      "We do not have open healthcare data analyst roles this week. New analytics and reporting roles are added regularly — browse all current jobs or check back soon.",
+    faq: makeFaq(
+      "healthcare data analyst",
+      "This category includes healthcare data analyst, reporting analyst, BI analyst, SQL analyst, healthcare analytics, and dashboard roles."
+    ),
+    related: ["medicaid-analytics-jobs", "healthcare-it-jobs", "claims-systems-jobs"],
+    matcher: {
+      categories: ["analytics", "data"],
+      titleKeywords: [
+        "healthcare data analyst",
+        "data analyst",
+        "reporting analyst",
+        "business intelligence",
+        "bi analyst",
+        "bi developer",
+        "analytics",
+        "data engineer",
+      ],
+      keywords: ["healthcare data", "claims data", "sql", "power bi", "tableau"],
+    },
+  },
+  {
+    slug: "claims-systems-jobs",
+    eyebrow: "Claims systems jobs",
+    heading: "Claims systems jobs",
+    metaTitle:
+      "Claims Systems Jobs — QNXT, Facets, Configuration, and Payer Systems | MedicaidReady Careers",
+    metaDescription:
+      "Browse claims systems jobs, claims configuration roles, QNXT jobs, Facets jobs, payer systems analyst jobs, and claims operations technology roles.",
+    intro:
+      "Claims systems, configuration, payer platforms, testing, and operations roles in healthcare.",
+    about: [
+      "Claims systems jobs support the technology and operations behind healthcare claims payment, configuration, adjudication, testing, and issue resolution.",
+      "Common systems and keywords include QNXT, Facets, provider configuration, claims configuration, EDI, payment integrity, claims operations, and payer platforms.",
+      "These jobs matter in Medicaid, Medicare, and managed care because claims accuracy affects members, providers, compliance, and financial performance.",
+    ],
+    emptyStateCopy:
+      "We do not have open claims systems roles this week. New payer systems and claims technology jobs are added regularly — browse all current jobs or check back soon.",
+    faq: makeFaq(
+      "claims systems",
+      "This category includes claims configuration, QNXT, Facets, payer systems, EDI, payment integrity, claims testing, and claims operations roles."
+    ),
+    related: ["healthcare-it-jobs", "provider-data-jobs", "healthcare-data-analyst-jobs"],
+    matcher: {
+      titleKeywords: [
+        "claims system",
+        "claims analyst",
+        "claims configuration",
+        "configuration analyst",
+        "claims operations",
+        "payment integrity",
+        "qnxt",
+        "facets",
+        "edi",
+      ],
+      keywords: [
+        "claims system",
+        "claims configuration",
+        "qnxt",
+        "facets",
+        "payment integrity",
+        "payer systems",
+      ],
+    },
+  },
+  {
+    slug: "provider-data-jobs",
+    eyebrow: "Provider data jobs",
+    heading: "Provider data jobs",
+    metaTitle:
+      "Provider Data Jobs — Credentialing, Network Data, Provider Configuration | MedicaidReady Careers",
+    metaDescription:
+      "Browse provider data jobs, credentialing roles, provider configuration jobs, network data analyst jobs, and provider operations roles.",
+    intro:
+      "Provider data, credentialing, network operations, provider configuration, and directory accuracy roles.",
+    about: [
+      "Provider data roles maintain the information health plans and healthcare organizations use for provider directories, network adequacy, credentialing, contracting, and claims setup.",
+      "Common titles include Provider Data Analyst, Credentialing Specialist, Provider Configuration Analyst, Network Operations Analyst, and Provider Relations Specialist.",
+      "This work matters because inaccurate provider data can affect claims, member access, compliance, and health plan performance.",
+    ],
+    emptyStateCopy:
+      "We do not have open provider data roles this week. New provider operations and network jobs are added regularly — browse all current jobs or check back soon.",
+    faq: makeFaq(
+      "provider data",
+      "This category includes provider data, credentialing, provider configuration, network operations, provider relations, and directory accuracy roles."
+    ),
+    related: ["claims-systems-jobs", "healthcare-it-jobs", "healthcare-compliance-jobs"],
+    matcher: {
+      titleKeywords: [
+        "provider data",
+        "provider configuration",
+        "provider credentialing",
+        "credentialing",
+        "network data",
+        "provider relations",
+        "network operations",
+      ],
+      keywords: [
+        "provider data",
+        "provider configuration",
+        "credentialing",
+        "provider directory",
+        "network adequacy",
+      ],
+    },
+  },
+  {
+    slug: "healthcare-product-manager-jobs",
+    eyebrow: "Healthcare product manager jobs",
+    heading: "Healthcare product manager jobs",
+    metaTitle:
+      "Healthcare Product Manager Jobs — Health Tech, Payer Product, and Platform Roles | MedicaidReady Careers",
+    metaDescription:
+      "Browse healthcare product manager jobs, payer product roles, health tech product owner jobs, program manager roles, and platform product roles.",
+    intro:
+      "Product manager, product owner, technical product, and program roles in healthcare technology and payer platforms.",
+    about: [
+      "Healthcare product managers work on digital tools, payer platforms, member experiences, provider systems, claims workflows, analytics products, and clinical or administrative technology.",
+      "These roles often combine stakeholder management, product strategy, workflow understanding, technical coordination, and healthcare domain knowledge.",
+      "Healthcare product roles fit MedicaidReady Careers because many products support access, enrollment, claims, care management, analytics, and compliance.",
+    ],
+    emptyStateCopy:
+      "We do not have open healthcare product manager roles this week. New product and platform roles are added regularly — browse all current jobs or check back soon.",
+    faq: makeFaq(
+      "healthcare product manager",
+      "This category includes product manager, product owner, technical product, platform, program manager, and health technology delivery roles."
+    ),
+    related: ["healthcare-it-jobs", "claims-systems-jobs", "healthcare-data-analyst-jobs"],
+    matcher: {
+      titleKeywords: [
+        "product manager",
+        "product owner",
+        "technical product manager",
+        "product management",
+        "program manager",
+      ],
+      keywords: [
+        "healthcare product",
+        "payer platform",
+        "member experience",
+        "provider platform",
+        "product roadmap",
+      ],
     },
   },
 ];
@@ -389,9 +762,14 @@ function rowMatchesCategory(row: CategoryRow, matcher: CategoryMatcher): boolean
   if (matcher.keywords && matcher.keywords.length > 0) {
     const haystack = [
       row.title,
+      row.company,
+      row.category,
+      row.location,
       row.summary,
       row.description,
       ...(row.responsibilities ?? []),
+      ...(row.requirements ?? []),
+      ...(row.benefits ?? []),
     ]
       .filter((x): x is string => typeof x === "string" && x.length > 0)
       .join(" ")
