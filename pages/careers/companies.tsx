@@ -8,6 +8,33 @@ import { listApprovedJobs } from "../../lib/careers/db";
 
 const SITE_URL = "https://www.medicaidready.org";
 
+const COMPANY_LOGO_DOMAINS: Record<string, string> = {
+  "unitedhealth group": "unitedhealthgroup.com",
+  "unitedhealth group / optum": "optum.com",
+  optum: "optum.com",
+  "molina healthcare": "molinahealthcare.com",
+  "centene corporation": "centene.com",
+  gbmc: "gbmc.org",
+  "adventist healthcare": "adventisthealthcare.com",
+  "elevance health": "elevancehealth.com",
+  "trinity health": "trinity-health.org",
+  "communitycare health": "communitycarehealth.org",
+  "cvs health": "cvshealth.com",
+  aetna: "aetna.com",
+  humana: "humana.com",
+  "kaiser permanente": "kp.org",
+  carefirst: "carefirst.com",
+  "carefirst bluecross blueshield": "carefirst.com",
+  "johns hopkins medicine": "hopkinsmedicine.org",
+  "medstar health": "medstarhealth.org",
+  "university of maryland medical system": "umms.org",
+  "children's national hospital": "childrensnational.org",
+  "children’s national hospital": "childrensnational.org",
+  "blue cross blue shield": "bcbs.com",
+  "capital one": "capitalone.com",
+  "navy federal credit union": "navyfederal.org",
+};
+
 type CompanyEntry = {
   company: string;
   openRoles: number;
@@ -107,6 +134,17 @@ function companyInitials(company: string): string {
   return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
 }
 
+function companyLogoUrl(company: string): string | null {
+  const normalized = company.trim().toLowerCase();
+  const domain = COMPANY_LOGO_DOMAINS[normalized];
+
+  if (!domain) return null;
+
+  return `https://www.google.com/s2/favicons?domain=${encodeURIComponent(
+    domain
+  )}&sz=128`;
+}
+
 export default function CareersCompanies({ companies, totalJobs }: Props) {
   const [query, setQuery] = useState("");
   const [sort, setSort] = useState<SortMode>("count");
@@ -176,7 +214,13 @@ export default function CareersCompanies({ companies, totalJobs }: Props) {
             <div className="dice-search-shell">
               <div className="dice-search-row">
                 <div className="dice-search-box">
-                  <svg width="22" height="22" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                  <svg
+                    width="22"
+                    height="22"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    aria-hidden="true"
+                  >
                     <path
                       d="M9.2 15.4a6.2 6.2 0 1 0 0-12.4 6.2 6.2 0 0 0 0 12.4ZM14 14l3 3"
                       stroke="currentColor"
@@ -214,15 +258,17 @@ export default function CareersCompanies({ companies, totalJobs }: Props) {
               </div>
 
               <div className="dice-filter-line">
-                <span className="filter-icon" aria-hidden="true">☰</span>
+                <span className="filter-icon" aria-hidden="true">
+                  ☰
+                </span>
                 <span>All companies</span>
               </div>
             </div>
 
             <div className="companies-results-bar">
               Showing <strong>{filtered.length}</strong>{" "}
-              {filtered.length === 1 ? "company" : "companies"}{" "}
-              <span>•</span> Manual review before publishing
+              {filtered.length === 1 ? "company" : "companies"} <span>•</span>{" "}
+              Manual review before publishing
             </div>
 
             {filtered.length === 0 ? (
@@ -233,48 +279,62 @@ export default function CareersCompanies({ companies, totalJobs }: Props) {
               </div>
             ) : (
               <div className="company-list">
-                {filtered.map((c) => (
-                  <Link
-                    key={c.company}
-                    href={`/careers/jobs?q=${encodeURIComponent(c.company)}`}
-                    className="company-row"
-                  >
-                    <div className="company-logo" aria-hidden="true">
-                      {companyInitials(c.company)}
-                    </div>
+                {filtered.map((c) => {
+                  const logoUrl = companyLogoUrl(c.company);
 
-                    <div className="company-main">
-                      <div className="company-topline">
-                        <h2>{c.company}</h2>
-                        <span className="verified-badge">Verified</span>
-                        {c.hasFeatured && (
-                          <span className="featured-badge">Featured</span>
+                  return (
+                    <Link
+                      key={c.company}
+                      href={`/careers/jobs?q=${encodeURIComponent(c.company)}`}
+                      className="company-row"
+                    >
+                      <div className="company-logo" aria-hidden="true">
+                        {logoUrl ? (
+                          <img src={logoUrl} alt="" loading="lazy" />
+                        ) : (
+                          <span>{companyInitials(c.company)}</span>
                         )}
                       </div>
 
-                      <div className="company-location">
-                        {c.topLocations.length > 0
-                          ? c.topLocations.join(" • ")
-                          : "Location varies by role"}
+                      <div className="company-main">
+                        <div className="company-topline">
+                          <h2>{c.company}</h2>
+                          <span className="verified-badge">Verified</span>
+                          {c.hasFeatured && (
+                            <span className="featured-badge">Featured</span>
+                          )}
+                        </div>
+
+                        <div className="company-location">
+                          {c.topLocations.length > 0
+                            ? c.topLocations.join(" • ")
+                            : "Location varies by role"}
+                        </div>
+
+                        <div className="company-summary">
+                          Healthcare employer with approved active listings on
+                          MedicaidReady Careers.
+                        </div>
+
+                        <div className="company-tags">
+                          <span>
+                            {c.openRoles} open{" "}
+                            {c.openRoles === 1 ? "role" : "roles"}
+                          </span>
+                          <span>
+                            {c.remoteRoles} remote{" "}
+                            {c.remoteRoles === 1 ? "role" : "roles"}
+                          </span>
+                          <span>Healthcare hiring</span>
+                        </div>
                       </div>
 
-                      <div className="company-summary">
-                        Healthcare employer with approved active listings on
-                        MedicaidReady Careers.
+                      <div className="company-action">
+                        <span className="view-button">View roles</span>
                       </div>
-
-                      <div className="company-tags">
-                        <span>{c.openRoles} open {c.openRoles === 1 ? "role" : "roles"}</span>
-                        <span>{c.remoteRoles} remote {c.remoteRoles === 1 ? "role" : "roles"}</span>
-                        <span>Healthcare hiring</span>
-                      </div>
-                    </div>
-
-                    <div className="company-action">
-                      <span className="view-button">View roles</span>
-                    </div>
-                  </Link>
-                ))}
+                    </Link>
+                  );
+                })}
               </div>
             )}
 
@@ -420,7 +480,8 @@ export default function CareersCompanies({ companies, totalJobs }: Props) {
           box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
           text-decoration: none !important;
           color: inherit;
-          transition: border-color 140ms ease, box-shadow 140ms ease, transform 120ms ease;
+          transition: border-color 140ms ease, box-shadow 140ms ease,
+            transform 120ms ease;
         }
 
         .company-row:hover {
@@ -434,12 +495,31 @@ export default function CareersCompanies({ companies, totalJobs }: Props) {
           width: 58px;
           height: 58px;
           border-radius: 8px;
-          background: #eef3f9;
+          background: #ffffff;
           border: 1px solid #dbe5ef;
           color: #042c53;
           display: flex;
           align-items: center;
           justify-content: center;
+          overflow: hidden;
+          box-shadow: 0 1px 4px rgba(15, 23, 42, 0.08);
+        }
+
+        .company-logo img {
+          display: block;
+          width: 42px;
+          height: 42px;
+          object-fit: contain;
+        }
+
+        .company-logo span {
+          display: flex;
+          width: 100%;
+          height: 100%;
+          align-items: center;
+          justify-content: center;
+          background: #eef3f9;
+          color: #042c53;
           font-size: 18px;
           font-weight: 900;
           letter-spacing: -0.04em;
