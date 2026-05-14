@@ -16,6 +16,55 @@ import type {
 const SITE_URL = "https://www.medicaidready.org";
 const SAVED_KEY = "mr_saved_jobs_v1";
 
+const COMPANY_LOGO_DOMAINS: Record<string, string> = {
+  "unitedhealth group": "unitedhealthgroup.com",
+  "unitedhealth group / optum": "optum.com",
+  optum: "optum.com",
+  "molina healthcare": "molinahealthcare.com",
+  "centene corporation": "centene.com",
+  gbmc: "gbmc.org",
+  "adventist healthcare": "adventisthealthcare.com",
+  "elevance health": "elevancehealth.com",
+  "trinity health": "trinity-health.org",
+  "communitycare health": "communitycarehealth.org",
+  "cvs health": "cvshealth.com",
+  aetna: "aetna.com",
+  humana: "humana.com",
+  "kaiser permanente": "kp.org",
+  carefirst: "carefirst.com",
+  "carefirst bluecross blueshield": "carefirst.com",
+  "johns hopkins medicine": "hopkinsmedicine.org",
+  "medstar health": "medstarhealth.org",
+  "university of maryland medical system": "umms.org",
+  "children's national hospital": "childrensnational.org",
+  "children’s national hospital": "childrensnational.org",
+  "blue cross blue shield": "bcbs.com",
+  "capital one": "capitalone.com",
+  "navy federal credit union": "navyfederal.org",
+  caresource: "caresource.com",
+  "commonwealth care alliance": "commonwealthcarealliance.org",
+  "caresource / commonwealth care alliance": "caresource.com",
+  "blue shield of california": "blueshieldca.com",
+  "anthem blue cross": "anthem.com",
+  "highmark health": "highmarkhealth.org",
+  "independence blue cross": "ibx.com",
+  "cigna healthcare": "cigna.com",
+  cigna: "cigna.com",
+  amerihealth: "amerihealth.com",
+  "amerihealth caritas": "amerihealthcaritas.com",
+  geisinger: "geisinger.org",
+  "mayo clinic": "mayoclinic.org",
+  "cleveland clinic": "clevelandclinic.org",
+  walgreens: "walgreens.com",
+  "rite aid": "riteaid.com",
+  "hca healthcare": "hcahealthcare.com",
+  "bon secours": "bonsecours.com",
+  "lifepoint health": "lifepointhealth.net",
+  "oak street health": "oakstreethealth.com",
+  chenmed: "chenmed.com",
+  vituity: "vituity.com",
+};
+
 type Props = { jobs: CareersJob[] };
 type DateRange = "any" | "1d" | "7d" | "30d";
 
@@ -168,23 +217,62 @@ function companyInitials(company: string): string {
   const parts = company.trim().split(/\s+/).filter(Boolean);
   if (parts.length === 0) return "MR";
   if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
-  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+  return ((parts[0][0] || "") + (parts[parts.length - 1][0] || "")).toUpperCase();
 }
 
-function avatarPalette(company: string): { bg: string; fg: string } {
-  const PALETTE = [
-    { bg: "#eef3f9", fg: "#042C53" },
-    { bg: "#fff7e6", fg: "#BA7517" },
-    { bg: "#ecfeff", fg: "#0e7490" },
-    { bg: "#f0fdf4", fg: "#15803d" },
-    { bg: "#faf5ff", fg: "#7c3aed" },
-    { bg: "#fff1f2", fg: "#be123c" },
-  ];
-  let hash = 0;
-  for (let i = 0; i < company.length; i++) {
-    hash = (hash * 31 + company.charCodeAt(i)) >>> 0;
+function getJobApplyUrl(job: CareersJob): string | null {
+  const flexibleJob = job as CareersJob & {
+    apply_url?: string | null;
+    applyUrl?: string | null;
+    url?: string | null;
+  };
+
+  return flexibleJob.apply_url || flexibleJob.applyUrl || flexibleJob.url || null;
+}
+
+function extractDomainFromUrl(url?: string | null): string | null {
+  if (!url) return null;
+
+  try {
+    const parsed = new URL(url);
+    const hostname = parsed.hostname.replace(/^www\./, "").toLowerCase();
+
+    const blockedJobBoards = [
+      "linkedin.com",
+      "indeed.com",
+      "ziprecruiter.com",
+      "glassdoor.com",
+      "dice.com",
+      "monster.com",
+      "careerbuilder.com",
+      "simplyhired.com",
+    ];
+
+    if (blockedJobBoards.some((domain) => hostname === domain || hostname.endsWith(`.${domain}`))) {
+      return null;
+    }
+
+    return hostname;
+  } catch {
+    return null;
   }
-  return PALETTE[hash % PALETTE.length];
+}
+
+function companyLogoUrl(job: CareersJob): string | null {
+  const applyDomain = extractDomainFromUrl(getJobApplyUrl(job));
+
+  if (applyDomain) {
+    return `https://www.google.com/s2/favicons?domain=${encodeURIComponent(applyDomain)}&sz=128`;
+  }
+
+  const normalized = job.company.trim().toLowerCase();
+  const mappedDomain = COMPANY_LOGO_DOMAINS[normalized];
+
+  if (mappedDomain) {
+    return `https://www.google.com/s2/favicons?domain=${encodeURIComponent(mappedDomain)}&sz=128`;
+  }
+
+  return null;
 }
 
 function modeBadgeClass(mode: CareersJobMode): string {
@@ -215,10 +303,8 @@ function jobMatchesLocation(job: CareersJob, loc: string): boolean {
 export default function CareersJobs({ jobs }: Props) {
   const router = useRouter();
 
-  const initialQ =
-    typeof router.query.q === "string" ? router.query.q : "";
-  const initialLoc =
-    typeof router.query.loc === "string" ? router.query.loc : "";
+  const initialQ = typeof router.query.q === "string" ? router.query.q : "";
+  const initialLoc = typeof router.query.loc === "string" ? router.query.loc : "";
 
   const [query, setQuery] = useState(initialQ);
   const [loc, setLoc] = useState(initialLoc);
@@ -451,8 +537,8 @@ export default function CareersJobs({ jobs }: Props) {
               <div className="cj-search-field cj-search-field-q">
                 <span className="cj-search-icon" aria-hidden="true">
                   <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                    <circle cx="8" cy="8" r="5.25" stroke="currentColor" strokeWidth="1.6"/>
-                    <path d="M12 12l3 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/>
+                    <circle cx="8" cy="8" r="5.25" stroke="currentColor" strokeWidth="1.6" />
+                    <path d="M12 12l3 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
                   </svg>
                 </span>
                 <input
@@ -466,8 +552,8 @@ export default function CareersJobs({ jobs }: Props) {
               <div className="cj-search-field cj-search-field-loc">
                 <span className="cj-search-icon" aria-hidden="true">
                   <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                    <path d="M9 16s5-4.5 5-9a5 5 0 10-10 0c0 4.5 5 9 5 9z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round"/>
-                    <circle cx="9" cy="7" r="2" stroke="currentColor" strokeWidth="1.6"/>
+                    <path d="M9 16s5-4.5 5-9a5 5 0 10-10 0c0 4.5 5 9 5 9z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+                    <circle cx="9" cy="7" r="2" stroke="currentColor" strokeWidth="1.6" />
                   </svg>
                 </span>
                 <input
@@ -486,7 +572,7 @@ export default function CareersJobs({ jobs }: Props) {
                 aria-controls="cj-filters-mobile"
               >
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                  <path d="M2 4h10M3 7h8M5 10h4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/>
+                  <path d="M2 4h10M3 7h8M5 10h4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
                 </svg>
                 All filters
                 {activeFilterCount > 0 && (
@@ -523,7 +609,7 @@ export default function CareersJobs({ jobs }: Props) {
                 ) : (
                   <div className="careers-job-list">
                     {filtered.map((job) => {
-                      const av = avatarPalette(job.company);
+                      const logoUrl = companyLogoUrl(job);
                       const isFeatured = Boolean(job.featured);
                       const isHot = daysSince(job.postedAt) <= 7;
                       const isSaved = Boolean(saved[job.id]);
@@ -545,19 +631,19 @@ export default function CareersJobs({ jobs }: Props) {
                           {isFeatured && (
                             <span className="jc-featured-badge">
                               <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                                <path d="M6 1l1.5 3.2L11 4.7l-2.5 2.4.6 3.4L6 8.9 2.9 10.5l.6-3.4L1 4.7l3.5-.5L6 1z" fill="currentColor"/>
+                                <path d="M6 1l1.5 3.2L11 4.7l-2.5 2.4.6 3.4L6 8.9 2.9 10.5l.6-3.4L1 4.7l3.5-.5L6 1z" fill="currentColor" />
                               </svg>
                               Featured
                             </span>
                           )}
 
                           <div className="jc-row">
-                            <div
-                              className="jc-avatar"
-                              style={{ background: av.bg, color: av.fg }}
-                              aria-hidden="true"
-                            >
-                              {companyInitials(job.company)}
+                            <div className="jc-avatar" aria-hidden="true">
+                              {logoUrl ? (
+                                <img src={logoUrl} alt="" loading="lazy" />
+                              ) : (
+                                <span>{companyInitials(job.company)}</span>
+                              )}
                             </div>
 
                             <div className="jc-main">
@@ -570,8 +656,8 @@ export default function CareersJobs({ jobs }: Props) {
                                   aria-label="Verified employer"
                                 >
                                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                                    <path d="M7 0.7l1.6 1L10.5 1.5l.4 1.9 1.6 1.1-.7 1.8.7 1.8-1.6 1.1-.4 1.9-1.9-.2L7 13.3l-1.6-1L3.5 12.5l-.4-1.9L1.5 9.5l.7-1.8-.7-1.8 1.6-1.1L3.5 2.9l1.9.2L7 0.7z" fill="#0e7490"/>
-                                    <path d="M4.5 7l1.7 1.7L9.5 5.3" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                                    <path d="M7 0.7l1.6 1L10.5 1.5l.4 1.9 1.6 1.1-.7 1.8.7 1.8-1.6 1.1-.4 1.9-1.9-.2L7 13.3l-1.6-1L3.5 12.5l-.4-1.9L1.5 9.5l.7-1.8-.7-1.8 1.6-1.1L3.5 2.9l1.9.2L7 0.7z" fill="#0e7490" />
+                                    <path d="M4.5 7l1.7 1.7L9.5 5.3" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                                   </svg>
                                 </span>
                                 {isHot && (
@@ -583,7 +669,7 @@ export default function CareersJobs({ jobs }: Props) {
                                     <span className="jc-hiring-dot-inner" />
                                   </span>
                                 )}
-                                <span className="jc-loc-sep" aria-hidden="true">·</span>
+                                <span className="jc-loc-sep" aria-hidden="true">•</span>
                                 <span className="jc-loc">{job.location}</span>
                               </div>
 
@@ -625,14 +711,14 @@ export default function CareersJobs({ jobs }: Props) {
                                     aria-label={isSaved ? "Remove from saved" : "Save this job"}
                                   >
                                     <svg width="14" height="14" viewBox="0 0 14 14" fill={isSaved ? "currentColor" : "none"} aria-hidden="true">
-                                      <path d="M3 1.5h8v11l-4-2.5-4 2.5v-11z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
+                                      <path d="M3 1.5h8v11l-4-2.5-4 2.5v-11z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
                                     </svg>
                                     {isSaved ? "Saved" : "Save"}
                                   </button>
                                   <Link href={`/careers/jobs/${job.id}`} className="jc-apply">
                                     Apply
                                     <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                                      <path d="M3 6h6M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                                      <path d="M3 6h6M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                                     </svg>
                                   </Link>
                                 </div>
@@ -678,7 +764,7 @@ export default function CareersJobs({ jobs }: Props) {
               aria-label="Close filters"
             >
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                <path d="M3 3l8 8M11 3l-8 8" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round"/>
+                <path d="M3 3l8 8M11 3l-8 8" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
               </svg>
             </button>
           </div>
@@ -812,7 +898,9 @@ export default function CareersJobs({ jobs }: Props) {
           font-family: inherit;
           padding: 4px 6px;
         }
-        .cj-clear:hover { color: #042C53; }
+        .cj-clear:hover {
+          color: #042C53;
+        }
 
         .cj-sidebar fieldset.cj-group {
           border: 0 !important;
@@ -823,7 +911,9 @@ export default function CareersJobs({ jobs }: Props) {
           margin: 0;
           border-bottom: 1px solid #f1f5f9;
         }
-        .cj-group:last-child { border-bottom: 0; }
+        .cj-group:last-child {
+          border-bottom: 0;
+        }
         .cj-group-title {
           font-size: 12px;
           font-weight: 700;
@@ -850,7 +940,9 @@ export default function CareersJobs({ jobs }: Props) {
           cursor: pointer;
           flex-shrink: 0;
         }
-        .cj-row:hover { color: #042C53; }
+        .cj-row:hover {
+          color: #042C53;
+        }
 
         .cj-results-head {
           display: flex;
@@ -907,7 +999,6 @@ export default function CareersJobs({ jobs }: Props) {
           background: #16a34a;
         }
 
-        /* Job card styles (reused) */
         .jc {
           position: relative;
           padding: 22px 24px;
@@ -951,8 +1042,12 @@ export default function CareersJobs({ jobs }: Props) {
           z-index: 2;
           pointer-events: none;
         }
-        .jc-row > * { pointer-events: auto; }
-        .jc-link { pointer-events: auto; }
+        .jc-row > * {
+          pointer-events: auto;
+        }
+        .jc-link {
+          pointer-events: auto;
+        }
         .jc-avatar {
           width: 52px;
           height: 52px;
@@ -960,13 +1055,34 @@ export default function CareersJobs({ jobs }: Props) {
           display: flex;
           align-items: center;
           justify-content: center;
-          font-size: 18px;
-          font-weight: 700;
-          letter-spacing: -0.02em;
           flex-shrink: 0;
-          border: 1px solid rgba(15, 23, 42, 0.06);
+          border: 1px solid rgba(15, 23, 42, 0.08);
+          background: #ffffff;
+          overflow: hidden;
+          box-shadow: 0 1px 4px rgba(15, 23, 42, 0.08);
         }
-        .jc-main { flex: 1; min-width: 0; }
+        .jc-avatar img {
+          display: block;
+          width: 38px;
+          height: 38px;
+          object-fit: contain;
+        }
+        .jc-avatar span {
+          display: flex;
+          width: 100%;
+          height: 100%;
+          align-items: center;
+          justify-content: center;
+          background: #eef3f9;
+          color: #042C53;
+          font-size: 18px;
+          font-weight: 800;
+          letter-spacing: -0.02em;
+        }
+        .jc-main {
+          flex: 1;
+          min-width: 0;
+        }
         .jc-title {
           font-size: 17px;
           font-weight: 700;
@@ -983,8 +1099,15 @@ export default function CareersJobs({ jobs }: Props) {
           margin: 0 0 12px;
           flex-wrap: wrap;
         }
-        .jc-company { font-weight: 600; color: #334155; }
-        .jc-verified { display: inline-flex; align-items: center; line-height: 1; }
+        .jc-company {
+          font-weight: 600;
+          color: #334155;
+        }
+        .jc-verified {
+          display: inline-flex;
+          align-items: center;
+          line-height: 1;
+        }
         .jc-hiring-dot {
           position: relative;
           width: 9px;
@@ -1002,9 +1125,15 @@ export default function CareersJobs({ jobs }: Props) {
           border-radius: 50%;
           background: #16a34a;
         }
-        .jc-loc-sep { color: #cbd5e1; }
-        .jc-loc { color: #64748b; }
-        .jc-meta { margin-bottom: 10px; }
+        .jc-loc-sep {
+          color: #cbd5e1;
+        }
+        .jc-loc {
+          color: #64748b;
+        }
+        .jc-meta {
+          margin-bottom: 10px;
+        }
         .jc-summary {
           font-size: 14px;
           color: #475569;
@@ -1035,7 +1164,9 @@ export default function CareersJobs({ jobs }: Props) {
           gap: 12px;
           flex-wrap: wrap;
         }
-        .jc-posted { margin-top: 0; }
+        .jc-posted {
+          margin-top: 0;
+        }
         .jc-actions {
           display: inline-flex;
           gap: 8px;
@@ -1086,7 +1217,6 @@ export default function CareersJobs({ jobs }: Props) {
           color: #ffffff !important;
         }
 
-        /* Mobile filter panel */
         .cj-mobile-overlay {
           display: none;
           position: fixed;
@@ -1161,8 +1291,12 @@ export default function CareersJobs({ jobs }: Props) {
           .cj-filters-btn {
             display: inline-flex;
           }
-          .cj-mobile-panel { display: flex; }
-          .cj-mobile-overlay { display: block; }
+          .cj-mobile-panel {
+            display: flex;
+          }
+          .cj-mobile-overlay {
+            display: block;
+          }
         }
         @media (max-width: 720px) {
           .cj-search-bar {
@@ -1177,14 +1311,28 @@ export default function CareersJobs({ jobs }: Props) {
           .cj-filters-btn {
             justify-content: center;
           }
-          .jc { padding: 18px 16px; }
-          .jc-avatar { width: 44px; height: 44px; font-size: 16px; }
-          .jc-row { gap: 12px; }
-          .jc-footer { align-items: flex-start; }
+          .jc {
+            padding: 18px 16px;
+          }
+          .jc-avatar {
+            width: 44px;
+            height: 44px;
+          }
+          .jc-avatar img {
+            width: 32px;
+            height: 32px;
+          }
+          .jc-avatar span {
+            font-size: 16px;
+          }
+          .jc-row {
+            gap: 12px;
+          }
+          .jc-footer {
+            align-items: flex-start;
+          }
         }
       `}</style>
     </>
   );
 }
-
-
