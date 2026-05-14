@@ -43,6 +43,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
     for (const j of jobs) {
       const c = (j.company ?? "").trim();
       if (!c) continue;
+
       const entry =
         map.get(c) ??
         {
@@ -52,27 +53,32 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
           latestPostedAt: j.postedAt,
           locationCounts: new Map<string, number>(),
         };
+
       entry.openRoles += 1;
       if (j.remote === "Remote") entry.remoteRoles += 1;
       if (j.featured) entry.hasFeatured = true;
+
       if (
         !entry.latestPostedAt ||
         new Date(j.postedAt).getTime() > new Date(entry.latestPostedAt).getTime()
       ) {
         entry.latestPostedAt = j.postedAt;
       }
+
       const loc = (j.location ?? "").trim();
       if (loc) {
         entry.locationCounts.set(loc, (entry.locationCounts.get(loc) ?? 0) + 1);
       }
+
       map.set(c, entry);
     }
 
     companies = Array.from(map.entries()).map(([company, e]) => {
       const topLocations = Array.from(e.locationCounts.entries())
         .sort((a, b) => b[1] - a[1])
-        .slice(0, 2)
+        .slice(0, 3)
         .map(([loc]) => loc);
+
       return {
         company,
         openRoles: e.openRoles,
@@ -101,32 +107,19 @@ function companyInitials(company: string): string {
   return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
 }
 
-function avatarPalette(company: string): { bg: string; fg: string } {
-  const PALETTE = [
-    { bg: "#eef3f9", fg: "#042C53" },
-    { bg: "#fff7e6", fg: "#BA7517" },
-    { bg: "#ecfeff", fg: "#0e7490" },
-    { bg: "#f0fdf4", fg: "#15803d" },
-    { bg: "#faf5ff", fg: "#7c3aed" },
-    { bg: "#fff1f2", fg: "#be123c" },
-  ];
-  let hash = 0;
-  for (let i = 0; i < company.length; i++) {
-    hash = (hash * 31 + company.charCodeAt(i)) >>> 0;
-  }
-  return PALETTE[hash % PALETTE.length];
-}
-
 export default function CareersCompanies({ companies, totalJobs }: Props) {
   const [query, setQuery] = useState("");
   const [sort, setSort] = useState<SortMode>("count");
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
+
     const list = q
       ? companies.filter((c) => c.company.toLowerCase().includes(q))
       : companies;
+
     const sorted = [...list];
+
     if (sort === "count") {
       sorted.sort((a, b) => {
         if (b.openRoles !== a.openRoles) return b.openRoles - a.openRoles;
@@ -135,6 +128,7 @@ export default function CareersCompanies({ companies, totalJobs }: Props) {
     } else {
       sorted.sort((a, b) => a.company.localeCompare(b.company));
     }
+
     return sorted;
   }, [companies, query, sort]);
 
@@ -158,128 +152,129 @@ export default function CareersCompanies({ companies, totalJobs }: Props) {
       </Head>
 
       <CareersShell>
-        <section className="careers-section">
+        <section className="careers-section companies-page">
           <div className="careers-container">
-            <div className="careers-eyebrow">Companies</div>
-            <h1 className="careers-h1">Healthcare employers hiring now.</h1>
-            <p className="careers-lead">
-              {companies.length > 0 ? (
-                <>
-                  {companies.length}{" "}
-                  {companies.length === 1 ? "employer" : "employers"} listing{" "}
-                  {totalJobs} open {totalJobs === 1 ? "role" : "roles"} on
-                  MedicaidReady Careers right now. Each one is curated and
-                  reviewed before going live.
-                </>
-              ) : (
-                <>No companies listed yet. New employer listings appear here as roles are approved.</>
-              )}
-            </p>
+            <div className="companies-hero">
+              <div className="careers-eyebrow">Companies</div>
+              <h1 className="careers-h1">Healthcare employers hiring now.</h1>
+              <p className="careers-lead">
+                {companies.length > 0 ? (
+                  <>
+                    Browse {companies.length} employers with {totalJobs} approved
+                    roles across Medicaid, healthcare operations, compliance,
+                    care workforce, and health-tech hiring.
+                  </>
+                ) : (
+                  <>
+                    No companies listed yet. New employer listings appear here as
+                    roles are approved.
+                  </>
+                )}
+              </p>
+            </div>
 
-            <div className="co-toolbar">
-              <input
-                type="search"
-                className="careers-search"
-                placeholder="Search companies"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                aria-label="Search companies"
-              />
-              <div className="co-sort" role="radiogroup" aria-label="Sort companies">
-                <button
-                  type="button"
-                  className={`co-sort-btn${sort === "count" ? " is-active" : ""}`}
-                  onClick={() => setSort("count")}
-                  aria-pressed={sort === "count"}
-                >
-                  Most open roles
-                </button>
-                <button
-                  type="button"
-                  className={`co-sort-btn${sort === "az" ? " is-active" : ""}`}
-                  onClick={() => setSort("az")}
-                  aria-pressed={sort === "az"}
-                >
-                  A–Z
-                </button>
+            <div className="dice-search-shell">
+              <div className="dice-search-row">
+                <div className="dice-search-box">
+                  <svg width="22" height="22" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                    <path
+                      d="M9.2 15.4a6.2 6.2 0 1 0 0-12.4 6.2 6.2 0 0 0 0 12.4ZM14 14l3 3"
+                      stroke="currentColor"
+                      strokeWidth="1.8"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                  <input
+                    type="search"
+                    placeholder="Search by employer name"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    aria-label="Search companies"
+                  />
+                </div>
+
+                <div className="dice-sort">
+                  <button
+                    type="button"
+                    className={sort === "count" ? "is-active" : ""}
+                    onClick={() => setSort("count")}
+                    aria-pressed={sort === "count"}
+                  >
+                    Most open roles
+                  </button>
+                  <button
+                    type="button"
+                    className={sort === "az" ? "is-active" : ""}
+                    onClick={() => setSort("az")}
+                    aria-pressed={sort === "az"}
+                  >
+                    A-Z
+                  </button>
+                </div>
+              </div>
+
+              <div className="dice-filter-line">
+                <span className="filter-icon" aria-hidden="true">☰</span>
+                <span>All companies</span>
               </div>
             </div>
 
+            <div className="companies-results-bar">
+              Showing <strong>{filtered.length}</strong>{" "}
+              {filtered.length === 1 ? "company" : "companies"}{" "}
+              <span>•</span> Manual review before publishing
+            </div>
+
             {filtered.length === 0 ? (
-              <div className="careers-empty">
+              <div className="careers-empty co-empty">
                 {query
                   ? "No companies match that search."
                   : "No companies listed yet. Check back after the next curation cycle."}
               </div>
             ) : (
-              <div className="co-grid">
-                {filtered.map((c) => {
-                  const av = avatarPalette(c.company);
-                  return (
-                    <Link
-                      key={c.company}
-                      href={`/careers/jobs?q=${encodeURIComponent(c.company)}`}
-                      className="co-card"
-                    >
-                      {c.hasFeatured && (
-                        <span className="co-card-featured">
-                          <svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                            <path d="M6 1l1.5 3.2L11 4.7l-2.5 2.4.6 3.4L6 8.9 2.9 10.5l.6-3.4L1 4.7l3.5-.5L6 1z" fill="currentColor"/>
-                          </svg>
-                          Featured employer
-                        </span>
-                      )}
+              <div className="company-list">
+                {filtered.map((c) => (
+                  <Link
+                    key={c.company}
+                    href={`/careers/jobs?q=${encodeURIComponent(c.company)}`}
+                    className="company-row"
+                  >
+                    <div className="company-logo" aria-hidden="true">
+                      {companyInitials(c.company)}
+                    </div>
 
-                      <div className="co-card-top">
-                        <div
-                          className="co-avatar"
-                          style={{ background: av.bg, color: av.fg }}
-                          aria-hidden="true"
-                        >
-                          {companyInitials(c.company)}
-                        </div>
-                        <div className="co-card-name-block">
-                          <div className="co-card-name-row">
-                            <span className="co-card-name">{c.company}</span>
-                            <span
-                              className="co-verified"
-                              title="Verified employer"
-                              aria-label="Verified employer"
-                            >
-                              <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                                <path d="M7 0.7l1.6 1L10.5 1.5l.4 1.9 1.6 1.1-.7 1.8.7 1.8-1.6 1.1-.4 1.9-1.9-.2L7 13.3l-1.6-1L3.5 12.5l-.4-1.9L1.5 9.5l.7-1.8-.7-1.8 1.6-1.1L3.5 2.9l1.9.2L7 0.7z" fill="#0e7490"/>
-                                <path d="M4.5 7l1.7 1.7L9.5 5.3" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
-                              </svg>
-                            </span>
-                          </div>
-                          {c.topLocations.length > 0 && (
-                            <div className="co-card-locations">
-                              {c.topLocations.join(" · ")}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-
-                      <div className="co-card-meta">
-                        <span className="careers-pill careers-pill-navy co-pill-strong">
-                          {c.openRoles} open {c.openRoles === 1 ? "role" : "roles"}
-                        </span>
-                        {c.remoteRoles > 0 && (
-                          <span className="careers-pill careers-pill-teal">
-                            {c.remoteRoles} remote
-                          </span>
+                    <div className="company-main">
+                      <div className="company-topline">
+                        <h2>{c.company}</h2>
+                        <span className="verified-badge">Verified</span>
+                        {c.hasFeatured && (
+                          <span className="featured-badge">Featured</span>
                         )}
                       </div>
 
-                      <div className="co-card-cta">
-                        View roles
-                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                          <path d="M3 6h6M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
+                      <div className="company-location">
+                        {c.topLocations.length > 0
+                          ? c.topLocations.join(" • ")
+                          : "Location varies by role"}
                       </div>
-                    </Link>
-                  );
-                })}
+
+                      <div className="company-summary">
+                        Healthcare employer with approved active listings on
+                        MedicaidReady Careers.
+                      </div>
+
+                      <div className="company-tags">
+                        <span>{c.openRoles} open {c.openRoles === 1 ? "role" : "roles"}</span>
+                        <span>{c.remoteRoles} remote {c.remoteRoles === 1 ? "role" : "roles"}</span>
+                        <span>Healthcare hiring</span>
+                      </div>
+                    </div>
+
+                    <div className="company-action">
+                      <span className="view-button">View roles</span>
+                    </div>
+                  </Link>
+                ))}
               </div>
             )}
 
@@ -289,7 +284,7 @@ export default function CareersCompanies({ companies, totalJobs }: Props) {
               listings go live.
             </p>
 
-            <div style={{ marginTop: 36 }}>
+            <div className="co-alert-wrap">
               <JobAlertCapture source="careers_companies_page" />
             </div>
           </div>
@@ -297,158 +292,332 @@ export default function CareersCompanies({ companies, totalJobs }: Props) {
       </CareersShell>
 
       <style jsx>{`
-        .co-toolbar {
-          display: flex;
-          gap: 12px;
-          align-items: center;
-          flex-wrap: wrap;
-          margin: 24px 0 22px;
-        }
-        .co-sort {
-          display: inline-flex;
-          padding: 4px;
-          background: #ffffff;
-          border: 1px solid #e2e8f0;
-          border-radius: 10px;
-          gap: 2px;
-        }
-        .co-sort-btn {
-          padding: 8px 14px;
-          border: 0;
-          background: transparent;
-          font-size: 13px;
-          font-weight: 600;
-          color: #475569;
-          border-radius: 8px;
-          cursor: pointer;
-          font-family: inherit;
-          transition: background 120ms, color 120ms;
-        }
-        .co-sort-btn:hover {
-          color: #042C53;
-          background: #f1f5f9;
-        }
-        .co-sort-btn.is-active {
-          background: #042C53;
-          color: #ffffff;
-          box-shadow: inset 0 -2px 0 0 #BA7517;
+        .companies-page {
+          background: #f8fafc;
         }
 
-        .co-grid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 14px;
+        .companies-hero {
+          margin-bottom: 22px;
         }
-        .co-card {
-          position: relative;
+
+        .dice-search-shell {
+          margin: 22px 0 26px;
+          padding: 22px;
+          border-radius: 18px;
+          background: #0f5668;
+          box-shadow: 0 18px 38px rgba(15, 86, 104, 0.18);
+        }
+
+        .dice-search-row {
+          display: grid;
+          grid-template-columns: minmax(0, 1fr) auto;
+          gap: 14px;
+          align-items: center;
+        }
+
+        .dice-search-box {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          min-height: 66px;
+          padding: 0 20px;
+          border-radius: 10px;
+          background: #ffffff;
+          color: #64748b;
+        }
+
+        .dice-search-box input {
+          width: 100%;
+          border: 0;
+          outline: 0;
+          background: transparent;
+          font-family: inherit;
+          font-size: 18px;
+          font-weight: 600;
+          color: #0f172a;
+        }
+
+        .dice-search-box input::placeholder {
+          color: #6b7280;
+        }
+
+        .dice-sort {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          height: 66px;
+          padding: 7px;
+          border-radius: 10px;
+          background: #ffffff;
+        }
+
+        .dice-sort button {
+          height: 50px;
+          padding: 0 20px;
+          border: 0;
+          border-radius: 999px;
+          background: transparent;
+          color: #042c53;
+          cursor: pointer;
+          font-family: inherit;
+          font-size: 15px;
+          font-weight: 850;
+        }
+
+        .dice-sort button.is-active {
+          background: #042c53;
+          color: #ffffff;
+          box-shadow: inset 0 -3px 0 #ba7517;
+        }
+
+        .dice-filter-line {
+          display: flex;
+          align-items: center;
+          gap: 9px;
+          margin-top: 20px;
+          color: #ffffff;
+          font-size: 16px;
+          font-weight: 850;
+        }
+
+        .filter-icon {
+          font-size: 18px;
+          line-height: 1;
+          transform: rotate(90deg);
+        }
+
+        .companies-results-bar {
+          margin-bottom: 16px;
+          color: #475569;
+          font-size: 15px;
+          font-weight: 700;
+        }
+
+        .companies-results-bar strong {
+          color: #042c53;
+        }
+
+        .companies-results-bar span {
+          margin: 0 8px;
+          color: #ba7517;
+        }
+
+        .company-list {
           display: flex;
           flex-direction: column;
-          gap: 14px;
+          gap: 16px;
+        }
+
+        .company-row {
+          display: grid;
+          grid-template-columns: 70px minmax(0, 1fr) auto;
+          gap: 20px;
+          align-items: start;
+          padding: 28px 30px;
+          border-radius: 12px;
           background: #ffffff;
-          border: 1px solid #e2e8f0;
-          border-radius: 14px;
-          padding: 20px 22px;
+          border: 1px solid #e5e7eb;
+          box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
           text-decoration: none !important;
           color: inherit;
-          box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
-          transition: border-color 140ms, transform 100ms, box-shadow 140ms;
+          transition: border-color 140ms ease, box-shadow 140ms ease, transform 120ms ease;
         }
-        .co-card:hover {
-          border-color: #BA7517;
+
+        .company-row:hover {
+          border-color: #0f7f99;
+          box-shadow: 0 10px 26px rgba(15, 23, 42, 0.1);
           transform: translateY(-1px);
-          box-shadow: 0 8px 22px rgba(4, 44, 83, 0.08);
           color: inherit;
         }
-        .co-card-featured {
-          position: absolute;
-          top: 10px;
-          right: 12px;
-          display: inline-flex;
-          align-items: center;
-          gap: 4px;
-          padding: 3px 8px;
-          border-radius: 999px;
-          background: #fff7e6;
-          color: #BA7517;
-          border: 1px solid #f1deb3;
-          font-size: 10px;
-          font-weight: 800;
-          letter-spacing: 0.04em;
-          text-transform: uppercase;
-        }
-        .co-card-top {
-          display: flex;
-          gap: 14px;
-          align-items: flex-start;
-        }
-        .co-avatar {
-          width: 48px;
-          height: 48px;
-          border-radius: 12px;
+
+        .company-logo {
+          width: 58px;
+          height: 58px;
+          border-radius: 8px;
+          background: #eef3f9;
+          border: 1px solid #dbe5ef;
+          color: #042c53;
           display: flex;
           align-items: center;
           justify-content: center;
-          font-size: 16px;
-          font-weight: 700;
-          flex-shrink: 0;
-          border: 1px solid rgba(15, 23, 42, 0.06);
+          font-size: 18px;
+          font-weight: 900;
+          letter-spacing: -0.04em;
         }
-        .co-card-name-block {
+
+        .company-main {
           min-width: 0;
-          flex: 1;
         }
-        .co-card-name-row {
+
+        .company-topline {
           display: flex;
-          align-items: center;
-          gap: 6px;
-        }
-        .co-card-name {
-          font-size: 15px;
-          font-weight: 700;
-          color: #042C53;
-          letter-spacing: -0.01em;
-        }
-        .co-verified {
-          display: inline-flex;
-          align-items: center;
-          line-height: 1;
-        }
-        .co-card-locations {
-          font-size: 12px;
-          color: #64748b;
-          margin-top: 3px;
-          line-height: 1.4;
-        }
-        .co-card-meta {
-          display: flex;
-          gap: 6px;
           flex-wrap: wrap;
+          align-items: center;
+          gap: 9px;
         }
-        .co-pill-strong {
-          font-weight: 700;
+
+        .company-topline h2 {
+          margin: 0;
+          color: #042c53;
+          font-size: 23px;
+          line-height: 1.25;
+          font-weight: 900;
+          letter-spacing: -0.03em;
         }
-        .co-card-cta {
+
+        .verified-badge,
+        .featured-badge {
           display: inline-flex;
           align-items: center;
-          gap: 6px;
+          min-height: 24px;
+          padding: 4px 10px;
+          border-radius: 999px;
+          font-size: 11px;
+          font-weight: 900;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+        }
+
+        .verified-badge {
+          background: #e6fbff;
+          color: #08758a;
+          border: 1px solid #bff3fb;
+        }
+
+        .featured-badge {
+          background: #fff7e6;
+          color: #9a5b08;
+          border: 1px solid #f1deb3;
+        }
+
+        .company-location {
+          margin-top: 9px;
+          color: #5b6472;
+          font-size: 16px;
+          font-weight: 650;
+          line-height: 1.5;
+        }
+
+        .company-summary {
+          margin-top: 18px;
+          padding-top: 18px;
+          border-top: 1px dashed #d7dde5;
+          color: #334155;
+          font-size: 16px;
+          line-height: 1.55;
+        }
+
+        .company-tags {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 10px;
+          margin-top: 18px;
+        }
+
+        .company-tags span {
+          display: inline-flex;
+          align-items: center;
+          min-height: 32px;
+          padding: 7px 12px;
+          border-radius: 6px;
+          background: #f3f4f6;
+          color: #374151;
           font-size: 13px;
-          font-weight: 700;
-          color: #BA7517;
-          margin-top: auto;
+          font-weight: 800;
+        }
+
+        .company-action {
+          display: flex;
+          align-items: flex-start;
+          justify-content: flex-end;
+          min-width: 138px;
+        }
+
+        .view-button {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          min-height: 46px;
+          padding: 0 22px;
+          border-radius: 999px;
+          background: #0f7f99;
+          color: #ffffff;
+          font-size: 15px;
+          font-weight: 900;
+          white-space: nowrap;
+          box-shadow: inset 0 -2px 0 rgba(4, 44, 83, 0.25);
+        }
+
+        .company-row:hover .view-button {
+          background: #042c53;
+        }
+
+        .co-empty {
+          border-radius: 12px;
+          background: #ffffff;
+          border: 1px solid #e5e7eb;
         }
 
         .co-disclaimer {
-          margin: 26px 0 0;
-          font-size: 13px;
+          margin: 24px 0 0;
           color: #64748b;
+          font-size: 13px;
           line-height: 1.6;
         }
 
-        @media (max-width: 960px) {
-          .co-grid { grid-template-columns: 1fr 1fr; }
+        .co-alert-wrap {
+          margin-top: 34px;
         }
-        @media (max-width: 600px) {
-          .co-grid { grid-template-columns: 1fr; }
+
+        @media (max-width: 860px) {
+          .dice-search-row {
+            grid-template-columns: 1fr;
+          }
+
+          .dice-sort {
+            width: 100%;
+          }
+
+          .dice-sort button {
+            flex: 1;
+          }
+
+          .company-row {
+            grid-template-columns: 58px minmax(0, 1fr);
+          }
+
+          .company-action {
+            grid-column: 1 / -1;
+            justify-content: flex-start;
+          }
+        }
+
+        @media (max-width: 560px) {
+          .dice-search-shell {
+            padding: 16px;
+          }
+
+          .dice-search-box {
+            min-height: 58px;
+          }
+
+          .dice-search-box input {
+            font-size: 15px;
+          }
+
+          .company-row {
+            padding: 22px 18px;
+            gap: 14px;
+          }
+
+          .company-topline h2 {
+            font-size: 19px;
+          }
+
+          .company-location,
+          .company-summary {
+            font-size: 14px;
+          }
         }
       `}</style>
     </>
