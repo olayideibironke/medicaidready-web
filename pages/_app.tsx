@@ -19,6 +19,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   }, [router.events]);
 
   const year = useMemo(() => new Date().getFullYear(), []);
+  const isCareersRoute = router.pathname.startsWith("/careers");
 
   return (
     <>
@@ -99,6 +100,10 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         }
 
         /* Header */
+        .header-hidden {
+          display: none !important;
+        }
+
         .header {
           position: sticky;
           top: 0;
@@ -358,7 +363,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       `}</style>
 
       <div className="shell">
-        <header className="header">
+        <header className={`header ${isCareersRoute ? "header-hidden" : ""}`}>
           <div className="header-inner">
             <Link href="/" className="brand" aria-label="MedicaidReady Home" onClick={() => setMenuOpen(false)}>
               <span className="brand-icon" aria-hidden="true">
@@ -410,7 +415,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
             </div>
           )}
         </header>
-
         <main style={{ flex: 1 }}>
           <Component {...pageProps} />
         </main>
@@ -437,3 +441,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     </>
   );
 }
+
+
+

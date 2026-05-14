@@ -122,9 +122,10 @@ export default function CareersShell({ children }: { children: ReactNode }) {
           background: #ffffff;
           border-bottom: 1px solid #e2e8f0;
           box-shadow: inset 0 -3px 0 0 #BA7517;
-          position: sticky;
-          top: 64px;
-          z-index: 50;
+          margin-bottom: 32px;
+          position: relative;
+          top: auto;
+          z-index: 20;
         }
 
         .careers-shell .careers-subnav-inner {
@@ -653,6 +654,120 @@ export default function CareersShell({ children }: { children: ReactNode }) {
           line-height: 1.6;
         }
 
+
+        /* ===== Jobs page hard visual fixes ===== */
+        .careers-shell .cj-sidebar {
+          background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%) !important;
+          border: 1px solid #dbe5f0 !important;
+          border-top: 4px solid #BA7517 !important;
+          border-radius: 18px !important;
+          padding: 16px 18px 18px !important;
+          box-shadow: 0 10px 26px rgba(4, 44, 83, 0.08) !important;
+          position: sticky !important;
+          top: 24px !important;
+          max-height: calc(100vh - 48px) !important;
+          overflow-y: auto !important;
+        }
+
+        .careers-shell .cj-sidebar fieldset,
+        .careers-shell fieldset.cj-group {
+          border: 0 !important;
+          margin: 0 !important;
+          padding: 14px 0 !important;
+          min-width: 0 !important;
+          border-bottom: 1px solid #edf2f7 !important;
+        }
+
+        .careers-shell .cj-sidebar fieldset:last-child,
+        .careers-shell fieldset.cj-group:last-child {
+          border-bottom: 0 !important;
+        }
+
+        .careers-shell .cj-sidebar legend,
+        .careers-shell .cj-group-title {
+          display: block !important;
+          width: 100% !important;
+          padding: 0 0 8px !important;
+          margin: 0 !important;
+          font-size: 12px !important;
+          font-weight: 800 !important;
+          color: #042C53 !important;
+          letter-spacing: 0.08em !important;
+          text-transform: uppercase !important;
+        }
+
+        .careers-shell .cj-row {
+          display: flex !important;
+          align-items: flex-start !important;
+          gap: 9px !important;
+          padding: 6px 0 !important;
+          font-size: 13px !important;
+          line-height: 1.45 !important;
+          color: #334155 !important;
+          cursor: pointer !important;
+        }
+
+        .careers-shell .cj-row input {
+          width: 16px !important;
+          height: 16px !important;
+          margin: 1px 0 0 !important;
+          accent-color: #BA7517 !important;
+          flex-shrink: 0 !important;
+        }
+
+        .careers-shell .cj-sidebar-head {
+          display: flex !important;
+          align-items: center !important;
+          justify-content: space-between !important;
+          padding: 0 0 12px !important;
+          margin: 0 0 4px !important;
+          border-bottom: 1px solid #edf2f7 !important;
+        }
+
+        .careers-shell .cj-sidebar-title {
+          font-size: 14px !important;
+          font-weight: 900 !important;
+          color: #042C53 !important;
+          letter-spacing: 0.08em !important;
+          text-transform: uppercase !important;
+        }
+
+        .careers-shell .cj-clear {
+          border: 1px solid #f1deb3 !important;
+          background: #fff7e6 !important;
+          color: #BA7517 !important;
+          border-radius: 999px !important;
+          padding: 5px 10px !important;
+          font-size: 12px !important;
+          font-weight: 800 !important;
+          cursor: pointer !important;
+        }
+
+        .careers-shell .jc-apply {
+          display: inline-flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          gap: 6px !important;
+          padding: 10px 18px !important;
+          min-width: 92px !important;
+          border-radius: 999px !important;
+          background: linear-gradient(135deg, #042C53, #0C447C) !important;
+          color: #ffffff !important;
+          font-size: 13px !important;
+          font-weight: 800 !important;
+          border: 1px solid #021c38 !important;
+          text-decoration: none !important;
+          box-shadow: 0 6px 14px rgba(4, 44, 83, 0.22), inset 0 -2px 0 0 #BA7517 !important;
+          position: relative !important;
+          z-index: 5 !important;
+        }
+
+        .careers-shell .jc-apply:hover {
+          background: linear-gradient(135deg, #0C447C, #042C53) !important;
+          color: #ffffff !important;
+          transform: translateY(-1px) !important;
+        }
+
         @media (max-width: 880px) {
           .careers-shell .careers-feature-grid {
             grid-template-columns: 1fr;
@@ -702,3 +817,7 @@ export default function CareersShell({ children }: { children: ReactNode }) {
     </div>
   );
 }
+
+
+
+

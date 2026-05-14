@@ -748,7 +748,7 @@ export default function CareersJobs({ jobs }: Props) {
           border: 1px solid #021c38;
           cursor: pointer;
           font-family: inherit;
-          box-shadow: inset 0 -2px 0 0 #BA7517;
+          box-shadow: 0 6px 14px rgba(4, 44, 83, 0.20), inset 0 -2px 0 0 #BA7517;
         }
         .cj-filters-count {
           display: inline-flex;
@@ -776,12 +776,14 @@ export default function CareersJobs({ jobs }: Props) {
         }
 
         .cj-sidebar {
-          background: #ffffff;
-          border: 1px solid #e2e8f0;
-          border-radius: 14px;
-          padding: 4px 18px 18px;
+          background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+          border: 1px solid #dbe5f0;
+          border-top: 4px solid #BA7517;
+          border-radius: 18px;
+          padding: 16px 18px 18px;
+          box-shadow: 0 10px 26px rgba(4, 44, 83, 0.08);
           position: sticky;
-          top: 140px;
+          top: 24px;
           max-height: calc(100vh - 160px);
           overflow-y: auto;
         }
@@ -812,6 +814,9 @@ export default function CareersJobs({ jobs }: Props) {
         }
         .cj-clear:hover { color: #042C53; }
 
+        .cj-sidebar fieldset.cj-group {
+          border: 0 !important;
+        }
         .cj-group {
           border: 0;
           padding: 12px 0;
@@ -1065,15 +1070,15 @@ export default function CareersJobs({ jobs }: Props) {
           display: inline-flex;
           align-items: center;
           gap: 6px;
-          padding: 8px 14px;
-          border-radius: 8px;
-          background: #042C53;
+          padding: 10px 18px;
+          border-radius: 999px;
+          background: linear-gradient(135deg, #042C53, #0C447C);
           color: #ffffff !important;
           font-size: 13px;
           font-weight: 700;
           border: 1px solid #021c38;
           text-decoration: none !important;
-          box-shadow: inset 0 -2px 0 0 #BA7517;
+          box-shadow: 0 6px 14px rgba(4, 44, 83, 0.20), inset 0 -2px 0 0 #BA7517;
           transition: background 120ms;
         }
         .jc-apply:hover {
@@ -1181,3 +1186,5 @@ export default function CareersJobs({ jobs }: Props) {
     </>
   );
 }
+
+
