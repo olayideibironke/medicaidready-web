@@ -50,6 +50,11 @@ export default function CareersShell({ children }: { children: ReactNode }) {
         .careers-shell {
           background: #f6f8fb;
           color: #0f172a;
+          --c-navy: #042C53;
+          --c-navy-2: #0C447C;
+          --c-gold: #BA7517;
+          --c-gold-bright: #EF9F27;
+          --c-light-blue: #85B7EB;
         }
 
         .careers-shell .careers-container {
@@ -101,8 +106,9 @@ export default function CareersShell({ children }: { children: ReactNode }) {
         }
 
         .careers-shell .careers-tab.is-active {
-          background: #0a3d6b;
+          background: #042C53;
           color: #ffffff;
+          box-shadow: inset 0 -2px 0 0 #BA7517;
         }
 
         .careers-shell .careers-section {
@@ -122,7 +128,7 @@ export default function CareersShell({ children }: { children: ReactNode }) {
           line-height: 1.1;
           letter-spacing: -0.035em;
           font-weight: 700;
-          color: #0f172a;
+          color: #042C53;
           margin: 0 0 16px;
         }
 
@@ -131,16 +137,16 @@ export default function CareersShell({ children }: { children: ReactNode }) {
           line-height: 1.2;
           letter-spacing: -0.03em;
           font-weight: 700;
-          color: #0f172a;
+          color: #042C53;
           margin: 0 0 12px;
         }
 
         .careers-shell .careers-eyebrow {
           font-size: 12px;
-          font-weight: 600;
-          letter-spacing: 0.1em;
+          font-weight: 700;
+          letter-spacing: 0.12em;
           text-transform: uppercase;
-          color: #1565c0;
+          color: #BA7517;
           margin: 0 0 10px;
         }
 
@@ -166,12 +172,12 @@ export default function CareersShell({ children }: { children: ReactNode }) {
           gap: 8px;
           padding: 13px 22px;
           border-radius: 10px;
-          background: #0a3d6b;
+          background: #042C53;
           color: #ffffff;
           font-size: 15px;
-          font-weight: 600;
-          border: 1px solid #072d52;
-          box-shadow: 0 4px 12px rgba(10, 61, 107, 0.22);
+          font-weight: 700;
+          border: 1px solid #021c38;
+          box-shadow: 0 4px 14px rgba(4, 44, 83, 0.28), inset 0 -2px 0 0 #BA7517;
           text-decoration: none;
           cursor: pointer;
           font-family: inherit;
@@ -179,7 +185,7 @@ export default function CareersShell({ children }: { children: ReactNode }) {
         }
 
         .careers-shell .careers-btn-primary:hover {
-          background: #072d52;
+          background: #0C447C;
           transform: translateY(-1px);
           color: #ffffff;
         }
@@ -191,7 +197,7 @@ export default function CareersShell({ children }: { children: ReactNode }) {
           padding: 13px 20px;
           border-radius: 10px;
           background: #ffffff;
-          color: #0a3d6b;
+          color: #042C53;
           font-size: 15px;
           font-weight: 600;
           border: 1px solid #cbd5e1;
@@ -202,9 +208,9 @@ export default function CareersShell({ children }: { children: ReactNode }) {
         }
 
         .careers-shell .careers-btn-ghost:hover {
-          background: #eff6ff;
-          border-color: #93c5fd;
-          color: #0a3d6b;
+          background: #fff7e6;
+          border-color: #BA7517;
+          color: #042C53;
         }
 
         .careers-shell .careers-card {
@@ -225,8 +231,9 @@ export default function CareersShell({ children }: { children: ReactNode }) {
           width: 40px;
           height: 40px;
           border-radius: 10px;
-          background: #eff6ff;
-          color: #0a3d6b;
+          background: #fff7e6;
+          color: #BA7517;
+          border: 1px solid #f1deb3;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -270,8 +277,8 @@ export default function CareersShell({ children }: { children: ReactNode }) {
         }
 
         .careers-shell .careers-search:focus {
-          border-color: #0a3d6b;
-          box-shadow: 0 0 0 3px rgba(10, 61, 107, 0.1);
+          border-color: #042C53;
+          box-shadow: 0 0 0 3px rgba(4, 44, 83, 0.12);
         }
 
         .careers-shell .careers-select {
@@ -304,16 +311,16 @@ export default function CareersShell({ children }: { children: ReactNode }) {
         }
 
         .careers-shell .careers-job-card:hover {
-          border-color: #93c5fd;
+          border-color: #BA7517;
           transform: translateY(-1px);
-          box-shadow: 0 6px 18px rgba(15, 23, 42, 0.07);
+          box-shadow: 0 8px 22px rgba(4, 44, 83, 0.08);
           color: inherit;
         }
 
         .careers-shell .careers-job-title {
           font-size: 18px;
           font-weight: 700;
-          color: #0f172a;
+          color: #042C53;
           margin: 0 0 4px;
           letter-spacing: -0.02em;
         }
@@ -350,6 +357,28 @@ export default function CareersShell({ children }: { children: ReactNode }) {
         .careers-shell .careers-pill-green {
           background: #f0fdf4;
           color: #15803d;
+        }
+
+        .careers-shell .careers-pill-gold {
+          background: #fff7e6;
+          color: #BA7517;
+          border: 1px solid #f1deb3;
+          font-weight: 700;
+        }
+
+        .careers-shell .careers-pill-teal {
+          background: #ecfeff;
+          color: #0e7490;
+        }
+
+        .careers-shell .careers-pill-purple {
+          background: #faf5ff;
+          color: #7c3aed;
+        }
+
+        .careers-shell .careers-pill-navy {
+          background: #eff6ff;
+          color: #042C53;
         }
 
         .careers-shell .careers-job-summary {
@@ -394,13 +423,13 @@ export default function CareersShell({ children }: { children: ReactNode }) {
         }
 
         .careers-shell .careers-detail-back:hover {
-          color: #0a3d6b;
+          color: #BA7517;
         }
 
         .careers-shell .careers-detail-title {
           font-size: 28px;
           font-weight: 700;
-          color: #0f172a;
+          color: #042C53;
           letter-spacing: -0.03em;
           margin: 0 0 6px;
         }
@@ -494,8 +523,8 @@ export default function CareersShell({ children }: { children: ReactNode }) {
         .careers-shell .careers-field input:focus,
         .careers-shell .careers-field select:focus,
         .careers-shell .careers-field textarea:focus {
-          border-color: #0a3d6b;
-          box-shadow: 0 0 0 3px rgba(10, 61, 107, 0.1);
+          border-color: #042C53;
+          box-shadow: 0 0 0 3px rgba(4, 44, 83, 0.12);
         }
 
         .careers-shell .careers-form-help {

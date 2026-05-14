@@ -40,10 +40,14 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         }
 
         :root {
-          --navy: #0a3d6b;
-          --navy-dark: #072d52;
-          --blue: #1565c0;
-          --blue-light: #1976d2;
+          --navy: #042C53;
+          --navy-dark: #021c38;
+          --navy-2: #0C447C;
+          --blue: #0C447C;
+          --blue-light: #85B7EB;
+          --gold: #BA7517;
+          --gold-bright: #EF9F27;
+          --gold-soft: #f4e4c6;
           --ink: #0f172a;
           --text: #334155;
           --muted: #64748b;
@@ -103,6 +107,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           backdrop-filter: blur(8px);
           -webkit-backdrop-filter: blur(8px);
           border-bottom: 1px solid var(--border);
+          box-shadow: inset 0 -3px 0 0 var(--gold);
         }
 
         .header-inner {
@@ -130,10 +135,8 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         }
 
         .brand-icon {
-          width: 32px;
-          height: 32px;
-          border-radius: 8px;
-          background: var(--navy);
+          width: 36px;
+          height: 38px;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -142,6 +145,8 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
         .brand-icon svg {
           display: block;
+          width: 100%;
+          height: 100%;
         }
 
         .brand-name {
@@ -155,7 +160,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         }
 
         .brand-name-accent {
-          color: var(--blue-light);
+          color: var(--gold);
         }
 
         /* Nav */
@@ -299,7 +304,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           width: 8px;
           height: 8px;
           border-radius: 50%;
-          background: var(--navy);
+          background: var(--gold);
           flex-shrink: 0;
         }
 
@@ -357,9 +362,13 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           <div className="header-inner">
             <Link href="/" className="brand" aria-label="MedicaidReady Home" onClick={() => setMenuOpen(false)}>
               <span className="brand-icon" aria-hidden="true">
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                  <path d="M9 2L15 5v4c0 3.31-2.5 6.41-6 7.16C5.5 15.41 3 12.31 3 9V5l6-3z" fill="white" fillOpacity="0.2" stroke="white" strokeWidth="1.5" strokeLinejoin="round"/>
-                  <path d="M9 6v6M6 9h6" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
+                <svg viewBox="0 0 52 56" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MedicaidReady Hex Crest Mark">
+                  <polygon points="26,3 48,15 48,39 26,51 4,39 4,15" fill="#042C53"/>
+                  <polygon points="26,9 43,19 43,35 26,45 9,35 9,19" fill="none" stroke="#BA7517" strokeWidth="1.5"/>
+                  <line x1="26" y1="20" x2="26" y2="34" stroke="#FFFFFF" strokeWidth="4" strokeLinecap="round"/>
+                  <line x1="19" y1="27" x2="33" y2="27" stroke="#FFFFFF" strokeWidth="4" strokeLinecap="round"/>
+                  <line x1="26" y1="20" x2="26" y2="34" stroke="#BA7517" strokeWidth="1.5" strokeLinecap="round"/>
+                  <line x1="19" y1="27" x2="33" y2="27" stroke="#BA7517" strokeWidth="1.5" strokeLinecap="round"/>
                 </svg>
               </span>
               <span className="brand-name">

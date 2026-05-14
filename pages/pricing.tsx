@@ -242,8 +242,8 @@ export default function Pricing() {
 
         .hero-tag { display: inline-block; padding: 5px 14px; border-radius: 999px; border: 1px solid #e2e8f0; background: #f8fafc; font-size: 12px; font-weight: 500; color: #64748b; margin-bottom: 18px; }
 
-        .h1 { font-size: 44px; font-weight: 700; letter-spacing: -0.04em; line-height: 1.1; margin: 0 0 16px; color: #0f172a; }
-        .h1-em { color: #0a3d6b; }
+        .h1 { font-size: 44px; font-weight: 700; letter-spacing: -0.04em; line-height: 1.1; margin: 0 0 16px; color: #042C53; }
+        .h1-em { color: #BA7517; }
         .hero-sub { font-size: 17px; line-height: 1.7; color: #475569; max-width: 540px; margin: 0; }
 
         .main { padding: 52px 0 80px; }
@@ -254,7 +254,7 @@ export default function Pricing() {
 
         .includes-header { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid #f1f5f9; }
 
-        .includes-icon { width: 44px; height: 44px; border-radius: 12px; background: #0a3d6b; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .includes-icon { width: 44px; height: 44px; border-radius: 12px; background: #042C53; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: inset 0 -2px 0 0 #BA7517; }
 
         .includes-title { font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 2px; }
         .includes-sub { font-size: 13px; color: #64748b; }
@@ -265,14 +265,14 @@ export default function Pricing() {
 
         .check-wrap { width: 22px; height: 22px; min-width: 22px; border-radius: 50%; background: #f0fdf4; border: 1px solid #bbf7d0; color: #15803d; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
 
-        .free-card { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 14px; padding: 20px 22px; margin-bottom: 20px; }
+        .free-card { background: linear-gradient(180deg, #f4f8fc 0%, #eef3f9 100%); border: 1px solid #c8d8ec; border-radius: 14px; padding: 20px 22px; margin-bottom: 20px; border-left: 4px solid #BA7517; }
 
         .free-pill { display: inline-block; padding: 2px 10px; border-radius: 999px; background: #f0fdf4; border: 1px solid #bbf7d0; font-size: 11px; font-weight: 700; color: #15803d; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
 
-        .free-title { font-size: 15px; font-weight: 700; color: #1e3a5f; margin-bottom: 6px; }
-        .free-body { font-size: 14px; color: #3b5998; line-height: 1.65; margin: 0 0 12px; }
-        .free-link { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; color: #1d4ed8; text-decoration: none; }
-        .free-link:hover { text-decoration: underline; }
+        .free-title { font-size: 15px; font-weight: 700; color: #042C53; margin-bottom: 6px; }
+        .free-body { font-size: 14px; color: #0C447C; line-height: 1.65; margin: 0 0 12px; }
+        .free-link { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; color: #042C53; text-decoration: none; }
+        .free-link:hover { text-decoration: underline; color: #BA7517; }
 
         .faq-wrap { }
         .faq-title { font-size: 17px; font-weight: 700; color: #0f172a; margin-bottom: 14px; letter-spacing: -0.02em; }
@@ -287,7 +287,7 @@ export default function Pricing() {
         .price-block { margin-bottom: 4px; }
         .price-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
         .price { font-size: 52px; font-weight: 700; letter-spacing: -0.05em; color: #0f172a; line-height: 1; }
-        .price-tag { display: inline-block; padding: 5px 12px; border-radius: 999px; background: #eff6ff; border: 1px solid #bfdbfe; font-size: 12px; font-weight: 600; color: #1d4ed8; }
+        .price-tag { display: inline-block; padding: 5px 12px; border-radius: 999px; background: #fff7e6; border: 1px solid #e7d3a3; font-size: 12px; font-weight: 700; color: #BA7517; letter-spacing: 0.04em; text-transform: uppercase; }
         .price-note { font-size: 13px; color: #64748b; }
 
         .card-rule { height: 1px; background: #f1f5f9; margin: 20px 0; }
@@ -300,12 +300,12 @@ export default function Pricing() {
         .email-block { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
         .email-label { font-size: 13px; font-weight: 500; color: #475569; }
         .email-input { width: 100%; padding: 13px 14px; border: 1.5px solid #e2e8f0; border-radius: 10px; font-size: 15px; color: #0f172a; background: #ffffff; outline: none; transition: border-color 140ms, box-shadow 140ms; font-family: inherit; }
-        .email-input:focus { border-color: #0a3d6b; box-shadow: 0 0 0 3px rgba(10,61,107,0.10); }
+        .email-input:focus { border-color: #042C53; box-shadow: 0 0 0 3px rgba(4,44,83,0.12); }
         .email-input-err { border-color: #dc2626 !important; }
         .email-err { font-size: 12px; color: #dc2626; font-weight: 500; margin: 0; }
 
-        .cta-btn { width: 100%; padding: 15px; border-radius: 12px; background: #0a3d6b; color: #ffffff; font-size: 15px; font-weight: 600; border: 1px solid #072d52; box-shadow: 0 4px 12px rgba(10,61,107,0.25); cursor: pointer; font-family: inherit; transition: background 140ms, transform 100ms; margin-bottom: 14px; }
-        .cta-btn:hover:not(:disabled) { background: #072d52; transform: translateY(-1px); }
+        .cta-btn { width: 100%; padding: 15px; border-radius: 12px; background: #042C53; color: #ffffff; font-size: 15px; font-weight: 700; border: 1px solid #021c38; box-shadow: 0 4px 14px rgba(4,44,83,0.28), inset 0 -2px 0 0 #BA7517; cursor: pointer; font-family: inherit; transition: background 140ms, transform 100ms; margin-bottom: 14px; }
+        .cta-btn:hover:not(:disabled) { background: #0C447C; transform: translateY(-1px); }
         .cta-btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
         .trust-row { display: flex; align-items: center; justify-content: center; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }

@@ -16,7 +16,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => ({
   props: {
     pricingDisplay: {
       standard:
-        process.env.STRIPE_CAREERS_STANDARD_DISPLAY ?? "$99 per 30-day listing",
+        process.env.STRIPE_CAREERS_STANDARD_DISPLAY ?? "$149 per 30-day listing",
       featured:
         process.env.STRIPE_CAREERS_FEATURED_DISPLAY ?? "$249 per 30-day featured listing",
     },
@@ -33,6 +33,15 @@ const NICHE = [
   "Care management",
   "Analytics & data",
   "Healthcare operations",
+];
+
+const STANDARD_INCLUDES = [
+  "Featured placement on the main board",
+  "Listed on matching SEO category pages",
+  "Verified employer checkmark",
+  "Priority review queue",
+  "30 days of active visibility",
+  "Apply link routes to your careers site",
 ];
 
 export default function CareersEmployers({ pricingDisplay }: Props) {
@@ -55,103 +64,137 @@ export default function CareersEmployers({ pricingDisplay }: Props) {
       </Head>
 
       <CareersShell>
-        <section className="careers-section">
+        <section className="careers-section emp-hero-section">
           <div className="careers-container">
-            <div className="careers-eyebrow">For employers</div>
-            <h1 className="careers-h1">Hire candidates who already speak Medicaid.</h1>
-            <p className="careers-lead">
-              Reach eligibility specialists, compliance analysts, billing coordinators,
-              policy associates, and care managers — without the noise of a generic job
-              board.
-            </p>
-            <div className="careers-actions">
-              <Link href="/careers/post-a-job" className="careers-btn-primary">
-                Post a job
-              </Link>
-              <Link href="/careers/jobs" className="careers-btn-ghost">
-                See current listings
-              </Link>
+            <div className="emp-split">
+              {/* LEFT: Pitch */}
+              <div className="emp-left">
+                <div className="careers-eyebrow">For employers</div>
+                <h1 className="careers-h1">
+                  Hire candidates who already speak Medicaid.
+                </h1>
+                <p className="careers-lead">
+                  Reach eligibility specialists, compliance analysts, billing coordinators,
+                  policy associates, and care managers — without the noise of a generic job
+                  board.
+                </p>
+
+                <div className="emp-trust">
+                  <div className="emp-trust-item">
+                    <span className="emp-trust-icon" aria-hidden="true">
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                        <path d="M2 7l3 3 7-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </span>
+                    Manual approval, every time
+                  </div>
+                  <div className="emp-trust-item">
+                    <span className="emp-trust-icon" aria-hidden="true">
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                        <path d="M2 7l3 3 7-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </span>
+                    Niche Medicaid-only audience
+                  </div>
+                  <div className="emp-trust-item">
+                    <span className="emp-trust-icon" aria-hidden="true">
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                        <path d="M2 7l3 3 7-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </span>
+                    Verified employer badge included
+                  </div>
+                </div>
+
+                <div className="emp-niche-block">
+                  <div className="emp-niche-label">We post and promote roles in:</div>
+                  <div className="emp-niche">
+                    {NICHE.map((n) => (
+                      <span key={n} className="emp-niche-pill">
+                        {n}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* RIGHT: Pricing card */}
+              <div className="emp-right">
+                <div className="emp-card">
+                  <span className="emp-card-badge">Most popular</span>
+                  <div className="emp-card-header">
+                    <div className="emp-card-title">Single Job Post</div>
+                    <div className="emp-card-sub">Standard placement, 30 days</div>
+                  </div>
+
+                  <div className="emp-card-price">
+                    <span className="emp-card-price-amount">$149</span>
+                    <span className="emp-card-price-period">/ job post</span>
+                  </div>
+                  <div className="emp-card-price-note">30-day listing · One-time payment</div>
+
+                  <div className="emp-card-rule" />
+
+                  <ul className="emp-card-list">
+                    {STANDARD_INCLUDES.map((item) => (
+                      <li key={item} className="emp-card-item">
+                        <span className="emp-card-check" aria-hidden="true">
+                          <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                            <path d="M1.5 5l2 2 4-5" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"/>
+                          </svg>
+                        </span>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <Link href="/careers/post-a-job" className="emp-card-cta">
+                    Post a Job
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                      <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </Link>
+
+                  <div className="emp-card-foot">
+                    Or post for free — manual review, may take a few business days.{" "}
+                    <Link href="/careers/post-a-job" className="emp-card-foot-link">
+                      Free option →
+                    </Link>
+                  </div>
+                </div>
+
+                <div className="emp-tiers">
+                  <div className="emp-tier-row">
+                    <div className="emp-tier-row-name">Free</div>
+                    <div className="emp-tier-row-price">$0</div>
+                  </div>
+                  <div className="emp-tier-row emp-tier-row-active">
+                    <div className="emp-tier-row-name">
+                      Single Post <span className="emp-tier-row-tag">Most popular</span>
+                    </div>
+                    <div className="emp-tier-row-price">$149</div>
+                  </div>
+                  <div className="emp-tier-row">
+                    <div className="emp-tier-row-name">
+                      Featured
+                      <span className="emp-tier-row-tag emp-tier-row-tag-gold">Top placement</span>
+                    </div>
+                    <div className="emp-tier-row-price">{pricingDisplay.featured.split(" ")[0]}</div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
         <section
-          className="careers-section-tight"
+          className="careers-section"
           style={{
             background: "#ffffff",
             borderTop: "1px solid #e2e8f0",
             borderBottom: "1px solid #e2e8f0",
           }}
         >
-          <div className="careers-container">
-            <div className="careers-eyebrow">Pricing</div>
-            <h2 className="careers-h2">Plain, predictable pricing.</h2>
-            <div className="emp-pricing-grid">
-              <div className="emp-tier">
-                <div className="emp-tier-name">Free</div>
-                <div className="emp-tier-price">No charge</div>
-                <div className="emp-tier-period">Standard placement</div>
-                <ul className="emp-tier-list">
-                  <li>Reviewed and approved by our team</li>
-                  <li>Goes live within a few business days</li>
-                  <li>Listed on the main jobs board</li>
-                  <li>Shown on matching SEO category pages</li>
-                </ul>
-                <Link href="/careers/post-a-job" className="emp-tier-cta">
-                  Post for free
-                </Link>
-              </div>
-
-              <div className="emp-tier emp-tier-standard">
-                <div className="emp-tier-name">Standard</div>
-                <div className="emp-tier-price">{pricingDisplay.standard}</div>
-                <div className="emp-tier-period">30-day listing</div>
-                <ul className="emp-tier-list">
-                  <li>Faster review queue</li>
-                  <li>Standard placement on the main board</li>
-                  <li>Shown on matching SEO category pages</li>
-                  <li>Final amount confirmed at checkout</li>
-                </ul>
-                <Link href="/careers/post-a-job" className="emp-tier-cta emp-tier-cta-primary">
-                  Post a Standard role
-                </Link>
-              </div>
-
-              <div className="emp-tier emp-tier-featured">
-                <div className="emp-tier-badge">Most visibility</div>
-                <div className="emp-tier-name">Featured</div>
-                <div className="emp-tier-price">{pricingDisplay.featured}</div>
-                <div className="emp-tier-period">30-day featured listing</div>
-                <ul className="emp-tier-list">
-                  <li>Top placement on the main board</li>
-                  <li>Top placement on category pages</li>
-                  <li>Highlighted styling on listings</li>
-                  <li>Final amount confirmed at checkout</li>
-                </ul>
-                <Link href="/careers/post-a-job" className="emp-tier-cta emp-tier-cta-primary">
-                  Post a Featured role
-                </Link>
-              </div>
-            </div>
-
-            <div className="emp-founding">
-              <div className="emp-founding-eyebrow">Founding employer</div>
-              <div className="emp-founding-title">
-                Founding employer pricing — for teams hiring multiple roles
-              </div>
-              <p className="emp-founding-body">
-                If you&apos;re posting more than 3 Medicaid roles in the next quarter,
-                email{" "}
-                <a href="mailto:careers@medicaidready.org">careers@medicaidready.org</a>{" "}
-                and we&apos;ll set up a founding-employer rate. Locked-in pricing for the
-                first year, priority review, and a placement on the employers section of
-                MedicaidReady Careers.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <section className="careers-section">
           <div className="careers-container">
             <div className="careers-eyebrow">How it works</div>
             <h2 className="careers-h2">Manual approval, every time.</h2>
@@ -165,8 +208,8 @@ export default function CareersEmployers({ pricingDisplay }: Props) {
                 <div className="emp-step-num">01</div>
                 <div className="emp-step-title">You submit</div>
                 <div className="emp-step-body">
-                  Fill out the post-a-job form. Pick free, standard, or featured. Pay if
-                  you chose a paid tier.
+                  Fill out the post-a-job form. Pick free, standard ($149), or featured. Pay
+                  if you chose a paid tier.
                 </div>
               </div>
               <div className="emp-step">
@@ -189,40 +232,23 @@ export default function CareersEmployers({ pricingDisplay }: Props) {
           </div>
         </section>
 
-        <section
-          className="careers-section-tight"
-          style={{
-            background: "#ffffff",
-            borderTop: "1px solid #e2e8f0",
-            borderBottom: "1px solid #e2e8f0",
-          }}
-        >
-          <div className="careers-container">
-            <div className="careers-eyebrow">Niche focus</div>
-            <h2 className="careers-h2">Built for the Medicaid ecosystem.</h2>
-            <p className="careers-lead">
-              MedicaidReady Careers is intentionally narrow. We post and promote roles in:
-            </p>
-            <div className="emp-niche">
-              {NICHE.map((n) => (
-                <span key={n} className="emp-niche-pill">
-                  {n}
-                </span>
-              ))}
-            </div>
-            <p
-              className="careers-lead"
-              style={{ marginTop: 18, fontSize: 15, color: "#64748b" }}
-            >
-              If your role isn&apos;t in this space, we&apos;ll let you know — and refund
-              the listing fee in full.
-            </p>
-          </div>
-        </section>
-
         <section className="careers-section">
           <div className="careers-container">
-            <h2 className="careers-h2">Ready to hire?</h2>
+            <div className="emp-founding">
+              <div className="emp-founding-eyebrow">Founding employer</div>
+              <div className="emp-founding-title">
+                Hiring 3+ Medicaid roles this quarter? Get locked-in pricing.
+              </div>
+              <p className="emp-founding-body">
+                Email{" "}
+                <a href="mailto:careers@medicaidready.org">careers@medicaidready.org</a>{" "}
+                and we&apos;ll set up a founding-employer rate: locked-in pricing for the
+                first year, priority review, and a placement on the employers section of
+                MedicaidReady Careers.
+              </p>
+            </div>
+
+            <h2 className="careers-h2" style={{ marginTop: 40 }}>Ready to hire?</h2>
             <p className="careers-lead">Submit your role and we&apos;ll take it from there.</p>
             <div className="careers-actions">
               <Link href="/careers/post-a-job" className="careers-btn-primary">
@@ -237,105 +263,271 @@ export default function CareersEmployers({ pricingDisplay }: Props) {
       </CareersShell>
 
       <style jsx>{`
-        .emp-pricing-grid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 16px;
-          margin-top: 24px;
+        .emp-hero-section {
+          background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
         }
-        .emp-tier {
+        .emp-split {
+          display: grid;
+          grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+          gap: 56px;
+          align-items: start;
+        }
+        .emp-left {
+          padding-top: 4px;
+        }
+        .emp-trust {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          margin-top: 28px;
+          margin-bottom: 28px;
+        }
+        .emp-trust-item {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          font-size: 14px;
+          font-weight: 500;
+          color: #334155;
+        }
+        .emp-trust-icon {
+          width: 22px;
+          height: 22px;
+          border-radius: 50%;
+          background: #f0fdf4;
+          border: 1px solid #bbf7d0;
+          color: #15803d;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+        }
+        .emp-niche-block {
+          margin-top: 8px;
+        }
+        .emp-niche-label {
+          font-size: 13px;
+          font-weight: 600;
+          color: #475569;
+          margin-bottom: 10px;
+        }
+        .emp-niche {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+        }
+        .emp-niche-pill {
+          display: inline-flex;
+          align-items: center;
+          padding: 6px 12px;
+          border-radius: 999px;
+          background: #ffffff;
+          color: #042C53;
+          font-size: 13px;
+          font-weight: 600;
+          border: 1px solid #cbd5e1;
+        }
+
+        .emp-right {
+          position: sticky;
+          top: 88px;
+        }
+        .emp-card {
+          position: relative;
+          background: #ffffff;
+          border: 2px solid #BA7517;
+          border-radius: 18px;
+          padding: 28px 26px 24px;
+          box-shadow: 0 16px 40px rgba(4, 44, 83, 0.10), 0 4px 12px rgba(4, 44, 83, 0.06);
+        }
+        .emp-card-badge {
+          position: absolute;
+          top: -12px;
+          left: 24px;
+          padding: 5px 12px;
+          border-radius: 999px;
+          background: #BA7517;
+          color: #ffffff;
+          font-size: 11px;
+          font-weight: 800;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+        }
+        .emp-card-header {
+          margin-bottom: 18px;
+        }
+        .emp-card-title {
+          font-size: 18px;
+          font-weight: 700;
+          color: #042C53;
+          letter-spacing: -0.02em;
+          margin-bottom: 4px;
+        }
+        .emp-card-sub {
+          font-size: 13px;
+          color: #64748b;
+        }
+        .emp-card-price {
+          display: flex;
+          align-items: baseline;
+          gap: 8px;
+        }
+        .emp-card-price-amount {
+          font-size: 56px;
+          font-weight: 700;
+          color: #042C53;
+          letter-spacing: -0.04em;
+          line-height: 1;
+        }
+        .emp-card-price-period {
+          font-size: 15px;
+          color: #64748b;
+          font-weight: 500;
+        }
+        .emp-card-price-note {
+          font-size: 12px;
+          color: #94a3b8;
+          margin-top: 6px;
+        }
+        .emp-card-rule {
+          height: 1px;
+          background: #f1f5f9;
+          margin: 20px 0;
+        }
+        .emp-card-list {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          margin-bottom: 22px;
+        }
+        .emp-card-item {
+          display: flex;
+          align-items: flex-start;
+          gap: 10px;
+          font-size: 14px;
+          color: #334155;
+          line-height: 1.55;
+        }
+        .emp-card-check {
+          width: 18px;
+          height: 18px;
+          min-width: 18px;
+          border-radius: 50%;
+          background: #fff7e6;
+          border: 1px solid #f1deb3;
+          color: #BA7517;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-top: 1px;
+        }
+        .emp-card-cta {
+          width: 100%;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          padding: 15px 22px;
+          border-radius: 12px;
+          background: #042C53;
+          color: #ffffff !important;
+          font-size: 15px;
+          font-weight: 700;
+          border: 1px solid #021c38;
+          box-shadow: 0 4px 16px rgba(4, 44, 83, 0.30), inset 0 -2px 0 0 #BA7517;
+          text-decoration: none !important;
+          transition: background 140ms, transform 100ms;
+          margin-bottom: 14px;
+        }
+        .emp-card-cta:hover {
+          background: #0C447C;
+          transform: translateY(-1px);
+        }
+        .emp-card-foot {
+          font-size: 12px;
+          color: #64748b;
+          text-align: center;
+          line-height: 1.5;
+        }
+        .emp-card-foot-link {
+          color: #042C53;
+          font-weight: 600;
+          text-decoration: none;
+          white-space: nowrap;
+        }
+        .emp-card-foot-link:hover {
+          color: #BA7517;
+        }
+
+        .emp-tiers {
+          margin-top: 16px;
           background: #ffffff;
           border: 1px solid #e2e8f0;
           border-radius: 14px;
-          padding: 24px;
+          padding: 4px;
+        }
+        .emp-tier-row {
           display: flex;
-          flex-direction: column;
+          align-items: center;
+          justify-content: space-between;
           gap: 8px;
-          box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
-          position: relative;
-        }
-        .emp-tier-standard {
-          border-color: #93c5fd;
-        }
-        .emp-tier-featured {
-          border: 2px solid #0a3d6b;
-          background: linear-gradient(180deg, #ffffff 0%, #f0f7ff 100%);
-        }
-        .emp-tier-badge {
-          position: absolute;
-          top: -10px;
-          right: 16px;
-          background: #0a3d6b;
-          color: #ffffff;
-          font-size: 11px;
-          font-weight: 700;
-          letter-spacing: 0.04em;
-          text-transform: uppercase;
-          padding: 4px 10px;
-          border-radius: 999px;
-        }
-        .emp-tier-name {
-          font-size: 16px;
-          font-weight: 700;
-          color: #0f172a;
-          letter-spacing: -0.01em;
-        }
-        .emp-tier-price {
-          font-size: 22px;
-          font-weight: 700;
-          color: #0a3d6b;
-          letter-spacing: -0.02em;
-        }
-        .emp-tier-period {
-          font-size: 12px;
-          color: #64748b;
-          margin: 0 0 8px;
-        }
-        .emp-tier-list {
-          margin: 0;
-          padding-left: 18px;
-          font-size: 13px;
-          color: #334155;
-          line-height: 1.7;
-          flex: 1;
-        }
-        .emp-tier-cta {
-          margin-top: 16px;
-          display: inline-block;
-          padding: 10px 16px;
+          padding: 11px 14px;
           border-radius: 10px;
-          background: #ffffff;
-          color: #0a3d6b;
-          border: 1px solid #cbd5e1;
+        }
+        .emp-tier-row-active {
+          background: #fff7e6;
+          border: 1px solid #f1deb3;
+        }
+        .emp-tier-row-name {
           font-size: 14px;
           font-weight: 600;
-          text-decoration: none;
-          text-align: center;
+          color: #042C53;
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
         }
-        .emp-tier-cta-primary {
-          background: #0a3d6b;
-          color: #ffffff;
-          border-color: #072d52;
+        .emp-tier-row-tag {
+          font-size: 10px;
+          font-weight: 700;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+          padding: 2px 7px;
+          border-radius: 999px;
+          background: #eff6ff;
+          color: #1d4ed8;
         }
+        .emp-tier-row-tag-gold {
+          background: #fff7e6;
+          color: #BA7517;
+        }
+        .emp-tier-row-price {
+          font-size: 14px;
+          font-weight: 700;
+          color: #042C53;
+        }
+
         .emp-founding {
-          margin-top: 32px;
           padding: 22px 24px;
           background: #f8fafc;
           border: 1px dashed #cbd5e1;
+          border-left: 4px solid #BA7517;
           border-radius: 14px;
         }
         .emp-founding-eyebrow {
           font-size: 12px;
-          font-weight: 600;
-          letter-spacing: 0.1em;
+          font-weight: 700;
+          letter-spacing: 0.12em;
           text-transform: uppercase;
-          color: #1565c0;
+          color: #BA7517;
           margin: 0 0 6px;
         }
         .emp-founding-title {
-          font-size: 16px;
+          font-size: 17px;
           font-weight: 700;
-          color: #0f172a;
+          color: #042C53;
           margin: 0 0 8px;
           letter-spacing: -0.01em;
         }
@@ -345,6 +537,13 @@ export default function CareersEmployers({ pricingDisplay }: Props) {
           line-height: 1.7;
           margin: 0;
         }
+        .emp-founding-body a {
+          color: #042C53;
+          font-weight: 600;
+          text-decoration: underline;
+        }
+        .emp-founding-body a:hover { color: #BA7517; }
+
         .emp-steps {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
@@ -359,15 +558,15 @@ export default function CareersEmployers({ pricingDisplay }: Props) {
         }
         .emp-step-num {
           font-size: 12px;
-          font-weight: 700;
-          color: #1565c0;
-          letter-spacing: 0.06em;
+          font-weight: 800;
+          color: #BA7517;
+          letter-spacing: 0.08em;
           margin-bottom: 10px;
         }
         .emp-step-title {
           font-size: 15px;
           font-weight: 700;
-          color: #0f172a;
+          color: #042C53;
           letter-spacing: -0.01em;
           margin-bottom: 6px;
         }
@@ -376,26 +575,14 @@ export default function CareersEmployers({ pricingDisplay }: Props) {
           color: #475569;
           line-height: 1.65;
         }
-        .emp-niche {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 8px;
-          margin-top: 16px;
-        }
-        .emp-niche-pill {
-          display: inline-flex;
-          align-items: center;
-          padding: 6px 12px;
-          border-radius: 999px;
-          background: #eff6ff;
-          color: #1d4ed8;
-          font-size: 13px;
-          font-weight: 500;
-          border: 1px solid #bfdbfe;
-        }
-        @media (max-width: 880px) {
-          .emp-pricing-grid {
+
+        @media (max-width: 960px) {
+          .emp-split {
             grid-template-columns: 1fr;
+            gap: 32px;
+          }
+          .emp-right {
+            position: static;
           }
           .emp-steps {
             grid-template-columns: 1fr;

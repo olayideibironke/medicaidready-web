@@ -912,9 +912,9 @@ export default function Quiz() {
           width: 52px;
           height: 52px;
           border-radius: var(--radius-md);
-          background: #eff6ff;
-          border: 1px solid #bfdbfe;
-          color: var(--navy);
+          background: #fff7e6;
+          border: 1px solid #e7d3a3;
+          color: var(--gold);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -1067,11 +1067,13 @@ export default function Quiz() {
           display: inline-block;
           padding: 3px 10px;
           border-radius: 999px;
-          background: #eff6ff;
-          border: 1px solid #bfdbfe;
+          background: #fff7e6;
+          border: 1px solid #e7d3a3;
           font-size: 11px;
-          font-weight: 600;
-          color: #1d4ed8;
+          font-weight: 700;
+          color: var(--gold);
+          letter-spacing: 0.04em;
+          text-transform: uppercase;
           margin-bottom: 8px;
         }
 
@@ -1096,9 +1098,9 @@ export default function Quiz() {
           background: var(--navy);
           color: #fff;
           font-size: 15px;
-          font-weight: 600;
+          font-weight: 700;
           border: 1px solid var(--navy-dark);
-          box-shadow: var(--shadow-md);
+          box-shadow: 0 4px 14px rgba(4,44,83,0.25), inset 0 -2px 0 0 var(--gold);
           cursor: pointer;
           font-family: inherit;
           transition: background 140ms;

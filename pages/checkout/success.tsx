@@ -84,9 +84,10 @@ export default function CheckoutSuccess() {
         }
 
         .link {
-          color: #0b3a66;
+          color: #042C53;
           font-weight: 700;
         }
+        .link:hover { color: #BA7517; }
 
         .actions {
           display: flex;
@@ -102,12 +103,12 @@ export default function CheckoutSuccess() {
           justify-content: center;
           padding: 13px 22px;
           border-radius: 12px;
-          background: linear-gradient(135deg, #0b3a66, #0f6aa6);
+          background: linear-gradient(135deg, #042C53, #0C447C);
           color: #ffffff;
-          font-weight: 800;
+          font-weight: 700;
           font-size: 14px;
-          border: 1px solid rgba(11, 58, 102, 0.3);
-          box-shadow: 0 8px 20px rgba(11, 18, 32, 0.14);
+          border: 1px solid rgba(4, 44, 83, 0.4);
+          box-shadow: 0 8px 22px rgba(4, 44, 83, 0.20), inset 0 -2px 0 0 #BA7517;
           text-decoration: none;
         }
 
@@ -118,12 +119,13 @@ export default function CheckoutSuccess() {
           padding: 13px 22px;
           border-radius: 12px;
           background: #ffffff;
-          color: #0b1220;
+          color: #042C53;
           font-weight: 700;
           font-size: 14px;
-          border: 1.5px solid rgba(11, 58, 102, 0.18);
+          border: 1.5px solid #cbd5e1;
           text-decoration: none;
         }
+        .btnSecondary:hover { border-color: #BA7517; }
       `}</style>
     </>
   );

@@ -150,9 +150,9 @@ export default function Home() {
           content="Find out if you qualify for Medicaid in 2 minutes. Free eligibility check. No jargon."
         />
         <meta name="twitter:image" content="https://medicaidready.org/medicaidready-header.png" />
-        <meta name="theme-color" content="#0a3d6b" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=6" />
-        <link rel="shortcut icon" href="/favicon.svg?v=6" />
+        <meta name="theme-color" content="#042C53" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=7" />
+        <link rel="shortcut icon" href="/favicon.svg?v=7" />
         <link rel="canonical" href="https://medicaidready.org/" />
       </Head>
 
@@ -338,13 +338,13 @@ export default function Home() {
                 <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
                   <path
                     d="M14 3L3 8.5v7c0 5.799 4.802 11.195 11 12.5C20.198 26.695 25 21.299 25 15.5v-7L14 3z"
-                    stroke="white"
+                    stroke="#EF9F27"
                     strokeWidth="2"
                     strokeLinejoin="round"
                   />
                   <path
                     d="M14 10v7M11 14h6"
-                    stroke="white"
+                    stroke="#EF9F27"
                     strokeWidth="2"
                     strokeLinecap="round"
                   />
@@ -395,11 +395,11 @@ export default function Home() {
           gap: 8px;
           padding: 6px 14px;
           border-radius: 999px;
-          border: 1px solid #bfdbfe;
-          background: #eff6ff;
+          border: 1px solid #e7d3a3;
+          background: #fff7e6;
           font-size: 13px;
-          font-weight: 500;
-          color: #1d4ed8;
+          font-weight: 600;
+          color: #BA7517;
           margin-bottom: 24px;
         }
 
@@ -408,7 +408,7 @@ export default function Home() {
           width: 6px;
           height: 6px;
           border-radius: 50%;
-          background: #3b82f6;
+          background: #BA7517;
           flex-shrink: 0;
         }
 
@@ -418,11 +418,11 @@ export default function Home() {
           letter-spacing: -0.04em;
           font-weight: 700;
           margin-bottom: 20px;
-          color: #0f172a;
+          color: #042C53;
         }
 
         .h1-em {
-          color: #0a3d6b;
+          color: #BA7517;
         }
 
         .hero-sub {
@@ -448,12 +448,12 @@ export default function Home() {
           gap: 8px;
           padding: 14px 24px;
           border-radius: 10px;
-          background: #0a3d6b;
+          background: #042C53;
           color: #ffffff !important;
           font-size: 15px;
           font-weight: 600;
-          border: 1px solid #072d52;
-          box-shadow: 0 4px 12px rgba(10, 61, 107, 0.25);
+          border: 1px solid #021c38;
+          box-shadow: 0 4px 14px rgba(4, 44, 83, 0.30), inset 0 -2px 0 0 #BA7517;
           text-decoration: none !important;
           transition:
             background 140ms,
@@ -462,7 +462,7 @@ export default function Home() {
         }
 
         .btn-primary:hover {
-          background: #072d52;
+          background: #0C447C;
           transform: translateY(-1px);
           color: #ffffff !important;
           text-decoration: none !important;
@@ -475,7 +475,7 @@ export default function Home() {
           padding: 14px 20px;
           border-radius: 10px;
           background: #ffffff;
-          color: #0a3d6b !important;
+          color: #042C53 !important;
           font-size: 15px;
           font-weight: 600;
           border: 1px solid #cbd5e1;
@@ -487,10 +487,10 @@ export default function Home() {
         }
 
         .btn-ghost:hover {
-          background: #eff6ff;
-          border-color: #93c5fd;
+          background: #fff7e6;
+          border-color: #BA7517;
           transform: translateY(-1px);
-          color: #0a3d6b !important;
+          color: #042C53 !important;
           text-decoration: none !important;
         }
 
@@ -518,8 +518,10 @@ export default function Home() {
         }
 
         .stats-bar {
-          background: #0a3d6b;
-          padding: 24px 0;
+          background: linear-gradient(180deg, #042C53 0%, #021c38 100%);
+          padding: 28px 0;
+          border-top: 3px solid #BA7517;
+          border-bottom: 3px solid #BA7517;
         }
 
         .stats-grid {
@@ -530,7 +532,7 @@ export default function Home() {
 
         .stat-item {
           padding: 8px 24px;
-          border-right: 1px solid rgba(255, 255, 255, 0.12);
+          border-right: 1px solid rgba(133, 183, 235, 0.18);
           text-align: center;
         }
 
@@ -539,17 +541,18 @@ export default function Home() {
         }
 
         .stat-value {
-          font-size: 26px;
+          font-size: 30px;
           font-weight: 700;
-          color: #fff;
+          color: #ffffff;
           letter-spacing: -0.03em;
           line-height: 1.2;
         }
 
         .stat-label {
           font-size: 13px;
-          color: rgba(255, 255, 255, 0.65);
-          margin-top: 3px;
+          color: #85B7EB;
+          margin-top: 4px;
+          font-weight: 500;
         }
 
         .section {
@@ -570,10 +573,10 @@ export default function Home() {
 
         .section-eyebrow {
           font-size: 12px;
-          font-weight: 600;
-          letter-spacing: 0.1em;
+          font-weight: 700;
+          letter-spacing: 0.12em;
           text-transform: uppercase;
-          color: #1565c0;
+          color: #BA7517;
           margin-bottom: 10px;
         }
 
@@ -611,9 +614,9 @@ export default function Home() {
 
         .step-num {
           font-size: 13px;
-          font-weight: 700;
-          color: #1565c0;
-          letter-spacing: 0.05em;
+          font-weight: 800;
+          color: #BA7517;
+          letter-spacing: 0.06em;
           margin-bottom: 16px;
         }
 
@@ -653,8 +656,9 @@ export default function Home() {
           width: 40px;
           height: 40px;
           border-radius: 10px;
-          background: #eff6ff;
-          color: #0a3d6b;
+          background: #fff7e6;
+          color: #BA7517;
+          border: 1px solid #f1deb3;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -705,8 +709,9 @@ export default function Home() {
         }
 
         .cta-section {
-          background: #0a3d6b;
+          background: linear-gradient(180deg, #042C53 0%, #021c38 100%);
           padding: 80px 0;
+          border-top: 3px solid #BA7517;
         }
 
         .cta-inner {
@@ -719,8 +724,9 @@ export default function Home() {
           width: 64px;
           height: 64px;
           border-radius: 20px;
-          background: rgba(255, 255, 255, 0.12);
-          border: 1px solid rgba(255, 255, 255, 0.2);
+          background: rgba(239, 159, 39, 0.15);
+          border: 1px solid rgba(239, 159, 39, 0.45);
+          color: #EF9F27;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -750,25 +756,38 @@ export default function Home() {
           padding: 14px 28px;
           border-radius: 10px;
           background: #ffffff;
-          color: #0a3d6b !important;
+          color: #042C53 !important;
           font-size: 15px;
-          font-weight: 600;
+          font-weight: 700;
           border: 1px solid rgba(255, 255, 255, 0.4);
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+          box-shadow: 0 4px 18px rgba(0, 0, 0, 0.22), inset 0 -2px 0 0 #BA7517;
           text-decoration: none !important;
           transition: transform 120ms;
         }
 
         .btn-white:hover {
           transform: translateY(-1px);
-          color: #0a3d6b !important;
+          color: #042C53 !important;
           text-decoration: none !important;
         }
 
         .cta-note {
           margin-top: 14px;
           font-size: 13px;
-          color: rgba(255, 255, 255, 0.5);
+          color: #85B7EB;
+        }
+
+        .cta-sub {
+          color: #85B7EB !important;
+        }
+
+        .who-card {
+          transition: border-color 140ms, transform 100ms, box-shadow 140ms;
+        }
+        .who-card:hover {
+          border-color: #BA7517;
+          transform: translateY(-2px);
+          box-shadow: 0 8px 24px rgba(186, 117, 23, 0.10);
         }
 
         @media (max-width: 960px) {

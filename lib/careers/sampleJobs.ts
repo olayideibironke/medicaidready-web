@@ -15,6 +15,7 @@ export type CareersJob = {
   responsibilities: string[];
   requirements: string[];
   benefits: string[];
+  featured?: boolean;
 };
 
 export const SAMPLE_JOBS: CareersJob[] = [

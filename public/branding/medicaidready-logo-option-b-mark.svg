@@ -1,0 +1,10 @@
+<svg width="520" height="560" viewBox="0 0 52 56" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">MedicaidReady Hex Crest Mark</title>
+  <desc id="desc">Deep navy hex crest with gold inner outline and medical plus mark.</desc>
+  <polygon points="26,3 48,15 48,39 26,51 4,39 4,15" fill="#042C53"/>
+  <polygon points="26,9 43,19 43,35 26,45 9,35 9,19" fill="none" stroke="#BA7517" stroke-width="1.5"/>
+  <line x1="26" y1="20" x2="26" y2="34" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
+  <line x1="19" y1="27" x2="33" y2="27" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
+  <line x1="26" y1="20" x2="26" y2="34" stroke="#BA7517" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="19" y1="27" x2="33" y2="27" stroke="#BA7517" stroke-width="1.5" stroke-linecap="round"/>
+</svg>

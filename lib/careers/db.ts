@@ -147,6 +147,7 @@ export function rowToCareersJob(row: CareersJobRow): CareersJob {
     responsibilities: row.responsibilities ?? [],
     requirements: row.requirements ?? [],
     benefits: row.benefits ?? [],
+    featured: Boolean(row.featured),
     applyUrl: applyUrl || null,
     apply_url: applyUrl || null,
     sourceType: row.source_type ?? null,
