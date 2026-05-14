@@ -438,7 +438,10 @@ export default function CareersJobs({ jobs }: Props) {
           ["7d", "Past 7 days"],
           ["30d", "Past 30 days"],
         ] as Array<[DateRange, string]>).map(([value, label]) => (
-          <label key={value} className="cj-row cj-radio-row">
+          <label
+            key={value}
+            className={`cj-row cj-radio-row${postedRange === value ? " is-selected" : ""}`}
+          >
             <input
               type="radio"
               name="posted"
@@ -446,6 +449,7 @@ export default function CareersJobs({ jobs }: Props) {
               checked={postedRange === value}
               onChange={() => setPostedRange(value)}
             />
+            <span className="cj-choice-mark cj-radio-mark" aria-hidden="true" />
             <span>{label}</span>
           </label>
         ))}
@@ -454,12 +458,13 @@ export default function CareersJobs({ jobs }: Props) {
       <fieldset className="cj-group">
         <legend className="cj-group-title">Work setting</legend>
         {(["Remote", "Hybrid", "On-site"] as CareersJobMode[]).map((m) => (
-          <label key={m} className="cj-row">
+          <label key={m} className={`cj-row${modes.has(m) ? " is-selected" : ""}`}>
             <input
               type="checkbox"
               checked={modes.has(m)}
               onChange={() => toggleSetItem(modes, m, setModes)}
             />
+            <span className="cj-choice-mark cj-check-mark" aria-hidden="true" />
             <span>{m}</span>
           </label>
         ))}
@@ -469,12 +474,13 @@ export default function CareersJobs({ jobs }: Props) {
         <legend className="cj-group-title">Employment type</legend>
         {(["Full-time", "Part-time", "Contract", "Internship"] as CareersJobType[]).map(
           (t) => (
-            <label key={t} className="cj-row">
+            <label key={t} className={`cj-row${types.has(t) ? " is-selected" : ""}`}>
               <input
                 type="checkbox"
                 checked={types.has(t)}
                 onChange={() => toggleSetItem(types, t, setTypes)}
               />
+              <span className="cj-choice-mark cj-check-mark" aria-hidden="true" />
               <span>{t}</span>
             </label>
           )
@@ -484,12 +490,13 @@ export default function CareersJobs({ jobs }: Props) {
       <fieldset className="cj-group">
         <legend className="cj-group-title">Category</legend>
         {CATEGORY_DEFS.map((def) => (
-          <label key={def.key} className="cj-row">
+          <label key={def.key} className={`cj-row${cats.has(def.key) ? " is-selected" : ""}`}>
             <input
               type="checkbox"
               checked={cats.has(def.key)}
               onChange={() => toggleSetItem(cats, def.key, setCats)}
             />
+            <span className="cj-choice-mark cj-check-mark" aria-hidden="true" />
             <span>{def.label}</span>
           </label>
         ))}
@@ -497,20 +504,22 @@ export default function CareersJobs({ jobs }: Props) {
 
       <fieldset className="cj-group">
         <legend className="cj-group-title">Other</legend>
-        <label className="cj-row">
+        <label className={`cj-row${salaryOnly ? " is-selected" : ""}`}>
           <input
             type="checkbox"
             checked={salaryOnly}
             onChange={() => setSalaryOnly((v) => !v)}
           />
+          <span className="cj-choice-mark cj-check-mark" aria-hidden="true" />
           <span>Salary available</span>
         </label>
-        <label className="cj-row">
+        <label className={`cj-row${featuredOnly ? " is-selected" : ""}`}>
           <input
             type="checkbox"
             checked={featuredOnly}
             onChange={() => setFeaturedOnly((v) => !v)}
           />
+          <span className="cj-choice-mark cj-check-mark" aria-hidden="true" />
           <span>Featured only</span>
         </label>
       </fieldset>
@@ -781,7 +790,7 @@ export default function CareersJobs({ jobs }: Props) {
         </div>
       </CareersShell>
 
-      <style jsx>{`
+      <style jsx global>{`
         .cj-search-bar {
           display: grid;
           grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) auto;
@@ -862,86 +871,166 @@ export default function CareersJobs({ jobs }: Props) {
         }
 
         .cj-sidebar {
-          background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
-          border: 1px solid #dbe5f0;
-          border-top: 4px solid #BA7517;
-          border-radius: 18px;
-          padding: 16px 18px 18px;
-          box-shadow: 0 10px 26px rgba(4, 44, 83, 0.08);
-          position: sticky;
-          top: 24px;
-          max-height: calc(100vh - 160px);
-          overflow-y: auto;
+          background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%) !important;
+          border: 1px solid #dbe5f0 !important;
+          border-top: 4px solid #BA7517 !important;
+          border-radius: 18px !important;
+          padding: 16px 18px 18px !important;
+          box-shadow: 0 10px 26px rgba(4, 44, 83, 0.08) !important;
+          position: sticky !important;
+          top: 24px !important;
+          max-height: calc(100vh - 160px) !important;
+          overflow-y: auto !important;
         }
         .cj-sidebar-head {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: 16px 0 10px;
-          border-bottom: 1px solid #f1f5f9;
-          margin-bottom: 6px;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: space-between !important;
+          padding: 0 0 12px !important;
+          border-bottom: 1px solid #edf2f7 !important;
+          margin-bottom: 4px !important;
         }
         .cj-sidebar-title {
-          font-size: 14px;
-          font-weight: 800;
-          letter-spacing: 0.04em;
-          text-transform: uppercase;
-          color: #042C53;
+          font-size: 14px !important;
+          font-weight: 900 !important;
+          color: #042C53 !important;
+          letter-spacing: 0.08em !important;
+          text-transform: uppercase !important;
         }
         .cj-clear {
-          background: none;
-          border: 0;
-          color: #BA7517;
-          font-size: 12px;
-          font-weight: 700;
-          cursor: pointer;
-          font-family: inherit;
-          padding: 4px 6px;
+          border: 1px solid #f1deb3 !important;
+          background: #fff7e6 !important;
+          color: #BA7517 !important;
+          border-radius: 999px !important;
+          padding: 5px 10px !important;
+          font-size: 12px !important;
+          font-weight: 800 !important;
+          cursor: pointer !important;
+          font-family: inherit !important;
         }
         .cj-clear:hover {
-          color: #042C53;
+          color: #042C53 !important;
+          background: #fff3d5 !important;
         }
 
-        .cj-sidebar fieldset.cj-group {
+        .cj-sidebar fieldset,
+        .cj-sidebar fieldset.cj-group,
+        fieldset.cj-group {
           border: 0 !important;
+          margin: 0 !important;
+          padding: 14px 0 !important;
+          min-width: 0 !important;
+          border-bottom: 1px solid #edf2f7 !important;
         }
-        .cj-group {
-          border: 0;
-          padding: 12px 0;
-          margin: 0;
-          border-bottom: 1px solid #f1f5f9;
+        .cj-sidebar fieldset:last-child,
+        fieldset.cj-group:last-child {
+          border-bottom: 0 !important;
         }
-        .cj-group:last-child {
-          border-bottom: 0;
-        }
-        .cj-group-title {
-          font-size: 12px;
-          font-weight: 700;
-          color: #042C53;
-          letter-spacing: 0.06em;
-          text-transform: uppercase;
-          padding: 0 0 8px;
+        .cj-group-title,
+        .cj-sidebar legend {
+          display: block !important;
+          width: 100% !important;
+          padding: 0 0 9px !important;
+          margin: 0 !important;
+          font-size: 12px !important;
+          font-weight: 850 !important;
+          color: #042C53 !important;
+          letter-spacing: 0.08em !important;
+          text-transform: uppercase !important;
         }
         .cj-row {
-          display: flex;
-          align-items: center;
-          gap: 9px;
-          padding: 5px 0;
-          font-size: 13.5px;
-          color: #334155;
-          cursor: pointer;
-          line-height: 1.4;
+          display: flex !important;
+          align-items: flex-start !important;
+          gap: 10px !important;
+          padding: 7px 0 !important;
+          font-size: 13.5px !important;
+          color: #334155 !important;
+          cursor: pointer !important;
+          line-height: 1.45 !important;
+          user-select: none !important;
         }
         .cj-row input[type="checkbox"],
         .cj-row input[type="radio"] {
-          width: 16px;
-          height: 16px;
-          accent-color: #BA7517;
-          cursor: pointer;
-          flex-shrink: 0;
+          position: absolute !important;
+          opacity: 0 !important;
+          width: 1px !important;
+          height: 1px !important;
+          margin: 0 !important;
+          pointer-events: none !important;
+          appearance: none !important;
+          -webkit-appearance: none !important;
+        }
+        .cj-choice-mark {
+          width: 18px !important;
+          height: 18px !important;
+          flex: 0 0 18px !important;
+          display: inline-flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          border: 1.7px solid #94a3b8 !important;
+          background: #ffffff !important;
+          color: #ffffff !important;
+          box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06) !important;
+          margin-top: 1px !important;
+          transition: border-color 120ms ease, background 120ms ease, box-shadow 120ms ease !important;
+        }
+        .cj-radio-mark {
+          border-radius: 999px !important;
+        }
+        .cj-check-mark {
+          border-radius: 5px !important;
+        }
+        .cj-radio-mark::after {
+          content: "" !important;
+          width: 8px !important;
+          height: 8px !important;
+          border-radius: 999px !important;
+          background: #BA7517 !important;
+          opacity: 0 !important;
+          transform: scale(0.35) !important;
+          transition: opacity 120ms ease, transform 120ms ease !important;
+        }
+        .cj-check-mark::after {
+          content: "✓" !important;
+          font-size: 13px !important;
+          font-weight: 900 !important;
+          line-height: 1 !important;
+          opacity: 0 !important;
+          transform: scale(0.8) !important;
+          transition: opacity 120ms ease, transform 120ms ease !important;
+        }
+        .cj-row.is-selected {
+          color: #042C53 !important;
+          font-weight: 650 !important;
+        }
+        .cj-row.is-selected .cj-radio-mark {
+          border-color: #BA7517 !important;
+          background: #fff7e6 !important;
+          box-shadow: 0 0 0 3px rgba(186, 117, 23, 0.12) !important;
+        }
+        .cj-row.is-selected .cj-radio-mark::after {
+          opacity: 1 !important;
+          transform: scale(1) !important;
+        }
+        .cj-row.is-selected .cj-check-mark {
+          border-color: #BA7517 !important;
+          background: #BA7517 !important;
+          box-shadow: 0 0 0 3px rgba(186, 117, 23, 0.12) !important;
+        }
+        .cj-row.is-selected .cj-check-mark::after {
+          opacity: 1 !important;
+          transform: scale(1) !important;
+        }
+        .cj-row input[type="checkbox"]:focus-visible + .cj-choice-mark,
+        .cj-row input[type="radio"]:focus-visible + .cj-choice-mark {
+          outline: 3px solid rgba(186, 117, 23, 0.25) !important;
+          outline-offset: 2px !important;
         }
         .cj-row:hover {
-          color: #042C53;
+          color: #042C53 !important;
+        }
+        .cj-row:hover .cj-choice-mark {
+          border-color: #BA7517 !important;
         }
 
         .cj-results-head {
@@ -1198,23 +1287,27 @@ export default function CareersJobs({ jobs }: Props) {
           background: #fff7e6;
         }
         .jc-apply {
-          display: inline-flex;
-          align-items: center;
-          gap: 6px;
-          padding: 10px 18px;
-          border-radius: 999px;
-          background: linear-gradient(135deg, #042C53, #0C447C);
+          display: inline-flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          gap: 6px !important;
+          padding: 10px 18px !important;
+          min-width: 92px !important;
+          border-radius: 999px !important;
+          background: linear-gradient(135deg, #042C53, #0C447C) !important;
           color: #ffffff !important;
-          font-size: 13px;
-          font-weight: 700;
-          border: 1px solid #021c38;
+          font-size: 13px !important;
+          font-weight: 800 !important;
+          border: 1px solid #021c38 !important;
           text-decoration: none !important;
-          box-shadow: 0 6px 14px rgba(4, 44, 83, 0.20), inset 0 -2px 0 0 #BA7517;
-          transition: background 120ms;
+          box-shadow: 0 6px 14px rgba(4, 44, 83, 0.22), inset 0 -2px 0 0 #BA7517 !important;
+          position: relative !important;
+          z-index: 5 !important;
         }
         .jc-apply:hover {
-          background: #0C447C;
+          background: linear-gradient(135deg, #0C447C, #042C53) !important;
           color: #ffffff !important;
+          transform: translateY(-1px) !important;
         }
 
         .cj-mobile-overlay {
@@ -1267,17 +1360,18 @@ export default function CareersJobs({ jobs }: Props) {
           overflow-y: auto;
           padding: 0 18px;
         }
-        .cj-mobile-body :global(.cj-sidebar) {
-          position: static;
-          max-height: none;
-          border: 0;
-          padding: 0;
+        .cj-mobile-body .cj-sidebar {
+          position: static !important;
+          max-height: none !important;
+          border: 0 !important;
+          padding: 0 !important;
+          box-shadow: none !important;
         }
         .cj-mobile-foot {
           padding: 14px 20px;
           border-top: 1px solid #e2e8f0;
         }
-        .cj-mobile-foot :global(.careers-btn-primary) {
+        .cj-mobile-foot .careers-btn-primary {
           width: 100%;
         }
 
@@ -1286,7 +1380,7 @@ export default function CareersJobs({ jobs }: Props) {
             grid-template-columns: 1fr;
           }
           .cj-sidebar {
-            display: none;
+            display: none !important;
           }
           .cj-filters-btn {
             display: inline-flex;
