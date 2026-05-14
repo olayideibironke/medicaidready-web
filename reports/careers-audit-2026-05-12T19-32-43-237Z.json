@@ -1,0 +1,962 @@
+{
+  "generated_at": "2026-05-12T19:32:43.235Z",
+  "scope": "approved_only",
+  "checked_links": true,
+  "counts": {
+    "jobs": 155,
+    "duplicate_slugs": 0,
+    "duplicate_apply_urls": 5,
+    "duplicate_title_company": 5,
+    "duplicate_title_company_location": 5,
+    "missing_apply_urls": 0,
+    "broken_links": 44,
+    "warning_links": 0
+  },
+  "duplicates": {
+    "slugs": [],
+    "apply_urls": [
+      {
+        "key": "https://careers.unitedhealthgroup.com/job/eden-prairie/quantitative-consultant-remote/34088/94867786272",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "95ce9f9d-da65-464f-9528-0acd211ca4ff",
+            "slug": "quantitative-consultant-remote-unitedhealth-group-optum-batch2",
+            "title": "Quantitative Consultant - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "Eden Prairie, MN / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/eden-prairie/quantitative-consultant-remote/34088/94867786272",
+            "created_at": "2026-05-12T19:27:09.730511+00:00",
+            "updated_at": "2026-05-12T19:27:09.730511+00:00"
+          },
+          {
+            "id": "c63c373a-d52d-44da-9558-2b432c88a91c",
+            "slug": "quantitative-consultant-remote-unitedhealth-group-optum",
+            "title": "Quantitative Consultant - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "Eden Prairie, MN / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/eden-prairie/quantitative-consultant-remote/34088/94867786272",
+            "created_at": "2026-05-12T18:53:29.852224+00:00",
+            "updated_at": "2026-05-12T18:53:29.852224+00:00"
+          }
+        ]
+      },
+      {
+        "key": "https://careers.unitedhealthgroup.com/job/de-pere/compliance-consultant-remote/34088/94611043184",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "9a4c497b-7a7f-45b2-8d93-eeb644c63484",
+            "slug": "compliance-consultant-remote-unitedhealth-group-optum-batch2",
+            "title": "Compliance Consultant - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "De Pere, WI / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/de-pere/compliance-consultant-remote/34088/94611043184",
+            "created_at": "2026-05-12T19:27:09.730511+00:00",
+            "updated_at": "2026-05-12T19:27:09.730511+00:00"
+          },
+          {
+            "id": "98194aea-ee62-49ba-b0bd-5eef675d2a43",
+            "slug": "compliance-consultant-remote-unitedhealth-group-optum",
+            "title": "Compliance Consultant - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "De Pere, WI / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/de-pere/compliance-consultant-remote/34088/94611043184",
+            "created_at": "2026-05-12T18:53:29.852224+00:00",
+            "updated_at": "2026-05-12T18:53:29.852224+00:00"
+          }
+        ]
+      },
+      {
+        "key": "https://careers.unitedhealthgroup.com/job/reston/health-data-analytics-consultant-remote/34088/94828967984",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "ecfc5b81-41ab-4c3d-9e20-3a042b5840df",
+            "slug": "health-data-analytics-consultant-remote-unitedhealth-group-optum-batch2",
+            "title": "Health Data Analytics Consultant - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "Reston, VA / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/reston/health-data-analytics-consultant-remote/34088/94828967984",
+            "created_at": "2026-05-12T19:27:09.730511+00:00",
+            "updated_at": "2026-05-12T19:27:09.730511+00:00"
+          },
+          {
+            "id": "c0b8b3fd-82d6-4db1-bea5-0e40d227c2ac",
+            "slug": "health-data-analytics-consultant-remote-unitedhealth-group-optum",
+            "title": "Health Data Analytics Consultant - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "Reston, VA / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/reston/health-data-analytics-consultant-remote/34088/94828967984",
+            "created_at": "2026-05-12T18:53:29.852224+00:00",
+            "updated_at": "2026-05-12T18:53:29.852224+00:00"
+          }
+        ]
+      },
+      {
+        "key": "https://careers.unitedhealthgroup.com/job/washington-d-c/senior-consultant-payment-model-implementation-remote/34088/93504540096",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "1aae521f-0895-4da9-b75d-7df631661035",
+            "slug": "senior-consultant-payment-model-implementation-remote-unitedhealth-group-optum-batch2",
+            "title": "Senior Consultant, Payment Model Implementation - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "Washington, DC / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/washington-d-c/senior-consultant-payment-model-implementation-remote/34088/93504540096",
+            "created_at": "2026-05-12T19:27:09.730511+00:00",
+            "updated_at": "2026-05-12T19:27:09.730511+00:00"
+          },
+          {
+            "id": "e8a2ae23-04c1-48ce-82af-88b9d707c502",
+            "slug": "senior-consultant-payment-model-implementation-remote-unitedhealth-group-optum",
+            "title": "Senior Consultant, Payment Model Implementation - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "Washington, DC / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/washington-d-c/senior-consultant-payment-model-implementation-remote/34088/93504540096",
+            "created_at": "2026-05-12T18:53:29.852224+00:00",
+            "updated_at": "2026-05-12T18:53:29.852224+00:00"
+          }
+        ]
+      },
+      {
+        "key": "https://careers.unitedhealthgroup.com/job/new-york/health-services-director-new-york/34088/94850990544",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "fb3aae4e-57bd-4226-bc2c-96e476fb28b3",
+            "slug": "health-services-director-new-york-unitedhealth-group-optum-batch2",
+            "title": "Health Services Director - New York",
+            "company": "UnitedHealth Group / Optum",
+            "location": "New York, NY",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/new-york/health-services-director-new-york/34088/94850990544",
+            "created_at": "2026-05-12T19:27:09.730511+00:00",
+            "updated_at": "2026-05-12T19:27:09.730511+00:00"
+          },
+          {
+            "id": "06467f61-7fe3-4110-b565-9399a1b6f332",
+            "slug": "health-services-director-new-york-unitedhealth-group-optum",
+            "title": "Health Services Director - New York",
+            "company": "UnitedHealth Group / Optum",
+            "location": "New York, NY",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/new-york/health-services-director-new-york/34088/94850990544",
+            "created_at": "2026-05-12T18:53:29.852224+00:00",
+            "updated_at": "2026-05-12T18:53:29.852224+00:00"
+          }
+        ]
+      }
+    ],
+    "title_company": [
+      {
+        "key": "quantitative consultant remote::unitedhealth group optum",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "95ce9f9d-da65-464f-9528-0acd211ca4ff",
+            "slug": "quantitative-consultant-remote-unitedhealth-group-optum-batch2",
+            "title": "Quantitative Consultant - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "Eden Prairie, MN / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/eden-prairie/quantitative-consultant-remote/34088/94867786272",
+            "created_at": "2026-05-12T19:27:09.730511+00:00",
+            "updated_at": "2026-05-12T19:27:09.730511+00:00"
+          },
+          {
+            "id": "c63c373a-d52d-44da-9558-2b432c88a91c",
+            "slug": "quantitative-consultant-remote-unitedhealth-group-optum",
+            "title": "Quantitative Consultant - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "Eden Prairie, MN / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/eden-prairie/quantitative-consultant-remote/34088/94867786272",
+            "created_at": "2026-05-12T18:53:29.852224+00:00",
+            "updated_at": "2026-05-12T18:53:29.852224+00:00"
+          }
+        ]
+      },
+      {
+        "key": "compliance consultant remote::unitedhealth group optum",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "9a4c497b-7a7f-45b2-8d93-eeb644c63484",
+            "slug": "compliance-consultant-remote-unitedhealth-group-optum-batch2",
+            "title": "Compliance Consultant - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "De Pere, WI / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/de-pere/compliance-consultant-remote/34088/94611043184",
+            "created_at": "2026-05-12T19:27:09.730511+00:00",
+            "updated_at": "2026-05-12T19:27:09.730511+00:00"
+          },
+          {
+            "id": "98194aea-ee62-49ba-b0bd-5eef675d2a43",
+            "slug": "compliance-consultant-remote-unitedhealth-group-optum",
+            "title": "Compliance Consultant - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "De Pere, WI / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/de-pere/compliance-consultant-remote/34088/94611043184",
+            "created_at": "2026-05-12T18:53:29.852224+00:00",
+            "updated_at": "2026-05-12T18:53:29.852224+00:00"
+          }
+        ]
+      },
+      {
+        "key": "health data analytics consultant remote::unitedhealth group optum",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "ecfc5b81-41ab-4c3d-9e20-3a042b5840df",
+            "slug": "health-data-analytics-consultant-remote-unitedhealth-group-optum-batch2",
+            "title": "Health Data Analytics Consultant - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "Reston, VA / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/reston/health-data-analytics-consultant-remote/34088/94828967984",
+            "created_at": "2026-05-12T19:27:09.730511+00:00",
+            "updated_at": "2026-05-12T19:27:09.730511+00:00"
+          },
+          {
+            "id": "c0b8b3fd-82d6-4db1-bea5-0e40d227c2ac",
+            "slug": "health-data-analytics-consultant-remote-unitedhealth-group-optum",
+            "title": "Health Data Analytics Consultant - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "Reston, VA / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/reston/health-data-analytics-consultant-remote/34088/94828967984",
+            "created_at": "2026-05-12T18:53:29.852224+00:00",
+            "updated_at": "2026-05-12T18:53:29.852224+00:00"
+          }
+        ]
+      },
+      {
+        "key": "senior consultant payment model implementation remote::unitedhealth group optum",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "1aae521f-0895-4da9-b75d-7df631661035",
+            "slug": "senior-consultant-payment-model-implementation-remote-unitedhealth-group-optum-batch2",
+            "title": "Senior Consultant, Payment Model Implementation - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "Washington, DC / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/washington-d-c/senior-consultant-payment-model-implementation-remote/34088/93504540096",
+            "created_at": "2026-05-12T19:27:09.730511+00:00",
+            "updated_at": "2026-05-12T19:27:09.730511+00:00"
+          },
+          {
+            "id": "e8a2ae23-04c1-48ce-82af-88b9d707c502",
+            "slug": "senior-consultant-payment-model-implementation-remote-unitedhealth-group-optum",
+            "title": "Senior Consultant, Payment Model Implementation - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "Washington, DC / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/washington-d-c/senior-consultant-payment-model-implementation-remote/34088/93504540096",
+            "created_at": "2026-05-12T18:53:29.852224+00:00",
+            "updated_at": "2026-05-12T18:53:29.852224+00:00"
+          }
+        ]
+      },
+      {
+        "key": "health services director new york::unitedhealth group optum",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "fb3aae4e-57bd-4226-bc2c-96e476fb28b3",
+            "slug": "health-services-director-new-york-unitedhealth-group-optum-batch2",
+            "title": "Health Services Director - New York",
+            "company": "UnitedHealth Group / Optum",
+            "location": "New York, NY",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/new-york/health-services-director-new-york/34088/94850990544",
+            "created_at": "2026-05-12T19:27:09.730511+00:00",
+            "updated_at": "2026-05-12T19:27:09.730511+00:00"
+          },
+          {
+            "id": "06467f61-7fe3-4110-b565-9399a1b6f332",
+            "slug": "health-services-director-new-york-unitedhealth-group-optum",
+            "title": "Health Services Director - New York",
+            "company": "UnitedHealth Group / Optum",
+            "location": "New York, NY",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/new-york/health-services-director-new-york/34088/94850990544",
+            "created_at": "2026-05-12T18:53:29.852224+00:00",
+            "updated_at": "2026-05-12T18:53:29.852224+00:00"
+          }
+        ]
+      }
+    ],
+    "title_company_location": [
+      {
+        "key": "quantitative consultant remote::unitedhealth group optum::eden prairie mn remote",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "95ce9f9d-da65-464f-9528-0acd211ca4ff",
+            "slug": "quantitative-consultant-remote-unitedhealth-group-optum-batch2",
+            "title": "Quantitative Consultant - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "Eden Prairie, MN / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/eden-prairie/quantitative-consultant-remote/34088/94867786272",
+            "created_at": "2026-05-12T19:27:09.730511+00:00",
+            "updated_at": "2026-05-12T19:27:09.730511+00:00"
+          },
+          {
+            "id": "c63c373a-d52d-44da-9558-2b432c88a91c",
+            "slug": "quantitative-consultant-remote-unitedhealth-group-optum",
+            "title": "Quantitative Consultant - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "Eden Prairie, MN / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/eden-prairie/quantitative-consultant-remote/34088/94867786272",
+            "created_at": "2026-05-12T18:53:29.852224+00:00",
+            "updated_at": "2026-05-12T18:53:29.852224+00:00"
+          }
+        ]
+      },
+      {
+        "key": "compliance consultant remote::unitedhealth group optum::de pere wi remote",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "9a4c497b-7a7f-45b2-8d93-eeb644c63484",
+            "slug": "compliance-consultant-remote-unitedhealth-group-optum-batch2",
+            "title": "Compliance Consultant - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "De Pere, WI / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/de-pere/compliance-consultant-remote/34088/94611043184",
+            "created_at": "2026-05-12T19:27:09.730511+00:00",
+            "updated_at": "2026-05-12T19:27:09.730511+00:00"
+          },
+          {
+            "id": "98194aea-ee62-49ba-b0bd-5eef675d2a43",
+            "slug": "compliance-consultant-remote-unitedhealth-group-optum",
+            "title": "Compliance Consultant - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "De Pere, WI / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/de-pere/compliance-consultant-remote/34088/94611043184",
+            "created_at": "2026-05-12T18:53:29.852224+00:00",
+            "updated_at": "2026-05-12T18:53:29.852224+00:00"
+          }
+        ]
+      },
+      {
+        "key": "health data analytics consultant remote::unitedhealth group optum::reston va remote",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "ecfc5b81-41ab-4c3d-9e20-3a042b5840df",
+            "slug": "health-data-analytics-consultant-remote-unitedhealth-group-optum-batch2",
+            "title": "Health Data Analytics Consultant - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "Reston, VA / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/reston/health-data-analytics-consultant-remote/34088/94828967984",
+            "created_at": "2026-05-12T19:27:09.730511+00:00",
+            "updated_at": "2026-05-12T19:27:09.730511+00:00"
+          },
+          {
+            "id": "c0b8b3fd-82d6-4db1-bea5-0e40d227c2ac",
+            "slug": "health-data-analytics-consultant-remote-unitedhealth-group-optum",
+            "title": "Health Data Analytics Consultant - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "Reston, VA / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/reston/health-data-analytics-consultant-remote/34088/94828967984",
+            "created_at": "2026-05-12T18:53:29.852224+00:00",
+            "updated_at": "2026-05-12T18:53:29.852224+00:00"
+          }
+        ]
+      },
+      {
+        "key": "senior consultant payment model implementation remote::unitedhealth group optum::washington dc remote",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "1aae521f-0895-4da9-b75d-7df631661035",
+            "slug": "senior-consultant-payment-model-implementation-remote-unitedhealth-group-optum-batch2",
+            "title": "Senior Consultant, Payment Model Implementation - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "Washington, DC / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/washington-d-c/senior-consultant-payment-model-implementation-remote/34088/93504540096",
+            "created_at": "2026-05-12T19:27:09.730511+00:00",
+            "updated_at": "2026-05-12T19:27:09.730511+00:00"
+          },
+          {
+            "id": "e8a2ae23-04c1-48ce-82af-88b9d707c502",
+            "slug": "senior-consultant-payment-model-implementation-remote-unitedhealth-group-optum",
+            "title": "Senior Consultant, Payment Model Implementation - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "Washington, DC / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/washington-d-c/senior-consultant-payment-model-implementation-remote/34088/93504540096",
+            "created_at": "2026-05-12T18:53:29.852224+00:00",
+            "updated_at": "2026-05-12T18:53:29.852224+00:00"
+          }
+        ]
+      },
+      {
+        "key": "health services director new york::unitedhealth group optum::new york ny",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "fb3aae4e-57bd-4226-bc2c-96e476fb28b3",
+            "slug": "health-services-director-new-york-unitedhealth-group-optum-batch2",
+            "title": "Health Services Director - New York",
+            "company": "UnitedHealth Group / Optum",
+            "location": "New York, NY",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/new-york/health-services-director-new-york/34088/94850990544",
+            "created_at": "2026-05-12T19:27:09.730511+00:00",
+            "updated_at": "2026-05-12T19:27:09.730511+00:00"
+          },
+          {
+            "id": "06467f61-7fe3-4110-b565-9399a1b6f332",
+            "slug": "health-services-director-new-york-unitedhealth-group-optum",
+            "title": "Health Services Director - New York",
+            "company": "UnitedHealth Group / Optum",
+            "location": "New York, NY",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/new-york/health-services-director-new-york/34088/94850990544",
+            "created_at": "2026-05-12T18:53:29.852224+00:00",
+            "updated_at": "2026-05-12T18:53:29.852224+00:00"
+          }
+        ]
+      }
+    ]
+  },
+  "missing_apply_urls": [],
+  "broken_links": [
+    {
+      "id": "ff9d3f66-7624-41d7-867b-1638a26afa7c",
+      "slug": "manager-healthcare-analytics-enterprise-provider-analytics-centene-corporation-batch2",
+      "title": "Manager, Healthcare Analytics, Enterprise Provider Analytics",
+      "company": "Centene Corporation",
+      "apply_url": "https://jobs.centene.com/us/en/jobs/1636413/manager-healthcare-analytics-enterprise-provider-analytics/",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://jobs.centene.com/us/en/jobs/1636413/manager-healthcare-analytics-enterprise-provider-analytics/",
+      "error": ""
+    },
+    {
+      "id": "7777151a-7eab-4a8e-b15e-84c0f9f90c09",
+      "slug": "specialist-appeals-grievances-member-medicaid-marketplace-experience-molina-healthcare-bat",
+      "title": "Specialist, Appeals & Grievances (Member Medicaid/Marketplace experience)",
+      "company": "Molina Healthcare",
+      "apply_url": "https://careers.molinahealthcare.com/job/united-states/specialist-appeals-and-grievances-member-medicaid-marketplace-experience/21726/93649680304",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.molinahealthcare.com/job/united-states/specialist-appeals-and-grievances-member-medicaid-marketplace-experience/21726/93649680304",
+      "error": ""
+    },
+    {
+      "id": "42fed8c0-e6b4-4d2f-8ff3-cb4b1d892a6f",
+      "slug": "specialist-appeals-grievances-molina-healthcare-batch-two",
+      "title": "Specialist, Appeals & Grievances",
+      "company": "Molina Healthcare",
+      "apply_url": "https://careers.molinahealthcare.com/job/united-states/specialist-appeals-and-grievances/21726/93799579856",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.molinahealthcare.com/job/united-states/specialist-appeals-and-grievances/21726/93799579856",
+      "error": ""
+    },
+    {
+      "id": "963b2db4-d7f3-4470-9738-a3e7a0f90e02",
+      "slug": "carelon-behavioral-health-legal-counsel-sr-elevance-health-batch-two",
+      "title": "Carelon Behavioral Health Legal Counsel Sr",
+      "company": "Elevance Health",
+      "apply_url": "https://careers.elevancehealth.com/carelon-behavioral-health-legal-counsel-sr/job/073F83219DA4B3BE38B66952A6F209B8",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.elevancehealth.com/carelon-behavioral-health-legal-counsel-sr/job/073F83219DA4B3BE38B66952A6F209B8",
+      "error": ""
+    },
+    {
+      "id": "6b3c21e1-50b1-476f-8f61-ffad43c390a2",
+      "slug": "insted-virtual-medical-control-vmc-nurse-practitioner-part-time-caresource-commonwealth-ca",
+      "title": "instED Virtual Medical Control (VMC) Nurse Practitioner - Part Time",
+      "company": "CareSource / Commonwealth Care Alliance",
+      "apply_url": "https://careers.caresource.com/search/jobdetails/insted-virtual-medical-control-vmc-nurse-practitioner---poolpart-time---9167-per-hourremotepacific-or-mountain-time/0da4b5bb-80bd-4fe8-8612-6bba29dbbbf8",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.caresource.com/search/jobdetails/insted-virtual-medical-control-vmc-nurse-practitioner---poolpart-time---9167-per-hourremotepacific-or-mountain-time/0da4b5bb-80bd-4fe8-8612-6bba29dbbbf8",
+      "error": ""
+    },
+    {
+      "id": "ee5023bd-8628-48b0-a5d3-e93f0f693a79",
+      "slug": "remote-registered-nurse-rn-utilization-reviewer-massachusetts-only-caresource-commonwealth",
+      "title": "REMOTE - Registered Nurse (RN) Utilization Reviewer - Massachusetts Only",
+      "company": "CareSource / Commonwealth Care Alliance",
+      "apply_url": "https://careers.caresource.com/search/jobdetails/remote---registered-nurse-rn-utilization-reviewer---massachusetts-only/1069b820-385e-4f42-bae5-9abb664b4c9f",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.caresource.com/search/jobdetails/remote---registered-nurse-rn-utilization-reviewer---massachusetts-only/1069b820-385e-4f42-bae5-9abb664b4c9f",
+      "error": ""
+    },
+    {
+      "id": "225d1c84-842a-4350-bf4a-51faabfd9e03",
+      "slug": "qai-medical-economics-analyst-ii-caresource-commonwealth-care-alliance-batch-two",
+      "title": "QAI Medical Economics Analyst II",
+      "company": "CareSource / Commonwealth Care Alliance",
+      "apply_url": "https://careers.caresource.com/search/jobdetails/qai-medical-economics-analyst-ii/f950f03f-a5bc-44e0-a8b3-4b400827707c",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.caresource.com/search/jobdetails/qai-medical-economics-analyst-ii/f950f03f-a5bc-44e0-a8b3-4b400827707c",
+      "error": ""
+    },
+    {
+      "id": "d726fe13-2bd6-4fe6-884e-d25e84e5ecf8",
+      "slug": "vice-president-network-development-contracting-centene-corporation-batch-two",
+      "title": "Vice President, Network Development & Contracting",
+      "company": "Centene Corporation",
+      "apply_url": "https://jobs.centene.com/us/en/jobs/1635715/vice-president-network-development-contracting/",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://jobs.centene.com/us/en/jobs/1635715/vice-president-network-development-contracting/",
+      "error": ""
+    },
+    {
+      "id": "95ce9f9d-da65-464f-9528-0acd211ca4ff",
+      "slug": "quantitative-consultant-remote-unitedhealth-group-optum-batch2",
+      "title": "Quantitative Consultant - Remote",
+      "company": "UnitedHealth Group / Optum",
+      "apply_url": "https://careers.unitedhealthgroup.com/job/eden-prairie/quantitative-consultant-remote/34088/94867786272",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.unitedhealthgroup.com/job/eden-prairie/quantitative-consultant-remote/34088/94867786272",
+      "error": ""
+    },
+    {
+      "id": "9a4c497b-7a7f-45b2-8d93-eeb644c63484",
+      "slug": "compliance-consultant-remote-unitedhealth-group-optum-batch2",
+      "title": "Compliance Consultant - Remote",
+      "company": "UnitedHealth Group / Optum",
+      "apply_url": "https://careers.unitedhealthgroup.com/job/de-pere/compliance-consultant-remote/34088/94611043184",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.unitedhealthgroup.com/job/de-pere/compliance-consultant-remote/34088/94611043184",
+      "error": ""
+    },
+    {
+      "id": "13c8ae44-38fb-448b-9d61-46c2a7b74fe4",
+      "slug": "senior-technical-project-manager-data-analytics-optum-state-government-remote-unitedhealth",
+      "title": "Senior Technical Project Manager, Data Analytics - Optum State Government - Remote",
+      "company": "UnitedHealth Group / Optum",
+      "apply_url": "https://careers.unitedhealthgroup.com/job/belleville/senior-technical-project-manager-data-analytics-optum-state-government-remote/34088/94343457536",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.unitedhealthgroup.com/job/belleville/senior-technical-project-manager-data-analytics-optum-state-government-remote/34088/94343457536",
+      "error": ""
+    },
+    {
+      "id": "f692a006-05af-4b14-9db8-3b77328acbce",
+      "slug": "care-manager-behavioral-health-centene-corporation-batch-two",
+      "title": "Care Manager - Behavioral Health",
+      "company": "Centene Corporation",
+      "apply_url": "https://jobs.centene.com/us/en/jobs/1639261/care-manager-behavioral-health/",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://jobs.centene.com/us/en/jobs/1639261/care-manager-behavioral-health/",
+      "error": ""
+    },
+    {
+      "id": "79f33ac9-edd1-408d-ab12-46b07ee23257",
+      "slug": "care-coordinator-ii-centene-corporation-batch-two",
+      "title": "Care Coordinator II",
+      "company": "Centene Corporation",
+      "apply_url": "https://jobs.centene.com/us/en/jobs/1639578/care-coordinator-ii/",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://jobs.centene.com/us/en/jobs/1639578/care-coordinator-ii/",
+      "error": ""
+    },
+    {
+      "id": "0fa90235-96a7-4e58-95b3-ff34d19ca3df",
+      "slug": "grievance-appeals-coordinator-california-centene-corporation-batch-two",
+      "title": "Grievance & Appeals Coordinator - California",
+      "company": "Centene Corporation",
+      "apply_url": "https://jobs.centene.com/us/en/jobs/1638187/grievance-appeals-coordinator/",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://jobs.centene.com/us/en/jobs/1638187/grievance-appeals-coordinator/",
+      "error": ""
+    },
+    {
+      "id": "d05d4e40-2e06-411c-85cd-b311855857d2",
+      "slug": "care-navigator-maternal-health-centene-corporation-batch-two",
+      "title": "Care Navigator - Maternal Health",
+      "company": "Centene Corporation",
+      "apply_url": "https://jobs.centene.com/us/en/jobs/1639160/care-navigator-maternal-health/",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://jobs.centene.com/us/en/jobs/1639160/care-navigator-maternal-health/",
+      "error": ""
+    },
+    {
+      "id": "ce9c2459-0854-4fc2-9ac3-fbf14f9132a1",
+      "slug": "care-manager-rn-louisiana-centene-corporation-batch-two",
+      "title": "Care Manager RN - Louisiana",
+      "company": "Centene Corporation",
+      "apply_url": "https://jobs.centene.com/us/en/jobs/1638245/care-manager-rn/",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://jobs.centene.com/us/en/jobs/1638245/care-manager-rn/",
+      "error": ""
+    },
+    {
+      "id": "684d94ca-47f3-427a-97ed-adbbb449d8af",
+      "slug": "project-coordinator-i-centene-corporation-batch-two",
+      "title": "Project Coordinator I",
+      "company": "Centene Corporation",
+      "apply_url": "https://jobs.centene.com/us/en/jobs/1638816/project-coordinator-i/",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://jobs.centene.com/us/en/jobs/1638816/project-coordinator-i/",
+      "error": ""
+    },
+    {
+      "id": "52cd7df3-8784-438c-b83b-d9e738bb0fb9",
+      "slug": "care-management-support-coordinator-nicu-centene-corporation-batch-two",
+      "title": "Care Management Support Coordinator NICU",
+      "company": "Centene Corporation",
+      "apply_url": "https://jobs.centene.com/us/en/jobs/1638610/care-management-support-coordinator-nicu/",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://jobs.centene.com/us/en/jobs/1638610/care-management-support-coordinator-nicu/",
+      "error": ""
+    },
+    {
+      "id": "d7ae1b8b-0783-4792-8726-e8c738f2c14f",
+      "slug": "ltss-service-care-coordinator-centene-corporation-batch-two",
+      "title": "LTSS Service Care Coordinator",
+      "company": "Centene Corporation",
+      "apply_url": "https://jobs.centene.com/us/en/jobs/1637904/ltss-service-care-coordinator/",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://jobs.centene.com/us/en/jobs/1637904/ltss-service-care-coordinator/",
+      "error": ""
+    },
+    {
+      "id": "28ab09fc-4917-440d-a424-b326e62200f1",
+      "slug": "supervisor-care-management-behavioral-health-centene-corporation-batch-two",
+      "title": "Supervisor, Care Management Behavioral Health",
+      "company": "Centene Corporation",
+      "apply_url": "https://jobs.centene.com/us/en/jobs/1633086/supervisor-care-management-behavioral-health/",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://jobs.centene.com/us/en/jobs/1633086/supervisor-care-management-behavioral-health/",
+      "error": ""
+    },
+    {
+      "id": "5c551371-cf90-4dc7-8de8-1cf87daf3365",
+      "slug": "business-analyst-ii-integration-quality-user-acceptance-testing-cm-centene-corporation-bat",
+      "title": "Business Analyst II - Integration Quality & User Acceptance Testing (CM)",
+      "company": "Centene Corporation",
+      "apply_url": "https://jobs.centene.com/us/en/jobs/1639327/business-analyst-ii-implementation-support-uat-cm/",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://jobs.centene.com/us/en/jobs/1639327/business-analyst-ii-implementation-support-uat-cm/",
+      "error": ""
+    },
+    {
+      "id": "8e51f7b1-4765-4022-b66c-c0524a4c1437",
+      "slug": "process-owner-centene-corporation-batch-two",
+      "title": "Process Owner",
+      "company": "Centene Corporation",
+      "apply_url": "https://jobs.centene.com/us/en/jobs/1638173/process-owner/",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://jobs.centene.com/us/en/jobs/1638173/process-owner/",
+      "error": ""
+    },
+    {
+      "id": "49ca0542-b617-4315-8b15-6d7bf26a87ee",
+      "slug": "delegation-project-coordinator-new-york-only-centene-corporation-batch-two",
+      "title": "Delegation Project Coordinator - New York Only",
+      "company": "Centene Corporation",
+      "apply_url": "https://jobs.centene.com/us/en/jobs/1639195/delegation-project-coordinator-ny-only/",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://jobs.centene.com/us/en/jobs/1639195/delegation-project-coordinator-ny-only/",
+      "error": ""
+    },
+    {
+      "id": "4b2c3852-6945-4833-baef-3b0a407298dc",
+      "slug": "grievance-appeals-coordinator-multi-state-remote-centene-corporation-batch-two",
+      "title": "Grievance & Appeals Coordinator - Multi-state Remote",
+      "company": "Centene Corporation",
+      "apply_url": "https://jobs.centene.com/us/en/jobs/1639118/grievance-appeals-coordinator/",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://jobs.centene.com/us/en/jobs/1639118/grievance-appeals-coordinator/",
+      "error": ""
+    },
+    {
+      "id": "eec1c9a0-89f8-4a4c-bad8-7216fd34d5db",
+      "slug": "senior-marketplace-member-liaison-hics-centene-corporation",
+      "title": "Senior Marketplace Member Liaison HICS",
+      "company": "Centene Corporation",
+      "apply_url": "https://jobs.centene.com/us/en/jobs/1638822/senior-marketplace-member-liaison-hics/",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://jobs.centene.com/us/en/jobs/1638822/senior-marketplace-member-liaison-hics/",
+      "error": ""
+    },
+    {
+      "id": "3fea66ce-2438-4ebf-b914-3bf332a424ca",
+      "slug": "business-analyst-iii-senior-tester-elevance-health",
+      "title": "Business Analyst III/Senior Tester",
+      "company": "Elevance Health",
+      "apply_url": "https://careers.elevancehealth.com/business-analyst-iii-senior-tester/job/C3A8D704D1D88A60D5CADA330E265A14",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.elevancehealth.com/business-analyst-iii-senior-tester/job/C3A8D704D1D88A60D5CADA330E265A14",
+      "error": ""
+    },
+    {
+      "id": "98194aea-ee62-49ba-b0bd-5eef675d2a43",
+      "slug": "compliance-consultant-remote-unitedhealth-group-optum",
+      "title": "Compliance Consultant - Remote",
+      "company": "UnitedHealth Group / Optum",
+      "apply_url": "https://careers.unitedhealthgroup.com/job/de-pere/compliance-consultant-remote/34088/94611043184",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.unitedhealthgroup.com/job/de-pere/compliance-consultant-remote/34088/94611043184",
+      "error": ""
+    },
+    {
+      "id": "c63c373a-d52d-44da-9558-2b432c88a91c",
+      "slug": "quantitative-consultant-remote-unitedhealth-group-optum",
+      "title": "Quantitative Consultant - Remote",
+      "company": "UnitedHealth Group / Optum",
+      "apply_url": "https://careers.unitedhealthgroup.com/job/eden-prairie/quantitative-consultant-remote/34088/94867786272",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.unitedhealthgroup.com/job/eden-prairie/quantitative-consultant-remote/34088/94867786272",
+      "error": ""
+    },
+    {
+      "id": "2643bd9a-946a-4970-b988-c27ca12f4f6e",
+      "slug": "data-analyst-claims-operations-unitedhealth-group-optum",
+      "title": "Data Analyst Claims Operations",
+      "company": "UnitedHealth Group / Optum",
+      "apply_url": "https://careers.unitedhealthgroup.com/job/dallas/data-analyst-claims-operations/34088/94973583216",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.unitedhealthgroup.com/job/dallas/data-analyst-claims-operations/34088/94973583216",
+      "error": ""
+    },
+    {
+      "id": "790a9c48-e805-4541-806f-19b062f6c608",
+      "slug": "rn-care-review-clinician-utilization-review-remote-molina-healthcare",
+      "title": "(RN) Care Review Clinician - Utilization Review (Remote)",
+      "company": "Molina Healthcare",
+      "apply_url": "https://careers.molinahealthcare.com/job/united-states/rn-care-review-clinician-utilization-review-remote/21726/94710746032",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.molinahealthcare.com/job/united-states/rn-care-review-clinician-utilization-review-remote/21726/94710746032",
+      "error": ""
+    },
+    {
+      "id": "f25091fe-b381-465c-921a-dd2095822fa2",
+      "slug": "claims-analyst-ii-centene-corporation",
+      "title": "Claims Analyst II",
+      "company": "Centene Corporation",
+      "apply_url": "https://jobs.centene.com/us/en/jobs/1639369/claims-analyst-ii/",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://jobs.centene.com/us/en/jobs/1639369/claims-analyst-ii/",
+      "error": ""
+    },
+    {
+      "id": "0d8720af-d86a-41d0-baf2-4da2c6d295f1",
+      "slug": "manager-finance-accounting-medicaid-sql-centene-corporation",
+      "title": "Manager, Finance - Accounting/Medicaid/SQL",
+      "company": "Centene Corporation",
+      "apply_url": "https://jobs.centene.com/us/en/jobs/1636946/manager-finance-accountingmedicaidsql/",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://jobs.centene.com/us/en/jobs/1636946/manager-finance-accountingmedicaidsql/",
+      "error": ""
+    },
+    {
+      "id": "94d75632-7207-405a-885b-9da5ac21a26e",
+      "slug": "claims-analyst-centene-corporation",
+      "title": "Claims Analyst",
+      "company": "Centene Corporation",
+      "apply_url": "https://jobs.centene.com/us/en/jobs/1639431/claims-analyst/",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://jobs.centene.com/us/en/jobs/1639431/claims-analyst/",
+      "error": ""
+    },
+    {
+      "id": "234e4035-dd9d-4f45-8fd2-aa322b12fea4",
+      "slug": "senior-business-process-improvement-manager-centene-corporation",
+      "title": "Senior Business Process Improvement Manager",
+      "company": "Centene Corporation",
+      "apply_url": "https://jobs.centene.com/us/en/jobs/1638557/senior-business-process-improvement-manager/",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://jobs.centene.com/us/en/jobs/1638557/senior-business-process-improvement-manager/",
+      "error": ""
+    },
+    {
+      "id": "74896319-2852-4426-91f6-13bbdd69d429",
+      "slug": "membership-reconciliation-analyst-hybrid-medicaid-centene-corporation",
+      "title": "Membership Reconciliation Analyst - Hybrid/Medicaid",
+      "company": "Centene Corporation",
+      "apply_url": "https://jobs.centene.com/us/en/jobs/1636006/membership-reconciliation-analyst-hybridmedicaid/",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://jobs.centene.com/us/en/jobs/1636006/membership-reconciliation-analyst-hybridmedicaid/",
+      "error": ""
+    },
+    {
+      "id": "1e6670df-99eb-48e4-831a-3d7adc3da8ae",
+      "slug": "manager-quality-improvement-analytics-centene-corporation",
+      "title": "Manager, Quality Improvement Analytics",
+      "company": "Centene Corporation",
+      "apply_url": "https://jobs.centene.com/us/en/jobs/1637135/manager-quality-improvement-analytics/",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://jobs.centene.com/us/en/jobs/1637135/manager-quality-improvement-analytics/",
+      "error": ""
+    },
+    {
+      "id": "a79535e9-c2e3-4e87-bceb-9d93f134fa62",
+      "slug": "utilization-review-clinician-behavioral-health-centene-corporation",
+      "title": "Utilization Review Clinician - Behavioral Health",
+      "company": "Centene Corporation",
+      "apply_url": "https://jobs.centene.com/us/en/jobs/1639244/utilization-review-clinician-behavioral-health/",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://jobs.centene.com/us/en/jobs/1639244/utilization-review-clinician-behavioral-health/",
+      "error": ""
+    },
+    {
+      "id": "e2c011d6-f604-41f7-b20a-287c810f7103",
+      "slug": "remote-medical-director-centene-corporation",
+      "title": "Remote Medical Director",
+      "company": "Centene Corporation",
+      "apply_url": "https://jobs.centene.com/us/en/jobs/1634942/remote-medical-director/",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://jobs.centene.com/us/en/jobs/1634942/remote-medical-director/",
+      "error": ""
+    },
+    {
+      "id": "35b1d97b-cbdf-4e38-a314-3f724e40e34f",
+      "slug": "contract-negotiator-iv-centene-corporation",
+      "title": "Contract Negotiator IV",
+      "company": "Centene Corporation",
+      "apply_url": "https://jobs.centene.com/us/en/jobs/1632070/contract-negotiator-iv/",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://jobs.centene.com/us/en/jobs/1632070/contract-negotiator-iv/",
+      "error": ""
+    },
+    {
+      "id": "f9f3d895-70e4-44db-b7d6-36449772511d",
+      "slug": "clinical-pharmacist-centene-corporation",
+      "title": "Clinical Pharmacist",
+      "company": "Centene Corporation",
+      "apply_url": "https://jobs.centene.com/us/en/jobs/1638575/clinical-pharmacist/",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://jobs.centene.com/us/en/jobs/1638575/clinical-pharmacist/",
+      "error": ""
+    },
+    {
+      "id": "6994bbdf-b93a-4ec1-a5ab-446770e5afbd",
+      "slug": "clinical-review-nurse-concurrent-review-centene-corporation",
+      "title": "Clinical Review Nurse - Concurrent Review",
+      "company": "Centene Corporation",
+      "apply_url": "https://jobs.centene.com/us/en/jobs/1638740/clinical-review-nurse-concurrent-review/",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://jobs.centene.com/us/en/jobs/1638740/clinical-review-nurse-concurrent-review/",
+      "error": ""
+    },
+    {
+      "id": "d8c07760-22b5-4e63-b64a-a3e218974f89",
+      "slug": "senior-manager-enterprise-compliance-corrections-centene-corporation",
+      "title": "Senior Manager, Enterprise Compliance Corrections",
+      "company": "Centene Corporation",
+      "apply_url": "https://jobs.centene.com/us/en/jobs/1631555/senior-manager-enterprise-compliance-corrections/",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://jobs.centene.com/us/en/jobs/1631555/senior-manager-enterprise-compliance-corrections/",
+      "error": ""
+    },
+    {
+      "id": "5e64e509-093a-47af-a0d3-65b80dabaa57",
+      "slug": "clinical-review-clinician-appeals-rn-centene-corporation",
+      "title": "Clinical Review Clinician Appeals RN",
+      "company": "Centene Corporation",
+      "apply_url": "https://jobs.centene.com/us/en/jobs/1639227/clinical-review-clinician-appeals-rn/",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://jobs.centene.com/us/en/jobs/1639227/clinical-review-clinician-appeals-rn/",
+      "error": ""
+    },
+    {
+      "id": "5bd8f92b-6eae-4771-9cf1-f75522cb3fe1",
+      "slug": "quality-care-member-advocate-centene-corporation",
+      "title": "Quality Care Member Advocate",
+      "company": "Centene Corporation",
+      "apply_url": "https://jobs.centene.com/us/en/jobs/1630242/quality-care-member-advocate/",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://jobs.centene.com/us/en/jobs/1630242/quality-care-member-advocate/",
+      "error": ""
+    }
+  ],
+  "warning_links": []
+}

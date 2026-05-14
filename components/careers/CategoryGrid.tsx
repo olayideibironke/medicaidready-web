@@ -147,7 +147,7 @@ export default function CategoryGrid({ heading = "Browse by category" }: { headi
         .cat-grid-heading {
           font-size: 18px;
           font-weight: 700;
-          color: #0f172a;
+          color: #042C53;
           letter-spacing: -0.02em;
           margin: 0 0 18px;
         }
@@ -160,8 +160,8 @@ export default function CategoryGrid({ heading = "Browse by category" }: { headi
         .cat-grid-group-title {
           font-size: 12px;
           font-weight: 800;
-          color: #1565c0;
-          letter-spacing: 0.1em;
+          color: #BA7517;
+          letter-spacing: 0.12em;
           text-transform: uppercase;
           margin: 0 0 10px;
         }
@@ -182,15 +182,15 @@ export default function CategoryGrid({ heading = "Browse by category" }: { headi
           box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
         }
         .cat-grid-card:hover {
-          border-color: #93c5fd;
+          border-color: #BA7517;
           transform: translateY(-1px);
-          box-shadow: 0 6px 18px rgba(15, 23, 42, 0.07);
+          box-shadow: 0 6px 18px rgba(4, 44, 83, 0.08);
           color: inherit;
         }
         .cat-grid-card-label {
           font-size: 14px;
           font-weight: 700;
-          color: #0f172a;
+          color: #042C53;
           letter-spacing: -0.01em;
           margin: 0 0 4px;
         }
@@ -202,8 +202,8 @@ export default function CategoryGrid({ heading = "Browse by category" }: { headi
         }
         .cat-grid-card-link {
           font-size: 12px;
-          font-weight: 600;
-          color: #1565c0;
+          font-weight: 700;
+          color: #BA7517;
         }
         @media (max-width: 880px) {
           .cat-grid {

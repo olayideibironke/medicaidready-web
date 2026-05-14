@@ -1,0 +1,111 @@
+{
+  "generated_at": "2026-05-13T19:44:04.358Z",
+  "scope": "approved_only",
+  "checked_links": true,
+  "counts": {
+    "jobs": 185,
+    "duplicate_slugs": 0,
+    "duplicate_apply_urls": 0,
+    "duplicate_title_company": 1,
+    "duplicate_title_company_location": 0,
+    "missing_apply_urls": 0,
+    "broken_links": 5,
+    "warning_links": 0
+  },
+  "duplicates": {
+    "slugs": [],
+    "apply_urls": [],
+    "title_company": [
+      {
+        "key": "lead software engineer remote::unitedhealth group optum",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "596598a4-d968-4211-88f2-a3ecf6fad767",
+            "slug": "lead-software-engineer-remote-unitedhealth-group-optum-4a64508e0e",
+            "title": "Lead Software Engineer - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "Eden Prairie, MN / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/eden-prairie/lead-software-engineer-remote/34088/93962091808",
+            "created_at": "2026-05-13T04:19:04.728661+00:00",
+            "updated_at": "2026-05-13T04:19:04.728661+00:00"
+          },
+          {
+            "id": "94d2ee12-5eec-46ec-a4b5-5275a685c9a8",
+            "slug": "lead-software-engineer-remote-unitedhealth-group-optum-55c6f36c67",
+            "title": "Lead Software Engineer - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "Fort Worth, TX / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/fort-worth/lead-software-engineer-remote/34088/93389948896",
+            "created_at": "2026-05-13T04:19:04.728661+00:00",
+            "updated_at": "2026-05-13T04:19:04.728661+00:00"
+          }
+        ]
+      }
+    ],
+    "title_company_location": []
+  },
+  "missing_apply_urls": [],
+  "broken_links": [
+    {
+      "id": "26131dfa-e63e-4b57-bf0d-e030bbe96d51",
+      "slug": "per-diem-insurance-verification-specialist-unitedhealth-group-optum-batch-two",
+      "title": "Per Diem Insurance Verification Specialist",
+      "company": "UnitedHealth Group / Optum",
+      "apply_url": "https://careers.unitedhealthgroup.com/job/brookfield/per-diem-insurance-verification-specialist/34088/94953529664",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.unitedhealthgroup.com/job/brookfield/per-diem-insurance-verification-specialist/34088/94953529664",
+      "error": ""
+    },
+    {
+      "id": "2136a347-63ad-4ff5-bf87-8b490b5ef383",
+      "slug": "senior-manager-payment-integrity-governance-centene-corporation-batch-two",
+      "title": "Senior Manager, Payment Integrity - Governance",
+      "company": "Centene Corporation",
+      "apply_url": "https://jobs.centene.com/us/en/jobs/1639366/senior-manager-payment-integrity-governance/",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://jobs.centene.com/us/en/jobs/1639366/senior-manager-payment-integrity-governance/",
+      "error": ""
+    },
+    {
+      "id": "e13638d3-83b8-4d1c-af6c-84d5dd98163a",
+      "slug": "data-analyst-iii-healthcare-analytics-provider-analytics-centene-corporation-batch-two",
+      "title": "Data Analyst III Healthcare Analytics, Provider Analytics",
+      "company": "Centene Corporation",
+      "apply_url": "https://jobs.centene.com/us/en/jobs/1636874/data-analyst-iii-healthcare-analytics-provider-analytics/",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://jobs.centene.com/us/en/jobs/1636874/data-analyst-iii-healthcare-analytics-provider-analytics/",
+      "error": ""
+    },
+    {
+      "id": "ae48849d-ceea-4d75-8804-77c3f6bc5efd",
+      "slug": "managing-actuary-medicaid-rate-advocacy-caresource-commonwealth-care-alliance-batch-two",
+      "title": "Managing Actuary - Medicaid Rate Advocacy",
+      "company": "CareSource / Commonwealth Care Alliance",
+      "apply_url": "https://careers.caresource.com/search/jobdetails/managing-actuary---medicaid-rate-advocacy/7727a8ff-a5ab-4e58-811d-6006c3a31516",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.caresource.com/search/jobdetails/managing-actuary---medicaid-rate-advocacy/7727a8ff-a5ab-4e58-811d-6006c3a31516",
+      "error": ""
+    },
+    {
+      "id": "b1453d8f-6db9-472d-afab-6375a8ae0caf",
+      "slug": "senior-representative-enrollment-remote-molina-healthcare-mp1jktzg",
+      "title": "Senior Representative, Enrollment (Remote)",
+      "company": "Molina Healthcare",
+      "apply_url": "https://careers.molinahealthcare.com/job/united-states/senior-representative-enrollment-remote/21726/93804320112",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.molinahealthcare.com/job/united-states/senior-representative-enrollment-remote/21726/93804320112",
+      "error": ""
+    }
+  ],
+  "warning_links": []
+}

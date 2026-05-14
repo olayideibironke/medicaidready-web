@@ -1,0 +1,477 @@
+{
+  "generated_at": "2026-05-12T19:32:04.014Z",
+  "scope": "approved_only",
+  "checked_links": false,
+  "counts": {
+    "jobs": 155,
+    "duplicate_slugs": 0,
+    "duplicate_apply_urls": 5,
+    "duplicate_title_company": 5,
+    "duplicate_title_company_location": 5,
+    "missing_apply_urls": 0,
+    "broken_links": 0,
+    "warning_links": 0
+  },
+  "duplicates": {
+    "slugs": [],
+    "apply_urls": [
+      {
+        "key": "https://careers.unitedhealthgroup.com/job/eden-prairie/quantitative-consultant-remote/34088/94867786272",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "95ce9f9d-da65-464f-9528-0acd211ca4ff",
+            "slug": "quantitative-consultant-remote-unitedhealth-group-optum-batch2",
+            "title": "Quantitative Consultant - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "Eden Prairie, MN / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/eden-prairie/quantitative-consultant-remote/34088/94867786272",
+            "created_at": "2026-05-12T19:27:09.730511+00:00",
+            "updated_at": "2026-05-12T19:27:09.730511+00:00"
+          },
+          {
+            "id": "c63c373a-d52d-44da-9558-2b432c88a91c",
+            "slug": "quantitative-consultant-remote-unitedhealth-group-optum",
+            "title": "Quantitative Consultant - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "Eden Prairie, MN / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/eden-prairie/quantitative-consultant-remote/34088/94867786272",
+            "created_at": "2026-05-12T18:53:29.852224+00:00",
+            "updated_at": "2026-05-12T18:53:29.852224+00:00"
+          }
+        ]
+      },
+      {
+        "key": "https://careers.unitedhealthgroup.com/job/de-pere/compliance-consultant-remote/34088/94611043184",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "9a4c497b-7a7f-45b2-8d93-eeb644c63484",
+            "slug": "compliance-consultant-remote-unitedhealth-group-optum-batch2",
+            "title": "Compliance Consultant - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "De Pere, WI / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/de-pere/compliance-consultant-remote/34088/94611043184",
+            "created_at": "2026-05-12T19:27:09.730511+00:00",
+            "updated_at": "2026-05-12T19:27:09.730511+00:00"
+          },
+          {
+            "id": "98194aea-ee62-49ba-b0bd-5eef675d2a43",
+            "slug": "compliance-consultant-remote-unitedhealth-group-optum",
+            "title": "Compliance Consultant - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "De Pere, WI / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/de-pere/compliance-consultant-remote/34088/94611043184",
+            "created_at": "2026-05-12T18:53:29.852224+00:00",
+            "updated_at": "2026-05-12T18:53:29.852224+00:00"
+          }
+        ]
+      },
+      {
+        "key": "https://careers.unitedhealthgroup.com/job/reston/health-data-analytics-consultant-remote/34088/94828967984",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "ecfc5b81-41ab-4c3d-9e20-3a042b5840df",
+            "slug": "health-data-analytics-consultant-remote-unitedhealth-group-optum-batch2",
+            "title": "Health Data Analytics Consultant - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "Reston, VA / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/reston/health-data-analytics-consultant-remote/34088/94828967984",
+            "created_at": "2026-05-12T19:27:09.730511+00:00",
+            "updated_at": "2026-05-12T19:27:09.730511+00:00"
+          },
+          {
+            "id": "c0b8b3fd-82d6-4db1-bea5-0e40d227c2ac",
+            "slug": "health-data-analytics-consultant-remote-unitedhealth-group-optum",
+            "title": "Health Data Analytics Consultant - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "Reston, VA / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/reston/health-data-analytics-consultant-remote/34088/94828967984",
+            "created_at": "2026-05-12T18:53:29.852224+00:00",
+            "updated_at": "2026-05-12T18:53:29.852224+00:00"
+          }
+        ]
+      },
+      {
+        "key": "https://careers.unitedhealthgroup.com/job/washington-d-c/senior-consultant-payment-model-implementation-remote/34088/93504540096",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "1aae521f-0895-4da9-b75d-7df631661035",
+            "slug": "senior-consultant-payment-model-implementation-remote-unitedhealth-group-optum-batch2",
+            "title": "Senior Consultant, Payment Model Implementation - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "Washington, DC / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/washington-d-c/senior-consultant-payment-model-implementation-remote/34088/93504540096",
+            "created_at": "2026-05-12T19:27:09.730511+00:00",
+            "updated_at": "2026-05-12T19:27:09.730511+00:00"
+          },
+          {
+            "id": "e8a2ae23-04c1-48ce-82af-88b9d707c502",
+            "slug": "senior-consultant-payment-model-implementation-remote-unitedhealth-group-optum",
+            "title": "Senior Consultant, Payment Model Implementation - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "Washington, DC / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/washington-d-c/senior-consultant-payment-model-implementation-remote/34088/93504540096",
+            "created_at": "2026-05-12T18:53:29.852224+00:00",
+            "updated_at": "2026-05-12T18:53:29.852224+00:00"
+          }
+        ]
+      },
+      {
+        "key": "https://careers.unitedhealthgroup.com/job/new-york/health-services-director-new-york/34088/94850990544",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "fb3aae4e-57bd-4226-bc2c-96e476fb28b3",
+            "slug": "health-services-director-new-york-unitedhealth-group-optum-batch2",
+            "title": "Health Services Director - New York",
+            "company": "UnitedHealth Group / Optum",
+            "location": "New York, NY",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/new-york/health-services-director-new-york/34088/94850990544",
+            "created_at": "2026-05-12T19:27:09.730511+00:00",
+            "updated_at": "2026-05-12T19:27:09.730511+00:00"
+          },
+          {
+            "id": "06467f61-7fe3-4110-b565-9399a1b6f332",
+            "slug": "health-services-director-new-york-unitedhealth-group-optum",
+            "title": "Health Services Director - New York",
+            "company": "UnitedHealth Group / Optum",
+            "location": "New York, NY",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/new-york/health-services-director-new-york/34088/94850990544",
+            "created_at": "2026-05-12T18:53:29.852224+00:00",
+            "updated_at": "2026-05-12T18:53:29.852224+00:00"
+          }
+        ]
+      }
+    ],
+    "title_company": [
+      {
+        "key": "quantitative consultant remote::unitedhealth group optum",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "95ce9f9d-da65-464f-9528-0acd211ca4ff",
+            "slug": "quantitative-consultant-remote-unitedhealth-group-optum-batch2",
+            "title": "Quantitative Consultant - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "Eden Prairie, MN / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/eden-prairie/quantitative-consultant-remote/34088/94867786272",
+            "created_at": "2026-05-12T19:27:09.730511+00:00",
+            "updated_at": "2026-05-12T19:27:09.730511+00:00"
+          },
+          {
+            "id": "c63c373a-d52d-44da-9558-2b432c88a91c",
+            "slug": "quantitative-consultant-remote-unitedhealth-group-optum",
+            "title": "Quantitative Consultant - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "Eden Prairie, MN / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/eden-prairie/quantitative-consultant-remote/34088/94867786272",
+            "created_at": "2026-05-12T18:53:29.852224+00:00",
+            "updated_at": "2026-05-12T18:53:29.852224+00:00"
+          }
+        ]
+      },
+      {
+        "key": "compliance consultant remote::unitedhealth group optum",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "9a4c497b-7a7f-45b2-8d93-eeb644c63484",
+            "slug": "compliance-consultant-remote-unitedhealth-group-optum-batch2",
+            "title": "Compliance Consultant - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "De Pere, WI / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/de-pere/compliance-consultant-remote/34088/94611043184",
+            "created_at": "2026-05-12T19:27:09.730511+00:00",
+            "updated_at": "2026-05-12T19:27:09.730511+00:00"
+          },
+          {
+            "id": "98194aea-ee62-49ba-b0bd-5eef675d2a43",
+            "slug": "compliance-consultant-remote-unitedhealth-group-optum",
+            "title": "Compliance Consultant - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "De Pere, WI / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/de-pere/compliance-consultant-remote/34088/94611043184",
+            "created_at": "2026-05-12T18:53:29.852224+00:00",
+            "updated_at": "2026-05-12T18:53:29.852224+00:00"
+          }
+        ]
+      },
+      {
+        "key": "health data analytics consultant remote::unitedhealth group optum",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "ecfc5b81-41ab-4c3d-9e20-3a042b5840df",
+            "slug": "health-data-analytics-consultant-remote-unitedhealth-group-optum-batch2",
+            "title": "Health Data Analytics Consultant - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "Reston, VA / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/reston/health-data-analytics-consultant-remote/34088/94828967984",
+            "created_at": "2026-05-12T19:27:09.730511+00:00",
+            "updated_at": "2026-05-12T19:27:09.730511+00:00"
+          },
+          {
+            "id": "c0b8b3fd-82d6-4db1-bea5-0e40d227c2ac",
+            "slug": "health-data-analytics-consultant-remote-unitedhealth-group-optum",
+            "title": "Health Data Analytics Consultant - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "Reston, VA / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/reston/health-data-analytics-consultant-remote/34088/94828967984",
+            "created_at": "2026-05-12T18:53:29.852224+00:00",
+            "updated_at": "2026-05-12T18:53:29.852224+00:00"
+          }
+        ]
+      },
+      {
+        "key": "senior consultant payment model implementation remote::unitedhealth group optum",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "1aae521f-0895-4da9-b75d-7df631661035",
+            "slug": "senior-consultant-payment-model-implementation-remote-unitedhealth-group-optum-batch2",
+            "title": "Senior Consultant, Payment Model Implementation - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "Washington, DC / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/washington-d-c/senior-consultant-payment-model-implementation-remote/34088/93504540096",
+            "created_at": "2026-05-12T19:27:09.730511+00:00",
+            "updated_at": "2026-05-12T19:27:09.730511+00:00"
+          },
+          {
+            "id": "e8a2ae23-04c1-48ce-82af-88b9d707c502",
+            "slug": "senior-consultant-payment-model-implementation-remote-unitedhealth-group-optum",
+            "title": "Senior Consultant, Payment Model Implementation - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "Washington, DC / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/washington-d-c/senior-consultant-payment-model-implementation-remote/34088/93504540096",
+            "created_at": "2026-05-12T18:53:29.852224+00:00",
+            "updated_at": "2026-05-12T18:53:29.852224+00:00"
+          }
+        ]
+      },
+      {
+        "key": "health services director new york::unitedhealth group optum",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "fb3aae4e-57bd-4226-bc2c-96e476fb28b3",
+            "slug": "health-services-director-new-york-unitedhealth-group-optum-batch2",
+            "title": "Health Services Director - New York",
+            "company": "UnitedHealth Group / Optum",
+            "location": "New York, NY",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/new-york/health-services-director-new-york/34088/94850990544",
+            "created_at": "2026-05-12T19:27:09.730511+00:00",
+            "updated_at": "2026-05-12T19:27:09.730511+00:00"
+          },
+          {
+            "id": "06467f61-7fe3-4110-b565-9399a1b6f332",
+            "slug": "health-services-director-new-york-unitedhealth-group-optum",
+            "title": "Health Services Director - New York",
+            "company": "UnitedHealth Group / Optum",
+            "location": "New York, NY",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/new-york/health-services-director-new-york/34088/94850990544",
+            "created_at": "2026-05-12T18:53:29.852224+00:00",
+            "updated_at": "2026-05-12T18:53:29.852224+00:00"
+          }
+        ]
+      }
+    ],
+    "title_company_location": [
+      {
+        "key": "quantitative consultant remote::unitedhealth group optum::eden prairie mn remote",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "95ce9f9d-da65-464f-9528-0acd211ca4ff",
+            "slug": "quantitative-consultant-remote-unitedhealth-group-optum-batch2",
+            "title": "Quantitative Consultant - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "Eden Prairie, MN / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/eden-prairie/quantitative-consultant-remote/34088/94867786272",
+            "created_at": "2026-05-12T19:27:09.730511+00:00",
+            "updated_at": "2026-05-12T19:27:09.730511+00:00"
+          },
+          {
+            "id": "c63c373a-d52d-44da-9558-2b432c88a91c",
+            "slug": "quantitative-consultant-remote-unitedhealth-group-optum",
+            "title": "Quantitative Consultant - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "Eden Prairie, MN / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/eden-prairie/quantitative-consultant-remote/34088/94867786272",
+            "created_at": "2026-05-12T18:53:29.852224+00:00",
+            "updated_at": "2026-05-12T18:53:29.852224+00:00"
+          }
+        ]
+      },
+      {
+        "key": "compliance consultant remote::unitedhealth group optum::de pere wi remote",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "9a4c497b-7a7f-45b2-8d93-eeb644c63484",
+            "slug": "compliance-consultant-remote-unitedhealth-group-optum-batch2",
+            "title": "Compliance Consultant - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "De Pere, WI / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/de-pere/compliance-consultant-remote/34088/94611043184",
+            "created_at": "2026-05-12T19:27:09.730511+00:00",
+            "updated_at": "2026-05-12T19:27:09.730511+00:00"
+          },
+          {
+            "id": "98194aea-ee62-49ba-b0bd-5eef675d2a43",
+            "slug": "compliance-consultant-remote-unitedhealth-group-optum",
+            "title": "Compliance Consultant - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "De Pere, WI / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/de-pere/compliance-consultant-remote/34088/94611043184",
+            "created_at": "2026-05-12T18:53:29.852224+00:00",
+            "updated_at": "2026-05-12T18:53:29.852224+00:00"
+          }
+        ]
+      },
+      {
+        "key": "health data analytics consultant remote::unitedhealth group optum::reston va remote",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "ecfc5b81-41ab-4c3d-9e20-3a042b5840df",
+            "slug": "health-data-analytics-consultant-remote-unitedhealth-group-optum-batch2",
+            "title": "Health Data Analytics Consultant - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "Reston, VA / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/reston/health-data-analytics-consultant-remote/34088/94828967984",
+            "created_at": "2026-05-12T19:27:09.730511+00:00",
+            "updated_at": "2026-05-12T19:27:09.730511+00:00"
+          },
+          {
+            "id": "c0b8b3fd-82d6-4db1-bea5-0e40d227c2ac",
+            "slug": "health-data-analytics-consultant-remote-unitedhealth-group-optum",
+            "title": "Health Data Analytics Consultant - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "Reston, VA / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/reston/health-data-analytics-consultant-remote/34088/94828967984",
+            "created_at": "2026-05-12T18:53:29.852224+00:00",
+            "updated_at": "2026-05-12T18:53:29.852224+00:00"
+          }
+        ]
+      },
+      {
+        "key": "senior consultant payment model implementation remote::unitedhealth group optum::washington dc remote",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "1aae521f-0895-4da9-b75d-7df631661035",
+            "slug": "senior-consultant-payment-model-implementation-remote-unitedhealth-group-optum-batch2",
+            "title": "Senior Consultant, Payment Model Implementation - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "Washington, DC / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/washington-d-c/senior-consultant-payment-model-implementation-remote/34088/93504540096",
+            "created_at": "2026-05-12T19:27:09.730511+00:00",
+            "updated_at": "2026-05-12T19:27:09.730511+00:00"
+          },
+          {
+            "id": "e8a2ae23-04c1-48ce-82af-88b9d707c502",
+            "slug": "senior-consultant-payment-model-implementation-remote-unitedhealth-group-optum",
+            "title": "Senior Consultant, Payment Model Implementation - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "Washington, DC / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/washington-d-c/senior-consultant-payment-model-implementation-remote/34088/93504540096",
+            "created_at": "2026-05-12T18:53:29.852224+00:00",
+            "updated_at": "2026-05-12T18:53:29.852224+00:00"
+          }
+        ]
+      },
+      {
+        "key": "health services director new york::unitedhealth group optum::new york ny",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "fb3aae4e-57bd-4226-bc2c-96e476fb28b3",
+            "slug": "health-services-director-new-york-unitedhealth-group-optum-batch2",
+            "title": "Health Services Director - New York",
+            "company": "UnitedHealth Group / Optum",
+            "location": "New York, NY",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/new-york/health-services-director-new-york/34088/94850990544",
+            "created_at": "2026-05-12T19:27:09.730511+00:00",
+            "updated_at": "2026-05-12T19:27:09.730511+00:00"
+          },
+          {
+            "id": "06467f61-7fe3-4110-b565-9399a1b6f332",
+            "slug": "health-services-director-new-york-unitedhealth-group-optum",
+            "title": "Health Services Director - New York",
+            "company": "UnitedHealth Group / Optum",
+            "location": "New York, NY",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/new-york/health-services-director-new-york/34088/94850990544",
+            "created_at": "2026-05-12T18:53:29.852224+00:00",
+            "updated_at": "2026-05-12T18:53:29.852224+00:00"
+          }
+        ]
+      }
+    ]
+  },
+  "missing_apply_urls": [],
+  "broken_links": [],
+  "warning_links": []
+}

@@ -1,0 +1,55 @@
+{
+  "generated_at": "2026-05-13T04:28:14.750Z",
+  "scope": "approved_only",
+  "checked_links": true,
+  "counts": {
+    "jobs": 185,
+    "duplicate_slugs": 0,
+    "duplicate_apply_urls": 0,
+    "duplicate_title_company": 1,
+    "duplicate_title_company_location": 0,
+    "missing_apply_urls": 0,
+    "broken_links": 0,
+    "warning_links": 0
+  },
+  "duplicates": {
+    "slugs": [],
+    "apply_urls": [],
+    "title_company": [
+      {
+        "key": "lead software engineer remote::unitedhealth group optum",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "596598a4-d968-4211-88f2-a3ecf6fad767",
+            "slug": "lead-software-engineer-remote-unitedhealth-group-optum-4a64508e0e",
+            "title": "Lead Software Engineer - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "Eden Prairie, MN / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/eden-prairie/lead-software-engineer-remote/34088/93962091808",
+            "created_at": "2026-05-13T04:19:04.728661+00:00",
+            "updated_at": "2026-05-13T04:19:04.728661+00:00"
+          },
+          {
+            "id": "94d2ee12-5eec-46ec-a4b5-5275a685c9a8",
+            "slug": "lead-software-engineer-remote-unitedhealth-group-optum-55c6f36c67",
+            "title": "Lead Software Engineer - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "Fort Worth, TX / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/fort-worth/lead-software-engineer-remote/34088/93389948896",
+            "created_at": "2026-05-13T04:19:04.728661+00:00",
+            "updated_at": "2026-05-13T04:19:04.728661+00:00"
+          }
+        ]
+      }
+    ],
+    "title_company_location": []
+  },
+  "missing_apply_urls": [],
+  "broken_links": [],
+  "warning_links": []
+}
