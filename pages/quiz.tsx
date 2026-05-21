@@ -74,6 +74,77 @@ type Phase = "quiz" | "email" | "loading" | "result" | "error";
 
 const TOTAL_QUIZ_STEPS = 5;
 
+function extractSummaryFromJsonLikeText(value: string): string | null {
+  const candidate = value.trim();
+
+  try {
+    const parsed = JSON.parse(candidate) as unknown;
+
+    if (typeof parsed === "string") {
+      return parsed;
+    }
+
+    if (
+      parsed &&
+      typeof parsed === "object" &&
+      "summary" in parsed &&
+      typeof (parsed as { summary?: unknown }).summary === "string"
+    ) {
+      return String((parsed as { summary: string }).summary);
+    }
+  } catch {
+    // Not valid JSON. Continue with safer text cleanup.
+  }
+
+  const summaryMatch = candidate.match(
+    /"summary"\s*:\s*"([\s\S]*?)(?:"\s*,\s*"(?:qualified|eligible|id|state|status|confidence)"\s*:|"\s*\}\s*$|"\s*$)/i
+  );
+
+  if (summaryMatch?.[1]) {
+    return summaryMatch[1];
+  }
+
+  return null;
+}
+
+function cleanSummaryText(value: string): string {
+  let text = String(value ?? "").trim();
+
+  text = text
+    .replace(/^\s*```(?:json|text|markdown)?\s*/i, "")
+    .replace(/\s*```\s*$/i, "")
+    .trim();
+
+  const parsedBeforeDecode = extractSummaryFromJsonLikeText(text);
+  if (parsedBeforeDecode) {
+    text = parsedBeforeDecode;
+  }
+
+  text = text
+    .replace(/\\n\\n/g, "\n\n")
+    .replace(/\\n/g, "\n")
+    .replace(/\\"/g, '"')
+    .replace(/\\'/g, "'")
+    .trim();
+
+  const parsedAfterDecode = extractSummaryFromJsonLikeText(text);
+  if (parsedAfterDecode) {
+    text = parsedAfterDecode;
+  }
+
+  text = text
+    .replace(/^\s*```(?:json|text|markdown)?\s*/i, "")
+    .replace(/\s*```\s*$/i, "")
+    .replace(/^\s*\{\s*/i, "")
+    .replace(/^\s*"summary"\s*:\s*/i, "")
+    .replace(/^["'`]+/, "")
+    .replace(/\s*[,;]?\s*"?(qualified|eligible|id|state|status|confidence)"?\s*:\s*[\s\S]*$/i, "")
+    .replace(/\s*[}"'`]+\s*$/g, "")
+    .trim();
+
+  return text;
+}
+
 function ProgressBar({ current, total }: { current: number; total: number }) {
   const pct = Math.round((current / total) * 100);
 
@@ -87,7 +158,9 @@ function ProgressBar({ current, total }: { current: number; total: number }) {
       aria-label={`Step ${current} of ${total}`}
     >
       <div className="progress-top">
-        <span className="progress-label">Step {current} of {total}</span>
+        <span className="progress-label">
+          Step {current} of {total}
+        </span>
       </div>
       <div className="progress-track">
         <div className="progress-fill" style={{ width: `${pct}%` }} />
@@ -116,6 +189,14 @@ export default function Quiz() {
     () => US_STATES.find((s) => s.code === answers.state)?.name ?? "your state",
     [answers.state]
   );
+
+  const resultParagraphs = useMemo(() => {
+    const cleaned = cleanSummaryText(result?.summary ?? "");
+    return cleaned
+      .split(/\n{2,}/)
+      .map((para) => para.trim())
+      .filter(Boolean);
+  }, [result?.summary]);
 
   function canAdvance(): boolean {
     if (step === 1) return answers.state !== "";
@@ -187,7 +268,7 @@ export default function Quiz() {
       setResult({
         id: json.id ?? null,
         qualified: Boolean(json.qualified),
-        summary: String(json.summary ?? ""),
+        summary: cleanSummaryText(String(json.summary ?? "")),
       });
       setPhase("result");
     } catch (e: unknown) {
@@ -249,6 +330,9 @@ export default function Quiz() {
           content="Answer 5 quick questions to find out if you may qualify for Medicaid."
         />
         <meta name="robots" content="noindex" />
+        <meta name="theme-color" content="#0a3d6b" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=6" />
+        <link rel="shortcut icon" href="/favicon.svg?v=6" />
       </Head>
 
       <div className="quiz-page">
@@ -543,7 +627,7 @@ export default function Quiz() {
               </div>
 
               <div className="result-body">
-                {result.summary.split("\n\n").map((para, i) => (
+                {resultParagraphs.map((para, i) => (
                   <p key={i} className="result-para">
                     {para}
                   </p>
@@ -912,9 +996,9 @@ export default function Quiz() {
           width: 52px;
           height: 52px;
           border-radius: var(--radius-md);
-          background: #fff7e6;
-          border: 1px solid #e7d3a3;
-          color: var(--gold);
+          background: #eff6ff;
+          border: 1px solid #bfdbfe;
+          color: var(--navy);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -1067,13 +1151,11 @@ export default function Quiz() {
           display: inline-block;
           padding: 3px 10px;
           border-radius: 999px;
-          background: #fff7e6;
-          border: 1px solid #e7d3a3;
+          background: #eff6ff;
+          border: 1px solid #bfdbfe;
           font-size: 11px;
-          font-weight: 700;
-          color: var(--gold);
-          letter-spacing: 0.04em;
-          text-transform: uppercase;
+          font-weight: 600;
+          color: #1d4ed8;
           margin-bottom: 8px;
         }
 
@@ -1098,9 +1180,9 @@ export default function Quiz() {
           background: var(--navy);
           color: #fff;
           font-size: 15px;
-          font-weight: 700;
+          font-weight: 600;
           border: 1px solid var(--navy-dark);
-          box-shadow: 0 4px 14px rgba(4,44,83,0.25), inset 0 -2px 0 0 var(--gold);
+          box-shadow: var(--shadow-md);
           cursor: pointer;
           font-family: inherit;
           transition: background 140ms;
