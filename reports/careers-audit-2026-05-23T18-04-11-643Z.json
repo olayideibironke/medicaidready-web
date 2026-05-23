@@ -1,0 +1,462 @@
+{
+  "generated_at": "2026-05-23T18:04:11.643Z",
+  "scope": "approved_only",
+  "checked_links": true,
+  "counts": {
+    "jobs": 218,
+    "duplicate_slugs": 0,
+    "duplicate_apply_urls": 2,
+    "duplicate_title_company": 2,
+    "duplicate_title_company_location": 2,
+    "missing_apply_urls": 0,
+    "broken_links": 6,
+    "warning_links": 17
+  },
+  "duplicates": {
+    "slugs": [],
+    "apply_urls": [
+      {
+        "key": "https://careers.molinahealthcare.com/job/united-states/lead-analyst-healthcare-analytics-remote/21726/94274245344",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "703b2dea-0a78-42a8-9baa-a6da173800d9",
+            "slug": "lead-analyst-healthcare-analytics-remote-molina-healthcare-fresh-batch-may-2026",
+            "title": "Lead Analyst, Healthcare Analytics - REMOTE",
+            "company": "Molina Healthcare",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.molinahealthcare.com/job/united-states/lead-analyst-healthcare-analytics-remote/21726/94274245344",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          },
+          {
+            "id": "233162f9-20d1-4f8c-ac65-a7e4d9052334",
+            "slug": "lead-analyst-healthcare-analytics-remote-molina-healthcare",
+            "title": "Lead Analyst, Healthcare Analytics - Remote",
+            "company": "Molina Healthcare",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.molinahealthcare.com/job/united-states/lead-analyst-healthcare-analytics-remote/21726/94274245344",
+            "created_at": "2026-05-13T20:25:35.721197+00:00",
+            "updated_at": "2026-05-13T20:25:35.721197+00:00"
+          }
+        ]
+      },
+      {
+        "key": "https://careers.molinahealthcare.com/job/united-states/lead-analyst-quality-analytics-and-performance-improvement-remote/21726/94183066896",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "97fd5df5-bbe5-4807-81f9-fc0a76671d04",
+            "slug": "lead-analyst-quality-analytics-performance-improvement-remote-molina-healthcare-fresh-batch-may",
+            "title": "Lead Analyst, Quality Analytics & Performance Improvement - Remote",
+            "company": "Molina Healthcare",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.molinahealthcare.com/job/united-states/lead-analyst-quality-analytics-and-performance-improvement-remote/21726/94183066896",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          },
+          {
+            "id": "ce878d91-1262-4e60-9eaa-1079b486abb4",
+            "slug": "lead-analyst-quality-analytics-performance-improvement-remote-molina-healthcare",
+            "title": "Lead Analyst, Quality Analytics & Performance Improvement - Remote",
+            "company": "Molina Healthcare",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.molinahealthcare.com/job/united-states/lead-analyst-quality-analytics-and-performance-improvement-remote/21726/94183066896",
+            "created_at": "2026-05-13T20:25:35.721197+00:00",
+            "updated_at": "2026-05-13T20:25:35.721197+00:00"
+          }
+        ]
+      }
+    ],
+    "title_company": [
+      {
+        "key": "lead analyst healthcare analytics remote::molina healthcare",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "703b2dea-0a78-42a8-9baa-a6da173800d9",
+            "slug": "lead-analyst-healthcare-analytics-remote-molina-healthcare-fresh-batch-may-2026",
+            "title": "Lead Analyst, Healthcare Analytics - REMOTE",
+            "company": "Molina Healthcare",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.molinahealthcare.com/job/united-states/lead-analyst-healthcare-analytics-remote/21726/94274245344",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          },
+          {
+            "id": "233162f9-20d1-4f8c-ac65-a7e4d9052334",
+            "slug": "lead-analyst-healthcare-analytics-remote-molina-healthcare",
+            "title": "Lead Analyst, Healthcare Analytics - Remote",
+            "company": "Molina Healthcare",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.molinahealthcare.com/job/united-states/lead-analyst-healthcare-analytics-remote/21726/94274245344",
+            "created_at": "2026-05-13T20:25:35.721197+00:00",
+            "updated_at": "2026-05-13T20:25:35.721197+00:00"
+          }
+        ]
+      },
+      {
+        "key": "lead analyst quality analytics and performance improvement remote::molina healthcare",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "97fd5df5-bbe5-4807-81f9-fc0a76671d04",
+            "slug": "lead-analyst-quality-analytics-performance-improvement-remote-molina-healthcare-fresh-batch-may",
+            "title": "Lead Analyst, Quality Analytics & Performance Improvement - Remote",
+            "company": "Molina Healthcare",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.molinahealthcare.com/job/united-states/lead-analyst-quality-analytics-and-performance-improvement-remote/21726/94183066896",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          },
+          {
+            "id": "ce878d91-1262-4e60-9eaa-1079b486abb4",
+            "slug": "lead-analyst-quality-analytics-performance-improvement-remote-molina-healthcare",
+            "title": "Lead Analyst, Quality Analytics & Performance Improvement - Remote",
+            "company": "Molina Healthcare",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.molinahealthcare.com/job/united-states/lead-analyst-quality-analytics-and-performance-improvement-remote/21726/94183066896",
+            "created_at": "2026-05-13T20:25:35.721197+00:00",
+            "updated_at": "2026-05-13T20:25:35.721197+00:00"
+          }
+        ]
+      }
+    ],
+    "title_company_location": [
+      {
+        "key": "lead analyst healthcare analytics remote::molina healthcare::remote",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "703b2dea-0a78-42a8-9baa-a6da173800d9",
+            "slug": "lead-analyst-healthcare-analytics-remote-molina-healthcare-fresh-batch-may-2026",
+            "title": "Lead Analyst, Healthcare Analytics - REMOTE",
+            "company": "Molina Healthcare",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.molinahealthcare.com/job/united-states/lead-analyst-healthcare-analytics-remote/21726/94274245344",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          },
+          {
+            "id": "233162f9-20d1-4f8c-ac65-a7e4d9052334",
+            "slug": "lead-analyst-healthcare-analytics-remote-molina-healthcare",
+            "title": "Lead Analyst, Healthcare Analytics - Remote",
+            "company": "Molina Healthcare",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.molinahealthcare.com/job/united-states/lead-analyst-healthcare-analytics-remote/21726/94274245344",
+            "created_at": "2026-05-13T20:25:35.721197+00:00",
+            "updated_at": "2026-05-13T20:25:35.721197+00:00"
+          }
+        ]
+      },
+      {
+        "key": "lead analyst quality analytics and performance improvement remote::molina healthcare::remote",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "97fd5df5-bbe5-4807-81f9-fc0a76671d04",
+            "slug": "lead-analyst-quality-analytics-performance-improvement-remote-molina-healthcare-fresh-batch-may",
+            "title": "Lead Analyst, Quality Analytics & Performance Improvement - Remote",
+            "company": "Molina Healthcare",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.molinahealthcare.com/job/united-states/lead-analyst-quality-analytics-and-performance-improvement-remote/21726/94183066896",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          },
+          {
+            "id": "ce878d91-1262-4e60-9eaa-1079b486abb4",
+            "slug": "lead-analyst-quality-analytics-performance-improvement-remote-molina-healthcare",
+            "title": "Lead Analyst, Quality Analytics & Performance Improvement - Remote",
+            "company": "Molina Healthcare",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.molinahealthcare.com/job/united-states/lead-analyst-quality-analytics-and-performance-improvement-remote/21726/94183066896",
+            "created_at": "2026-05-13T20:25:35.721197+00:00",
+            "updated_at": "2026-05-13T20:25:35.721197+00:00"
+          }
+        ]
+      }
+    ]
+  },
+  "missing_apply_urls": [],
+  "broken_links": [
+    {
+      "id": "b8cdbca6-30ac-4e72-9d60-37b8dc05e8d6",
+      "slug": "data-analyst-iii-healthcare-analytics-provider-analytics-centene-corporation-fresh-batch-may-20",
+      "title": "Data Analyst III Healthcare Analytics, Provider Analytics",
+      "company": "Centene Corporation",
+      "apply_url": "https://jobs.centene.com/us/en/jobs/1636874/data-analyst-iii-healthcare-analytics-provider-analytics/",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://jobs.centene.com/us/en/jobs/1636874/data-analyst-iii-healthcare-analytics-provider-analytics/",
+      "error": ""
+    },
+    {
+      "id": "6c050fcf-5e5c-46b0-b8e1-085a37440d3f",
+      "slug": "healthcare-program-analyst-specialist-gd-information-technology-inc-fresh-batch-may-2026",
+      "title": "Healthcare Program Analyst Specialist",
+      "company": "GD Information Technology, Inc.",
+      "apply_url": "https://tallo.com/talent/job/education/special-education-teacher/remote/healthcare-program-analyst-spe-3c7c7f4b",
+      "result": "broken",
+      "status": 410,
+      "final_url": "https://tallo.com/talent/job/education/special-education-teacher/remote/healthcare-program-analyst-spe-3c7c7f4b",
+      "error": ""
+    },
+    {
+      "id": "42291b05-718b-44c8-ba84-7ca95001c33f",
+      "slug": "senior-data-analyst-healthcare-analytics-molina-healthcare-fresh-batch-may-2026",
+      "title": "Senior Data Analyst, Healthcare Analytics",
+      "company": "Molina Healthcare",
+      "apply_url": "https://careers.molinahealthcare.com/job/united-states/senior-data-analyst-healthcare-analytics/21726/94486422352",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.molinahealthcare.com/job/united-states/senior-data-analyst-healthcare-analytics/21726/94486422352",
+      "error": ""
+    },
+    {
+      "id": "03c8060f-f4f2-4ae1-b283-ada52d870f5a",
+      "slug": "data-analyst-iii-healthcare-analytics-centene-corporation-fresh-batch-may-2026",
+      "title": "Data Analyst III Healthcare Analytics",
+      "company": "Centene Corporation",
+      "apply_url": "https://jobs.centene.com/us/en/jobs/1636010/data-analyst-iii-healthcare-analytics/",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://jobs.centene.com/us/en/jobs/1636010/data-analyst-iii-healthcare-analytics/",
+      "error": ""
+    },
+    {
+      "id": "2064ca15-d9fd-4da2-b19b-e2a42d0b50a9",
+      "slug": "medicare-sales-data-analyst-cvs-health-aetna-fresh-batch-may-2026",
+      "title": "Medicare Sales Data Analyst",
+      "company": "CVS Health / Aetna",
+      "apply_url": "https://jobs.cvshealth.com/us/en/job/R0884029/Medicare-Sales-Data-Analyst",
+      "result": "broken",
+      "status": 410,
+      "final_url": "https://jobs.cvshealth.com/us/en/job/R0884029/Medicare-Sales-Data-Analyst",
+      "error": ""
+    },
+    {
+      "id": "9a843955-fc87-48b8-abbe-6bc2160312d4",
+      "slug": "gen-ai-engineer-elevance-health-fresh-batch-may-2026",
+      "title": "Gen AI Engineer",
+      "company": "Elevance Health",
+      "apply_url": "https://careers.elevancehealth.com/gen-ai-engineer/job/FD1F01DC4E4323DDCFE96BA84A52A384",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.elevancehealth.com/gen-ai-engineer/job/FD1F01DC4E4323DDCFE96BA84A52A384",
+      "error": ""
+    }
+  ],
+  "warning_links": [
+    {
+      "id": "86049790-c508-4a20-b8e3-b62f4b89cb0a",
+      "slug": "healthcare-data-analyst-w2-tricon-solutions-fresh-batch-may-2026",
+      "title": "Healthcare Data Analyst - W2",
+      "company": "Tricon Solutions",
+      "apply_url": "https://to.indeed.com/aapvwwc4pj2b",
+      "result": "blocked_or_rate_limited",
+      "status": 403,
+      "final_url": "https://www.indeed.com/rc/clk?jk=0bb730f82f943e4e&bb=1MqxjS8nNIhvi5RtJbtwwpaeBzjrQWFnt9KRHtLhuIhDpL2CvNgJHeqUqDpSC9aYmT9pYLAYnD84ca4NTQ7IzBHJo0t6TXiq5DaupdWcnUYY3bMZ2rmqfX_NneB6ep6FVgrVlOBLWxb0xhDe3YbtzQ%3D%3D&xkcb=SoBg67M3jq28IqggYT0sbzkdCdPP&atk=1jpavcvn62qtn000&jrtk=5-cmh1-0-1jpavcvn62qtn000-0bb730f82f943e4e&fvj=1&from=mcp-openai-jobsearch",
+      "error": ""
+    },
+    {
+      "id": "e1d9f3c1-64e8-4d59-8a25-143f1cdbe2d2",
+      "slug": "healthcare-reclamation-analyst-performant-financial-corporation-machinify-fresh-batch-may-2026",
+      "title": "Healthcare Reclamation Analyst",
+      "company": "Performant Financial Corporation / Machinify",
+      "apply_url": "https://to.indeed.com/aadtmm89lgwb",
+      "result": "blocked_or_rate_limited",
+      "status": 403,
+      "final_url": "https://www.indeed.com/rc/clk?jk=8ec56433194f554c&bb=JC-NLfyhvBphr9qsDkM-73reGGAL6oyT6MY2zPl-3FB_MLAlOlVxFK9xAPwCWKBOi1apePC_z0ZG4FLC7Wd8KRsl0JYWyemlC5UKJAMh8SdYLWWZfZEq1jo70YW1RTfiWxxzoSw4WXJg_AOaBg3yjA%3D%3D&xkcb=SoDx67M3jq27RXyw0Z0IbzkdCdPP&atk=1jpavd4ovgimm805&jrtk=5-cmh1-0-1jpavd4ovgimm805-8ec56433194f554c&fvj=1&from=mcp-openai-jobsearch",
+      "error": ""
+    },
+    {
+      "id": "94d9ca2c-1f3c-4008-8137-88459236f7eb",
+      "slug": "senior-application-analyst-revenue-cycle-remote-mayo-clinic-fresh-batch-may-2026",
+      "title": "Senior Application Analyst - Revenue Cycle - Remote",
+      "company": "Mayo Clinic",
+      "apply_url": "https://www.theladders.com/job/senior-application-analyst-revenue-cycle-remote-mayoclinic-virtual-travel_85112589",
+      "result": "blocked_or_rate_limited",
+      "status": 403,
+      "final_url": "https://www.theladders.com/job/senior-application-analyst-revenue-cycle-remote-mayoclinic-virtual-travel_85112589",
+      "error": ""
+    },
+    {
+      "id": "0831d1f5-36c1-471f-acec-cf4b715757bb",
+      "slug": "revenue-operations-analyst-finance-sword-health-fresh-batch-may-2026",
+      "title": "Revenue Operations Analyst, Finance",
+      "company": "SWORD Health",
+      "apply_url": "https://to.indeed.com/aanvk9rkw8qq",
+      "result": "blocked_or_rate_limited",
+      "status": 403,
+      "final_url": "https://www.indeed.com/rc/clk?jk=385b0834f7b30cc7&bb=vt624wrn4xvbrzQt2fTXdFVYSfb2mh905S4f6XtXwDfcUNKZzfu9FzxEcqOsrNwAkCOuJFtks3gihLuM6x8YVSt2VgsibktDpq-s_VDj2n6-Vxl5lUTiFQBJ9Gaty9pYeU5a27emegZsLIFZz9qzMA%3D%3D&xkcb=SoB_67M3jq27RWSw0Z0IbzkdCdPP&atk=1jpavd4ovgimm805&jrtk=5-cmh1-0-1jpavd4ovgimm805-385b0834f7b30cc7&fvj=1&from=mcp-openai-jobsearch",
+      "error": ""
+    },
+    {
+      "id": "9aa588ec-74c0-47a8-a33e-dad9078a8cf3",
+      "slug": "operations-analyst-vytlone-fresh-batch-may-2026",
+      "title": "Operations Analyst",
+      "company": "VytlOne",
+      "apply_url": "https://to.indeed.com/aafzpvgm22dl",
+      "result": "blocked_or_rate_limited",
+      "status": 403,
+      "final_url": "https://www.indeed.com/rc/clk?jk=d8be3679aceffe5c&bb=ZPPKgDVpkEK1qRlESPsmOMr5H-i7wilAjZxZlQIcIN72w3zyFr-nAXQ3hae2hnzmR5MuF_98yH9RbM3nFdmr-R985Dp7rH_SaYina8EyLsFwaWcvKMhMzt4QRiCZ1c23MGNZO8EY0CXs9dMwcpiPKQ%3D%3D&xkcb=SoCO67M3jq27RXSw0Z0ObzkdCdPP&atk=1jpavd4ovgimm805&jrtk=5-cmh1-0-1jpavd4ovgimm805-d8be3679aceffe5c&fvj=1&from=mcp-openai-jobsearch",
+      "error": ""
+    },
+    {
+      "id": "4cf10c11-2ba9-465f-86db-d6e730867d87",
+      "slug": "junior-program-analyst-healthcare-transformation-blue-water-thinking-fresh-batch-may-2026",
+      "title": "Junior Program Analyst - Healthcare Transformation",
+      "company": "Blue Water Thinking",
+      "apply_url": "https://to.indeed.com/aa2mcbvvthp2",
+      "result": "blocked_or_rate_limited",
+      "status": 403,
+      "final_url": "https://www.indeed.com/rc/clk?jk=8811856db357a555&bb=JC-NLfyhvBphr9qsDkM-73reGGAL6oyT6MY2zPl-3FD6cSgGnZ2QjIdf5FECM1HLHzXiCBiBZbwSrSVm8zpiC-FwvpobTZWdnvaw1WE8UNPePAGOjKSiH0XXFG141X8VojdCVF5EnTc5XTzIeE2_tw%3D%3D&xkcb=SoDi67M3jq27RXyw0Z0MbzkdCdPP&atk=1jpavd4ovgimm805&jrtk=5-cmh1-0-1jpavd4ovgimm805-8811856db357a555&fvj=1&from=mcp-openai-jobsearch",
+      "error": ""
+    },
+    {
+      "id": "5791f559-d763-4bfe-8ca1-ec525cd6b662",
+      "slug": "data-analyst-intone-networks-fresh-batch-may-2026",
+      "title": "Data Analyst",
+      "company": "Intone Networks",
+      "apply_url": "https://to.indeed.com/aat9z87dcgf9",
+      "result": "blocked_or_rate_limited",
+      "status": 403,
+      "final_url": "https://www.indeed.com/rc/clk?jk=986ce6b296c45beb&bb=vt624wrn4xvbrzQt2fTXdFVYSfb2mh905S4f6XtXwDe8JAuetNqYKba3Gtc9NahD1z0VXtxZjDMfBnOeQDBrz3QMkye0QFoJ5SgpOWY0ehN6jAjgnvzO561HwOhA5p1lyy_4aK9zQ2iK_2R4z3OZ2g%3D%3D&xkcb=SoBF67M3jq27RWSw0Z0ObzkdCdPP&atk=1jpavd4ovgimm805&jrtk=5-cmh1-0-1jpavd4ovgimm805-986ce6b296c45beb&fvj=1&from=mcp-openai-jobsearch",
+      "error": ""
+    },
+    {
+      "id": "c4089771-c8b6-4569-9a92-8ac8156d7fff",
+      "slug": "collections-analyst-managed-resources-fresh-batch-may-2026",
+      "title": "Collections Analyst",
+      "company": "Managed Resources",
+      "apply_url": "https://to.indeed.com/aaxhnd84299r",
+      "result": "blocked_or_rate_limited",
+      "status": 403,
+      "final_url": "https://www.indeed.com/rc/clk?jk=92219c3c3692817c&bb=JC-NLfyhvBphr9qsDkM-73reGGAL6oyT6MY2zPl-3FAQRXj1MzLkj4S8DOdPa5eRyjyo3hxYwwWuxXjCsbEdQriuXHrJpCn0ewOToFrhw0xLexiJt-OTVwZp4AvpIv6HRZYFJT1oe77JdkDMe3HvlQ%3D%3D&xkcb=SoDY67M3jq27RXyw0Z0KbzkdCdPP&atk=1jpavd4ovgimm805&jrtk=5-cmh1-0-1jpavd4ovgimm805-92219c3c3692817c&fvj=1&from=mcp-openai-jobsearch",
+      "error": ""
+    },
+    {
+      "id": "f647b913-ae07-46b3-87c3-80a502e96a87",
+      "slug": "audit-analyst-healthcare-healthmap-solutions-fresh-batch-may-2026",
+      "title": "Audit Analyst - Healthcare",
+      "company": "Healthmap Solutions",
+      "apply_url": "https://to.indeed.com/aavtzmb7kmhn",
+      "result": "blocked_or_rate_limited",
+      "status": 403,
+      "final_url": "https://www.indeed.com/rc/clk?jk=0dfedd2e6d376f45&bb=GfC7lEAwusnKkPYyLnuPz4MVrkpnxKNG20xPZHhLcOebIvY8kvR58gQLh-5J0nR_tn49_FzfvsAglaQo4ZX2mTsnADyBojzdpo3wafK0xnIkgg6dlgNKIAsbvUceHHrm-_Krq57tpSdDIYXzhMt5gg%3D%3D&xkcb=SoDt67M3jq27RUyw0Z0IbzkdCdPP&atk=1jpavd4ovgimm805&jrtk=5-cmh1-0-1jpavd4ovgimm805-0dfedd2e6d376f45&fvj=1&from=mcp-openai-jobsearch",
+      "error": ""
+    },
+    {
+      "id": "8dec9cd0-e9e0-4046-9130-fa25e6b89635",
+      "slug": "epic-tapestry-healthcare-analyst-integrated-resources-inc-fresh-batch-may-2026",
+      "title": "Epic Tapestry Healthcare Analyst",
+      "company": "Integrated Resources Inc",
+      "apply_url": "https://to.indeed.com/aap77skqr2nb",
+      "result": "blocked_or_rate_limited",
+      "status": 403,
+      "final_url": "https://www.indeed.com/pagead/clk?mo=r&ad=-6NYlbfkN0AefGjJ46TMfVDrA4prEV9Q_r-5JX4cnF1zrQK7lTsGhbT4WckYkxpgtISL7KWuPYdC0A7kyDpJ7hNKGIr205w3fLKwhONyjtJElxzIB4NBww-tNU61zT9R1Sqas9910oNMyWGhD6ar7lRskE5gQMjtYOszLMPYR5X-HBNgfC7iP39qBWB7xkW-x-0lq_ux1QCn0HfUcjDcxNHCJC2jzk_bMDyZ9xYQITPpSCyhtJKTKxk1-H1BNL-Qxw8iFiGuVOXHXsWzx3VFlkMB5G_T3ivmN-oFke1SpRwnlGhguxwTXxB_9FnZSNt4GR_LG7jAvrqnNB8uZGh4kr31T7SeF9wM6vYDTNaaSER91Zbig3zqXLraMulTfLILRJaiG6dcGWv_JKgWb_9_g2iuBJLIKuJxvYGc2PDVmSj3blnyDPad_SpUrainD6MxRKNpLRYwdStaFnZweJejOasDNwyzmOilOjV7JbZyzSg4QHJ6tO0HythmFu918hqA80C8_ZuG5bZpT62Z2OWSPLXMq2GyBBm4TKiY3uJvIqEjf3kvpoO9SfSQJoEzBcBIlIaCQvjNMwKP4T0w9oIhMv5HewXiA5m-fL4C7dWdiXAWHDuHxRyS53m-_D3L_R2wY6uiFwWNVwM7kDXQu3JwA0LtzRZBUGnO3aGeaOti-r-LCt9dovJDTJ36AioY9IhMRTQvomFa26DW5iDGvdPopJ04RoTa82Yf_kuQdaSZQuw-ssPJCckiowa6cLOcS3v8hQc058ewcQkSm1Wt3SPTWM-mUMsE9sDOrae0fIH0DiCvFNTMmiJN4VgXvpSLQxDWmyXybScBBaXrVIjw2uJ3Luo8dIPD7sbh&rm=0&xkcb=SoAI6_M3jq28IrAgYT0LbzkdCdPP&ctk=1jpavcvktgdavb61&jsa=8244&camk=nUmJqO2E8rizQZjW2S5xTg%3D%3D&jk=b325d93d937b3337&jrtk=5-cmh1-0-1jpavcvn62qtn000-b325d93d937b3337&fvj=1&from=mcp-openai-jobsearch",
+      "error": ""
+    },
+    {
+      "id": "e3950b33-5ccd-4842-99f0-59db57173705",
+      "slug": "application-analyst-i-tufts-medical-center-fresh-batch-may-2026",
+      "title": "Application Analyst I",
+      "company": "Tufts Medical Center",
+      "apply_url": "https://remote.co/job-details/application-analyst-i-5a52f552-fda8-41af-8daf-be063586f292",
+      "result": "error",
+      "status": "",
+      "final_url": "",
+      "error": "timeout"
+    },
+    {
+      "id": "30a2cb5f-54d3-4697-852e-e05a09ca5134",
+      "slug": "functional-analyst-healthcare-business-blue-rose-consulting-group-inc-fresh-batch-may-2026",
+      "title": "Functional Analyst (Healthcare Business)",
+      "company": "Blue Rose Consulting Group, Inc.",
+      "apply_url": "https://to.indeed.com/aa6cggk7pcnk",
+      "result": "blocked_or_rate_limited",
+      "status": 403,
+      "final_url": "https://www.indeed.com/rc/clk?jk=4fa972e5d4cbf8c7&bb=akWiF40UjWL4oVdHar5JNUhT4MGlEiaZ4fxHK6J7WwPIMJ45ZTRaM5YrrzDLYJ1CHk97HehOnqOZOnmkNJSX9bHupwVC4mKWyQMpVtJRRPpe6FANA_CrvVjA26brT31_5vJeDHkOx6SK0V8EG1Pkng%3D%3D&xkcb=SoCz67M3jq28IVggYT0FbzkdCdPP&atk=1jpavcvn62qtn000&jrtk=5-cmh1-0-1jpavcvn62qtn000-4fa972e5d4cbf8c7&fvj=1&from=mcp-openai-jobsearch",
+      "error": ""
+    },
+    {
+      "id": "b601775e-defc-4b0a-9c51-ab4d9c0f3bc1",
+      "slug": "healthcare-analyst-ii-cohere-health-fresh-batch-may-2026",
+      "title": "Healthcare Analyst II",
+      "company": "Cohere Health",
+      "apply_url": "https://to.indeed.com/aa6zs9rmz87s",
+      "result": "blocked_or_rate_limited",
+      "status": 403,
+      "final_url": "https://www.indeed.com/rc/clk?jk=33525df3b23d9f28&bb=7evypm4iWoLYsA2vwMdI2AS7oWxBRniOlYSnDlNxL22atJwTkk9O5mEz-apAbWp0RvtBt5NG8xpfd1eTnQCAc8CKBsmAgX1qS5yHK2C2hk72Ftg7tkEKe4uGIfABMIEVRtc17q7_5bdR7MxZL7zrkQ%3D%3D&xkcb=SoC567M3jq28IrggYT0LbzkdCdPP&atk=1jpavcvn62qtn000&jrtk=5-cmh1-0-1jpavcvn62qtn000-33525df3b23d9f28&fvj=1&from=mcp-openai-jobsearch",
+      "error": ""
+    },
+    {
+      "id": "dcb67658-47e0-4d95-aad6-d41c8f51f332",
+      "slug": "healthcare-analytics-advisor-claritev-fresh-batch-may-2026",
+      "title": "Healthcare Analytics Advisor",
+      "company": "Claritev",
+      "apply_url": "https://to.indeed.com/aahhygbvflby",
+      "result": "blocked_or_rate_limited",
+      "status": 403,
+      "final_url": "https://www.indeed.com/rc/clk?jk=c991900da4f695fd&bb=akWiF40UjWL4oVdHar5JNUhT4MGlEiaZ4fxHK6J7WwNR8uvtry9VHzWKmXLfKEfNwIZssRCDCZdkGRXXMDjc9epSEPFYfmwJ8cfnNrNkpqcoGiJIHw0Kbr_4qWUx52WZRSW2gzsrZ3O8-BUeczOS7Q%3D%3D&xkcb=SoCJ67M3jq28IVggYT0DbzkdCdPP&atk=1jpavcvn62qtn000&jrtk=5-cmh1-0-1jpavcvn62qtn000-c991900da4f695fd&fvj=1&from=mcp-openai-jobsearch",
+      "error": ""
+    },
+    {
+      "id": "6bd61817-1fa0-4f62-b3d1-f6dd5876545e",
+      "slug": "senior-healthcare-data-analyst-accompany-health-fresh-batch-may-2026",
+      "title": "Senior Healthcare Data Analyst",
+      "company": "Accompany Health",
+      "apply_url": "https://to.indeed.com/aa2xpmxw9lrd",
+      "result": "blocked_or_rate_limited",
+      "status": 403,
+      "final_url": "https://www.indeed.com/rc/clk?jk=1ae3a03c6bf760c0&bb=VddJBaNLYKGaNK6GSEIxJstDrvNDBvwCZOFV65vP7dh-uKO9l0HaODjZsgDYC5KDgEX_MHznuXMRvN3PLUKzaQ00-IN179Sp5UAP0WqfIcoMbb4K_rQJ7vpMy9tFUsGOFLpicKodWjRUZiHhM5CR2Q%3D%3D&xkcb=SoCD67M3jq28IqAgYT0KbzkdCdPP&atk=1jpavcvn62qtn000&jrtk=5-cmh1-0-1jpavcvn62qtn000-1ae3a03c6bf760c0&fvj=1&from=mcp-openai-jobsearch",
+      "error": ""
+    },
+    {
+      "id": "75c98c0b-b3a7-457d-8461-e5567ac5f8ef",
+      "slug": "senior-analyst-data-analytics-siu-oscar-health-fresh-batch-may-2026",
+      "title": "Senior Analyst, Data Analytics, SIU",
+      "company": "Oscar Health",
+      "apply_url": "https://to.indeed.com/aagkghn4dr89",
+      "result": "blocked_or_rate_limited",
+      "status": 403,
+      "final_url": "https://www.indeed.com/rc/clk?jk=7cb269d04ce3541c&bb=akWiF40UjWL4oVdHar5JNUhT4MGlEiaZ4fxHK6J7WwN8dDyhB2vl0bQzVuDRS4FXvTDr2Kmq6EROEnMo2EV5zDdHMzpxIlgRxtOjzhFWf96gBQU8VjRMXcIQNFHe8HQ9wq_ch59RqSq1muAMUFaKug%3D%3D&xkcb=SoDH67M3jq28IVggYT0JbzkdCdPP&atk=1jpavcvn62qtn000&jrtk=5-cmh1-0-1jpavcvn62qtn000-7cb269d04ce3541c&fvj=1&from=mcp-openai-jobsearch",
+      "error": ""
+    },
+    {
+      "id": "3dfca759-0716-43a5-a5d2-2c89e559bc08",
+      "slug": "healthcare-data-analyst-algorithm-developer-radcube-fresh-batch-may-2026",
+      "title": "Healthcare Data Analyst / Algorithm Developer",
+      "company": "RadCube",
+      "apply_url": "https://to.indeed.com/aayvdksdp6pg",
+      "result": "blocked_or_rate_limited",
+      "status": 403,
+      "final_url": "https://www.indeed.com/rc/clk?jk=c2a505e8ea5fcd48&bb=_MxGoSRk2u2N7XqCOkUOI1CEXuYfbCKTMFfz6dKv64I_npAhqZEPlF-9fzX-N7uaDWsiA-BqwNkJyFViCwJek1R4OSicxkzRdqI7_H6S59-G7FztpkjwA329cQrLbmyl884TYkmD2WPFxXPCUx7wmQ%3D%3D&xkcb=SoAM67M3jq28IVAgYT0ObzkdCdPP&atk=1jpavcvn62qtn000&jrtk=5-cmh1-0-1jpavcvn62qtn000-c2a505e8ea5fcd48&fvj=1&from=mcp-openai-jobsearch",
+      "error": ""
+    }
+  ]
+}

@@ -1,0 +1,743 @@
+{
+  "generated_at": "2026-05-23T17:41:53.651Z",
+  "scope": "approved_only",
+  "checked_links": true,
+  "counts": {
+    "jobs": 219,
+    "duplicate_slugs": 0,
+    "duplicate_apply_urls": 5,
+    "duplicate_title_company": 2,
+    "duplicate_title_company_location": 0,
+    "missing_apply_urls": 0,
+    "broken_links": 46,
+    "warning_links": 0
+  },
+  "duplicates": {
+    "slugs": [],
+    "apply_urls": [
+      {
+        "key": "https://careers.molinahealthcare.com/job/united-states/tech-product-owner-lead-analyst-advanced-provider-data-management/21726/93930379664",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "460cd779-27de-48d3-9262-fae10c50e9d4",
+            "slug": "tech-product-owner-lead-analyst-advanced-provider-data-management-molina-healthcare",
+            "title": "Tech Product Owner / Lead Analyst, Advanced Provider Data Management",
+            "company": "Molina Healthcare",
+            "location": "Remote / United States",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.molinahealthcare.com/job/united-states/tech-product-owner-lead-analyst-advanced-provider-data-management/21726/93930379664",
+            "created_at": "2026-05-13T20:25:35.721197+00:00",
+            "updated_at": "2026-05-13T20:25:35.721197+00:00"
+          },
+          {
+            "id": "93867f3c-09a8-43e5-9ad6-fa9fb7503958",
+            "slug": "lead-analyst-advanced-provider-data-management-molina-healthcare-ab2b62a93d",
+            "title": "Lead Analyst, Advanced Provider Data Management",
+            "company": "Molina Healthcare",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.molinahealthcare.com/job/united-states/tech-product-owner-lead-analyst-advanced-provider-data-management/21726/93930379664",
+            "created_at": "2026-05-13T04:19:04.728661+00:00",
+            "updated_at": "2026-05-13T04:19:04.728661+00:00"
+          }
+        ]
+      },
+      {
+        "key": "https://gbmc.wd1.myworkdayjobs.com/en-us/gbmc/job/mother-baby-nurse-support-technician-day-shift-7a-7p-ft_jr106452",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "75275699-7005-4312-b6bd-1a039ff9262b",
+            "slug": "mother-baby-nurse-support-technician-day-shift-listing-gbmc",
+            "title": "Mother Baby Nurse Support Technician Day Shift Listing",
+            "company": "GBMC",
+            "location": "Baltimore, MD",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://gbmc.wd1.myworkdayjobs.com/en-US/GBMC/job/Mother-Baby-Nurse-Support-Technician-Day-Shift-7a-7p-FT_JR106452",
+            "created_at": "2026-05-13T20:25:35.721197+00:00",
+            "updated_at": "2026-05-13T20:25:35.721197+00:00"
+          },
+          {
+            "id": "ee437b06-abcd-457f-8ae8-cde68d0a0f8a",
+            "slug": "mother-baby-nurse-support-technician-day-shift-ft-gbmc-healthcare-13584dedb5",
+            "title": "Mother Baby Nurse Support Technician Day Shift FT",
+            "company": "GBMC HealthCare",
+            "location": "Baltimore, MD",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://gbmc.wd1.myworkdayjobs.com/en-US/GBMC/job/Mother-Baby-Nurse-Support-Technician-Day-Shift-7a-7p-FT_JR106452",
+            "created_at": "2026-05-13T04:19:04.728661+00:00",
+            "updated_at": "2026-05-13T04:19:04.728661+00:00"
+          }
+        ]
+      },
+      {
+        "key": "https://gbmc.wd1.myworkdayjobs.com/en-us/gbmc/job/unit-42--medicine-telemetry-oncology---certified-nursing-assistant---part-time-24-hrs-wk---dayshift--7am-7-30pm-_jr106477/apply",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "2cf982da-88a2-403d-bf8f-f3671b23989b",
+            "slug": "unit-42-certified-nursing-assistant-part-time-dayshift-gbmc",
+            "title": "Unit 42 Certified Nursing Assistant - Part-Time Dayshift",
+            "company": "GBMC",
+            "location": "Baltimore, MD",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://gbmc.wd1.myworkdayjobs.com/en-us/gbmc/job/unit-42--medicine-telemetry-oncology---certified-nursing-assistant---part-time-24-hrs-wk---dayshift--7am-7-30pm-_jr106477/apply",
+            "created_at": "2026-05-13T20:25:35.721197+00:00",
+            "updated_at": "2026-05-13T20:25:35.721197+00:00"
+          },
+          {
+            "id": "b6f385c7-70ba-4f63-8712-5a87f3f820a7",
+            "slug": "unit-42-certified-nursing-assistant-part-time-dayshift-gbmc-healthcare-d9013b2747",
+            "title": "Unit 42 Certified Nursing Assistant - Part Time Dayshift",
+            "company": "GBMC HealthCare",
+            "location": "Baltimore, MD",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://gbmc.wd1.myworkdayjobs.com/en-us/gbmc/job/unit-42--medicine-telemetry-oncology---certified-nursing-assistant---part-time-24-hrs-wk---dayshift--7am-7-30pm-_jr106477/apply",
+            "created_at": "2026-05-13T04:19:04.728661+00:00",
+            "updated_at": "2026-05-13T04:19:04.728661+00:00"
+          }
+        ]
+      },
+      {
+        "key": "https://gbmc.wd1.myworkdayjobs.com/en-us/gbmc/job/gbmc-hospital/certified-nursing-assistant--unit-38---med-surg-tele---ft-dayshift--7a-7-30p-_jr106278/apply/autofillwithresume",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "6c48376b-9cc1-4261-824b-7a6bd0936689",
+            "slug": "certified-nursing-assistant-unit-38-apply-gbmc",
+            "title": "Certified Nursing Assistant - Unit 38 Apply",
+            "company": "GBMC",
+            "location": "Baltimore, MD",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://gbmc.wd1.myworkdayjobs.com/en-US/gbmc/job/GBMC-Hospital/Certified-Nursing-Assistant--Unit-38---Med-Surg-Tele---FT-Dayshift--7A-7-30P-_JR106278/apply/autofillWithResume",
+            "created_at": "2026-05-13T20:25:35.721197+00:00",
+            "updated_at": "2026-05-13T20:25:35.721197+00:00"
+          },
+          {
+            "id": "a5fdaf30-7b86-41b0-9738-211a7e2b16fa",
+            "slug": "certified-nursing-assistant-unit-38-ft-dayshift-gbmc-healthcare-3948d36761",
+            "title": "Certified Nursing Assistant - Unit 38 - FT Dayshift",
+            "company": "GBMC HealthCare",
+            "location": "Baltimore, MD",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://gbmc.wd1.myworkdayjobs.com/en-US/gbmc/job/GBMC-Hospital/Certified-Nursing-Assistant--Unit-38---Med-Surg-Tele---FT-Dayshift--7A-7-30P-_JR106278/apply/autofillWithResume",
+            "created_at": "2026-05-13T04:19:04.728661+00:00",
+            "updated_at": "2026-05-13T04:19:04.728661+00:00"
+          }
+        ]
+      },
+      {
+        "key": "https://adventisthealthcare.wd1.myworkdayjobs.com/en-us/adventisthealthcarecareers/job/patient-care-tech--cna---pt-night-shift--med-surg-oncology_r-041612",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "2e90df96-92d9-4d18-a7f7-c214cf46b4b0",
+            "slug": "patient-care-tech-cna-pt-night-shift-med-surg-oncology-adventist-healthcare",
+            "title": "Patient Care Tech (CNA), PT Night Shift, Med Surg Oncology",
+            "company": "Adventist HealthCare",
+            "location": "Rockville, MD",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://adventisthealthcare.wd1.myworkdayjobs.com/en-US/AdventistHealthCareCareers/job/Patient-Care-Tech--CNA---PT-Night-Shift--Med-Surg-Oncology_R-041612",
+            "created_at": "2026-05-13T20:25:35.721197+00:00",
+            "updated_at": "2026-05-13T20:25:35.721197+00:00"
+          },
+          {
+            "id": "668b18ee-9e22-4e79-ab31-0125e7a564c2",
+            "slug": "patient-care-tech-cna-pt-night-shift-med-surg-oncology-adventist-healthcare-8da9acf10f",
+            "title": "Patient Care Tech (CNA), PT Night Shift, Med Surg Oncology",
+            "company": "Adventist HealthCare",
+            "location": "Maryland",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://adventisthealthcare.wd1.myworkdayjobs.com/en-US/AdventistHealthCareCareers/job/Patient-Care-Tech--CNA---PT-Night-Shift--Med-Surg-Oncology_R-041612",
+            "created_at": "2026-05-13T04:19:04.728661+00:00",
+            "updated_at": "2026-05-13T04:19:04.728661+00:00"
+          }
+        ]
+      }
+    ],
+    "title_company": [
+      {
+        "key": "patient care tech cna pt night shift med surg oncology::adventist healthcare",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "2e90df96-92d9-4d18-a7f7-c214cf46b4b0",
+            "slug": "patient-care-tech-cna-pt-night-shift-med-surg-oncology-adventist-healthcare",
+            "title": "Patient Care Tech (CNA), PT Night Shift, Med Surg Oncology",
+            "company": "Adventist HealthCare",
+            "location": "Rockville, MD",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://adventisthealthcare.wd1.myworkdayjobs.com/en-US/AdventistHealthCareCareers/job/Patient-Care-Tech--CNA---PT-Night-Shift--Med-Surg-Oncology_R-041612",
+            "created_at": "2026-05-13T20:25:35.721197+00:00",
+            "updated_at": "2026-05-13T20:25:35.721197+00:00"
+          },
+          {
+            "id": "668b18ee-9e22-4e79-ab31-0125e7a564c2",
+            "slug": "patient-care-tech-cna-pt-night-shift-med-surg-oncology-adventist-healthcare-8da9acf10f",
+            "title": "Patient Care Tech (CNA), PT Night Shift, Med Surg Oncology",
+            "company": "Adventist HealthCare",
+            "location": "Maryland",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://adventisthealthcare.wd1.myworkdayjobs.com/en-US/AdventistHealthCareCareers/job/Patient-Care-Tech--CNA---PT-Night-Shift--Med-Surg-Oncology_R-041612",
+            "created_at": "2026-05-13T04:19:04.728661+00:00",
+            "updated_at": "2026-05-13T04:19:04.728661+00:00"
+          }
+        ]
+      },
+      {
+        "key": "lead software engineer remote::unitedhealth group optum",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "596598a4-d968-4211-88f2-a3ecf6fad767",
+            "slug": "lead-software-engineer-remote-unitedhealth-group-optum-4a64508e0e",
+            "title": "Lead Software Engineer - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "Eden Prairie, MN / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/eden-prairie/lead-software-engineer-remote/34088/93962091808",
+            "created_at": "2026-05-13T04:19:04.728661+00:00",
+            "updated_at": "2026-05-13T04:19:04.728661+00:00"
+          },
+          {
+            "id": "94d2ee12-5eec-46ec-a4b5-5275a685c9a8",
+            "slug": "lead-software-engineer-remote-unitedhealth-group-optum-55c6f36c67",
+            "title": "Lead Software Engineer - Remote",
+            "company": "UnitedHealth Group / Optum",
+            "location": "Fort Worth, TX / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.unitedhealthgroup.com/job/fort-worth/lead-software-engineer-remote/34088/93389948896",
+            "created_at": "2026-05-13T04:19:04.728661+00:00",
+            "updated_at": "2026-05-13T04:19:04.728661+00:00"
+          }
+        ]
+      }
+    ],
+    "title_company_location": []
+  },
+  "missing_apply_urls": [],
+  "broken_links": [
+    {
+      "id": "82ea8ad0-70d6-4aad-9cfc-e9dab630ba9a",
+      "slug": "director-provider-data-management-data-solutions-remote-molina-healthcare",
+      "title": "Director, Provider Data Management - Data Solutions - Remote",
+      "company": "Molina Healthcare",
+      "apply_url": "https://careers.molinahealthcare.com/job/united-states/director-provider-data-management-data-solutions-remote/21726/92574191648",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.molinahealthcare.com/job/united-states/director-provider-data-management-data-solutions-remote/21726/92574191648",
+      "error": ""
+    },
+    {
+      "id": "e13dee86-b139-4570-8692-1e6abab78263",
+      "slug": "data-analyst-ii-uhc-cove-unitedhealth-group-optum",
+      "title": "Data Analyst II - UHC COVE",
+      "company": "UnitedHealth Group / Optum",
+      "apply_url": "https://careers.unitedhealthgroup.com/job/minnetonka/data-analyst-ii-uhc-cove/34088/95043544432",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.unitedhealthgroup.com/job/minnetonka/data-analyst-ii-uhc-cove/34088/95043544432",
+      "error": ""
+    },
+    {
+      "id": "bd253b20-8ae2-465b-a627-66588df2e8ab",
+      "slug": "epic-patient-access-analyst-cadence-or-prelude-remote-unitedhealth-group-optum",
+      "title": "Epic Patient Access Analyst - Cadence or Prelude - Remote",
+      "company": "UnitedHealth Group / Optum",
+      "apply_url": "https://careers.unitedhealthgroup.com/job/walnut-creek/epic-patient-access-analyst-cadence-or-prelude-remote/34088/95052070720",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.unitedhealthgroup.com/job/walnut-creek/epic-patient-access-analyst-cadence-or-prelude-remote/34088/95052070720",
+      "error": ""
+    },
+    {
+      "id": "d221fa06-f06a-4fb6-b900-97f099c6c691",
+      "slug": "financial-data-analyst-remote-unitedhealth-group-optum",
+      "title": "Financial/Data Analyst - Remote",
+      "company": "UnitedHealth Group / Optum",
+      "apply_url": "https://careers.unitedhealthgroup.com/job/eden-prairie/financial-data-analyst-remote/34088/95024674704",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.unitedhealthgroup.com/job/eden-prairie/financial-data-analyst-remote/34088/95024674704",
+      "error": ""
+    },
+    {
+      "id": "034dee27-583e-44f6-b248-49e24d90cb2f",
+      "slug": "director-data-analytics-remote-unitedhealth-group-optum",
+      "title": "Director Data Analytics - Remote",
+      "company": "UnitedHealth Group / Optum",
+      "apply_url": "https://careers.unitedhealthgroup.com/job/richardson/director-data-analytics-remote/34088/94982381152",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.unitedhealthgroup.com/job/richardson/director-data-analytics-remote/34088/94982381152",
+      "error": ""
+    },
+    {
+      "id": "ac3ec5b1-a6f3-4287-940e-33c518794f9d",
+      "slug": "data-engineering-and-analytics-remote-unitedhealth-group-optum",
+      "title": "Data Engineering and Analytics - Remote",
+      "company": "UnitedHealth Group / Optum",
+      "apply_url": "https://careers.unitedhealthgroup.com/job/eden-prairie/data-engineering-and-analytics-remote/34088/95052070320",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.unitedhealthgroup.com/job/eden-prairie/data-engineering-and-analytics-remote/34088/95052070320",
+      "error": ""
+    },
+    {
+      "id": "dc5ae61c-0bb8-430a-8f2f-809ef22fdebe",
+      "slug": "data-engineer-optum-advisory-board-remote-unitedhealth-group-optum-ccfaf8c1f7",
+      "title": "Data Engineer - Optum Advisory Board - Remote",
+      "company": "UnitedHealth Group / Optum",
+      "apply_url": "https://careers.unitedhealthgroup.com/job/eden-prairie/data-engineer-optum-advisory-board-remote/34088/95009058112",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.unitedhealthgroup.com/job/eden-prairie/data-engineer-optum-advisory-board-remote/34088/95009058112",
+      "error": ""
+    },
+    {
+      "id": "1687c924-423a-4836-9b5f-fb6c55b07733",
+      "slug": "software-engineer-sre-remote-unitedhealth-group-optum-2205d1a512",
+      "title": "Software Engineer (SRE) - Remote",
+      "company": "UnitedHealth Group / Optum",
+      "apply_url": "https://careers.unitedhealthgroup.com/job/eden-prairie/software-engineer-sre-remote/34088/95012677008",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.unitedhealthgroup.com/job/eden-prairie/software-engineer-sre-remote/34088/95012677008",
+      "error": ""
+    },
+    {
+      "id": "356b9ba7-87b4-46ce-821c-608f83f13d0b",
+      "slug": "principal-software-engineer-remote-or-hybrid-in-mn-and-dc-unitedhealth-group-optum-6f7a623a14",
+      "title": "Principal Software Engineer - Remote or Hybrid in MN and DC",
+      "company": "UnitedHealth Group / Optum",
+      "apply_url": "https://careers.unitedhealthgroup.com/job/eden-prairie/principal-software-engineer-remote-or-hybrid-in-mn-and-dc/34088/94978224480",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.unitedhealthgroup.com/job/eden-prairie/principal-software-engineer-remote-or-hybrid-in-mn-and-dc/34088/94978224480",
+      "error": ""
+    },
+    {
+      "id": "599923d9-b2fa-4690-9493-1578bf9f918f",
+      "slug": "principal-data-engineer-remote-unitedhealth-group-optum-ddc470c036",
+      "title": "Principal Data Engineer - Remote",
+      "company": "UnitedHealth Group / Optum",
+      "apply_url": "https://careers.unitedhealthgroup.com/job/raleigh/principal-data-engineer-remote/34088/94867786144",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.unitedhealthgroup.com/job/raleigh/principal-data-engineer-remote/34088/94867786144",
+      "error": ""
+    },
+    {
+      "id": "94d2ee12-5eec-46ec-a4b5-5275a685c9a8",
+      "slug": "lead-software-engineer-remote-unitedhealth-group-optum-55c6f36c67",
+      "title": "Lead Software Engineer - Remote",
+      "company": "UnitedHealth Group / Optum",
+      "apply_url": "https://careers.unitedhealthgroup.com/job/fort-worth/lead-software-engineer-remote/34088/93389948896",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.unitedhealthgroup.com/job/fort-worth/lead-software-engineer-remote/34088/93389948896",
+      "error": ""
+    },
+    {
+      "id": "8d862434-2bdd-4b46-94c2-e9ad9c194591",
+      "slug": "principal-software-engineer-remote-unitedhealth-group-optum-4e59c3dd63",
+      "title": "Principal Software Engineer - Remote",
+      "company": "UnitedHealth Group / Optum",
+      "apply_url": "https://careers.unitedhealthgroup.com/job/eden-prairie/principal-software-engineer-remote/34088/92872096112",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.unitedhealthgroup.com/job/eden-prairie/principal-software-engineer-remote/34088/92872096112",
+      "error": ""
+    },
+    {
+      "id": "84e44df3-42bf-4ea5-a052-52191786ae68",
+      "slug": "technical-product-manager-unitedhealth-group-optum-db4d1ccdb2",
+      "title": "Technical Product Manager",
+      "company": "UnitedHealth Group / Optum",
+      "apply_url": "https://careers.unitedhealthgroup.com/job/noida/technical-product-manager/34088/94710862416",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.unitedhealthgroup.com/job/noida/technical-product-manager/34088/94710862416",
+      "error": ""
+    },
+    {
+      "id": "6c391aaa-99e5-4186-8c07-9e5a485959fe",
+      "slug": "analyst-provider-configuration-excel-qnxt-sql-remote-molina-healthcare-dc634ce9e1",
+      "title": "Analyst, Provider Configuration - Excel / QNXT / SQL (Remote)",
+      "company": "Molina Healthcare",
+      "apply_url": "https://careers.molinahealthcare.com/job/united-states/analyst-provider-configuration-excel-qnxt-sql-remote/21726/91635612080",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.molinahealthcare.com/job/united-states/analyst-provider-configuration-excel-qnxt-sql-remote/21726/91635612080",
+      "error": ""
+    },
+    {
+      "id": "3c0fe5dd-6c3b-4ba1-9b38-222791c7fb96",
+      "slug": "program-manager-remote-data-analysis-and-reporting-molina-healthcare-0efe3fb00b",
+      "title": "Program Manager - Remote (Data Analysis & Reporting)",
+      "company": "Molina Healthcare",
+      "apply_url": "https://careers.molinahealthcare.com/job/united-states/program-manager-remote-data-analysis-and-reporting/21726/94785849712",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.molinahealthcare.com/job/united-states/program-manager-remote-data-analysis-and-reporting/21726/94785849712",
+      "error": ""
+    },
+    {
+      "id": "9c99f706-8e7b-4104-82ff-63be90389c77",
+      "slug": "lead-analyst-healthcare-analytics-data-engineer-molina-healthcare-27f7ee3ac0",
+      "title": "Lead Analyst, Healthcare Analytics (Data Engineer)",
+      "company": "Molina Healthcare",
+      "apply_url": "https://careers.molinahealthcare.com/job/united-states/lead-analyst-healthcare-analytics-data-engineer/21726/93205770064",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.molinahealthcare.com/job/united-states/lead-analyst-healthcare-analytics-data-engineer/21726/93205770064",
+      "error": ""
+    },
+    {
+      "id": "83752f25-a99e-4328-91a7-626c64c560e7",
+      "slug": "senior-azure-engineer-cloud-remote-molina-healthcare-1f1f67bc41",
+      "title": "Senior Azure Engineer, Cloud - Remote",
+      "company": "Molina Healthcare",
+      "apply_url": "https://careers.molinahealthcare.com/job/united-states/senior-azure-engineer-cloud-remote/21726/92924677808",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.molinahealthcare.com/job/united-states/senior-azure-engineer-cloud-remote/21726/92924677808",
+      "error": ""
+    },
+    {
+      "id": "e4d91fe7-4f62-4bb3-8c0e-d0ad16c1a0be",
+      "slug": "associate-analyst-provider-configuration-molina-healthcare-8000d2b10c",
+      "title": "Associate Analyst, Provider Configuration",
+      "company": "Molina Healthcare",
+      "apply_url": "https://careers.molinahealthcare.com/job/united-states/associate-analyst-provider-configuration/21726/93698029360",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.molinahealthcare.com/job/united-states/associate-analyst-provider-configuration/21726/93698029360",
+      "error": ""
+    },
+    {
+      "id": "4dbf0580-039a-4d95-88ae-de5a495d5af6",
+      "slug": "data-analyst-pharmacy-molina-healthcare-batch-two",
+      "title": "Data Analyst - Pharmacy",
+      "company": "Molina Healthcare",
+      "apply_url": "https://careers.molinahealthcare.com/job/united-states/data-analyst-pharmacy/21726/93661357504",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.molinahealthcare.com/job/united-states/data-analyst-pharmacy/21726/93661357504",
+      "error": ""
+    },
+    {
+      "id": "95b6ddb8-edf5-4aaf-8f5d-e433fb40b774",
+      "slug": "senior-business-analyst-remote-molina-healthcare-batch-two",
+      "title": "Senior Business Analyst - Remote",
+      "company": "Molina Healthcare",
+      "apply_url": "https://careers.molinahealthcare.com/job/united-states/senior-business-analyst-remote/21726/93516831168",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.molinahealthcare.com/job/united-states/senior-business-analyst-remote/21726/93516831168",
+      "error": ""
+    },
+    {
+      "id": "250e4876-ff2e-4a3f-8d4c-f5b76a58f48b",
+      "slug": "navigator-healthcare-access-remote-molina-healthcare-batch-two",
+      "title": "Navigator, Healthcare Access - Remote",
+      "company": "Molina Healthcare",
+      "apply_url": "https://careers.molinahealthcare.com/job/united-states/navigator-healthcare-access-remote/21726/94752742832",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.molinahealthcare.com/job/united-states/navigator-healthcare-access-remote/21726/94752742832",
+      "error": ""
+    },
+    {
+      "id": "4982d5a5-0ac0-4273-9c16-3ddcd4010b12",
+      "slug": "care-review-clinician-rn-weekends-molina-healthcare-batch-two",
+      "title": "Care Review Clinician (RN) Weekends",
+      "company": "Molina Healthcare",
+      "apply_url": "https://careers.molinahealthcare.com/job/united-states/care-review-clinician-rn/21726/93967909392",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.molinahealthcare.com/job/united-states/care-review-clinician-rn/21726/93967909392",
+      "error": ""
+    },
+    {
+      "id": "ea5b1d39-d60a-4327-84b1-476c0a6f59f5",
+      "slug": "ltss-service-coordinator-case-manager-region-d-hillsborough-manatee-polk-elevance-health-b",
+      "title": "LTSS Service Coordinator - Case Manager (Region D: Hillsborough/Manatee/Polk)",
+      "company": "Elevance Health",
+      "apply_url": "https://careers.elevancehealth.com/ltss-service-coordinator-case-manager-region-d-hillsborough-mantee-polk/job/5D191E1C2F7C8F5693396F9CF12C35F0",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.elevancehealth.com/ltss-service-coordinator-case-manager-region-d-hillsborough-mantee-polk/job/5D191E1C2F7C8F5693396F9CF12C35F0",
+      "error": ""
+    },
+    {
+      "id": "515e7d86-030c-42a7-be64-6889ceb78d96",
+      "slug": "social-work-case-manager-nj-medicaid-housing-program-elevance-health-batch-two",
+      "title": "Social Work Case Manager - NJ Medicaid Housing Program",
+      "company": "Elevance Health",
+      "apply_url": "https://careers.elevancehealth.com/social-work-case-manager-us/job/3DD53D24A7811C41AEAB811221B9E0A2",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.elevancehealth.com/social-work-case-manager-us/job/3DD53D24A7811C41AEAB811221B9E0A2",
+      "error": ""
+    },
+    {
+      "id": "ae292bb0-1096-45a8-a3c6-13223097954d",
+      "slug": "medical-director-psychiatrist-child-adolescence-elevance-health-batch-two",
+      "title": "Medical Director-Psychiatrist (Child Adolescence)",
+      "company": "Elevance Health",
+      "apply_url": "https://careers.elevancehealth.com/medical-director-psychiatrist-child-adolescence/job/24B5C660DED1E0C73E24B60D5C4490A1",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.elevancehealth.com/medical-director-psychiatrist-child-adolescence/job/24B5C660DED1E0C73E24B60D5C4490A1",
+      "error": ""
+    },
+    {
+      "id": "ffb99f97-3f5f-4652-ad12-a7d05740824c",
+      "slug": "medical-director-california-elevance-health-batch-two",
+      "title": "Medical Director - California",
+      "company": "Elevance Health",
+      "apply_url": "https://careers.elevancehealth.com/medical-director/job/F678148D65220E34764BDEF3AA1748B0",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.elevancehealth.com/medical-director/job/F678148D65220E34764BDEF3AA1748B0",
+      "error": ""
+    },
+    {
+      "id": "cd0e7a95-7bd4-46ab-a1f8-03416e5fe574",
+      "slug": "hybrid-bh-clinical-care-manager-licsw-or-lmhc-lynn-and-surrounding-caresource-commonwealth",
+      "title": "Hybrid BH Clinical Care Manager (LICSW or LMHC) - Lynn and surrounding",
+      "company": "CareSource / Commonwealth Care Alliance",
+      "apply_url": "https://careers.caresource.com/search/jobdetails/hybrid-bh-clinical-care-manager-licsw-or-lmhc---lynn-and-surrounding/5230637e-53b2-4cac-9140-9eb55ca296d1",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.caresource.com/search/jobdetails/hybrid-bh-clinical-care-manager-licsw-or-lmhc---lynn-and-surrounding/5230637e-53b2-4cac-9140-9eb55ca296d1",
+      "error": ""
+    },
+    {
+      "id": "82b7eb96-edff-4a5a-ae17-473cc6679b65",
+      "slug": "sr-manager-medical-risk-adjustment-analytics-caresource-commonwealth-care-alliance-batch-t",
+      "title": "Sr. Manager, Medical Risk Adjustment Analytics",
+      "company": "CareSource / Commonwealth Care Alliance",
+      "apply_url": "https://careers.caresource.com/search/jobdetails/sr-manager-medical-risk-adjustment-analytics/34839be1-11a3-4028-9808-d1b686b33aa9",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.caresource.com/search/jobdetails/sr-manager-medical-risk-adjustment-analytics/34839be1-11a3-4028-9808-d1b686b33aa9",
+      "error": ""
+    },
+    {
+      "id": "633e44d4-3f3b-4493-aacd-6ef72ab9b302",
+      "slug": "head-of-provider-operations-centene-corporation-batch-two",
+      "title": "Head of Provider Operations",
+      "company": "Centene Corporation",
+      "apply_url": "https://jobs.centene.com/us/en/jobs/1633894/head-of-provider-operations/",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://jobs.centene.com/us/en/jobs/1633894/head-of-provider-operations/",
+      "error": ""
+    },
+    {
+      "id": "e870a335-dd8f-4881-a292-fccb3a407482",
+      "slug": "manager-healthcare-analytics-centene-corporation-batch-two",
+      "title": "Manager, Healthcare Analytics",
+      "company": "Centene Corporation",
+      "apply_url": "https://jobs.centene.com/us/en/jobs/1618222/manager-healthcare-analytics/",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://jobs.centene.com/us/en/jobs/1618222/manager-healthcare-analytics/",
+      "error": ""
+    },
+    {
+      "id": "105b4c1d-1c34-4484-a720-7b30d6e60266",
+      "slug": "remote-medical-director-appeals-centene-corporation-batch-two",
+      "title": "Remote Medical Director, Appeals",
+      "company": "Centene Corporation",
+      "apply_url": "https://jobs.centene.com/us/en/jobs/1623752/remote-medical-director-appeals/",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://jobs.centene.com/us/en/jobs/1623752/remote-medical-director-appeals/",
+      "error": ""
+    },
+    {
+      "id": "cc799fbd-7414-45d3-8bad-7f8c343dc0ee",
+      "slug": "sr-dir-software-engineering-remote-or-hybrid-in-mn-or-dc-unitedhealth-group-optum-batch-tw",
+      "title": "Sr Dir, Software Engineering - Remote or Hybrid in MN or DC",
+      "company": "UnitedHealth Group / Optum",
+      "apply_url": "https://careers.unitedhealthgroup.com/job/minnetonka/sr-dir-software-engineering-remote-or-hybrid-in-mn-or-dc/34088/94973583328",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.unitedhealthgroup.com/job/minnetonka/sr-dir-software-engineering-remote-or-hybrid-in-mn-or-dc/34088/94973583328",
+      "error": ""
+    },
+    {
+      "id": "0bf9e023-5f36-4178-9a09-396300a20cba",
+      "slug": "c-s-plan-of-indiana-chief-medical-officer-unitedhealth-group-optum-batch-two",
+      "title": "C&S Plan of Indiana - Chief Medical Officer",
+      "company": "UnitedHealth Group / Optum",
+      "apply_url": "https://careers.unitedhealthgroup.com/job/indianapolis/c-and-s-plan-of-indiana-chief-medical-officer/34088/92872076352",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.unitedhealthgroup.com/job/indianapolis/c-and-s-plan-of-indiana-chief-medical-officer/34088/92872076352",
+      "error": ""
+    },
+    {
+      "id": "546e053a-8e98-4465-b3d3-58a194791ce5",
+      "slug": "sr-payment-integrity-specialist-governance-centene-corporation-batch-two",
+      "title": "Sr. Payment Integrity Specialist - Governance",
+      "company": "Centene Corporation",
+      "apply_url": "https://jobs.centene.com/us/en/jobs/1639269/sr-payment-integrity-specialist-governance/",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://jobs.centene.com/us/en/jobs/1639269/sr-payment-integrity-specialist-governance/",
+      "error": ""
+    },
+    {
+      "id": "09137be6-c59e-48dd-aab2-ffbbd58e5bc6",
+      "slug": "vice-president-risk-adjustment-program-operations-data-integrity-centene-corporation-batch",
+      "title": "Vice President, Risk Adjustment Program Operations & Data Integrity",
+      "company": "Centene Corporation",
+      "apply_url": "https://jobs.centene.com/us/en/jobs/1638546/vice-president-risk-adjustment-program-operations-data-integrity/",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://jobs.centene.com/us/en/jobs/1638546/vice-president-risk-adjustment-program-operations-data-integrity/",
+      "error": ""
+    },
+    {
+      "id": "b2845901-f26d-4352-b7e0-9d2744474ec2",
+      "slug": "manager-payment-integrity-policy-governance-centene-corporation-batch-two",
+      "title": "Manager, Payment Integrity - Policy Governance",
+      "company": "Centene Corporation",
+      "apply_url": "https://jobs.centene.com/us/en/jobs/1639246/manager-payment-integrity-policy-governance/",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://jobs.centene.com/us/en/jobs/1639246/manager-payment-integrity-policy-governance/",
+      "error": ""
+    },
+    {
+      "id": "ea9a494f-29a2-48fa-9e8c-8cbdc2bc2e33",
+      "slug": "payment-integrity-specialist-governance-centene-corporation-batch-two",
+      "title": "Payment Integrity Specialist - Governance",
+      "company": "Centene Corporation",
+      "apply_url": "https://jobs.centene.com/us/en/jobs/1639268/payment-integrity-specialist-governance/",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://jobs.centene.com/us/en/jobs/1639268/payment-integrity-specialist-governance/",
+      "error": ""
+    },
+    {
+      "id": "8413e105-ba12-454a-8373-bebdb33d6977",
+      "slug": "healthcare-data-analytics-consultant-quality-measurement-remote-unitedhealth-group-optum",
+      "title": "Healthcare Data Analytics Consultant, Quality Measurement - Remote",
+      "company": "UnitedHealth Group / Optum",
+      "apply_url": "https://careers.unitedhealthgroup.com/job/reston/healthcare-data-analytics-consultant-quality-measurement-remote/34088/95009058976",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.unitedhealthgroup.com/job/reston/healthcare-data-analytics-consultant-quality-measurement-remote/34088/95009058976",
+      "error": ""
+    },
+    {
+      "id": "cce10cf7-e843-4fa3-b3e1-fe7d43b3563d",
+      "slug": "director-risk-compliance-processes-initiatives-centene-corporation",
+      "title": "Director, Risk & Compliance Processes & Initiatives",
+      "company": "Centene Corporation",
+      "apply_url": "https://jobs.centene.com/us/en/jobs/1637638/director-risk-compliance-processes-initiatives/",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://jobs.centene.com/us/en/jobs/1637638/director-risk-compliance-processes-initiatives/",
+      "error": ""
+    },
+    {
+      "id": "7bd8aaca-f37e-43e5-81eb-5710ba23fdc4",
+      "slug": "project-manager-managed-care-cost-saving-implementations-remote-molina-healthcare",
+      "title": "Project Manager - Managed Care Cost Saving Implementations - Remote",
+      "company": "Molina Healthcare",
+      "apply_url": "https://careers.molinahealthcare.com/job/united-states/project-manager-managed-care-cost-saving-implementations-remote/21726/94785847728",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.molinahealthcare.com/job/united-states/project-manager-managed-care-cost-saving-implementations-remote/21726/94785847728",
+      "error": ""
+    },
+    {
+      "id": "34c78c92-cc74-4928-acff-2113ccfaa53c",
+      "slug": "program-manager-pmo-smartsheet-medicaid-implementation-remote-molina-healthcare",
+      "title": "Program Manager, PMO - Smartsheet/Medicaid Implementation - Remote",
+      "company": "Molina Healthcare",
+      "apply_url": "https://careers.molinahealthcare.com/job/united-states/program-manager-pmo-smartsheet-medicaid-implementation-remote/21726/94268062464",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.molinahealthcare.com/job/united-states/program-manager-pmo-smartsheet-medicaid-implementation-remote/21726/94268062464",
+      "error": ""
+    },
+    {
+      "id": "0dec054d-203f-4fa3-b501-f72567cd44d9",
+      "slug": "field-service-coordinator-rn-idd-remote-unitedhealth-group-optum",
+      "title": "Field Service Coordinator, RN - IDD - Remote",
+      "company": "UnitedHealth Group / Optum",
+      "apply_url": "https://careers.unitedhealthgroup.com/job/arlington/field-service-coordinator-rn-idd-remote/34088/93760954128",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.unitedhealthgroup.com/job/arlington/field-service-coordinator-rn-idd-remote/34088/93760954128",
+      "error": ""
+    },
+    {
+      "id": "052a2602-cadc-4e29-81ff-23c22b35a5f1",
+      "slug": "vice-president-of-product-state-government-solutions-unitedhealth-group-optum",
+      "title": "Vice President of Product - State Government Solutions",
+      "company": "UnitedHealth Group / Optum",
+      "apply_url": "https://careers.unitedhealthgroup.com/job/washington-d-c/vice-president-of-product-state-government-solutions/34088/92872151840",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.unitedhealthgroup.com/job/washington-d-c/vice-president-of-product-state-government-solutions/34088/92872151840",
+      "error": ""
+    },
+    {
+      "id": "602e2cad-0e88-43da-9998-fc401ea5906f",
+      "slug": "behavioral-health-contracting-california-and-western-united-states-remote-unitedhealth-gro",
+      "title": "Behavioral Health Contracting - California and Western United States - Remote",
+      "company": "UnitedHealth Group / Optum",
+      "apply_url": "https://careers.unitedhealthgroup.com/job/cypress/behavioral-health-contracting-california-and-western-united-states-remote/34088/94268460384",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.unitedhealthgroup.com/job/cypress/behavioral-health-contracting-california-and-western-united-states-remote/34088/94268460384",
+      "error": ""
+    },
+    {
+      "id": "cb29dfba-ce41-4006-84c3-bc852f26c3a9",
+      "slug": "behavioral-health-compliance-manager-elevance-health",
+      "title": "Behavioral Health Compliance Manager",
+      "company": "Elevance Health",
+      "apply_url": "https://careers.elevancehealth.com/behavioral-health-compliance-manager/job/6B3F8B2C060D3B759412BE2DBD817540",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.elevancehealth.com/behavioral-health-compliance-manager/job/6B3F8B2C060D3B759412BE2DBD817540",
+      "error": ""
+    },
+    {
+      "id": "d9afbfa3-6194-4269-98c2-40be75dfd6b9",
+      "slug": "manager-ii-medicaid-pbm-sales-support-elevance-health",
+      "title": "Manager II, Medicaid PBM Sales Support",
+      "company": "Elevance Health",
+      "apply_url": "https://careers.elevancehealth.com/manager-ii-medicaid-pbm-sales-support/job/90FA35649B6F8A3369F82A95FAFC4A37",
+      "result": "broken",
+      "status": 404,
+      "final_url": "https://careers.elevancehealth.com/manager-ii-medicaid-pbm-sales-support/job/90FA35649B6F8A3369F82A95FAFC4A37",
+      "error": ""
+    }
+  ],
+  "warning_links": []
+}
