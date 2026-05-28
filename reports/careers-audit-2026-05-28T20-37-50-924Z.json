@@ -1,0 +1,507 @@
+{
+  "generated_at": "2026-05-28T20:37:50.923Z",
+  "scope": "approved_only",
+  "checked_links": false,
+  "counts": {
+    "jobs": 290,
+    "duplicate_slugs": 0,
+    "duplicate_apply_urls": 3,
+    "duplicate_title_company": 7,
+    "duplicate_title_company_location": 6,
+    "missing_apply_urls": 0,
+    "broken_links": 0,
+    "warning_links": 0
+  },
+  "duplicates": {
+    "slugs": [],
+    "apply_urls": [
+      {
+        "key": "https://himalayas.app/companies/guidewell/jobs/health-data-consultant-remote-florida",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "1e0bf91e-d8c5-472b-a5b8-7ebded860af4",
+            "slug": "health-data-consultant-guidewell-2026-05-28",
+            "title": "Health Data Consultant",
+            "company": "GuideWell",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://himalayas.app/companies/guidewell/jobs/health-data-consultant-remote-florida",
+            "created_at": "2026-05-28T20:36:21.223797+00:00",
+            "updated_at": "2026-05-28T20:36:21.223797+00:00"
+          },
+          {
+            "id": "4fc59460-e80a-49a6-8907-ee099de92acd",
+            "slug": "health-data-consultant-remote-florida-guidewell-d9de01cd",
+            "title": "Health Data Consultant, Remote Florida",
+            "company": "GuideWell",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://himalayas.app/companies/guidewell/jobs/health-data-consultant-remote-florida",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          }
+        ]
+      },
+      {
+        "key": "https://remotive.com/remote/jobs/data/sr-quality-data-analyst-3927987",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "149d135a-3908-45f4-b1a3-d09e78a59ff0",
+            "slug": "sr-quality-data-analyst-mvp-health-care-2026-05-28",
+            "title": "Sr. Quality Data Analyst",
+            "company": "MVP Health Care",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://remotive.com/remote/jobs/data/sr-quality-data-analyst-3927987",
+            "created_at": "2026-05-28T20:36:21.223797+00:00",
+            "updated_at": "2026-05-28T20:36:21.223797+00:00"
+          },
+          {
+            "id": "2085a3e8-a2aa-4c9e-b2b8-1d60d5ae5e7f",
+            "slug": "sr-quality-data-analyst-mvp-health-care-58b41ea2",
+            "title": "Sr. Quality Data Analyst",
+            "company": "MVP Health Care",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://remotive.com/remote/jobs/data/sr-quality-data-analyst-3927987",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          }
+        ]
+      },
+      {
+        "key": "https://jobs.ashbyhq.com/intus/eb715729-5af9-40e4-a560-4c0e8a96eaa3",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "f3d77017-7732-4925-ab35-7e05ee134654",
+            "slug": "sr-data-analyst-scientist-intuscare-2026-05-28",
+            "title": "Sr Data Analyst/Scientist",
+            "company": "IntusCare",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://jobs.ashbyhq.com/intus/eb715729-5af9-40e4-a560-4c0e8a96eaa3",
+            "created_at": "2026-05-28T20:36:21.223797+00:00",
+            "updated_at": "2026-05-28T20:36:21.223797+00:00"
+          },
+          {
+            "id": "5509a77c-e419-4daf-a6ab-3814928688fe",
+            "slug": "sr-data-analyst-scientist-intuscare-00a4747f",
+            "title": "Sr Data Analyst/Scientist",
+            "company": "IntusCare",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://jobs.ashbyhq.com/intus/eb715729-5af9-40e4-a560-4c0e8a96eaa3",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      }
+    ],
+    "title_company": [
+      {
+        "key": "senior healthcare data analyst::accompany health",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "1eb997df-a7be-4081-9ccb-a59d16c736b8",
+            "slug": "senior-healthcare-data-analyst-accompany-health-2026-05-28",
+            "title": "Senior Healthcare Data Analyst",
+            "company": "Accompany Health",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aa2r4sgzw42n",
+            "created_at": "2026-05-28T20:36:21.223797+00:00",
+            "updated_at": "2026-05-28T20:36:21.223797+00:00"
+          },
+          {
+            "id": "59b45276-5d61-4a12-88d3-8dfbda6c9247",
+            "slug": "senior-healthcare-data-analyst-accompany-health-c5907233",
+            "title": "Senior Healthcare Data Analyst",
+            "company": "Accompany Health",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aa2xpmxw9lrd",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      },
+      {
+        "key": "medicaid analyst::stride inc",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "79873a45-997c-48e0-b72a-0833647b2792",
+            "slug": "medicaid-analyst-stride-2026-05-28",
+            "title": "Medicaid Analyst",
+            "company": "Stride, Inc.",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aavncphzdhhc",
+            "created_at": "2026-05-28T20:36:21.223797+00:00",
+            "updated_at": "2026-05-28T20:36:21.223797+00:00"
+          },
+          {
+            "id": "f5482b44-7bf2-462b-b1a6-1d0536145ed4",
+            "slug": "medicaid-analyst-stride-inc-453d2455",
+            "title": "Medicaid Analyst",
+            "company": "Stride, Inc.",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://www.remoterocketship.com/us/company/stridelearning/jobs/medicaid-analyst-united-states-remote/",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          }
+        ]
+      },
+      {
+        "key": "healthcare data analyst algorithm developer::radcube",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "802ba7d2-5f40-46a1-818a-2337e180e01c",
+            "slug": "healthcare-data-analyst-algorithm-developer-radcube-2026-05-28",
+            "title": "Healthcare Data Analyst / Algorithm Developer",
+            "company": "RadCube",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aa4gwpvdf6r6",
+            "created_at": "2026-05-28T20:36:21.223797+00:00",
+            "updated_at": "2026-05-28T20:36:21.223797+00:00"
+          },
+          {
+            "id": "4b1bf56d-bdfd-4954-972f-5d143a31b715",
+            "slug": "healthcare-data-analyst-algorithm-developer-radcube-748c3144",
+            "title": "Healthcare Data Analyst / Algorithm Developer",
+            "company": "RadCube",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aayvdksdp6pg",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      },
+      {
+        "key": "healthcare analytics advisor::claritev",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "f6a2a1a1-4226-4472-8409-2590e8f3bcd5",
+            "slug": "healthcare-analytics-advisor-claritev-2026-05-28",
+            "title": "Healthcare Analytics Advisor",
+            "company": "Claritev",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aamf8ztvw68s",
+            "created_at": "2026-05-28T20:36:21.223797+00:00",
+            "updated_at": "2026-05-28T20:36:21.223797+00:00"
+          },
+          {
+            "id": "62c59789-2a5a-48e9-b86a-c567ba7e934d",
+            "slug": "healthcare-analytics-advisor-claritev-03eacccc",
+            "title": "Healthcare Analytics Advisor",
+            "company": "Claritev",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aahhygbvflby",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      },
+      {
+        "key": "sr quality data analyst::mvp health care",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "149d135a-3908-45f4-b1a3-d09e78a59ff0",
+            "slug": "sr-quality-data-analyst-mvp-health-care-2026-05-28",
+            "title": "Sr. Quality Data Analyst",
+            "company": "MVP Health Care",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://remotive.com/remote/jobs/data/sr-quality-data-analyst-3927987",
+            "created_at": "2026-05-28T20:36:21.223797+00:00",
+            "updated_at": "2026-05-28T20:36:21.223797+00:00"
+          },
+          {
+            "id": "2085a3e8-a2aa-4c9e-b2b8-1d60d5ae5e7f",
+            "slug": "sr-quality-data-analyst-mvp-health-care-58b41ea2",
+            "title": "Sr. Quality Data Analyst",
+            "company": "MVP Health Care",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://remotive.com/remote/jobs/data/sr-quality-data-analyst-3927987",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          }
+        ]
+      },
+      {
+        "key": "sr data analyst scientist::intuscare",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "f3d77017-7732-4925-ab35-7e05ee134654",
+            "slug": "sr-data-analyst-scientist-intuscare-2026-05-28",
+            "title": "Sr Data Analyst/Scientist",
+            "company": "IntusCare",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://jobs.ashbyhq.com/intus/eb715729-5af9-40e4-a560-4c0e8a96eaa3",
+            "created_at": "2026-05-28T20:36:21.223797+00:00",
+            "updated_at": "2026-05-28T20:36:21.223797+00:00"
+          },
+          {
+            "id": "5509a77c-e419-4daf-a6ab-3814928688fe",
+            "slug": "sr-data-analyst-scientist-intuscare-00a4747f",
+            "title": "Sr Data Analyst/Scientist",
+            "company": "IntusCare",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://jobs.ashbyhq.com/intus/eb715729-5af9-40e4-a560-4c0e8a96eaa3",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      },
+      {
+        "key": "value based programs analyst::humana",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "eb12ee4d-a36d-4bc7-89c8-2d9dde9a7c53",
+            "slug": "value-based-programs-analyst-humana-b77c000b",
+            "title": "Value-Based Programs Analyst",
+            "company": "Humana",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aaz4d42rlfp8",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          },
+          {
+            "id": "4bde8034-0a7d-47e7-913c-62053d9bcfe2",
+            "slug": "value-based-programs-analyst-humana-fresh-batch-may-2026",
+            "title": "Value-Based Programs Analyst",
+            "company": "Humana",
+            "location": "Remote, Nationwide",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.humana.com/us/en/job/R-416072/Value-Based-Programs-Analyst",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          }
+        ]
+      }
+    ],
+    "title_company_location": [
+      {
+        "key": "senior healthcare data analyst::accompany health::remote",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "1eb997df-a7be-4081-9ccb-a59d16c736b8",
+            "slug": "senior-healthcare-data-analyst-accompany-health-2026-05-28",
+            "title": "Senior Healthcare Data Analyst",
+            "company": "Accompany Health",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aa2r4sgzw42n",
+            "created_at": "2026-05-28T20:36:21.223797+00:00",
+            "updated_at": "2026-05-28T20:36:21.223797+00:00"
+          },
+          {
+            "id": "59b45276-5d61-4a12-88d3-8dfbda6c9247",
+            "slug": "senior-healthcare-data-analyst-accompany-health-c5907233",
+            "title": "Senior Healthcare Data Analyst",
+            "company": "Accompany Health",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aa2xpmxw9lrd",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      },
+      {
+        "key": "medicaid analyst::stride inc::remote",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "79873a45-997c-48e0-b72a-0833647b2792",
+            "slug": "medicaid-analyst-stride-2026-05-28",
+            "title": "Medicaid Analyst",
+            "company": "Stride, Inc.",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aavncphzdhhc",
+            "created_at": "2026-05-28T20:36:21.223797+00:00",
+            "updated_at": "2026-05-28T20:36:21.223797+00:00"
+          },
+          {
+            "id": "f5482b44-7bf2-462b-b1a6-1d0536145ed4",
+            "slug": "medicaid-analyst-stride-inc-453d2455",
+            "title": "Medicaid Analyst",
+            "company": "Stride, Inc.",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://www.remoterocketship.com/us/company/stridelearning/jobs/medicaid-analyst-united-states-remote/",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          }
+        ]
+      },
+      {
+        "key": "healthcare data analyst algorithm developer::radcube::remote",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "802ba7d2-5f40-46a1-818a-2337e180e01c",
+            "slug": "healthcare-data-analyst-algorithm-developer-radcube-2026-05-28",
+            "title": "Healthcare Data Analyst / Algorithm Developer",
+            "company": "RadCube",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aa4gwpvdf6r6",
+            "created_at": "2026-05-28T20:36:21.223797+00:00",
+            "updated_at": "2026-05-28T20:36:21.223797+00:00"
+          },
+          {
+            "id": "4b1bf56d-bdfd-4954-972f-5d143a31b715",
+            "slug": "healthcare-data-analyst-algorithm-developer-radcube-748c3144",
+            "title": "Healthcare Data Analyst / Algorithm Developer",
+            "company": "RadCube",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aayvdksdp6pg",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      },
+      {
+        "key": "healthcare analytics advisor::claritev::remote",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "f6a2a1a1-4226-4472-8409-2590e8f3bcd5",
+            "slug": "healthcare-analytics-advisor-claritev-2026-05-28",
+            "title": "Healthcare Analytics Advisor",
+            "company": "Claritev",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aamf8ztvw68s",
+            "created_at": "2026-05-28T20:36:21.223797+00:00",
+            "updated_at": "2026-05-28T20:36:21.223797+00:00"
+          },
+          {
+            "id": "62c59789-2a5a-48e9-b86a-c567ba7e934d",
+            "slug": "healthcare-analytics-advisor-claritev-03eacccc",
+            "title": "Healthcare Analytics Advisor",
+            "company": "Claritev",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aahhygbvflby",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      },
+      {
+        "key": "sr quality data analyst::mvp health care::remote",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "149d135a-3908-45f4-b1a3-d09e78a59ff0",
+            "slug": "sr-quality-data-analyst-mvp-health-care-2026-05-28",
+            "title": "Sr. Quality Data Analyst",
+            "company": "MVP Health Care",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://remotive.com/remote/jobs/data/sr-quality-data-analyst-3927987",
+            "created_at": "2026-05-28T20:36:21.223797+00:00",
+            "updated_at": "2026-05-28T20:36:21.223797+00:00"
+          },
+          {
+            "id": "2085a3e8-a2aa-4c9e-b2b8-1d60d5ae5e7f",
+            "slug": "sr-quality-data-analyst-mvp-health-care-58b41ea2",
+            "title": "Sr. Quality Data Analyst",
+            "company": "MVP Health Care",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://remotive.com/remote/jobs/data/sr-quality-data-analyst-3927987",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          }
+        ]
+      },
+      {
+        "key": "sr data analyst scientist::intuscare::remote",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "f3d77017-7732-4925-ab35-7e05ee134654",
+            "slug": "sr-data-analyst-scientist-intuscare-2026-05-28",
+            "title": "Sr Data Analyst/Scientist",
+            "company": "IntusCare",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://jobs.ashbyhq.com/intus/eb715729-5af9-40e4-a560-4c0e8a96eaa3",
+            "created_at": "2026-05-28T20:36:21.223797+00:00",
+            "updated_at": "2026-05-28T20:36:21.223797+00:00"
+          },
+          {
+            "id": "5509a77c-e419-4daf-a6ab-3814928688fe",
+            "slug": "sr-data-analyst-scientist-intuscare-00a4747f",
+            "title": "Sr Data Analyst/Scientist",
+            "company": "IntusCare",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://jobs.ashbyhq.com/intus/eb715729-5af9-40e4-a560-4c0e8a96eaa3",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      }
+    ]
+  },
+  "missing_apply_urls": [],
+  "broken_links": [],
+  "warning_links": []
+}

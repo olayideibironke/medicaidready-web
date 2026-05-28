@@ -1,0 +1,86 @@
+{
+  "generated_at": "2026-05-28T20:40:06.007Z",
+  "scope": "approved_only",
+  "checked_links": false,
+  "counts": {
+    "jobs": 284,
+    "duplicate_slugs": 0,
+    "duplicate_apply_urls": 1,
+    "duplicate_title_company": 1,
+    "duplicate_title_company_location": 0,
+    "missing_apply_urls": 0,
+    "broken_links": 0,
+    "warning_links": 0
+  },
+  "duplicates": {
+    "slugs": [],
+    "apply_urls": [
+      {
+        "key": "https://himalayas.app/companies/guidewell/jobs/health-data-consultant-remote-florida",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "1e0bf91e-d8c5-472b-a5b8-7ebded860af4",
+            "slug": "health-data-consultant-guidewell-2026-05-28",
+            "title": "Health Data Consultant",
+            "company": "GuideWell",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://himalayas.app/companies/guidewell/jobs/health-data-consultant-remote-florida",
+            "created_at": "2026-05-28T20:36:21.223797+00:00",
+            "updated_at": "2026-05-28T20:36:21.223797+00:00"
+          },
+          {
+            "id": "4fc59460-e80a-49a6-8907-ee099de92acd",
+            "slug": "health-data-consultant-remote-florida-guidewell-d9de01cd",
+            "title": "Health Data Consultant, Remote Florida",
+            "company": "GuideWell",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://himalayas.app/companies/guidewell/jobs/health-data-consultant-remote-florida",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          }
+        ]
+      }
+    ],
+    "title_company": [
+      {
+        "key": "value based programs analyst::humana",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "eb12ee4d-a36d-4bc7-89c8-2d9dde9a7c53",
+            "slug": "value-based-programs-analyst-humana-b77c000b",
+            "title": "Value-Based Programs Analyst",
+            "company": "Humana",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aaz4d42rlfp8",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          },
+          {
+            "id": "4bde8034-0a7d-47e7-913c-62053d9bcfe2",
+            "slug": "value-based-programs-analyst-humana-fresh-batch-may-2026",
+            "title": "Value-Based Programs Analyst",
+            "company": "Humana",
+            "location": "Remote, Nationwide",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.humana.com/us/en/job/R-416072/Value-Based-Programs-Analyst",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          }
+        ]
+      }
+    ],
+    "title_company_location": []
+  },
+  "missing_apply_urls": [],
+  "broken_links": [],
+  "warning_links": []
+}
