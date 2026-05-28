@@ -1,0 +1,1167 @@
+{
+  "generated_at": "2026-05-28T20:10:21.858Z",
+  "scope": "approved_only",
+  "checked_links": false,
+  "counts": {
+    "jobs": 282,
+    "duplicate_slugs": 0,
+    "duplicate_apply_urls": 13,
+    "duplicate_title_company": 13,
+    "duplicate_title_company_location": 12,
+    "missing_apply_urls": 0,
+    "broken_links": 0,
+    "warning_links": 0
+  },
+  "duplicates": {
+    "slugs": [],
+    "apply_urls": [
+      {
+        "key": "https://remotive.com/remote/jobs/data/healthcare-analyst-ii-vendor-management-experience-required-4214126",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "70b4ae6b-2bc1-4032-9c99-d2c113e5b234",
+            "slug": "healthcare-analyst-ii-vendor-management-experience-required-caresource-96678e36",
+            "title": "Healthcare Analyst II - Vendor Management Experience Required",
+            "company": "CareSource",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://remotive.com/remote/jobs/data/healthcare-analyst-ii-vendor-management-experience-required-4214126",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          },
+          {
+            "id": "b09f07b0-631d-4e83-9e7a-d14a557a3dc3",
+            "slug": "healthcare-analyst-ii-vendor-management-experience-required-caresource-58acc65b",
+            "title": "Healthcare Analyst II - Vendor Management Experience Required",
+            "company": "CareSource",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://remotive.com/remote/jobs/data/healthcare-analyst-ii-vendor-management-experience-required-4214126",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      },
+      {
+        "key": "https://to.indeed.com/aac6jt88mb9y",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "6160ba19-d694-479f-ba79-ca81492364f4",
+            "slug": "clinical-coding-analyst-enjoin-754f056c",
+            "title": "Clinical Coding Analyst",
+            "company": "Enjoin",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aac6jt88mb9y",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          },
+          {
+            "id": "c0071af6-8b0f-48c6-b93d-b7e30f3f7adc",
+            "slug": "clinical-coding-analyst-inpatient-clinical-coding-validation-enjoin-5f168860",
+            "title": "Clinical Coding Analyst (Inpatient Clinical & Coding Validation)",
+            "company": "Enjoin",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aac6jt88mb9y",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      },
+      {
+        "key": "https://to.indeed.com/aaxyc22jjnng",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "600d5db0-7ede-46de-9f59-4bced8a264bb",
+            "slug": "denials-recovery-analyst-revecore-541438c5",
+            "title": "Denials Recovery Analyst",
+            "company": "Revecore",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aaxyc22jjnng",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          },
+          {
+            "id": "8d6146f3-c297-4d01-9525-a9648247c99b",
+            "slug": "denials-recovery-analyst-revecore-ca24fb92",
+            "title": "Denials Recovery Analyst",
+            "company": "Revecore",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aaxyc22jjnng",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      },
+      {
+        "key": "https://to.indeed.com/aaj92wfznv48",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "40af8797-29c6-45a0-93ad-74e978139b3f",
+            "slug": "epic-cogito-business-intelligence-developer-scaled-data-llc-25b95659",
+            "title": "EPIC Cogito Business Intelligence Developer",
+            "company": "Scaled Data LLC",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aaj92wfznv48",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          },
+          {
+            "id": "db8f5ad5-2222-4a15-81ef-7d59c81ed8c3",
+            "slug": "epic-cogito-business-intelligence-developer-senior-data-analyst-scaled-data-llc-ba717d0f",
+            "title": "EPIC Cogito Business Intelligence Developer - Senior Data Analyst",
+            "company": "Scaled Data LLC",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aaj92wfznv48",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      },
+      {
+        "key": "https://to.indeed.com/aaqpgmwjrtfc",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "bdba1dd4-b9f7-4ae2-bd59-0ae5dd29be97",
+            "slug": "healthcare-integration-analyst-evidencecare-ee2d0a0f",
+            "title": "Healthcare Integration Analyst",
+            "company": "EvidenceCare",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aaqpgmwjrtfc",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          },
+          {
+            "id": "7a306c99-5fc7-4f1e-96eb-4bb7f02aee0b",
+            "slug": "healthcare-integration-analyst-evidencecare-0d6a3777",
+            "title": "Healthcare Integration Analyst",
+            "company": "EvidenceCare",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aaqpgmwjrtfc",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      },
+      {
+        "key": "https://to.indeed.com/aaq7n7jc678n",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "4063ec0c-215d-4297-9af8-9d652543b82c",
+            "slug": "product-analyst-azra-ai-efe3bbb1",
+            "title": "Product Analyst",
+            "company": "Azra AI",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aaq7n7jc678n",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          },
+          {
+            "id": "c584b0a2-e6aa-4b79-a5f6-de43ccbed31c",
+            "slug": "product-analyst-azra-ai-71d21e0c",
+            "title": "Product Analyst",
+            "company": "Azra AI",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aaq7n7jc678n",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      },
+      {
+        "key": "https://to.indeed.com/aa9wdvqwr7n7",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "f8ec5613-6261-4aad-ad3c-2496fc46c9b4",
+            "slug": "data-engineer-sun-river-health-f52d5bda",
+            "title": "Data Engineer",
+            "company": "Sun River Health",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aa9wdvqwr7n7",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          },
+          {
+            "id": "4b8348da-f62f-47a3-ac4c-f4c267130d52",
+            "slug": "data-engineer-sun-river-health-5723ce51",
+            "title": "Data Engineer",
+            "company": "Sun River Health",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aa9wdvqwr7n7",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      },
+      {
+        "key": "https://to.indeed.com/aapv4jdrt4gq",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "67636d39-19a9-4824-b90a-2077d67807d4",
+            "slug": "drg-integrity-analyst-enjoin-5ea10bd2",
+            "title": "DRG Integrity Analyst",
+            "company": "Enjoin",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aapv4jdrt4gq",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          },
+          {
+            "id": "e5f348a3-7fdf-444f-ad56-0b6d8eec1886",
+            "slug": "drg-integrity-analyst-dia-enjoin-823b6345",
+            "title": "DRG Integrity Analyst (DIA)",
+            "company": "Enjoin",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aapv4jdrt4gq",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      },
+      {
+        "key": "https://umb.wd1.myworkdayjobs.com/en-us/umbexternal/job/compliance-analyst-healthcare-services_r-8751",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "b99c877c-dd13-4a59-a14a-0789deab47c7",
+            "slug": "compliance-analyst-healthcare-services-umb-bank-na-12d3b827",
+            "title": "Compliance Analyst Healthcare Services",
+            "company": "UMB BANK NA",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://umb.wd1.myworkdayjobs.com/en-US/UMBExternal/job/Compliance-Analyst-Healthcare-Services_R-8751",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          },
+          {
+            "id": "561e5c7f-c8fe-4402-aed4-296043ceff4e",
+            "slug": "compliance-analyst-healthcare-services-umb-bank-na-bf7e2213",
+            "title": "Compliance Analyst Healthcare Services",
+            "company": "UMB BANK NA",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://umb.wd1.myworkdayjobs.com/en-US/UMBExternal/job/Compliance-Analyst-Healthcare-Services_R-8751",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      },
+      {
+        "key": "https://www.remoterocketship.com/us/company/experian/jobs/client-implementation-analyst-healthcare-billing-and-claims-united-states-remote",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "1e4b54f8-43b1-4715-9d35-97096151e319",
+            "slug": "client-implementation-analyst-healthcare-billing-and-claims-experian-9d866490",
+            "title": "Client Implementation Analyst – Healthcare Billing and Claims",
+            "company": "Experian",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://www.remoterocketship.com/us/company/experian/jobs/client-implementation-analyst-healthcare-billing-and-claims-united-states-remote/",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          },
+          {
+            "id": "a1c00275-2991-4618-bfe1-302d295e92ae",
+            "slug": "client-implementation-analyst-healthcare-billing-and-claims-experian-db1ca11e",
+            "title": "Client Implementation Analyst – Healthcare Billing and Claims",
+            "company": "Experian",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://www.remoterocketship.com/us/company/experian/jobs/client-implementation-analyst-healthcare-billing-and-claims-united-states-remote/",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      },
+      {
+        "key": "https://dailyremote.com/remote-job/revenue-cycle-project-analyst-remote-revenue-cycle-optimization-ft-8-30-a-5-p-4882572",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "58e65c2b-e94d-44d3-8171-cbf0a8aedf04",
+            "slug": "revenue-cycle-project-analyst-baptist-health-south-florida-ce20eb2b",
+            "title": "Revenue Cycle Project Analyst",
+            "company": "Baptist Health South Florida",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://dailyremote.com/remote-job/revenue-cycle-project-analyst-remote-revenue-cycle-optimization-ft-8-30-a-5-p-4882572",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          },
+          {
+            "id": "a014b32c-b1b4-46bc-9da2-0d95e904ce54",
+            "slug": "revenue-cycle-project-analyst-remote-revenue-cycle-optimization-baptist-health-south-flori",
+            "title": "Revenue Cycle Project Analyst, Remote, Revenue Cycle Optimization",
+            "company": "Baptist Health South Florida",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://dailyremote.com/remote-job/revenue-cycle-project-analyst-remote-revenue-cycle-optimization-ft-8-30-a-5-p-4882572",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      },
+      {
+        "key": "https://umiami.wd1.myworkdayjobs.com/en-us/umcareerstaff/job/quality-management-analyst-3---full-time---remote_r100093327",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "ccbd7eb3-9ac9-43a4-8a18-9a928210262a",
+            "slug": "quality-management-analyst-3-university-of-miami-health-system-01219c03",
+            "title": "Quality Management Analyst 3",
+            "company": "University of Miami Health System",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://umiami.wd1.myworkdayjobs.com/en-US/UMCareerStaff/job/Quality-Management-Analyst-3---Full-TIME---Remote_R100093327",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          },
+          {
+            "id": "8570b974-53a6-45a9-aff8-4c776b0658f4",
+            "slug": "quality-management-analyst-3-full-time-remote-university-of-miami-1784f48a",
+            "title": "Quality Management Analyst 3 - Full TIME - Remote",
+            "company": "University of Miami",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://umiami.wd1.myworkdayjobs.com/en-US/UMCareerStaff/job/Quality-Management-Analyst-3---Full-TIME---Remote_R100093327",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      },
+      {
+        "key": "https://www.linkedin.com/jobs/view/senior-public-policy-long-term-care-rate-setting-analyst-at-gainwell-technologies-4385052865",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "cb72e712-d4a7-4525-b7e2-61bf6625c58d",
+            "slug": "senior-public-policy-long-term-care-rate-setting-analyst-gainwell-tech-8c9c383b",
+            "title": "Senior Public Policy / Long-Term Care Rate Setting Analyst",
+            "company": "Gainwell Technologies",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://www.linkedin.com/jobs/view/senior-public-policy-long-term-care-rate-setting-analyst-at-gainwell-technologies-4385052865",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          },
+          {
+            "id": "f305b2c7-3877-4387-93ab-4fdde0861713",
+            "slug": "senior-public-policy-long-term-care-rate-setting-analyst-gainwell-technologies-fe7d410e",
+            "title": "Senior Public Policy / Long-Term Care - Rate Setting Analyst",
+            "company": "Gainwell Technologies",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://www.linkedin.com/jobs/view/senior-public-policy-long-term-care-rate-setting-analyst-at-gainwell-technologies-4385052865",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      }
+    ],
+    "title_company": [
+      {
+        "key": "value based programs analyst::humana",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "eb12ee4d-a36d-4bc7-89c8-2d9dde9a7c53",
+            "slug": "value-based-programs-analyst-humana-b77c000b",
+            "title": "Value-Based Programs Analyst",
+            "company": "Humana",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aaz4d42rlfp8",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          },
+          {
+            "id": "4bde8034-0a7d-47e7-913c-62053d9bcfe2",
+            "slug": "value-based-programs-analyst-humana-fresh-batch-may-2026",
+            "title": "Value-Based Programs Analyst",
+            "company": "Humana",
+            "location": "Remote, Nationwide",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://careers.humana.com/us/en/job/R-416072/Value-Based-Programs-Analyst",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          }
+        ]
+      },
+      {
+        "key": "tmsis experience required data analyst::trillian technologies inc",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "0d28f74d-5b7a-484f-869a-0a57871d076f",
+            "slug": "tmsis-experience-required-data-analyst-trillian-technologies-inc-5fb96c77",
+            "title": "TMSIS Experience Required - Data Analyst",
+            "company": "Trillian Technologies Inc.",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aapty2rdf8yj",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          },
+          {
+            "id": "e5307672-e483-4fdb-9b7d-5d38556f6975",
+            "slug": "tmsis-experience-required-data-analyst-trillian-technologies-inc-ecc19a50",
+            "title": "TMSIS Experience Required - Data Analyst",
+            "company": "Trillian Technologies Inc.",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aa72xpxxqzl9",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      },
+      {
+        "key": "healthcare analyst ii vendor management experience required::caresource",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "70b4ae6b-2bc1-4032-9c99-d2c113e5b234",
+            "slug": "healthcare-analyst-ii-vendor-management-experience-required-caresource-96678e36",
+            "title": "Healthcare Analyst II - Vendor Management Experience Required",
+            "company": "CareSource",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://remotive.com/remote/jobs/data/healthcare-analyst-ii-vendor-management-experience-required-4214126",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          },
+          {
+            "id": "b09f07b0-631d-4e83-9e7a-d14a557a3dc3",
+            "slug": "healthcare-analyst-ii-vendor-management-experience-required-caresource-58acc65b",
+            "title": "Healthcare Analyst II - Vendor Management Experience Required",
+            "company": "CareSource",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://remotive.com/remote/jobs/data/healthcare-analyst-ii-vendor-management-experience-required-4214126",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      },
+      {
+        "key": "clinical denials analyst::enjoin",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "70fa3374-f4fb-4abf-838a-a86bafab98dc",
+            "slug": "clinical-denials-analyst-enjoin-ea424453",
+            "title": "Clinical Denials Analyst",
+            "company": "Enjoin",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aaw7psgkkfcd",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          },
+          {
+            "id": "0bbc0e84-d1ef-4afd-bd1e-22945f7fa4c2",
+            "slug": "clinical-denials-analyst-enjoin-0fbd66dd",
+            "title": "Clinical Denials Analyst",
+            "company": "Enjoin",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aa9d96fbrpr4",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      },
+      {
+        "key": "denials recovery analyst::revecore",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "600d5db0-7ede-46de-9f59-4bced8a264bb",
+            "slug": "denials-recovery-analyst-revecore-541438c5",
+            "title": "Denials Recovery Analyst",
+            "company": "Revecore",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aaxyc22jjnng",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          },
+          {
+            "id": "8d6146f3-c297-4d01-9525-a9648247c99b",
+            "slug": "denials-recovery-analyst-revecore-ca24fb92",
+            "title": "Denials Recovery Analyst",
+            "company": "Revecore",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aaxyc22jjnng",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      },
+      {
+        "key": "healthcare integration analyst::evidencecare",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "bdba1dd4-b9f7-4ae2-bd59-0ae5dd29be97",
+            "slug": "healthcare-integration-analyst-evidencecare-ee2d0a0f",
+            "title": "Healthcare Integration Analyst",
+            "company": "EvidenceCare",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aaqpgmwjrtfc",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          },
+          {
+            "id": "7a306c99-5fc7-4f1e-96eb-4bb7f02aee0b",
+            "slug": "healthcare-integration-analyst-evidencecare-0d6a3777",
+            "title": "Healthcare Integration Analyst",
+            "company": "EvidenceCare",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aaqpgmwjrtfc",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      },
+      {
+        "key": "payment analyst healthcare::signature performance",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "95fdf6a3-0957-4cab-9294-bd8b462a50f2",
+            "slug": "payment-analyst-healthcare-signature-performance-00b1d551",
+            "title": "Payment Analyst, Healthcare",
+            "company": "Signature Performance",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aaprwqsqw8bb",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          },
+          {
+            "id": "2d8ff7e8-c515-431a-a985-c3b497df9751",
+            "slug": "payment-analyst-healthcare-signature-performance-5dd2d363",
+            "title": "Payment Analyst, Healthcare",
+            "company": "Signature Performance",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aagqyrrdx4kd",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      },
+      {
+        "key": "product analyst::azra ai",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "4063ec0c-215d-4297-9af8-9d652543b82c",
+            "slug": "product-analyst-azra-ai-efe3bbb1",
+            "title": "Product Analyst",
+            "company": "Azra AI",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aaq7n7jc678n",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          },
+          {
+            "id": "c584b0a2-e6aa-4b79-a5f6-de43ccbed31c",
+            "slug": "product-analyst-azra-ai-71d21e0c",
+            "title": "Product Analyst",
+            "company": "Azra AI",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aaq7n7jc678n",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      },
+      {
+        "key": "operations application analyst::teamhealth",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "d827c3a4-b3e2-4a52-9fef-0335c8bf13cd",
+            "slug": "operations-application-analyst-teamhealth-97873116",
+            "title": "Operations Application Analyst",
+            "company": "TeamHealth",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aawhrjzwyskq",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          },
+          {
+            "id": "dd310b8c-eeb1-4a39-8664-ebb07fe74b7e",
+            "slug": "operations-application-analyst-teamhealth-f4b8574a",
+            "title": "Operations Application Analyst",
+            "company": "TeamHealth",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aa2tr86mnh2f",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      },
+      {
+        "key": "data engineer::sun river health",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "f8ec5613-6261-4aad-ad3c-2496fc46c9b4",
+            "slug": "data-engineer-sun-river-health-f52d5bda",
+            "title": "Data Engineer",
+            "company": "Sun River Health",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aa9wdvqwr7n7",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          },
+          {
+            "id": "4b8348da-f62f-47a3-ac4c-f4c267130d52",
+            "slug": "data-engineer-sun-river-health-5723ce51",
+            "title": "Data Engineer",
+            "company": "Sun River Health",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aa9wdvqwr7n7",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      },
+      {
+        "key": "compliance analyst healthcare services::umb bank na",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "b99c877c-dd13-4a59-a14a-0789deab47c7",
+            "slug": "compliance-analyst-healthcare-services-umb-bank-na-12d3b827",
+            "title": "Compliance Analyst Healthcare Services",
+            "company": "UMB BANK NA",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://umb.wd1.myworkdayjobs.com/en-US/UMBExternal/job/Compliance-Analyst-Healthcare-Services_R-8751",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          },
+          {
+            "id": "561e5c7f-c8fe-4402-aed4-296043ceff4e",
+            "slug": "compliance-analyst-healthcare-services-umb-bank-na-bf7e2213",
+            "title": "Compliance Analyst Healthcare Services",
+            "company": "UMB BANK NA",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://umb.wd1.myworkdayjobs.com/en-US/UMBExternal/job/Compliance-Analyst-Healthcare-Services_R-8751",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      },
+      {
+        "key": "client implementation analyst healthcare billing and claims::experian",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "1e4b54f8-43b1-4715-9d35-97096151e319",
+            "slug": "client-implementation-analyst-healthcare-billing-and-claims-experian-9d866490",
+            "title": "Client Implementation Analyst – Healthcare Billing and Claims",
+            "company": "Experian",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://www.remoterocketship.com/us/company/experian/jobs/client-implementation-analyst-healthcare-billing-and-claims-united-states-remote/",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          },
+          {
+            "id": "a1c00275-2991-4618-bfe1-302d295e92ae",
+            "slug": "client-implementation-analyst-healthcare-billing-and-claims-experian-db1ca11e",
+            "title": "Client Implementation Analyst – Healthcare Billing and Claims",
+            "company": "Experian",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://www.remoterocketship.com/us/company/experian/jobs/client-implementation-analyst-healthcare-billing-and-claims-united-states-remote/",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      },
+      {
+        "key": "senior public policy long term care rate setting analyst::gainwell technologies",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "cb72e712-d4a7-4525-b7e2-61bf6625c58d",
+            "slug": "senior-public-policy-long-term-care-rate-setting-analyst-gainwell-tech-8c9c383b",
+            "title": "Senior Public Policy / Long-Term Care Rate Setting Analyst",
+            "company": "Gainwell Technologies",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://www.linkedin.com/jobs/view/senior-public-policy-long-term-care-rate-setting-analyst-at-gainwell-technologies-4385052865",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          },
+          {
+            "id": "f305b2c7-3877-4387-93ab-4fdde0861713",
+            "slug": "senior-public-policy-long-term-care-rate-setting-analyst-gainwell-technologies-fe7d410e",
+            "title": "Senior Public Policy / Long-Term Care - Rate Setting Analyst",
+            "company": "Gainwell Technologies",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://www.linkedin.com/jobs/view/senior-public-policy-long-term-care-rate-setting-analyst-at-gainwell-technologies-4385052865",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      }
+    ],
+    "title_company_location": [
+      {
+        "key": "tmsis experience required data analyst::trillian technologies inc::remote",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "0d28f74d-5b7a-484f-869a-0a57871d076f",
+            "slug": "tmsis-experience-required-data-analyst-trillian-technologies-inc-5fb96c77",
+            "title": "TMSIS Experience Required - Data Analyst",
+            "company": "Trillian Technologies Inc.",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aapty2rdf8yj",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          },
+          {
+            "id": "e5307672-e483-4fdb-9b7d-5d38556f6975",
+            "slug": "tmsis-experience-required-data-analyst-trillian-technologies-inc-ecc19a50",
+            "title": "TMSIS Experience Required - Data Analyst",
+            "company": "Trillian Technologies Inc.",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aa72xpxxqzl9",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      },
+      {
+        "key": "healthcare analyst ii vendor management experience required::caresource::remote",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "70b4ae6b-2bc1-4032-9c99-d2c113e5b234",
+            "slug": "healthcare-analyst-ii-vendor-management-experience-required-caresource-96678e36",
+            "title": "Healthcare Analyst II - Vendor Management Experience Required",
+            "company": "CareSource",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://remotive.com/remote/jobs/data/healthcare-analyst-ii-vendor-management-experience-required-4214126",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          },
+          {
+            "id": "b09f07b0-631d-4e83-9e7a-d14a557a3dc3",
+            "slug": "healthcare-analyst-ii-vendor-management-experience-required-caresource-58acc65b",
+            "title": "Healthcare Analyst II - Vendor Management Experience Required",
+            "company": "CareSource",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://remotive.com/remote/jobs/data/healthcare-analyst-ii-vendor-management-experience-required-4214126",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      },
+      {
+        "key": "clinical denials analyst::enjoin::remote",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "70fa3374-f4fb-4abf-838a-a86bafab98dc",
+            "slug": "clinical-denials-analyst-enjoin-ea424453",
+            "title": "Clinical Denials Analyst",
+            "company": "Enjoin",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aaw7psgkkfcd",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          },
+          {
+            "id": "0bbc0e84-d1ef-4afd-bd1e-22945f7fa4c2",
+            "slug": "clinical-denials-analyst-enjoin-0fbd66dd",
+            "title": "Clinical Denials Analyst",
+            "company": "Enjoin",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aa9d96fbrpr4",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      },
+      {
+        "key": "denials recovery analyst::revecore::remote",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "600d5db0-7ede-46de-9f59-4bced8a264bb",
+            "slug": "denials-recovery-analyst-revecore-541438c5",
+            "title": "Denials Recovery Analyst",
+            "company": "Revecore",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aaxyc22jjnng",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          },
+          {
+            "id": "8d6146f3-c297-4d01-9525-a9648247c99b",
+            "slug": "denials-recovery-analyst-revecore-ca24fb92",
+            "title": "Denials Recovery Analyst",
+            "company": "Revecore",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aaxyc22jjnng",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      },
+      {
+        "key": "healthcare integration analyst::evidencecare::remote",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "bdba1dd4-b9f7-4ae2-bd59-0ae5dd29be97",
+            "slug": "healthcare-integration-analyst-evidencecare-ee2d0a0f",
+            "title": "Healthcare Integration Analyst",
+            "company": "EvidenceCare",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aaqpgmwjrtfc",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          },
+          {
+            "id": "7a306c99-5fc7-4f1e-96eb-4bb7f02aee0b",
+            "slug": "healthcare-integration-analyst-evidencecare-0d6a3777",
+            "title": "Healthcare Integration Analyst",
+            "company": "EvidenceCare",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aaqpgmwjrtfc",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      },
+      {
+        "key": "payment analyst healthcare::signature performance::remote",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "95fdf6a3-0957-4cab-9294-bd8b462a50f2",
+            "slug": "payment-analyst-healthcare-signature-performance-00b1d551",
+            "title": "Payment Analyst, Healthcare",
+            "company": "Signature Performance",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aaprwqsqw8bb",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          },
+          {
+            "id": "2d8ff7e8-c515-431a-a985-c3b497df9751",
+            "slug": "payment-analyst-healthcare-signature-performance-5dd2d363",
+            "title": "Payment Analyst, Healthcare",
+            "company": "Signature Performance",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aagqyrrdx4kd",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      },
+      {
+        "key": "product analyst::azra ai::remote",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "4063ec0c-215d-4297-9af8-9d652543b82c",
+            "slug": "product-analyst-azra-ai-efe3bbb1",
+            "title": "Product Analyst",
+            "company": "Azra AI",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aaq7n7jc678n",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          },
+          {
+            "id": "c584b0a2-e6aa-4b79-a5f6-de43ccbed31c",
+            "slug": "product-analyst-azra-ai-71d21e0c",
+            "title": "Product Analyst",
+            "company": "Azra AI",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aaq7n7jc678n",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      },
+      {
+        "key": "operations application analyst::teamhealth::remote",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "d827c3a4-b3e2-4a52-9fef-0335c8bf13cd",
+            "slug": "operations-application-analyst-teamhealth-97873116",
+            "title": "Operations Application Analyst",
+            "company": "TeamHealth",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aawhrjzwyskq",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          },
+          {
+            "id": "dd310b8c-eeb1-4a39-8664-ebb07fe74b7e",
+            "slug": "operations-application-analyst-teamhealth-f4b8574a",
+            "title": "Operations Application Analyst",
+            "company": "TeamHealth",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aa2tr86mnh2f",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      },
+      {
+        "key": "data engineer::sun river health::remote",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "f8ec5613-6261-4aad-ad3c-2496fc46c9b4",
+            "slug": "data-engineer-sun-river-health-f52d5bda",
+            "title": "Data Engineer",
+            "company": "Sun River Health",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aa9wdvqwr7n7",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          },
+          {
+            "id": "4b8348da-f62f-47a3-ac4c-f4c267130d52",
+            "slug": "data-engineer-sun-river-health-5723ce51",
+            "title": "Data Engineer",
+            "company": "Sun River Health",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aa9wdvqwr7n7",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      },
+      {
+        "key": "compliance analyst healthcare services::umb bank na::remote",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "b99c877c-dd13-4a59-a14a-0789deab47c7",
+            "slug": "compliance-analyst-healthcare-services-umb-bank-na-12d3b827",
+            "title": "Compliance Analyst Healthcare Services",
+            "company": "UMB BANK NA",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://umb.wd1.myworkdayjobs.com/en-US/UMBExternal/job/Compliance-Analyst-Healthcare-Services_R-8751",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          },
+          {
+            "id": "561e5c7f-c8fe-4402-aed4-296043ceff4e",
+            "slug": "compliance-analyst-healthcare-services-umb-bank-na-bf7e2213",
+            "title": "Compliance Analyst Healthcare Services",
+            "company": "UMB BANK NA",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://umb.wd1.myworkdayjobs.com/en-US/UMBExternal/job/Compliance-Analyst-Healthcare-Services_R-8751",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      },
+      {
+        "key": "client implementation analyst healthcare billing and claims::experian::remote",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "1e4b54f8-43b1-4715-9d35-97096151e319",
+            "slug": "client-implementation-analyst-healthcare-billing-and-claims-experian-9d866490",
+            "title": "Client Implementation Analyst – Healthcare Billing and Claims",
+            "company": "Experian",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://www.remoterocketship.com/us/company/experian/jobs/client-implementation-analyst-healthcare-billing-and-claims-united-states-remote/",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          },
+          {
+            "id": "a1c00275-2991-4618-bfe1-302d295e92ae",
+            "slug": "client-implementation-analyst-healthcare-billing-and-claims-experian-db1ca11e",
+            "title": "Client Implementation Analyst – Healthcare Billing and Claims",
+            "company": "Experian",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://www.remoterocketship.com/us/company/experian/jobs/client-implementation-analyst-healthcare-billing-and-claims-united-states-remote/",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      },
+      {
+        "key": "senior public policy long term care rate setting analyst::gainwell technologies::remote",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "cb72e712-d4a7-4525-b7e2-61bf6625c58d",
+            "slug": "senior-public-policy-long-term-care-rate-setting-analyst-gainwell-tech-8c9c383b",
+            "title": "Senior Public Policy / Long-Term Care Rate Setting Analyst",
+            "company": "Gainwell Technologies",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://www.linkedin.com/jobs/view/senior-public-policy-long-term-care-rate-setting-analyst-at-gainwell-technologies-4385052865",
+            "created_at": "2026-05-28T20:10:19.503982+00:00",
+            "updated_at": "2026-05-28T20:10:19.503982+00:00"
+          },
+          {
+            "id": "f305b2c7-3877-4387-93ab-4fdde0861713",
+            "slug": "senior-public-policy-long-term-care-rate-setting-analyst-gainwell-technologies-fe7d410e",
+            "title": "Senior Public Policy / Long-Term Care - Rate Setting Analyst",
+            "company": "Gainwell Technologies",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://www.linkedin.com/jobs/view/senior-public-policy-long-term-care-rate-setting-analyst-at-gainwell-technologies-4385052865",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      }
+    ]
+  },
+  "missing_apply_urls": [],
+  "broken_links": [],
+  "warning_links": []
+}

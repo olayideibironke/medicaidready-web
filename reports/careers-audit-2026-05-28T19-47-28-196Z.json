@@ -1,0 +1,1257 @@
+{
+  "generated_at": "2026-05-28T19:47:28.194Z",
+  "scope": "approved_only",
+  "checked_links": false,
+  "counts": {
+    "jobs": 260,
+    "duplicate_slugs": 0,
+    "duplicate_apply_urls": 12,
+    "duplicate_title_company": 15,
+    "duplicate_title_company_location": 14,
+    "missing_apply_urls": 0,
+    "broken_links": 0,
+    "warning_links": 0
+  },
+  "duplicates": {
+    "slugs": [],
+    "apply_urls": [
+      {
+        "key": "https://builtin.com/job/principal-data-analyst-and-ai-liaison-remote-est-cst-or-mst/9478024",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "49237402-e407-44fd-ba45-5e25ac2a7189",
+            "slug": "principal-data-analyst-and-ai-liaison-remote-optum-6bb9b1c4",
+            "title": "Principal Data Analyst and AI Liaison - Remote",
+            "company": "Optum",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://builtin.com/job/principal-data-analyst-and-ai-liaison-remote-est-cst-or-mst/9478024",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          },
+          {
+            "id": "865066e2-a1de-4bec-a684-62044b2a32f6",
+            "slug": "principal-data-analyst-and-ai-liaison-remote-in-est-cst-or-mst-optum-fresh-batch-may-2026",
+            "title": "Principal Data Analyst and AI Liaison - Remote in EST, CST, or MST",
+            "company": "Optum",
+            "location": "Remote - EST/CST/MST",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://builtin.com/job/principal-data-analyst-and-ai-liaison-remote-est-cst-or-mst/9478024",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          }
+        ]
+      },
+      {
+        "key": "https://to.indeed.com/aafzpvgm22dl",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "4d27c183-00f4-4e32-b3d6-fad7322bd94a",
+            "slug": "operations-analyst-vytlone-17df8321",
+            "title": "Operations Analyst",
+            "company": "VytlOne",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aafzpvgm22dl",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          },
+          {
+            "id": "9aa588ec-74c0-47a8-a33e-dad9078a8cf3",
+            "slug": "operations-analyst-vytlone-fresh-batch-may-2026",
+            "title": "Operations Analyst",
+            "company": "VytlOne",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aafzpvgm22dl",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          }
+        ]
+      },
+      {
+        "key": "https://to.indeed.com/aayvdksdp6pg",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "4b1bf56d-bdfd-4954-972f-5d143a31b715",
+            "slug": "healthcare-data-analyst-algorithm-developer-radcube-748c3144",
+            "title": "Healthcare Data Analyst / Algorithm Developer",
+            "company": "RadCube",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aayvdksdp6pg",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          },
+          {
+            "id": "3dfca759-0716-43a5-a5d2-2c89e559bc08",
+            "slug": "healthcare-data-analyst-algorithm-developer-radcube-fresh-batch-may-2026",
+            "title": "Healthcare Data Analyst / Algorithm Developer",
+            "company": "RadCube",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aayvdksdp6pg",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          }
+        ]
+      },
+      {
+        "key": "https://to.indeed.com/aagkghn4dr89",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "a1eae249-91e6-4c1f-b065-bbc8939a24a4",
+            "slug": "senior-analyst-data-analytics-siu-oscar-health-ccbda538",
+            "title": "Senior Analyst, Data Analytics, SIU",
+            "company": "Oscar Health",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aagkghn4dr89",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          },
+          {
+            "id": "75c98c0b-b3a7-457d-8461-e5567ac5f8ef",
+            "slug": "senior-analyst-data-analytics-siu-oscar-health-fresh-batch-may-2026",
+            "title": "Senior Analyst, Data Analytics, SIU",
+            "company": "Oscar Health",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aagkghn4dr89",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          }
+        ]
+      },
+      {
+        "key": "https://to.indeed.com/aa2xpmxw9lrd",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "59b45276-5d61-4a12-88d3-8dfbda6c9247",
+            "slug": "senior-healthcare-data-analyst-accompany-health-c5907233",
+            "title": "Senior Healthcare Data Analyst",
+            "company": "Accompany Health",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aa2xpmxw9lrd",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          },
+          {
+            "id": "6bd61817-1fa0-4f62-b3d1-f6dd5876545e",
+            "slug": "senior-healthcare-data-analyst-accompany-health-fresh-batch-may-2026",
+            "title": "Senior Healthcare Data Analyst",
+            "company": "Accompany Health",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aa2xpmxw9lrd",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          }
+        ]
+      },
+      {
+        "key": "https://to.indeed.com/aahhygbvflby",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "62c59789-2a5a-48e9-b86a-c567ba7e934d",
+            "slug": "healthcare-analytics-advisor-claritev-03eacccc",
+            "title": "Healthcare Analytics Advisor",
+            "company": "Claritev",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aahhygbvflby",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          },
+          {
+            "id": "dcb67658-47e0-4d95-aad6-d41c8f51f332",
+            "slug": "healthcare-analytics-advisor-claritev-fresh-batch-may-2026",
+            "title": "Healthcare Analytics Advisor",
+            "company": "Claritev",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aahhygbvflby",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          }
+        ]
+      },
+      {
+        "key": "https://www.sentaracareers.com/job/23403357/senior-healthcare-data-analyst-remote-remote",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "f2069107-a727-4b28-a262-dc6d0bb6e8eb",
+            "slug": "senior-healthcare-data-analyst-remote-sentara-585bb178",
+            "title": "Senior Healthcare Data Analyst - Remote",
+            "company": "Sentara",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://www.sentaracareers.com/job/23403357/senior-healthcare-data-analyst-remote-remote/",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          },
+          {
+            "id": "093d0b62-3872-4619-9496-09ce90341e55",
+            "slug": "senior-healthcare-data-analyst-remote-sentara-fresh-batch-may-2026",
+            "title": "Senior Healthcare Data Analyst - Remote",
+            "company": "Sentara",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://www.sentaracareers.com/job/23403357/senior-healthcare-data-analyst-remote-remote/",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          }
+        ]
+      },
+      {
+        "key": "https://lensa.com/job-v1/esr-healthcare/remote/senior-data-analyst/057d8f99dc9a213778b915d8ba17a498",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "0433dc95-2fc4-4afb-9a91-6919157b71af",
+            "slug": "sr-data-analyst-risk-adjustment-us-remote-esr-healthcare-9cb27096",
+            "title": "Sr. Data Analyst/Risk Adjustment - US Remote",
+            "company": "ESR Healthcare",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://lensa.com/job-v1/esr-healthcare/remote/senior-data-analyst/057d8f99dc9a213778b915d8ba17a498",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          },
+          {
+            "id": "7253284b-c5a0-4919-8ab5-9bfbc0e7fbab",
+            "slug": "sr-data-analyst-risk-adjustment-us-remote-esr-healthcare-fresh-batch-may-2026",
+            "title": "Sr. Data Analyst/Risk Adjustment - US Remote",
+            "company": "ESR Healthcare",
+            "location": "Remote - United States",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://lensa.com/job-v1/esr-healthcare/remote/senior-data-analyst/057d8f99dc9a213778b915d8ba17a498",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          }
+        ]
+      },
+      {
+        "key": "https://to.indeed.com/aa2mcbvvthp2",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "d23b9814-832c-4eb2-adb6-517972d344a5",
+            "slug": "junior-program-analyst-healthcare-transformation-blue-water-thinking-625ed93f",
+            "title": "Junior Program Analyst - Healthcare Transformation",
+            "company": "Blue Water Thinking",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aa2mcbvvthp2",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          },
+          {
+            "id": "4cf10c11-2ba9-465f-86db-d6e730867d87",
+            "slug": "junior-program-analyst-healthcare-transformation-blue-water-thinking-fresh-batch-may-2026",
+            "title": "Junior Program Analyst - Healthcare Transformation",
+            "company": "Blue Water Thinking",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aa2mcbvvthp2",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          }
+        ]
+      },
+      {
+        "key": "https://to.indeed.com/aat9z87dcgf9",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "b311a8fc-ab01-4ed0-8e4f-0de4805ca8a7",
+            "slug": "data-analyst-intone-networks-277c7470",
+            "title": "Data Analyst",
+            "company": "Intone Networks",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aat9z87dcgf9",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          },
+          {
+            "id": "5791f559-d763-4bfe-8ca1-ec525cd6b662",
+            "slug": "data-analyst-intone-networks-fresh-batch-may-2026",
+            "title": "Data Analyst",
+            "company": "Intone Networks",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aat9z87dcgf9",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          }
+        ]
+      },
+      {
+        "key": "https://www.theladders.com/job/senior-application-analyst-revenue-cycle-remote-mayoclinic-virtual-travel_85112589",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "fd11fea5-3ccb-4f96-b887-bf6cf30c2460",
+            "slug": "senior-application-analyst-revenue-cycle-remote-mayo-clinic-a435067f",
+            "title": "Senior Application Analyst - Revenue Cycle - Remote",
+            "company": "Mayo Clinic",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://www.theladders.com/job/senior-application-analyst-revenue-cycle-remote-mayoclinic-virtual-travel_85112589",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          },
+          {
+            "id": "94d9ca2c-1f3c-4008-8137-88459236f7eb",
+            "slug": "senior-application-analyst-revenue-cycle-remote-mayo-clinic-fresh-batch-may-2026",
+            "title": "Senior Application Analyst - Revenue Cycle - Remote",
+            "company": "Mayo Clinic",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://www.theladders.com/job/senior-application-analyst-revenue-cycle-remote-mayoclinic-virtual-travel_85112589",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          }
+        ]
+      },
+      {
+        "key": "https://www.linkedin.com/jobs/view/program-business-analyst-health-program-florida-texas-remote-at-icf-4407982056",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "57c313df-27b5-4a07-b355-5a90dd67dae4",
+            "slug": "program-business-analyst-health-program-florida-texas-remote-icf-3897e540",
+            "title": "Program Business Analyst HEALTH PROGRAM (Florida, Texas REMOTE)",
+            "company": "ICF",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://www.linkedin.com/jobs/view/program-business-analyst-health-program-florida-texas-remote-at-icf-4407982056",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          },
+          {
+            "id": "3cf078dd-c2db-41e0-a70c-0f7bae508783",
+            "slug": "program-business-analyst-health-program-icf-fresh-batch-may-2026",
+            "title": "Program Business Analyst HEALTH PROGRAM",
+            "company": "ICF",
+            "location": "Florida or Texas / Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://www.linkedin.com/jobs/view/program-business-analyst-health-program-florida-texas-remote-at-icf-4407982056",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          }
+        ]
+      }
+    ],
+    "title_company": [
+      {
+        "key": "operations analyst::vytlone",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "4d27c183-00f4-4e32-b3d6-fad7322bd94a",
+            "slug": "operations-analyst-vytlone-17df8321",
+            "title": "Operations Analyst",
+            "company": "VytlOne",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aafzpvgm22dl",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          },
+          {
+            "id": "9aa588ec-74c0-47a8-a33e-dad9078a8cf3",
+            "slug": "operations-analyst-vytlone-fresh-batch-may-2026",
+            "title": "Operations Analyst",
+            "company": "VytlOne",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aafzpvgm22dl",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          }
+        ]
+      },
+      {
+        "key": "healthcare data analyst algorithm developer::radcube",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "4b1bf56d-bdfd-4954-972f-5d143a31b715",
+            "slug": "healthcare-data-analyst-algorithm-developer-radcube-748c3144",
+            "title": "Healthcare Data Analyst / Algorithm Developer",
+            "company": "RadCube",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aayvdksdp6pg",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          },
+          {
+            "id": "3dfca759-0716-43a5-a5d2-2c89e559bc08",
+            "slug": "healthcare-data-analyst-algorithm-developer-radcube-fresh-batch-may-2026",
+            "title": "Healthcare Data Analyst / Algorithm Developer",
+            "company": "RadCube",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aayvdksdp6pg",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          }
+        ]
+      },
+      {
+        "key": "senior analyst data analytics siu::oscar health",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "a1eae249-91e6-4c1f-b065-bbc8939a24a4",
+            "slug": "senior-analyst-data-analytics-siu-oscar-health-ccbda538",
+            "title": "Senior Analyst, Data Analytics, SIU",
+            "company": "Oscar Health",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aagkghn4dr89",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          },
+          {
+            "id": "75c98c0b-b3a7-457d-8461-e5567ac5f8ef",
+            "slug": "senior-analyst-data-analytics-siu-oscar-health-fresh-batch-may-2026",
+            "title": "Senior Analyst, Data Analytics, SIU",
+            "company": "Oscar Health",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aagkghn4dr89",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          }
+        ]
+      },
+      {
+        "key": "senior healthcare data analyst::accompany health",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "59b45276-5d61-4a12-88d3-8dfbda6c9247",
+            "slug": "senior-healthcare-data-analyst-accompany-health-c5907233",
+            "title": "Senior Healthcare Data Analyst",
+            "company": "Accompany Health",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aa2xpmxw9lrd",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          },
+          {
+            "id": "6bd61817-1fa0-4f62-b3d1-f6dd5876545e",
+            "slug": "senior-healthcare-data-analyst-accompany-health-fresh-batch-may-2026",
+            "title": "Senior Healthcare Data Analyst",
+            "company": "Accompany Health",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aa2xpmxw9lrd",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          }
+        ]
+      },
+      {
+        "key": "healthcare reclamation analyst::performant financial corporation",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "f630aaf3-48f1-4553-a790-bf7d895eb517",
+            "slug": "healthcare-reclamation-analyst-performant-financial-corporation-26144bf4",
+            "title": "Healthcare Reclamation Analyst",
+            "company": "Performant Financial Corporation",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aa9qgdlmscyt",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          },
+          {
+            "id": "4ef8d57c-ff2a-4363-9029-dbf0c08af0e6",
+            "slug": "healthcare-reclamation-analyst-performant-financial-corporation-79d2db67",
+            "title": "Healthcare Reclamation Analyst",
+            "company": "Performant Financial Corporation",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aasjny6n629y",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      },
+      {
+        "key": "healthcare data analyst remote opportunity::vetsez",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "fb4d08a7-4c93-4a2e-9653-946662ce92ee",
+            "slug": "healthcare-data-analyst-remote-opportunity-vetsez-e8e721f6",
+            "title": "Healthcare Data Analyst (Remote Opportunity)",
+            "company": "VetsEZ",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aajd2g8v9lqp",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          },
+          {
+            "id": "2bc5b575-42fa-4c3a-b2e7-eef63d5a1217",
+            "slug": "healthcare-data-analyst-remote-opportunity-vetsez-ba6e90b6",
+            "title": "Healthcare Data Analyst (Remote Opportunity)",
+            "company": "VetsEZ",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aa7g9dchw822",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      },
+      {
+        "key": "healthcare analytics advisor::claritev",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "62c59789-2a5a-48e9-b86a-c567ba7e934d",
+            "slug": "healthcare-analytics-advisor-claritev-03eacccc",
+            "title": "Healthcare Analytics Advisor",
+            "company": "Claritev",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aahhygbvflby",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          },
+          {
+            "id": "dcb67658-47e0-4d95-aad6-d41c8f51f332",
+            "slug": "healthcare-analytics-advisor-claritev-fresh-batch-may-2026",
+            "title": "Healthcare Analytics Advisor",
+            "company": "Claritev",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aahhygbvflby",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          }
+        ]
+      },
+      {
+        "key": "senior healthcare data analyst remote::sentara",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "f2069107-a727-4b28-a262-dc6d0bb6e8eb",
+            "slug": "senior-healthcare-data-analyst-remote-sentara-585bb178",
+            "title": "Senior Healthcare Data Analyst - Remote",
+            "company": "Sentara",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://www.sentaracareers.com/job/23403357/senior-healthcare-data-analyst-remote-remote/",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          },
+          {
+            "id": "093d0b62-3872-4619-9496-09ce90341e55",
+            "slug": "senior-healthcare-data-analyst-remote-sentara-fresh-batch-may-2026",
+            "title": "Senior Healthcare Data Analyst - Remote",
+            "company": "Sentara",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://www.sentaracareers.com/job/23403357/senior-healthcare-data-analyst-remote-remote/",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          }
+        ]
+      },
+      {
+        "key": "sr data analyst risk adjustment us remote::esr healthcare",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "0433dc95-2fc4-4afb-9a91-6919157b71af",
+            "slug": "sr-data-analyst-risk-adjustment-us-remote-esr-healthcare-9cb27096",
+            "title": "Sr. Data Analyst/Risk Adjustment - US Remote",
+            "company": "ESR Healthcare",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://lensa.com/job-v1/esr-healthcare/remote/senior-data-analyst/057d8f99dc9a213778b915d8ba17a498",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          },
+          {
+            "id": "7253284b-c5a0-4919-8ab5-9bfbc0e7fbab",
+            "slug": "sr-data-analyst-risk-adjustment-us-remote-esr-healthcare-fresh-batch-may-2026",
+            "title": "Sr. Data Analyst/Risk Adjustment - US Remote",
+            "company": "ESR Healthcare",
+            "location": "Remote - United States",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://lensa.com/job-v1/esr-healthcare/remote/senior-data-analyst/057d8f99dc9a213778b915d8ba17a498",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          }
+        ]
+      },
+      {
+        "key": "junior program analyst healthcare transformation::blue water thinking",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "d23b9814-832c-4eb2-adb6-517972d344a5",
+            "slug": "junior-program-analyst-healthcare-transformation-blue-water-thinking-625ed93f",
+            "title": "Junior Program Analyst - Healthcare Transformation",
+            "company": "Blue Water Thinking",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aa2mcbvvthp2",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          },
+          {
+            "id": "4cf10c11-2ba9-465f-86db-d6e730867d87",
+            "slug": "junior-program-analyst-healthcare-transformation-blue-water-thinking-fresh-batch-may-2026",
+            "title": "Junior Program Analyst - Healthcare Transformation",
+            "company": "Blue Water Thinking",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aa2mcbvvthp2",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          }
+        ]
+      },
+      {
+        "key": "data analyst::intone networks",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "b311a8fc-ab01-4ed0-8e4f-0de4805ca8a7",
+            "slug": "data-analyst-intone-networks-277c7470",
+            "title": "Data Analyst",
+            "company": "Intone Networks",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aat9z87dcgf9",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          },
+          {
+            "id": "5791f559-d763-4bfe-8ca1-ec525cd6b662",
+            "slug": "data-analyst-intone-networks-fresh-batch-may-2026",
+            "title": "Data Analyst",
+            "company": "Intone Networks",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aat9z87dcgf9",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          }
+        ]
+      },
+      {
+        "key": "revenue operations analyst finance::sword health",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "012b6824-a4af-4f97-97de-8bdd057e2845",
+            "slug": "revenue-operations-analyst-finance-sword-health-03d17ec0",
+            "title": "Revenue Operations Analyst, Finance",
+            "company": "SWORD Health",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aa8vq4wtwp4n",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          },
+          {
+            "id": "0831d1f5-36c1-471f-acec-cf4b715757bb",
+            "slug": "revenue-operations-analyst-finance-sword-health-fresh-batch-may-2026",
+            "title": "Revenue Operations Analyst, Finance",
+            "company": "SWORD Health",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aanvk9rkw8qq",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          }
+        ]
+      },
+      {
+        "key": "senior application analyst revenue cycle remote::mayo clinic",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "fd11fea5-3ccb-4f96-b887-bf6cf30c2460",
+            "slug": "senior-application-analyst-revenue-cycle-remote-mayo-clinic-a435067f",
+            "title": "Senior Application Analyst - Revenue Cycle - Remote",
+            "company": "Mayo Clinic",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://www.theladders.com/job/senior-application-analyst-revenue-cycle-remote-mayoclinic-virtual-travel_85112589",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          },
+          {
+            "id": "94d9ca2c-1f3c-4008-8137-88459236f7eb",
+            "slug": "senior-application-analyst-revenue-cycle-remote-mayo-clinic-fresh-batch-may-2026",
+            "title": "Senior Application Analyst - Revenue Cycle - Remote",
+            "company": "Mayo Clinic",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://www.theladders.com/job/senior-application-analyst-revenue-cycle-remote-mayoclinic-virtual-travel_85112589",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          }
+        ]
+      },
+      {
+        "key": "audit analyst healthcare::healthmap solutions",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "8709e06b-0874-4fd8-893e-656523d366be",
+            "slug": "audit-analyst-healthcare-healthmap-solutions-79eef79f",
+            "title": "Audit Analyst - Healthcare",
+            "company": "Healthmap Solutions",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aa4ykdxpyvyb",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          },
+          {
+            "id": "f647b913-ae07-46b3-87c3-80a502e96a87",
+            "slug": "audit-analyst-healthcare-healthmap-solutions-fresh-batch-may-2026",
+            "title": "Audit Analyst - Healthcare",
+            "company": "Healthmap Solutions",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aavtzmb7kmhn",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          }
+        ]
+      },
+      {
+        "key": "healthcare analyst ii::cohere health",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "642b6c2a-21c3-4b67-9e39-eed19dd40a85",
+            "slug": "healthcare-analyst-ii-cohere-health-26927e77",
+            "title": "Healthcare Analyst II",
+            "company": "Cohere Health",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aaygvmptk4kt",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          },
+          {
+            "id": "b601775e-defc-4b0a-9c51-ab4d9c0f3bc1",
+            "slug": "healthcare-analyst-ii-cohere-health-fresh-batch-may-2026",
+            "title": "Healthcare Analyst II",
+            "company": "Cohere Health",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aa6zs9rmz87s",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          }
+        ]
+      }
+    ],
+    "title_company_location": [
+      {
+        "key": "operations analyst::vytlone::remote",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "4d27c183-00f4-4e32-b3d6-fad7322bd94a",
+            "slug": "operations-analyst-vytlone-17df8321",
+            "title": "Operations Analyst",
+            "company": "VytlOne",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aafzpvgm22dl",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          },
+          {
+            "id": "9aa588ec-74c0-47a8-a33e-dad9078a8cf3",
+            "slug": "operations-analyst-vytlone-fresh-batch-may-2026",
+            "title": "Operations Analyst",
+            "company": "VytlOne",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aafzpvgm22dl",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          }
+        ]
+      },
+      {
+        "key": "healthcare data analyst algorithm developer::radcube::remote",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "4b1bf56d-bdfd-4954-972f-5d143a31b715",
+            "slug": "healthcare-data-analyst-algorithm-developer-radcube-748c3144",
+            "title": "Healthcare Data Analyst / Algorithm Developer",
+            "company": "RadCube",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aayvdksdp6pg",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          },
+          {
+            "id": "3dfca759-0716-43a5-a5d2-2c89e559bc08",
+            "slug": "healthcare-data-analyst-algorithm-developer-radcube-fresh-batch-may-2026",
+            "title": "Healthcare Data Analyst / Algorithm Developer",
+            "company": "RadCube",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aayvdksdp6pg",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          }
+        ]
+      },
+      {
+        "key": "senior analyst data analytics siu::oscar health::remote",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "a1eae249-91e6-4c1f-b065-bbc8939a24a4",
+            "slug": "senior-analyst-data-analytics-siu-oscar-health-ccbda538",
+            "title": "Senior Analyst, Data Analytics, SIU",
+            "company": "Oscar Health",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aagkghn4dr89",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          },
+          {
+            "id": "75c98c0b-b3a7-457d-8461-e5567ac5f8ef",
+            "slug": "senior-analyst-data-analytics-siu-oscar-health-fresh-batch-may-2026",
+            "title": "Senior Analyst, Data Analytics, SIU",
+            "company": "Oscar Health",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aagkghn4dr89",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          }
+        ]
+      },
+      {
+        "key": "senior healthcare data analyst::accompany health::remote",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "59b45276-5d61-4a12-88d3-8dfbda6c9247",
+            "slug": "senior-healthcare-data-analyst-accompany-health-c5907233",
+            "title": "Senior Healthcare Data Analyst",
+            "company": "Accompany Health",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aa2xpmxw9lrd",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          },
+          {
+            "id": "6bd61817-1fa0-4f62-b3d1-f6dd5876545e",
+            "slug": "senior-healthcare-data-analyst-accompany-health-fresh-batch-may-2026",
+            "title": "Senior Healthcare Data Analyst",
+            "company": "Accompany Health",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aa2xpmxw9lrd",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          }
+        ]
+      },
+      {
+        "key": "healthcare reclamation analyst::performant financial corporation::remote",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "f630aaf3-48f1-4553-a790-bf7d895eb517",
+            "slug": "healthcare-reclamation-analyst-performant-financial-corporation-26144bf4",
+            "title": "Healthcare Reclamation Analyst",
+            "company": "Performant Financial Corporation",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aa9qgdlmscyt",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          },
+          {
+            "id": "4ef8d57c-ff2a-4363-9029-dbf0c08af0e6",
+            "slug": "healthcare-reclamation-analyst-performant-financial-corporation-79d2db67",
+            "title": "Healthcare Reclamation Analyst",
+            "company": "Performant Financial Corporation",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aasjny6n629y",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      },
+      {
+        "key": "healthcare data analyst remote opportunity::vetsez::remote",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "fb4d08a7-4c93-4a2e-9653-946662ce92ee",
+            "slug": "healthcare-data-analyst-remote-opportunity-vetsez-e8e721f6",
+            "title": "Healthcare Data Analyst (Remote Opportunity)",
+            "company": "VetsEZ",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aajd2g8v9lqp",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          },
+          {
+            "id": "2bc5b575-42fa-4c3a-b2e7-eef63d5a1217",
+            "slug": "healthcare-data-analyst-remote-opportunity-vetsez-ba6e90b6",
+            "title": "Healthcare Data Analyst (Remote Opportunity)",
+            "company": "VetsEZ",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aa7g9dchw822",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          }
+        ]
+      },
+      {
+        "key": "healthcare analytics advisor::claritev::remote",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "62c59789-2a5a-48e9-b86a-c567ba7e934d",
+            "slug": "healthcare-analytics-advisor-claritev-03eacccc",
+            "title": "Healthcare Analytics Advisor",
+            "company": "Claritev",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aahhygbvflby",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          },
+          {
+            "id": "dcb67658-47e0-4d95-aad6-d41c8f51f332",
+            "slug": "healthcare-analytics-advisor-claritev-fresh-batch-may-2026",
+            "title": "Healthcare Analytics Advisor",
+            "company": "Claritev",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aahhygbvflby",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          }
+        ]
+      },
+      {
+        "key": "senior healthcare data analyst remote::sentara::remote",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "f2069107-a727-4b28-a262-dc6d0bb6e8eb",
+            "slug": "senior-healthcare-data-analyst-remote-sentara-585bb178",
+            "title": "Senior Healthcare Data Analyst - Remote",
+            "company": "Sentara",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://www.sentaracareers.com/job/23403357/senior-healthcare-data-analyst-remote-remote/",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          },
+          {
+            "id": "093d0b62-3872-4619-9496-09ce90341e55",
+            "slug": "senior-healthcare-data-analyst-remote-sentara-fresh-batch-may-2026",
+            "title": "Senior Healthcare Data Analyst - Remote",
+            "company": "Sentara",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://www.sentaracareers.com/job/23403357/senior-healthcare-data-analyst-remote-remote/",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          }
+        ]
+      },
+      {
+        "key": "junior program analyst healthcare transformation::blue water thinking::remote",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "d23b9814-832c-4eb2-adb6-517972d344a5",
+            "slug": "junior-program-analyst-healthcare-transformation-blue-water-thinking-625ed93f",
+            "title": "Junior Program Analyst - Healthcare Transformation",
+            "company": "Blue Water Thinking",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aa2mcbvvthp2",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          },
+          {
+            "id": "4cf10c11-2ba9-465f-86db-d6e730867d87",
+            "slug": "junior-program-analyst-healthcare-transformation-blue-water-thinking-fresh-batch-may-2026",
+            "title": "Junior Program Analyst - Healthcare Transformation",
+            "company": "Blue Water Thinking",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aa2mcbvvthp2",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          }
+        ]
+      },
+      {
+        "key": "data analyst::intone networks::remote",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "b311a8fc-ab01-4ed0-8e4f-0de4805ca8a7",
+            "slug": "data-analyst-intone-networks-277c7470",
+            "title": "Data Analyst",
+            "company": "Intone Networks",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aat9z87dcgf9",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          },
+          {
+            "id": "5791f559-d763-4bfe-8ca1-ec525cd6b662",
+            "slug": "data-analyst-intone-networks-fresh-batch-may-2026",
+            "title": "Data Analyst",
+            "company": "Intone Networks",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aat9z87dcgf9",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          }
+        ]
+      },
+      {
+        "key": "revenue operations analyst finance::sword health::remote",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "012b6824-a4af-4f97-97de-8bdd057e2845",
+            "slug": "revenue-operations-analyst-finance-sword-health-03d17ec0",
+            "title": "Revenue Operations Analyst, Finance",
+            "company": "SWORD Health",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aa8vq4wtwp4n",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          },
+          {
+            "id": "0831d1f5-36c1-471f-acec-cf4b715757bb",
+            "slug": "revenue-operations-analyst-finance-sword-health-fresh-batch-may-2026",
+            "title": "Revenue Operations Analyst, Finance",
+            "company": "SWORD Health",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aanvk9rkw8qq",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          }
+        ]
+      },
+      {
+        "key": "senior application analyst revenue cycle remote::mayo clinic::remote",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "fd11fea5-3ccb-4f96-b887-bf6cf30c2460",
+            "slug": "senior-application-analyst-revenue-cycle-remote-mayo-clinic-a435067f",
+            "title": "Senior Application Analyst - Revenue Cycle - Remote",
+            "company": "Mayo Clinic",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://www.theladders.com/job/senior-application-analyst-revenue-cycle-remote-mayoclinic-virtual-travel_85112589",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          },
+          {
+            "id": "94d9ca2c-1f3c-4008-8137-88459236f7eb",
+            "slug": "senior-application-analyst-revenue-cycle-remote-mayo-clinic-fresh-batch-may-2026",
+            "title": "Senior Application Analyst - Revenue Cycle - Remote",
+            "company": "Mayo Clinic",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://www.theladders.com/job/senior-application-analyst-revenue-cycle-remote-mayoclinic-virtual-travel_85112589",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          }
+        ]
+      },
+      {
+        "key": "audit analyst healthcare::healthmap solutions::remote",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "8709e06b-0874-4fd8-893e-656523d366be",
+            "slug": "audit-analyst-healthcare-healthmap-solutions-79eef79f",
+            "title": "Audit Analyst - Healthcare",
+            "company": "Healthmap Solutions",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aa4ykdxpyvyb",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          },
+          {
+            "id": "f647b913-ae07-46b3-87c3-80a502e96a87",
+            "slug": "audit-analyst-healthcare-healthmap-solutions-fresh-batch-may-2026",
+            "title": "Audit Analyst - Healthcare",
+            "company": "Healthmap Solutions",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aavtzmb7kmhn",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          }
+        ]
+      },
+      {
+        "key": "healthcare analyst ii::cohere health::remote",
+        "count": 2,
+        "jobs": [
+          {
+            "id": "642b6c2a-21c3-4b67-9e39-eed19dd40a85",
+            "slug": "healthcare-analyst-ii-cohere-health-26927e77",
+            "title": "Healthcare Analyst II",
+            "company": "Cohere Health",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aaygvmptk4kt",
+            "created_at": "2026-05-28T19:47:25.709753+00:00",
+            "updated_at": "2026-05-28T19:47:25.709753+00:00"
+          },
+          {
+            "id": "b601775e-defc-4b0a-9c51-ab4d9c0f3bc1",
+            "slug": "healthcare-analyst-ii-cohere-health-fresh-batch-may-2026",
+            "title": "Healthcare Analyst II",
+            "company": "Cohere Health",
+            "location": "Remote",
+            "status": "approved",
+            "source_type": "imported",
+            "apply_url": "https://to.indeed.com/aa6zs9rmz87s",
+            "created_at": "2026-05-23T18:03:29.443909+00:00",
+            "updated_at": "2026-05-23T18:03:29.443909+00:00"
+          }
+        ]
+      }
+    ]
+  },
+  "missing_apply_urls": [],
+  "broken_links": [],
+  "warning_links": []
+}
