@@ -35,15 +35,25 @@ function hasArg(name) {
   return process.argv.includes(name);
 }
 
+function normalize(value) {
+  return String(value || "")
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function dateValue(job) {
+  const value = job.published_at || job.created_at || job.updated_at;
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? 0 : date.getTime();
+}
+
 async function main() {
   loadDotEnvLocal();
 
   const dryRun = hasArg("--dry-run");
-
-  const duplicateJobIdsToArchive = [
-    "6ab61257-4207-4bfe-9e4d-b63733238120",
-    "1eb997df-a7be-4081-9ccb-a59d16c736b8",
-  ];
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const serviceRole = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -55,23 +65,57 @@ async function main() {
     auth: { persistSession: false },
   });
 
-  console.log(`Duplicate job IDs to archive: ${duplicateJobIdsToArchive.length}`);
-
-  const { data: jobs, error: fetchError } = await supabase
+  const { data: jobs, error } = await supabase
     .from("careers_jobs")
-    .select("id, slug, title, company, status, created_at")
-    .in("id", duplicateJobIdsToArchive);
+    .select("id, slug, title, company, location, status, published_at, created_at, updated_at")
+    .eq("status", "approved")
+    .order("created_at", { ascending: false });
 
-  if (fetchError) throw fetchError;
+  if (error) throw error;
+
+  const groups = new Map();
+
+  for (const job of jobs || []) {
+    const key = [
+      normalize(job.title),
+      normalize(job.company),
+      normalize(job.location),
+    ].join("::");
+
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(job);
+  }
+
+  const archiveIds = [];
+
+  console.log("Duplicate groups found:");
+
+  for (const [key, group] of groups.entries()) {
+    if (group.length <= 1) continue;
+
+    const sorted = [...group].sort((a, b) => dateValue(b) - dateValue(a));
+    const keep = sorted[0];
+    const remove = sorted.slice(1);
+
+    console.log("");
+    console.log(`Group: ${key}`);
+    console.log(`KEEP: ${keep.title} — ${keep.company} — ${keep.slug}`);
+
+    for (const job of remove) {
+      console.log(`ARCHIVE: ${job.title} — ${job.company} — ${job.slug}`);
+      archiveIds.push(job.id);
+    }
+  }
 
   console.log("");
-  console.log("Preview:");
-  for (const job of jobs || []) {
-    console.log(`- ${job.title} — ${job.company} — ${job.slug} — ${job.status}`);
+  console.log(`Duplicate jobs to archive: ${archiveIds.length}`);
+
+  if (archiveIds.length === 0) {
+    console.log("Nothing to archive.");
+    return;
   }
 
   if (dryRun) {
-    console.log("");
     console.log("Dry run only. No jobs were changed.");
     return;
   }
@@ -82,12 +126,11 @@ async function main() {
       status: "archived",
       updated_at: new Date().toISOString(),
     })
-    .in("id", duplicateJobIdsToArchive);
+    .in("id", archiveIds);
 
   if (updateError) throw updateError;
 
-  console.log("");
-  console.log(`Archived ${duplicateJobIdsToArchive.length} duplicate jobs.`);
+  console.log(`Archived ${archiveIds.length} duplicate jobs.`);
   console.log("Done.");
 }
 
