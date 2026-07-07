@@ -10,14 +10,14 @@ import { listApprovedJobs } from "../../lib/careers/db";
 
 const SITE_URL = "https://www.medicaidready.org";
 const POPULAR_SEARCHES = [
-  "CNA",
-  "GNA",
-  "Caregiver",
-  "Medicaid Analyst",
-  "Healthcare IT",
-  "EHR Analyst",
-  "Provider Data",
-  "Claims Systems",
+  "IT Specialist",
+  "Data Scientist",
+  "Cybersecurity",
+  "Azure Developer",
+  "DevOps",
+  "Data Analyst",
+  "Program Analyst",
+  "Healthcare Analyst",
 ];
 
 type Stats = {
@@ -122,9 +122,10 @@ export default function CareersHome({ stats }: Props) {
   }
 
   const url = `${SITE_URL}/careers`;
-  const metaTitle = "MedicaidReady Careers — Healthcare, Medicaid, and Care Workforce Jobs";
+  const metaTitle =
+    "MedicaidReady Careers — Verified Jobs Across Tech, Healthcare, Data, and Public Sector";
   const metaDescription =
-    "Find healthcare, Medicaid, and care workforce jobs: CNA, GNA, caregiver, eligibility, care management, analytics, healthcare IT, EHR, claims systems, and more. Updated weekly. Apply directly through the employer's official site.";
+    "Find verified jobs across technology, healthcare, data, cybersecurity, cloud, public sector, analyst, operations, and care workforce career tracks. Updated weekly. Apply directly through each employer's official site.";
 
   return (
     <>
@@ -145,11 +146,12 @@ export default function CareersHome({ stats }: Props) {
             <div className="ch-hero-inner">
               <div className="careers-eyebrow">MedicaidReady Careers</div>
               <h1 className="ch-hero-title">
-                Healthcare, Medicaid, and care workforce jobs — all in one place.
+                Verified jobs across tech, healthcare, data, public sector, and care careers — all in one place.
               </h1>
               <p className="ch-hero-sub">
-                Curated openings across coverage, the direct-care workforce, and healthcare
-                technology. Updated weekly. Apply through each employer&apos;s official site.
+                Curated openings across technology, cybersecurity, cloud, data,
+                healthcare, public sector, analyst, operations, and care workforce
+                roles. Updated weekly. Apply through each employer&apos;s official site.
               </p>
 
               <form className="ch-search" onSubmit={handleSearch} role="search">
@@ -389,8 +391,8 @@ export default function CareersHome({ stats }: Props) {
             <div className="careers-eyebrow">Career resources</div>
             <h2 className="careers-h2">Tools and guides for your search.</h2>
             <p className="careers-lead">
-              Free resources you can use today — from checking your own benefits coverage
-              to navigating Medicaid as a candidate or employer.
+              Free resources you can use today — from career insights and verified
+              job search tools to benefits guidance and practical hiring resources.
             </p>
 
             <div className="ch-resources">
@@ -430,7 +432,8 @@ export default function CareersHome({ stats }: Props) {
                 </div>
                 <div className="ch-res-title">Career resources</div>
                 <div className="ch-res-body">
-                  Curated links to official Medicaid, CMS, and care workforce resources.
+                  Curated links and guides for tech, healthcare, data, public sector,
+                  Medicaid, and care workforce career pathways.
                 </div>
                 <span className="ch-res-link">Browse resources →</span>
               </Link>
@@ -444,7 +447,8 @@ export default function CareersHome({ stats }: Props) {
                 </div>
                 <div className="ch-res-title">Browse companies</div>
                 <div className="ch-res-body">
-                  See which healthcare and Medicaid employers are actively hiring this week.
+                  See which employers are actively hiring across tech, healthcare,
+                  data, public sector, analyst, and care workforce roles.
                 </div>
                 <span className="ch-res-link">See employers →</span>
               </Link>
@@ -474,11 +478,13 @@ export default function CareersHome({ stats }: Props) {
                 <div className="careers-eyebrow" style={{ color: "#EF9F27" }}>
                   For employers
                 </div>
-                <h2 className="ch-emp-h2">Hire healthcare and Medicaid talent.</h2>
+                <h2 className="ch-emp-h2">
+                  Hire verified talent across healthcare, tech, data, and public sector roles.
+                </h2>
                 <p className="ch-emp-sub">
-                  Reach a niche audience that already speaks Medicaid: eligibility,
-                  compliance, billing, care management, analytics, EHR, and the direct-care
-                  workforce.
+                  Reach job seekers across Medicaid, healthcare, cybersecurity,
+                  cloud, data, analyst, public sector, operations, and direct-care
+                  career tracks.
                 </p>
                 <div className="careers-actions">
                   <Link href="/careers/post-a-job" className="ch-emp-cta">
@@ -522,7 +528,7 @@ export default function CareersHome({ stats }: Props) {
           border-bottom: 3px solid #BA7517;
         }
         .ch-hero-inner {
-          max-width: 880px;
+          max-width: 980px;
         }
         .ch-hero :global(.careers-eyebrow) {
           color: #EF9F27;
@@ -539,7 +545,7 @@ export default function CareersHome({ stats }: Props) {
           font-size: 17px;
           line-height: 1.65;
           color: #85B7EB;
-          max-width: 720px;
+          max-width: 780px;
           margin: 0 0 28px;
         }
 
