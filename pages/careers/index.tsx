@@ -260,6 +260,64 @@ export default function CareersHome({ stats }: Props) {
           </section>
         )}
 
+        <section className="ch-insights-section">
+          <div className="careers-container">
+            <div className="ch-insights">
+              <div className="ch-insights-left">
+                <div className="careers-eyebrow" style={{ color: "#EF9F27" }}>
+                  Career Intelligence
+                </div>
+                <h2 className="ch-insights-title">
+                  New: Career Insights Center for verified hiring trends.
+                </h2>
+                <p className="ch-insights-sub">
+                  Go beyond job listings. Explore hiring signals, salary snapshots,
+                  verified opportunity reports, and weekly market summaries built from
+                  real MedicaidReady Careers job activity.
+                </p>
+
+                <div className="ch-insights-actions">
+                  <Link href="/careers/insights" className="ch-insights-cta">
+                    Explore Career Insights
+                  </Link>
+                  <Link href="/careers/jobs" className="ch-insights-ghost">
+                    Browse verified jobs
+                  </Link>
+                </div>
+              </div>
+
+              <div className="ch-insights-panel">
+                <div className="ch-insights-panel-top">
+                  <span className="ch-insights-live-dot" aria-hidden="true" />
+                  <span>Verification standard</span>
+                </div>
+
+                <div className="ch-insights-metrics">
+                  <div className="ch-insights-metric">
+                    <strong>{formatNumber(stats.totalJobs)}</strong>
+                    <span>active listings reviewed</span>
+                  </div>
+                  <div className="ch-insights-metric">
+                    <strong>0</strong>
+                    <span>broken links after cleanup</span>
+                  </div>
+                  <div className="ch-insights-metric">
+                    <strong>0</strong>
+                    <span>duplicate groups after audit</span>
+                  </div>
+                </div>
+
+                <div className="ch-insights-tags">
+                  <span>Hiring reports</span>
+                  <span>Salary signals</span>
+                  <span>Verified links</span>
+                  <span>Weekly audits</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section className="careers-section">
           <div className="careers-container">
             <CategoryGrid heading="Browse by category" />
@@ -336,6 +394,20 @@ export default function CareersHome({ stats }: Props) {
             </p>
 
             <div className="ch-resources">
+              <Link href="/careers/insights" className="ch-res-card ch-res-card-featured">
+                <div className="ch-res-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M4 15V5M8 15V9M12 15V7M16 15V3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                    <path d="M3 16h14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                  </svg>
+                </div>
+                <div className="ch-res-title">Career Insights Center</div>
+                <div className="ch-res-body">
+                  Hiring trends, salary insights, weekly reports, and verified job market signals.
+                </div>
+                <span className="ch-res-link">Explore insights →</span>
+              </Link>
+
               <Link href="/quiz" className="ch-res-card">
                 <div className="ch-res-icon" aria-hidden="true">
                   <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -659,6 +731,143 @@ export default function CareersHome({ stats }: Props) {
           font-weight: 500;
         }
 
+        .ch-insights-section {
+          padding: 28px 0 10px;
+        }
+        .ch-insights {
+          display: grid;
+          grid-template-columns: 1.15fr 0.85fr;
+          gap: 24px;
+          align-items: center;
+          overflow: hidden;
+          border-radius: 20px;
+          border: 1px solid rgba(186, 117, 23, 0.35);
+          background:
+            radial-gradient(circle at top left, rgba(239, 159, 39, 0.22), transparent 34%),
+            linear-gradient(135deg, #042C53 0%, #021c38 62%, #0C447C 100%);
+          color: #ffffff;
+          padding: 28px;
+          box-shadow: 0 18px 46px rgba(4, 44, 83, 0.18);
+        }
+        .ch-insights-title {
+          font-size: 30px;
+          line-height: 1.15;
+          letter-spacing: -0.035em;
+          font-weight: 800;
+          color: #ffffff;
+          margin: 8px 0 12px;
+          max-width: 680px;
+        }
+        .ch-insights-sub {
+          font-size: 15px;
+          line-height: 1.7;
+          color: #dbeafe;
+          margin: 0;
+          max-width: 720px;
+        }
+        .ch-insights-actions {
+          display: flex;
+          gap: 10px;
+          flex-wrap: wrap;
+          margin-top: 22px;
+        }
+        .ch-insights-cta,
+        .ch-insights-ghost {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          padding: 12px 18px;
+          border-radius: 999px;
+          font-size: 14px;
+          font-weight: 800;
+          text-decoration: none !important;
+          transition: transform 100ms, background 140ms, border-color 140ms;
+        }
+        .ch-insights-cta {
+          background: #EF9F27;
+          border: 1px solid #BA7517;
+          color: #061a2f !important;
+          box-shadow: 0 12px 28px rgba(239, 159, 39, 0.22);
+        }
+        .ch-insights-cta:hover {
+          background: #f6b34c;
+          transform: translateY(-1px);
+        }
+        .ch-insights-ghost {
+          border: 1px solid rgba(133, 183, 235, 0.45);
+          color: #ffffff !important;
+          background: rgba(255,255,255,0.06);
+        }
+        .ch-insights-ghost:hover {
+          background: rgba(255,255,255,0.1);
+          border-color: rgba(255,255,255,0.7);
+          transform: translateY(-1px);
+        }
+        .ch-insights-panel {
+          border-radius: 18px;
+          border: 1px solid rgba(255,255,255,0.14);
+          background: rgba(2, 28, 56, 0.72);
+          padding: 20px;
+          box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+        }
+        .ch-insights-panel-top {
+          display: inline-flex;
+          align-items: center;
+          gap: 9px;
+          color: #dbeafe;
+          font-size: 12px;
+          font-weight: 800;
+          letter-spacing: 0.09em;
+          text-transform: uppercase;
+          margin-bottom: 16px;
+        }
+        .ch-insights-live-dot {
+          width: 9px;
+          height: 9px;
+          border-radius: 50%;
+          background: #22c55e;
+          box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.14);
+        }
+        .ch-insights-metrics {
+          display: grid;
+          gap: 10px;
+        }
+        .ch-insights-metric {
+          border-radius: 14px;
+          background: rgba(255,255,255,0.08);
+          border: 1px solid rgba(255,255,255,0.08);
+          padding: 13px 14px;
+        }
+        .ch-insights-metric strong {
+          display: block;
+          color: #ffffff;
+          font-size: 24px;
+          line-height: 1;
+          letter-spacing: -0.03em;
+        }
+        .ch-insights-metric span {
+          display: block;
+          color: #bfdbfe;
+          font-size: 12px;
+          margin-top: 6px;
+          font-weight: 600;
+        }
+        .ch-insights-tags {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 7px;
+          margin-top: 14px;
+        }
+        .ch-insights-tags span {
+          border-radius: 999px;
+          background: rgba(239, 159, 39, 0.12);
+          border: 1px solid rgba(239, 159, 39, 0.24);
+          color: #fdecc8;
+          font-size: 12px;
+          font-weight: 700;
+          padding: 6px 9px;
+        }
+
         .ch-featured-card {
           display: grid;
           grid-template-columns: auto 1fr auto;
@@ -743,7 +952,7 @@ export default function CareersHome({ stats }: Props) {
 
         .ch-resources {
           display: grid;
-          grid-template-columns: repeat(3, 1fr);
+          grid-template-columns: repeat(4, 1fr);
           gap: 14px;
           margin-top: 24px;
         }
@@ -763,6 +972,10 @@ export default function CareersHome({ stats }: Props) {
           transform: translateY(-1px);
           box-shadow: 0 8px 22px rgba(4, 44, 83, 0.08);
           color: inherit;
+        }
+        .ch-res-card-featured {
+          border-color: rgba(186, 117, 23, 0.5);
+          background: linear-gradient(180deg, #ffffff 0%, #fff8eb 100%);
         }
         .ch-res-icon {
           width: 40px;
@@ -920,7 +1133,9 @@ export default function CareersHome({ stats }: Props) {
           .ch-search-btn { padding: 14px 22px; }
           .ch-stats { grid-template-columns: 1fr 1fr; gap: 10px; }
           .ch-stat { border-right: 0; }
-          .ch-resources { grid-template-columns: 1fr; }
+          .ch-insights { grid-template-columns: 1fr; padding: 22px; }
+          .ch-insights-title { font-size: 25px; }
+          .ch-resources { grid-template-columns: 1fr 1fr; }
           .ch-featured-card { grid-template-columns: 1fr; }
           .ch-featured-cta { width: max-content; }
           .ch-emp { grid-template-columns: 1fr; }
@@ -930,6 +1145,7 @@ export default function CareersHome({ stats }: Props) {
           .ch-hero { padding: 44px 0 36px; }
           .ch-hero-title { font-size: 28px; }
           .ch-stats { grid-template-columns: 1fr 1fr; }
+          .ch-resources { grid-template-columns: 1fr; }
         }
       `}</style>
     </>
