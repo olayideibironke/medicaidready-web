@@ -66,6 +66,8 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
           "business intelligence",
           "reporting analyst",
           "data engineer",
+          "machine learning",
+          "ai engineer",
         ])
     ).length,
     cyberSecurity: jobs.filter((job) =>
@@ -136,17 +138,17 @@ export default function CareersReportsIndex({ stats, generatedAt }: Props) {
       status: "Live",
     },
     {
-      eyebrow: "Market Watch",
-      title: "Remote Data Analyst & Data Science Jobs",
+      eyebrow: "Live Report",
+      title: "Remote Data Analyst & Data Science Jobs Hiring This Week",
       description:
-        "Track remote data analyst, data science, analytics, reporting, and business intelligence opportunities.",
-      href: "/careers/jobs?query=Data%20Analyst&workMode=remote",
+        "Track remote data analyst, data science, analytics, reporting, business intelligence, machine learning, and data engineering opportunities.",
+      href: "/careers/reports/remote-data-analyst-data-science-jobs-this-week",
       metric: stats.dataAnalyticsRemote,
       metricLabel: "remote data roles",
-      status: "Job search",
+      status: "Live",
     },
     {
-      eyebrow: "Market Watch",
+      eyebrow: "Next Report Lane",
       title: "Cybersecurity Jobs Hiring Now",
       description:
         "Follow application security, cloud security, information security, vulnerability, and security engineering roles.",
@@ -156,7 +158,7 @@ export default function CareersReportsIndex({ stats, generatedAt }: Props) {
       status: "Job search",
     },
     {
-      eyebrow: "Market Watch",
+      eyebrow: "Next Report Lane",
       title: "Cloud, DevOps & Infrastructure Jobs",
       description:
         "Review DevOps, SRE, cloud infrastructure, platform, Azure, AWS, GCP, and systems engineering roles.",
@@ -290,7 +292,7 @@ export default function CareersReportsIndex({ stats, generatedAt }: Props) {
                         <strong>{formatNumber(report.metric)}</strong>
                         <span>{report.metricLabel}</span>
                       </div>
-                      <span className="report-arrow">Read →</span>
+                      <span className="report-arrow">Open →</span>
                     </div>
                   </Link>
                 ))}
