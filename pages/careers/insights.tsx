@@ -1,210 +1,364 @@
 import Head from "next/head";
 import Link from "next/link";
 
-const hiringIndicators = [
+const weeklyReports = [
   {
-    label: "Verified job listings",
-    value: "282",
-    detail: "Active jobs reviewed after the latest refresh",
+    title: "Remote Program Analyst Jobs Hiring This Week",
+    eyebrow: "Weekly Hiring Report",
+    summary:
+      "Track remote Program Analyst openings, hiring signals, role patterns, salary ranges, and verified application links.",
+    href: "/careers/jobs?query=Program%20Analyst&workMode=remote",
+    metric: "Program Analyst",
+    signal: "Remote demand",
   },
   {
-    label: "Broken links",
-    value: "0",
-    detail: "Application links cleared after audit cleanup",
+    title: "Remote Data Analyst Jobs Hiring This Week",
+    eyebrow: "Analytics Hiring",
+    summary:
+      "Explore remote Data Analyst roles across healthcare, technology, operations, finance, and public-sector employers.",
+    href: "/careers/jobs?query=Data%20Analyst&workMode=remote",
+    metric: "Data Analyst",
+    signal: "Skills-driven",
   },
   {
-    label: "Duplicate groups",
-    value: "0",
-    detail: "Duplicate title, company, and location groups removed",
+    title: "Healthcare Analyst Jobs Hiring This Week",
+    eyebrow: "Healthcare Careers",
+    summary:
+      "Reviewed healthcare analyst, claims, quality, EHR, Medicaid, compliance, and provider-data opportunities.",
+    href: "/careers/jobs?query=Healthcare%20Analyst",
+    metric: "Healthcare",
+    signal: "Stable hiring",
   },
   {
-    label: "Job categories tracked",
-    value: "7+",
-    detail: "Analyst, healthcare, finance, quality, remote, public sector, and more",
+    title: "Government & Public Sector Analyst Jobs",
+    eyebrow: "Public Sector",
+    summary:
+      "Follow analyst, compliance, operations, contractor, program-support, and government-adjacent roles.",
+    href: "/careers/jobs?query=Program%20Analyst",
+    metric: "Public Sector",
+    signal: "Career ladder",
+  },
+];
+
+const marketSignals = [
+  {
+    label: "Verified discovery",
+    value: "Reviewed links",
+    detail:
+      "Application links are checked during refresh cycles so job seekers waste less time on expired postings.",
+  },
+  {
+    label: "Market direction",
+    value: "Analyst growth",
+    detail:
+      "Program, data, business, operations, healthcare, compliance, and public-sector roles remain priority categories.",
+  },
+  {
+    label: "Platform focus",
+    value: "Career intelligence",
+    detail:
+      "MedicaidReady Careers is expanding beyond listings into reports, signals, employer research, and guidance.",
+  },
+];
+
+const verificationItems = [
+  {
+    title: "Application links reviewed",
+    detail: "Broken or expired apply links are identified during job audits.",
+  },
+  {
+    title: "Duplicate listings cleaned",
+    detail: "Duplicate title, company, location, and apply URL groups are reviewed before growth pushes.",
+  },
+  {
+    title: "Fresh jobs imported",
+    detail: "New approved roles are added through a controlled import process.",
+  },
+  {
+    title: "Reports shaped by real activity",
+    detail: "Insights are built around active jobs, employer movement, categories, and applicant needs.",
   },
 ];
 
 const trendingCategories = [
+  "Remote Program Analyst",
+  "Remote Data Analyst",
+  "Business Analyst",
+  "Healthcare Analyst",
+  "Government Contractor",
+  "Compliance Analyst",
+  "Operations Analyst",
+  "Cybersecurity Analyst",
+  "Cloud Support",
+  "Provider Data",
+  "Finance Analyst",
+  "IT Specialist",
+];
+
+const salaryGuides = [
   {
-    title: "Remote Program Analyst",
-    description:
-      "Operational, policy, compliance, and workforce roles with remote or hybrid flexibility.",
-    href: "/careers/jobs?query=Program%20Analyst",
-    signal: "Strong remote interest",
+    title: "Program Analyst Salary Guide",
+    detail: "Role levels, public-sector pathways, remote ranges, and negotiation signals.",
+    query: "Program Analyst",
   },
   {
-    title: "Healthcare Analyst",
-    description:
-      "Healthcare operations, Medicaid, quality improvement, claims, and population health roles.",
-    href: "/careers/jobs?query=Healthcare%20Analyst",
-    signal: "High mission alignment",
+    title: "Data Analyst Salary Guide",
+    detail: "SQL, dashboards, Excel, Power BI, Python, and analytics compensation signals.",
+    query: "Data Analyst",
   },
   {
-    title: "Data Analyst",
-    description:
-      "Reporting, dashboards, SQL, Excel, Power BI, healthcare data, and business intelligence roles.",
-    href: "/careers/jobs?query=Data%20Analyst",
-    signal: "Consistent hiring demand",
+    title: "Business Analyst Salary Guide",
+    detail: "Requirements, operations, systems, product, and process improvement roles.",
+    query: "Business Analyst",
   },
   {
-    title: "Business Analyst",
-    description:
-      "Process improvement, requirements, stakeholder support, systems analysis, and documentation roles.",
-    href: "/careers/jobs?query=Business%20Analyst",
-    signal: "Reliable career pathway",
+    title: "Healthcare Analyst Salary Guide",
+    detail: "Claims, quality, Medicaid, EHR, provider data, and compliance-focused roles.",
+    query: "Healthcare Analyst",
   },
 ];
 
-const weeklyReports = [
+const careerGuides = [
+  "How to Become a Program Analyst",
+  "Remote Job Search Guide",
+  "Resume Tips for Data Analysts",
+  "Government Contractor Career Guide",
+  "Healthcare Analytics Certifications",
+  "Interview Prep for Analyst Roles",
+  "Salary Negotiation for Career Switchers",
+  "How to Read Job Descriptions Better",
+];
+
+const employerSpotlights = [
   {
-    title: "Remote Program Analyst Jobs Hiring This Week",
-    summary:
-      "A weekly look at verified remote and hybrid Program Analyst opportunities across healthcare, public sector, nonprofit, and operations teams.",
-    status: "Live report",
-    href: "/careers/insights/remote-program-analyst-jobs-this-week",
+    name: "CareFirst BlueCross BlueShield",
+    focus: "Healthcare, data, operations",
   },
   {
-    title: "Remote Data Analyst Jobs Hiring This Week",
-    summary:
-      "Freshly reviewed Data Analyst roles focused on reporting, dashboards, healthcare data, Excel, SQL, and business intelligence.",
-    status: "Live report",
-    href: "/careers/insights/remote-data-analyst-jobs-this-week",
+    name: "GAP Solutions",
+    focus: "Government support, program roles",
   },
   {
-    title: "Healthcare Analyst Jobs Hiring This Week",
-    summary:
-      "Verified healthcare analyst opportunities connected to Medicaid, claims, operations, quality improvement, and care coordination.",
-    status: "Live report",
-    href: "/careers/insights/healthcare-analyst-jobs-this-week",
+    name: "Kentro",
+    focus: "Technology, federal contracting",
+  },
+  {
+    name: "Amerit Fleet Solutions",
+    focus: "Operations, field support",
+  },
+  {
+    name: "GitHub",
+    focus: "Technology, remote roles",
+  },
+  {
+    name: "Blue Water Thinking",
+    focus: "Healthcare consulting, analysis",
   },
 ];
 
-const salarySnapshots = [
+const skillSignals = [
+  "SQL",
+  "Power BI",
+  "Excel",
+  "Python",
+  "Tableau",
+  "Project Management",
+  "Azure",
+  "Epic",
+  "Compliance",
+  "Data Reporting",
+  "Stakeholder Support",
+  "Process Improvement",
+];
+
+const intelligencePillars = [
   {
-    role: "Program Analyst",
-    range: "$68k – $115k",
-    note: "Higher ranges often appear in government, healthcare, compliance, and grants-related roles.",
+    title: "Jobs",
+    detail: "Verified opportunities across analyst, healthcare, government, technology, compliance, and remote categories.",
   },
   {
-    role: "Data Analyst",
-    range: "$72k – $120k",
-    note: "Roles requiring SQL, Power BI, Tableau, Python, or healthcare data experience often trend higher.",
+    title: "Signals",
+    detail: "Clear direction on what roles are growing, what skills employers want, and where hiring is moving.",
   },
   {
-    role: "Healthcare Analyst",
-    range: "$70k – $118k",
-    note: "Medicaid, claims, utilization, quality, and population health experience can improve competitiveness.",
+    title: "Employers",
+    detail: "Employer spotlights, hiring volume patterns, role clusters, and companies worth watching.",
+  },
+  {
+    title: "Guidance",
+    detail: "Practical career guides for resumes, interviews, salary expectations, remote work, and career switching.",
   },
 ];
 
-const verificationStandards = [
-  "Active listings reviewed regularly",
-  "Expired opportunities removed",
-  "Duplicate listings cleaned before publication",
-  "Application links reviewed before job refreshes are finalized",
-  "Career reports built from real hiring activity",
+const editorialQueue = [
+  "Remote Program Analyst Jobs This Week",
+  "Remote Data Analyst Jobs This Week",
+  "Healthcare Analyst Hiring Report",
+  "Government Contractor Hiring Report",
+  "Business Analyst Career Guide",
+  "Skills Employers Want This Month",
 ];
 
-const featuredEmployers = [
-  "Healthcare organizations",
-  "Government agencies",
-  "Managed care teams",
-  "Public health programs",
-  "Nonprofit service providers",
-  "Remote-first operations teams",
+const newsroomStats = [
+  {
+    value: "282",
+    label: "Reviewed jobs",
+  },
+  {
+    value: "0",
+    label: "Broken links",
+  },
+  {
+    value: "0",
+    label: "Duplicate apply URLs",
+  },
 ];
 
-export default function CareersInsightsPage() {
+function jobSearchHref(query: string) {
+  return `/careers/jobs?query=${encodeURIComponent(query)}`;
+}
+
+export default function CareerInsightsPage() {
   return (
     <>
       <Head>
-        <title>Career Insights Center | MedicaidReady Careers</title>
+        <title>Career Insights | MedicaidReady Careers</title>
         <meta
           name="description"
-          content="Hiring trends, salary insights, and verified opportunities from MedicaidReady Careers. Explore weekly job market signals, verified listings, and career intelligence for healthcare, analyst, and public sector roles."
+          content="MedicaidReady Career Insights provides weekly hiring reports, salary intelligence, employer spotlights, skill trends, and verified job market updates for analyst, healthcare, government, technology, and remote roles."
+        />
+        <meta property="og:title" content="Career Insights | MedicaidReady Careers" />
+        <meta
+          property="og:description"
+          content="Weekly hiring reports, salary intelligence, employer spotlights, skill trends, and verified job market updates."
         />
       </Head>
 
-      <main className="min-h-screen bg-slate-950 text-white">
+      <main className="min-h-screen bg-[#061b3a] text-white">
         <section className="relative overflow-hidden border-b border-white/10">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(245,196,80,0.18),_transparent_32%),radial-gradient(circle_at_75%_10%,_rgba(59,130,246,0.18),_transparent_30%)]" />
-          <div className="relative mx-auto max-w-7xl px-6 py-16 sm:py-20 lg:px-8">
-            <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(245,185,66,0.22),transparent_36%),radial-gradient(circle_at_left,rgba(42,133,255,0.18),transparent_38%)]" />
+          <div className="absolute left-1/2 top-20 h-72 w-72 -translate-x-1/2 rounded-full bg-[#f5b942]/10 blur-3xl" />
+
+          <div className="relative mx-auto max-w-7xl px-6 py-8">
+            <nav className="mb-14 flex flex-wrap items-center justify-between gap-4 rounded-3xl border border-white/10 bg-white/[0.06] px-5 py-4 shadow-2xl shadow-black/20 backdrop-blur">
+              <Link href="/careers" className="text-xl font-black tracking-tight">
+                MedicaidReady <span className="text-[#f5b942]">Careers</span>
+              </Link>
+
+              <div className="flex flex-wrap gap-4 text-sm font-semibold text-white/75">
+                <Link href="/careers/jobs" className="hover:text-white">
+                  Find Jobs
+                </Link>
+                <Link href="/careers/companies" className="hover:text-white">
+                  Companies
+                </Link>
+                <Link href="/careers/insights" className="text-[#f5b942]">
+                  Career Insights
+                </Link>
+                <Link href="/careers/resources" className="hover:text-white">
+                  Career Resources
+                </Link>
+                <Link href="/careers/employers" className="hover:text-white">
+                  For Employers
+                </Link>
+              </div>
+            </nav>
+
+            <div className="grid gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:items-center">
               <div>
-                <div className="mb-5 inline-flex items-center rounded-full border border-amber-300/30 bg-amber-300/10 px-4 py-2 text-sm font-semibold text-amber-200">
-                  MedicaidReady Career Insights
+                <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#f5b942]/30 bg-[#f5b942]/10 px-4 py-2 text-xs font-black uppercase tracking-[0.22em] text-[#f5b942]">
+                  Career Intelligence Center
                 </div>
 
-                <h1 className="max-w-4xl text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
-                  Hiring trends, salary insights, and verified opportunities.
+                <h1 className="max-w-5xl text-4xl font-black leading-tight tracking-tight md:text-6xl">
+                  Understand the hiring market before you apply.
                 </h1>
 
-                <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-300">
-                  A premium career intelligence center built for job seekers who
-                  want cleaner listings, stronger market signals, and verified
-                  application paths across healthcare, analyst, public sector,
-                  nonprofit, and remote career tracks.
+                <p className="mt-6 max-w-2xl text-lg leading-8 text-white/75">
+                  MedicaidReady Careers combines verified jobs with weekly hiring
+                  reports, market signals, salary intelligence, employer spotlights,
+                  and practical guidance for modern professionals.
                 </p>
 
-                <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <div className="mt-8 flex flex-wrap gap-4">
+                  <Link
+                    href="#reports"
+                    className="rounded-full bg-[#f5b942] px-6 py-3 text-sm font-black text-[#061b3a] shadow-lg shadow-black/20 transition hover:-translate-y-0.5 hover:bg-[#ffd978]"
+                  >
+                    View Hiring Reports
+                  </Link>
                   <Link
                     href="/careers/jobs"
-                    className="inline-flex items-center justify-center rounded-full bg-amber-400 px-6 py-3 text-sm font-bold text-slate-950 shadow-lg shadow-amber-400/20 transition hover:bg-amber-300"
+                    className="rounded-full border border-white/20 px-6 py-3 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-white/10"
                   >
-                    Browse verified jobs
-                  </Link>
-                  <Link
-                    href="/careers"
-                    className="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-6 py-3 text-sm font-bold text-white transition hover:bg-white/10"
-                  >
-                    Back to Careers
+                    Browse Verified Jobs
                   </Link>
                 </div>
-              </div>
 
-              <div className="rounded-3xl border border-white/10 bg-white/[0.06] p-6 shadow-2xl backdrop-blur">
-                <div className="flex items-start justify-between gap-4 border-b border-white/10 pb-5">
-                  <div>
-                    <p className="text-sm font-semibold uppercase tracking-[0.22em] text-amber-200">
-                      Verification Summary
-                    </p>
-                    <h2 className="mt-2 text-2xl font-bold text-white">
-                      Clean job data, stronger search confidence.
-                    </h2>
-                  </div>
-                  <div className="rounded-2xl bg-emerald-400/15 px-4 py-2 text-sm font-bold text-emerald-200">
-                    Active
-                  </div>
-                </div>
-
-                <div className="mt-6 space-y-4">
-                  {verificationStandards.map((item) => (
+                <div className="mt-10 grid max-w-2xl gap-3 sm:grid-cols-3">
+                  {newsroomStats.map((stat) => (
                     <div
-                      key={item}
-                      className="flex items-start gap-3 rounded-2xl bg-slate-900/70 p-4"
+                      key={stat.label}
+                      className="rounded-3xl border border-white/10 bg-white/[0.07] p-5"
                     >
-                      <span className="mt-1 h-2.5 w-2.5 rounded-full bg-amber-300" />
-                      <p className="text-sm leading-6 text-slate-200">{item}</p>
+                      <div className="text-3xl font-black text-[#f5b942]">
+                        {stat.value}
+                      </div>
+                      <p className="mt-1 text-xs font-bold uppercase tracking-[0.18em] text-white/60">
+                        {stat.label}
+                      </p>
                     </div>
                   ))}
                 </div>
               </div>
+
+              <div className="rounded-[2rem] border border-white/10 bg-white/10 p-5 shadow-2xl shadow-black/30 backdrop-blur">
+                <div className="rounded-[1.5rem] bg-white p-6 text-[#061b3a]">
+                  <div className="flex items-center justify-between gap-4">
+                    <p className="text-sm font-black uppercase tracking-[0.2em] text-[#1f7ae0]">
+                      Verification Standard
+                    </p>
+                    <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-black text-emerald-700">
+                      Active
+                    </span>
+                  </div>
+
+                  <h2 className="mt-4 text-2xl font-black">
+                    Cleaner job discovery, stronger career decisions.
+                  </h2>
+
+                  <p className="mt-3 text-sm leading-6 text-slate-600">
+                    The platform is maintained around a simple promise: help people
+                    spend less time chasing bad listings and more time applying with
+                    direction.
+                  </p>
+
+                  <div className="mt-6 grid gap-3">
+                    {verificationItems.map((item) => (
+                      <div key={item.title} className="rounded-2xl bg-slate-50 p-4">
+                        <p className="font-black">✓ {item.title}</p>
+                        <p className="mt-1 text-sm leading-6 text-slate-600">
+                          {item.detail}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {hiringIndicators.map((item) => (
+            <div className="mt-12 grid gap-4 md:grid-cols-3">
+              {marketSignals.map((signal) => (
                 <div
-                  key={item.label}
-                  className="rounded-3xl border border-white/10 bg-white/[0.06] p-5 shadow-xl"
+                  key={signal.label}
+                  className="rounded-3xl border border-white/10 bg-white/[0.07] p-5 shadow-xl shadow-black/10"
                 >
-                  <p className="text-sm font-medium text-slate-300">
-                    {item.label}
+                  <p className="text-xs font-black uppercase tracking-[0.2em] text-[#f5b942]">
+                    {signal.label}
                   </p>
-                  <p className="mt-3 text-4xl font-extrabold text-white">
-                    {item.value}
-                  </p>
-                  <p className="mt-3 text-sm leading-6 text-slate-400">
-                    {item.detail}
+                  <div className="mt-3 text-2xl font-black">{signal.value}</div>
+                  <p className="mt-2 text-sm leading-6 text-white/65">
+                    {signal.detail}
                   </p>
                 </div>
               ))}
@@ -212,55 +366,137 @@ export default function CareersInsightsPage() {
           </div>
         </section>
 
-        <section className="bg-slate-50 text-slate-950">
-          <div className="mx-auto max-w-7xl px-6 py-14 lg:px-8">
-            <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr]">
-              <div className="rounded-3xl bg-slate-900 p-7 text-white shadow-xl">
-                <p className="text-sm font-bold uppercase tracking-[0.22em] text-amber-300">
-                  Weekly Market Summary
-                </p>
-                <h2 className="mt-4 text-3xl font-extrabold">
-                  A cleaner view of what is actually hiring.
-                </h2>
-                <p className="mt-4 text-base leading-7 text-slate-300">
-                  MedicaidReady Careers is moving beyond basic job listings.
-                  The goal is to help job seekers understand where demand is
-                  showing up, which categories are active, and which verified
-                  opportunities are worth applying to now.
-                </p>
+        <section className="border-b border-white/10 bg-white/[0.035]">
+          <div className="mx-auto grid max-w-7xl gap-6 px-6 py-8 lg:grid-cols-[0.7fr_1.3fr] lg:items-center">
+            <div>
+              <p className="text-sm font-black uppercase tracking-[0.22em] text-[#f5b942]">
+                This Week&apos;s Brief
+              </p>
+              <h2 className="mt-2 text-2xl font-black">What job seekers should watch.</h2>
+            </div>
 
-                <div className="mt-7 rounded-2xl border border-amber-300/25 bg-amber-300/10 p-5">
-                  <p className="text-sm font-bold text-amber-200">
-                    Current platform signal
-                  </p>
-                  <p className="mt-2 text-sm leading-6 text-slate-200">
-                    Individual job pages and the verified jobs directory are
-                    already showing strong organic search value. Career Insights
-                    builds on that by turning verified hiring activity into
-                    indexable weekly reports and practical career guidance.
-                  </p>
-                </div>
+            <div className="grid gap-3 md:grid-cols-3">
+              <div className="rounded-3xl border border-white/10 bg-[#061b3a] p-5">
+                <p className="text-sm font-black text-[#f5b942]">Roles</p>
+                <p className="mt-2 text-sm leading-6 text-white/70">
+                  Analyst, compliance, operations, technology, and public-sector
+                  jobs continue to shape the platform.
+                </p>
               </div>
+              <div className="rounded-3xl border border-white/10 bg-[#061b3a] p-5">
+                <p className="text-sm font-black text-[#f5b942]">Skills</p>
+                <p className="mt-2 text-sm leading-6 text-white/70">
+                  SQL, Excel, Power BI, reporting, project coordination, and
+                  stakeholder support remain strong signals.
+                </p>
+              </div>
+              <div className="rounded-3xl border border-white/10 bg-[#061b3a] p-5">
+                <p className="text-sm font-black text-[#f5b942]">Strategy</p>
+                <p className="mt-2 text-sm leading-6 text-white/70">
+                  Apply smarter by tracking employers, role clusters, salary ranges,
+                  and weekly hiring movement.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
 
-              <div className="grid gap-4 sm:grid-cols-2">
+        <section id="reports" className="mx-auto max-w-7xl px-6 py-16">
+          <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p className="text-sm font-black uppercase tracking-[0.22em] text-[#f5b942]">
+                Weekly Hiring Reports
+              </p>
+              <h2 className="mt-2 text-3xl font-black md:text-4xl">
+                Fresh reports for serious job seekers.
+              </h2>
+              <p className="mt-3 max-w-2xl text-sm leading-6 text-white/65">
+                Reports are designed to help professionals understand where hiring is
+                active, what kinds of roles are appearing, and where to focus next.
+              </p>
+            </div>
+            <Link href="/careers/jobs" className="text-sm font-black text-[#f5b942]">
+              Browse all jobs →
+            </Link>
+          </div>
+
+          <div className="grid gap-5 md:grid-cols-2">
+            {weeklyReports.map((report) => (
+              <Link
+                key={report.title}
+                href={report.href}
+                className="group rounded-[2rem] border border-white/10 bg-white/[0.07] p-6 shadow-xl shadow-black/10 transition duration-300 hover:-translate-y-1 hover:bg-white/[0.11]"
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <p className="text-xs font-black uppercase tracking-[0.2em] text-[#f5b942]">
+                    {report.eyebrow}
+                  </p>
+                  <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-bold text-white/70">
+                    {report.signal}
+                  </span>
+                </div>
+                <h3 className="mt-4 text-2xl font-black leading-tight">
+                  {report.title}
+                </h3>
+                <p className="mt-3 text-sm leading-6 text-white/65">
+                  {report.summary}
+                </p>
+                <div className="mt-6 flex items-center justify-between gap-4">
+                  <span className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 text-xs font-bold text-white/65">
+                    {report.metric}
+                  </span>
+                  <span className="text-sm font-black text-[#f5b942] transition group-hover:translate-x-1">
+                    Read report →
+                  </span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        <section className="mx-auto max-w-7xl px-6 py-8">
+          <div className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
+            <div className="rounded-[2rem] bg-white p-7 text-[#061b3a] shadow-2xl shadow-black/20">
+              <p className="text-sm font-black uppercase tracking-[0.22em] text-[#1f7ae0]">
+                Trending Categories
+              </p>
+              <h2 className="mt-3 text-3xl font-black">Where hiring is moving.</h2>
+              <p className="mt-3 text-sm leading-6 text-slate-600">
+                These categories reflect the broader direction of MedicaidReady
+                Careers as it expands into a true career intelligence platform.
+              </p>
+
+              <div className="mt-6 flex flex-wrap gap-3">
                 {trendingCategories.map((category) => (
                   <Link
-                    key={category.title}
-                    href={category.href}
-                    className="group rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-amber-300 hover:shadow-xl"
+                    key={category}
+                    href={jobSearchHref(category)}
+                    className="rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-bold transition hover:-translate-y-0.5 hover:border-[#f5b942] hover:bg-white"
                   >
-                    <div className="mb-5 inline-flex rounded-full bg-amber-100 px-3 py-1 text-xs font-bold text-amber-800">
-                      {category.signal}
-                    </div>
-                    <h3 className="text-xl font-extrabold text-slate-950">
-                      {category.title}
-                    </h3>
-                    <p className="mt-3 text-sm leading-6 text-slate-600">
-                      {category.description}
-                    </p>
-                    <p className="mt-5 text-sm font-bold text-slate-950 group-hover:text-amber-700">
-                      Explore verified roles →
-                    </p>
+                    {category}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-[2rem] border border-white/10 bg-white/[0.07] p-7 shadow-2xl shadow-black/10">
+              <p className="text-sm font-black uppercase tracking-[0.22em] text-[#f5b942]">
+                Skills Intelligence
+              </p>
+              <h2 className="mt-3 text-3xl font-black">Skills employers keep asking for.</h2>
+              <p className="mt-3 text-sm leading-6 text-white/65">
+                Skills intelligence will help job seekers quickly see which keywords,
+                tools, and capabilities appear across active roles.
+              </p>
+
+              <div className="mt-6 grid gap-3 sm:grid-cols-3">
+                {skillSignals.map((skill) => (
+                  <Link
+                    key={skill}
+                    href={jobSearchHref(skill)}
+                    className="rounded-2xl border border-white/10 bg-white/[0.07] p-4 text-center text-sm font-black transition hover:-translate-y-0.5 hover:bg-white/[0.12]"
+                  >
+                    {skill}
                   </Link>
                 ))}
               </div>
@@ -268,146 +504,178 @@ export default function CareersInsightsPage() {
           </div>
         </section>
 
-        <section className="bg-white text-slate-950">
-          <div className="mx-auto max-w-7xl px-6 py-14 lg:px-8">
-            <div className="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+        <section className="mx-auto max-w-7xl px-6 py-12">
+          <div className="rounded-[2rem] border border-white/10 bg-white/[0.06] p-7">
+            <div className="mb-7 flex flex-wrap items-end justify-between gap-4">
               <div>
-                <p className="text-sm font-bold uppercase tracking-[0.22em] text-amber-700">
-                  Latest Hiring Reports
+                <p className="text-sm font-black uppercase tracking-[0.22em] text-[#f5b942]">
+                  Employer Intelligence
                 </p>
-                <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-950 sm:text-4xl">
-                  Weekly intelligence built from verified job activity.
-                </h2>
+                <h2 className="mt-3 text-3xl font-black">Employers to watch.</h2>
+                <p className="mt-3 max-w-2xl text-sm leading-6 text-white/65">
+                  Employer spotlights will help job seekers understand who is hiring,
+                  what kinds of roles are active, and where opportunities may be growing.
+                </p>
               </div>
               <Link
-                href="/careers/jobs"
-                className="inline-flex rounded-full border border-slate-300 px-5 py-3 text-sm font-bold text-slate-900 transition hover:border-amber-400 hover:bg-amber-50"
+                href="/careers/companies"
+                className="rounded-full border border-white/20 px-5 py-3 text-sm font-black text-white transition hover:bg-white/10"
               >
-                View all jobs
+                Browse Companies
               </Link>
             </div>
 
-            <div className="grid gap-5 lg:grid-cols-3">
-              {weeklyReports.map((report) => (
-                <article
-                  key={report.title}
-                  className="rounded-3xl border border-slate-200 bg-slate-50 p-6 shadow-sm"
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {employerSpotlights.map((employer) => (
+                <Link
+                  key={employer.name}
+                  href={jobSearchHref(employer.name)}
+                  className="rounded-3xl border border-white/10 bg-[#061b3a] p-5 transition hover:-translate-y-1 hover:bg-[#08244c]"
                 >
-                  <div className="mb-5 inline-flex rounded-full bg-slate-900 px-3 py-1 text-xs font-bold text-amber-200">
-                    {report.status}
-                  </div>
-                  <h3 className="text-xl font-extrabold text-slate-950">
-                    {report.title}
-                  </h3>
-                  <p className="mt-3 text-sm leading-6 text-slate-600">
-                    {report.summary}
+                  <p className="text-lg font-black">{employer.name}</p>
+                  <p className="mt-2 text-sm leading-6 text-white/60">
+                    {employer.focus}
                   </p>
-                  <Link
-                    href={report.href}
-                    className="mt-6 inline-flex text-sm font-bold text-amber-700 hover:text-amber-800"
-                  >
-                    Read report →
-                  </Link>
-                </article>
+                  <p className="mt-5 text-sm font-black text-[#f5b942]">
+                    View related roles →
+                  </p>
+                </Link>
               ))}
             </div>
           </div>
         </section>
 
-        <section className="bg-slate-50 text-slate-950">
-          <div className="mx-auto grid max-w-7xl gap-8 px-6 py-14 lg:grid-cols-[1fr_0.85fr] lg:px-8">
-            <div className="rounded-3xl border border-slate-200 bg-white p-7 shadow-sm">
-              <p className="text-sm font-bold uppercase tracking-[0.22em] text-amber-700">
-                Salary Snapshot
-              </p>
-              <h2 className="mt-3 text-3xl font-extrabold">
-                Practical salary signals for high-demand career tracks.
-              </h2>
+        <section className="mx-auto grid max-w-7xl gap-6 px-6 py-12 lg:grid-cols-2">
+          <div className="rounded-[2rem] bg-white p-7 text-[#061b3a] shadow-2xl shadow-black/20">
+            <p className="text-sm font-black uppercase tracking-[0.22em] text-[#1f7ae0]">
+              Salary Center
+            </p>
+            <h2 className="mt-3 text-3xl font-black">Salary intelligence for smarter applications.</h2>
+            <p className="mt-3 text-sm leading-6 text-slate-600">
+              Salary pages will help professionals understand expected ranges before
+              they apply, interview, or negotiate.
+            </p>
 
-              <div className="mt-7 space-y-4">
-                {salarySnapshots.map((item) => (
+            <div className="mt-6 grid gap-3">
+              {salaryGuides.map((guide) => (
+                <Link
+                  key={guide.title}
+                  href={jobSearchHref(guide.query)}
+                  className="rounded-2xl border border-slate-200 p-4 transition hover:-translate-y-0.5 hover:bg-slate-50"
+                >
+                  <p className="font-black">{guide.title} →</p>
+                  <p className="mt-1 text-sm leading-6 text-slate-600">
+                    {guide.detail}
+                  </p>
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          <div className="rounded-[2rem] bg-[#f5b942] p-7 text-[#061b3a] shadow-2xl shadow-black/20">
+            <p className="text-sm font-black uppercase tracking-[0.22em]">
+              Career Guides
+            </p>
+            <h2 className="mt-3 text-3xl font-black">Practical help before the application.</h2>
+            <p className="mt-3 text-sm font-semibold leading-6 text-[#061b3a]/75">
+              Career guides will support resumes, interviews, skills,
+              certifications, remote work, salary negotiation, and realistic next
+              steps.
+            </p>
+
+            <div className="mt-6 grid gap-3">
+              {careerGuides.map((guide) => (
+                <Link
+                  key={guide}
+                  href="/careers/resources"
+                  className="rounded-2xl bg-white/75 p-4 font-black transition hover:-translate-y-0.5 hover:bg-white"
+                >
+                  {guide} →
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="mx-auto max-w-7xl px-6 py-12">
+          <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+            <div className="rounded-[2rem] border border-white/10 bg-white/[0.07] p-7">
+              <p className="text-sm font-black uppercase tracking-[0.22em] text-[#f5b942]">
+                Editorial Roadmap
+              </p>
+              <h2 className="mt-3 text-3xl font-black">The next layer of authority.</h2>
+              <p className="mt-3 text-sm leading-6 text-white/65">
+                The long-term advantage is publishing useful career intelligence
+                consistently, so professionals return even when they are not applying
+                the same day.
+              </p>
+
+              <div className="mt-6 grid gap-3">
+                {editorialQueue.map((item) => (
                   <div
-                    key={item.role}
-                    className="rounded-2xl border border-slate-200 bg-slate-50 p-5"
+                    key={item}
+                    className="rounded-2xl border border-white/10 bg-white/[0.06] p-4 font-bold"
                   >
-                    <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
-                      <h3 className="text-lg font-extrabold">{item.role}</h3>
-                      <p className="rounded-full bg-emerald-100 px-4 py-2 text-sm font-extrabold text-emerald-800">
-                        {item.range}
-                      </p>
-                    </div>
-                    <p className="mt-3 text-sm leading-6 text-slate-600">
-                      {item.note}
+                    {item}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-[2rem] bg-white p-7 text-[#061b3a]">
+              <p className="text-sm font-black uppercase tracking-[0.22em] text-[#1f7ae0]">
+                Intelligence Platform
+              </p>
+              <h2 className="mt-3 text-3xl font-black">Not another job board.</h2>
+              <p className="mt-3 text-sm leading-6 text-slate-600">
+                MedicaidReady Careers is being built around the full decision cycle:
+                discover jobs, understand the market, identify skills, compare
+                employers, and apply with confidence.
+              </p>
+
+              <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                {intelligencePillars.map((pillar) => (
+                  <div key={pillar.title} className="rounded-3xl bg-slate-50 p-5">
+                    <p className="text-xl font-black">{pillar.title}</p>
+                    <p className="mt-2 text-sm leading-6 text-slate-600">
+                      {pillar.detail}
                     </p>
                   </div>
                 ))}
               </div>
             </div>
-
-            <div className="rounded-3xl bg-slate-900 p-7 text-white shadow-xl">
-              <p className="text-sm font-bold uppercase tracking-[0.22em] text-amber-300">
-                Featured Hiring Areas
-              </p>
-              <h2 className="mt-3 text-3xl font-extrabold">
-                Where verified opportunities are showing up.
-              </h2>
-
-              <div className="mt-7 grid gap-3">
-                {featuredEmployers.map((employer) => (
-                  <div
-                    key={employer}
-                    className="rounded-2xl border border-white/10 bg-white/[0.06] px-4 py-3 text-sm font-semibold text-slate-200"
-                  >
-                    {employer}
-                  </div>
-                ))}
-              </div>
-
-              <Link
-                href="/careers/companies"
-                className="mt-7 inline-flex rounded-full bg-white px-5 py-3 text-sm font-bold text-slate-950 transition hover:bg-amber-100"
-              >
-                Explore companies
-              </Link>
-            </div>
           </div>
         </section>
 
-        <section className="bg-slate-950 text-white">
-          <div className="mx-auto max-w-7xl px-6 py-14 lg:px-8">
-            <div className="rounded-[2rem] border border-white/10 bg-white/[0.06] p-8 shadow-2xl lg:p-10">
-              <div className="grid gap-8 lg:grid-cols-[1fr_0.8fr] lg:items-center">
-                <div>
-                  <p className="text-sm font-bold uppercase tracking-[0.22em] text-amber-300">
-                    MedicaidReady Quality Standard
-                  </p>
-                  <h2 className="mt-3 text-3xl font-extrabold tracking-tight sm:text-4xl">
-                    Built for job seekers who are tired of messy job boards.
-                  </h2>
-                  <p className="mt-4 max-w-3xl text-base leading-7 text-slate-300">
-                    The Career Insights Center supports a better search
-                    experience by combining verified jobs, link audits,
-                    duplicate cleanup, salary context, and weekly market
-                    reporting into one trusted career platform.
-                  </p>
-                </div>
+        <section className="mx-auto max-w-7xl px-6 py-12 pb-20">
+          <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.07] p-8 text-center shadow-2xl shadow-black/20">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(245,185,66,0.18),transparent_34%)]" />
+            <div className="relative">
+              <p className="text-sm font-black uppercase tracking-[0.22em] text-[#f5b942]">
+                Career Intelligence Platform
+              </p>
+              <h2 className="mt-3 text-3xl font-black md:text-4xl">
+                The place professionals visit before they move.
+              </h2>
+              <p className="mx-auto mt-4 max-w-3xl text-white/70">
+                MedicaidReady Careers is evolving into a trusted destination for
+                verified opportunities, hiring trends, salary signals, employer
+                research, skill intelligence, and practical career guidance.
+              </p>
 
-                <div className="rounded-3xl bg-slate-900 p-6">
-                  <p className="text-lg font-extrabold text-white">
-                    Start with verified opportunities.
-                  </p>
-                  <p className="mt-3 text-sm leading-6 text-slate-300">
-                    Browse active analyst, healthcare, public sector, nonprofit,
-                    remote, and operations roles reviewed through the
-                    MedicaidReady Careers refresh workflow.
-                  </p>
-                  <Link
-                    href="/careers/jobs"
-                    className="mt-6 inline-flex w-full justify-center rounded-full bg-amber-400 px-6 py-3 text-sm font-extrabold text-slate-950 transition hover:bg-amber-300"
-                  >
-                    Browse verified jobs
-                  </Link>
-                </div>
+              <div className="mt-7 flex flex-wrap justify-center gap-4">
+                <Link
+                  href="/careers/jobs"
+                  className="rounded-full bg-[#f5b942] px-7 py-3 text-sm font-black text-[#061b3a] transition hover:-translate-y-0.5 hover:bg-[#ffd978]"
+                >
+                  Browse Verified Jobs
+                </Link>
+                <Link
+                  href="/careers/resources"
+                  className="rounded-full border border-white/20 px-7 py-3 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-white/10"
+                >
+                  Explore Resources
+                </Link>
               </div>
             </div>
           </div>

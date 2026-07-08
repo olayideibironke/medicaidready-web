@@ -7,6 +7,12 @@ function mustGet(name: string) {
   return v;
 }
 
+function setCorsHeaders(res: NextApiResponse) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+}
+
 function normalizeEmail(v: unknown): string {
   return (v ?? "").toString().trim().toLowerCase();
 }
@@ -30,8 +36,14 @@ const STATE_NAMES: Record<string, string> = {
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  setCorsHeaders(res);
+
+  if (req.method === "OPTIONS") {
+    return res.status(204).end();
+  }
+
   if (req.method !== "POST") {
-    res.setHeader("Allow", "POST");
+    res.setHeader("Allow", "POST, OPTIONS");
     return res.status(405).json({ ok: false, error: "method_not_allowed" });
   }
 
@@ -55,7 +67,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const stateName = STATE_NAMES[state];
 
-    // Build Claude prompt
     const prompt = `You are a friendly Medicaid eligibility advisor. A user has submitted the following information:
 
 - State: ${stateName} (${state})
@@ -81,7 +92,7 @@ Respond with valid JSON only — no markdown, no explanation outside of the JSON
     const orRes = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${mustGet("OPENROUTER_API_KEY")}`,
+        Authorization: `Bearer ${mustGet("OPENROUTER_API_KEY")}`,
         "Content-Type": "application/json",
         "HTTP-Referer": "https://medicaidready.org",
         "X-Title": "MedicaidReady",
@@ -101,23 +112,27 @@ Respond with valid JSON only — no markdown, no explanation outside of the JSON
     const orData = (await orRes.json()) as {
       choices: { message: { content: string } }[];
     };
+
     const rawText = (orData.choices[0]?.message?.content ?? "").trim();
 
     let qualified: boolean;
     let summary: string;
+
     try {
       const parsed = JSON.parse(rawText) as { qualified: boolean; summary: string };
       qualified = Boolean(parsed.qualified);
       summary = String(parsed.summary ?? "").trim();
       if (!summary) throw new Error("empty summary");
     } catch {
-      // Fallback: try to extract from text if JSON parse fails
       qualified = rawText.toLowerCase().includes('"qualified": true');
-      summary = rawText.replace(/\{[\s\S]*"summary"\s*:\s*"/, "").replace(/"[\s\S]*\}$/, "").trim()
-        || "We assessed your information. Please visit your state Medicaid office for a definitive determination.";
+      summary =
+        rawText
+          .replace(/\{[\s\S]*"summary"\s*:\s*"/, "")
+          .replace(/"[\s\S]*\}$/, "")
+          .trim() ||
+        "We assessed your information. Please visit your state Medicaid office for a definitive determination.";
     }
 
-    // Save to Supabase
     const sb = supabaseAdmin();
     const { data: inserted, error: dbErr } = await sb
       .from("eligibility_submissions")
@@ -136,7 +151,6 @@ Respond with valid JSON only — no markdown, no explanation outside of the JSON
 
     if (dbErr) {
       console.error("Supabase insert error:", dbErr);
-      // Don't block the user — return result even if DB save fails
     }
 
     return res.status(200).json({
