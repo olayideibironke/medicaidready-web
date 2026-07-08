@@ -75,10 +75,16 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
         "cybersecurity",
         "cyber security",
         "security engineer",
+        "security analyst",
         "application security",
         "cloud security",
         "information security",
+        "security operations",
+        "soc analyst",
         "vulnerability",
+        "threat detection",
+        "identity access",
+        "iam analyst",
       ])
     ).length,
     cloudInfrastructure: jobs.filter((job) =>
@@ -148,14 +154,14 @@ export default function CareersReportsIndex({ stats, generatedAt }: Props) {
       status: "Live",
     },
     {
-      eyebrow: "Next Report Lane",
+      eyebrow: "Live Report",
       title: "Cybersecurity Jobs Hiring Now",
       description:
-        "Follow application security, cloud security, information security, vulnerability, and security engineering roles.",
-      href: "/careers/jobs?category=cybersecurity",
+        "Follow cybersecurity, application security, cloud security, information security, SOC, vulnerability, IAM, and security engineering roles.",
+      href: "/careers/reports/cybersecurity-jobs-hiring-now",
       metric: stats.cyberSecurity,
       metricLabel: "security matches",
-      status: "Job search",
+      status: "Live",
     },
     {
       eyebrow: "Next Report Lane",
@@ -224,7 +230,7 @@ export default function CareersReportsIndex({ stats, generatedAt }: Props) {
 
                   <div className="reports-actions">
                     <Link
-                      href="/careers/reports/remote-program-analyst-jobs-this-week"
+                      href="/careers/reports/cybersecurity-jobs-hiring-now"
                       className="reports-primary"
                     >
                       Read latest report
