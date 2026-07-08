@@ -36,6 +36,7 @@ type CareersJobRow = {
 };
 
 type CareersJobWithApplyUrl = CareersJob & {
+  category: string | null;
   applyUrl: string | null;
   apply_url: string | null;
   sourceType: string | null;
@@ -137,6 +138,7 @@ export function rowToCareersJob(row: CareersJobRow): CareersJob {
     id: row.slug,
     title: row.title,
     company: row.company,
+    category: row.category ?? null,
     location: row.location ?? "",
     type: row.employment_type ? (TYPE_MAP[row.employment_type] ?? "Full-time") : "Full-time",
     remote: row.work_mode ? (MODE_MAP[row.work_mode] ?? "On-site") : "On-site",

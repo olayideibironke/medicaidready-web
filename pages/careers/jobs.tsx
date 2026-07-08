@@ -6,6 +6,12 @@ import { useRouter } from "next/router";
 import CareersShell from "../../components/careers/CareersShell";
 import CategoryGrid from "../../components/careers/CategoryGrid";
 import JobAlertCapture from "../../components/careers/JobAlertCapture";
+import {
+  CAREERS_CATEGORY_DEFS,
+  careersJobSearchText,
+  findCareersCategoryByInput,
+  jobMatchesCareersCategory,
+} from "../../lib/careers/categories";
 import { listApprovedJobs } from "../../lib/careers/db";
 import type {
   CareersJob,
@@ -68,128 +74,9 @@ const COMPANY_LOGO_DOMAINS: Record<string, string> = {
 type Props = { jobs: CareersJob[] };
 type DateRange = "any" | "1d" | "7d" | "30d";
 
-type CategoryDef = {
-  key: string;
-  label: string;
-  keywords: string[];
-};
-
-const CATEGORY_DEFS: CategoryDef[] = [
-  {
-    key: "medicaid",
-    label: "Medicaid coverage & eligibility",
-    keywords: [
-      "medicaid",
-      "eligibility",
-      "enrollment",
-      "navigator",
-      "patient access",
-      "benefits",
-      "coverage",
-    ],
-  },
-  {
-    key: "care_workforce",
-    label: "Care workforce (CNA, GNA, caregiver)",
-    keywords: [
-      "cna",
-      "gna",
-      "caregiver",
-      "nursing assistant",
-      "home health aide",
-      "hha",
-      "personal care",
-      "direct support",
-      "dsp",
-      "patient care tech",
-    ],
-  },
-  {
-    key: "care_management",
-    label: "Care management & coordination",
-    keywords: [
-      "care manager",
-      "care coordinator",
-      "case manager",
-      "social worker",
-      "care management",
-      "case management",
-      "ltss",
-    ],
-  },
-  {
-    key: "healthcare_it",
-    label: "Healthcare IT & systems",
-    keywords: [
-      "healthcare it",
-      "clinical systems",
-      "systems analyst",
-      "application analyst",
-      "it analyst",
-      "technical analyst",
-      "information systems",
-    ],
-  },
-  {
-    key: "ehr",
-    label: "EHR / Epic / Cerner",
-    keywords: ["ehr", "epic", "cerner", "electronic health record"],
-  },
-  {
-    key: "claims",
-    label: "Claims systems & payer ops",
-    keywords: [
-      "claims",
-      "qnxt",
-      "facets",
-      "payment integrity",
-      "claims configuration",
-      "configuration analyst",
-      "edi",
-    ],
-  },
-  {
-    key: "provider_data",
-    label: "Provider data & credentialing",
-    keywords: [
-      "provider data",
-      "credentialing",
-      "provider configuration",
-      "network",
-      "provider relations",
-    ],
-  },
-  {
-    key: "analytics",
-    label: "Healthcare data & analytics",
-    keywords: [
-      "data analyst",
-      "data scientist",
-      "data engineer",
-      "analytics",
-      "reporting analyst",
-      "bi analyst",
-      "bi developer",
-      "business intelligence",
-    ],
-  },
-  {
-    key: "compliance",
-    label: "Compliance & regulatory",
-    keywords: [
-      "compliance",
-      "regulatory",
-      "auditor",
-      "audit",
-      "hipaa",
-      "risk",
-      "privacy",
-    ],
-  },
-];
-
 export const getStaticProps: GetStaticProps<Props> = async () => {
   const jobs = await listApprovedJobs();
+
   return {
     props: { jobs },
     revalidate: 60,
@@ -199,24 +86,31 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 function formatPostedAt(iso: string): string {
   const then = new Date(iso).getTime();
   if (Number.isNaN(then)) return "";
+
   const days = Math.max(0, Math.floor((Date.now() - then) / 86_400_000));
+
   if (days === 0) return "Posted today";
   if (days === 1) return "Posted yesterday";
   if (days < 30) return `Posted ${days} days ago`;
+
   const months = Math.floor(days / 30);
+
   return `Posted ${months} month${months === 1 ? "" : "s"} ago`;
 }
 
 function daysSince(iso: string): number {
   const then = new Date(iso).getTime();
   if (Number.isNaN(then)) return Infinity;
+
   return Math.max(0, Math.floor((Date.now() - then) / 86_400_000));
 }
 
 function companyInitials(company: string): string {
   const parts = company.trim().split(/\s+/).filter(Boolean);
+
   if (parts.length === 0) return "MR";
   if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+
   return ((parts[0][0] || "") + (parts[parts.length - 1][0] || "")).toUpperCase();
 }
 
@@ -278,40 +172,69 @@ function companyLogoUrl(job: CareersJob): string | null {
 function modeBadgeClass(mode: CareersJobMode): string {
   if (mode === "Remote") return "careers-pill-teal";
   if (mode === "Hybrid") return "careers-pill-navy";
+
   return "careers-pill";
 }
 
 function typeBadgeClass(type: string): string {
   if (type === "Contract") return "careers-pill-purple";
   if (type === "Full-time") return "careers-pill-green";
-  return "careers-pill-blue";
-}
 
-function jobMatchesCategory(job: CareersJob, def: CategoryDef): boolean {
-  const haystack = `${job.title} ${job.summary} ${job.description}`.toLowerCase();
-  return def.keywords.some((kw) => haystack.includes(kw));
+  return "careers-pill-blue";
 }
 
 function jobMatchesLocation(job: CareersJob, loc: string): boolean {
   const l = loc.trim().toLowerCase();
+
   if (!l) return true;
   if (l === "remote" || l === "remote-friendly") return job.remote === "Remote";
+
   const target = `${job.location} ${job.remote}`.toLowerCase();
+
   return target.includes(l);
+}
+
+function queryStringValue(value: string | string[] | undefined): string {
+  if (typeof value === "string") return value;
+  if (Array.isArray(value)) return value[0] || "";
+
+  return "";
+}
+
+function normalizeWorkModeParam(value: string | string[] | undefined): CareersJobMode | null {
+  const raw = queryStringValue(value).trim().toLowerCase();
+
+  if (raw === "remote") return "Remote";
+  if (raw === "hybrid") return "Hybrid";
+  if (raw === "on-site" || raw === "onsite" || raw === "on site") return "On-site";
+
+  return null;
+}
+
+function normalizeCategoryParam(value: string | string[] | undefined): string | null {
+  const category = findCareersCategoryByInput(queryStringValue(value));
+
+  return category?.key ?? null;
 }
 
 export default function CareersJobs({ jobs }: Props) {
   const router = useRouter();
 
-  const initialQ = typeof router.query.q === "string" ? router.query.q : "";
-  const initialLoc = typeof router.query.loc === "string" ? router.query.loc : "";
+  const initialQ = queryStringValue(router.query.q) || queryStringValue(router.query.query);
+  const initialLoc = queryStringValue(router.query.loc) || queryStringValue(router.query.location);
+  const initialMode = normalizeWorkModeParam(router.query.workMode) || normalizeWorkModeParam(router.query.mode);
+  const initialCategory = normalizeCategoryParam(router.query.category);
 
   const [query, setQuery] = useState(initialQ);
   const [loc, setLoc] = useState(initialLoc);
   const [postedRange, setPostedRange] = useState<DateRange>("any");
-  const [modes, setModes] = useState<Set<CareersJobMode>>(new Set());
+  const [modes, setModes] = useState<Set<CareersJobMode>>(
+    () => new Set(initialMode ? [initialMode] : [])
+  );
   const [types, setTypes] = useState<Set<CareersJobType>>(new Set());
-  const [cats, setCats] = useState<Set<string>>(new Set());
+  const [cats, setCats] = useState<Set<string>>(
+    () => new Set(initialCategory ? [initialCategory] : [])
+  );
   const [salaryOnly, setSalaryOnly] = useState(false);
   const [featuredOnly, setFeaturedOnly] = useState(false);
   const [saved, setSaved] = useState<Record<string, boolean>>({});
@@ -319,14 +242,40 @@ export default function CareersJobs({ jobs }: Props) {
 
   useEffect(() => {
     if (!router.isReady) return;
-    if (typeof router.query.q === "string" && router.query.q !== query) {
-      setQuery(router.query.q);
+
+    const nextQuery = queryStringValue(router.query.q) || queryStringValue(router.query.query);
+    const nextLocation = queryStringValue(router.query.loc) || queryStringValue(router.query.location);
+    const nextMode = normalizeWorkModeParam(router.query.workMode) || normalizeWorkModeParam(router.query.mode);
+    const nextCategory = normalizeCategoryParam(router.query.category);
+
+    setQuery((current) => (current === nextQuery ? current : nextQuery));
+    setLoc((current) => (current === nextLocation ? current : nextLocation));
+
+    if (nextMode) {
+      setModes((current) => {
+        if (current.size === 1 && current.has(nextMode)) return current;
+
+        return new Set([nextMode]);
+      });
     }
-    if (typeof router.query.loc === "string" && router.query.loc !== loc) {
-      setLoc(router.query.loc);
+
+    if (nextCategory) {
+      setCats((current) => {
+        if (current.size === 1 && current.has(nextCategory)) return current;
+
+        return new Set([nextCategory]);
+      });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router.isReady, router.query.q, router.query.loc]);
+  }, [
+    router.isReady,
+    router.query.q,
+    router.query.query,
+    router.query.loc,
+    router.query.location,
+    router.query.workMode,
+    router.query.mode,
+    router.query.category,
+  ]);
 
   useEffect(() => {
     try {
@@ -340,21 +289,26 @@ export default function CareersJobs({ jobs }: Props) {
   function toggleSaved(id: string) {
     setSaved((prev) => {
       const next = { ...prev };
+
       if (next[id]) delete next[id];
       else next[id] = true;
+
       try {
         window.localStorage.setItem(SAVED_KEY, JSON.stringify(next));
       } catch {
         /* ignore */
       }
+
       return next;
     });
   }
 
   function toggleSetItem<T>(set: Set<T>, item: T, setter: (s: Set<T>) => void) {
     const next = new Set(set);
+
     if (next.has(item)) next.delete(item);
     else next.add(item);
+
     setter(next);
   }
 
@@ -379,31 +333,34 @@ export default function CareersJobs({ jobs }: Props) {
 
   const filtered = useMemo<CareersJob[]>(() => {
     const q = query.trim().toLowerCase();
+
     return jobs.filter((j) => {
       if (q) {
-        const hay = `${j.title} ${j.company} ${j.location} ${j.summary}`.toLowerCase();
+        const hay = careersJobSearchText(j).toLowerCase();
         if (!hay.includes(q)) return false;
       }
+
       if (loc && !jobMatchesLocation(j, loc)) return false;
       if (modes.size > 0 && !modes.has(j.remote)) return false;
       if (types.size > 0 && !types.has(j.type)) return false;
       if (salaryOnly && !(j.salary && j.salary.trim())) return false;
       if (featuredOnly && !j.featured) return false;
+
       if (postedRange !== "any") {
         const limit = postedRange === "1d" ? 1 : postedRange === "7d" ? 7 : 30;
         if (daysSince(j.postedAt) > limit) return false;
       }
+
       if (cats.size > 0) {
-        let matchAny = false;
-        for (const key of cats) {
-          const def = CATEGORY_DEFS.find((c) => c.key === key);
-          if (def && jobMatchesCategory(j, def)) {
-            matchAny = true;
-            break;
-          }
-        }
-        if (!matchAny) return false;
+        const matchAnySelectedCategory = Array.from(cats).some((key) => {
+          const def = CAREERS_CATEGORY_DEFS.find((category) => category.key === key);
+
+          return def ? jobMatchesCareersCategory(j, def) : false;
+        });
+
+        if (!matchAnySelectedCategory) return false;
       }
+
       return true;
     });
   }, [jobs, query, loc, postedRange, modes, types, cats, salaryOnly, featuredOnly]);
@@ -413,11 +370,26 @@ export default function CareersJobs({ jobs }: Props) {
     [filtered]
   );
 
+  const activeCategoryLabels = useMemo(
+    () =>
+      CAREERS_CATEGORY_DEFS.filter((category) => cats.has(category.key)).map(
+        (category) => category.label
+      ),
+    [cats]
+  );
+
+  const activeResultsLabel =
+    activeCategoryLabels.length === 1
+      ? activeCategoryLabels[0]
+      : activeCategoryLabels.length > 1
+        ? "Filtered Jobs"
+        : "Recommended Jobs";
+
   const url = `${SITE_URL}/careers/jobs`;
   const metaTitle =
-    "Find Medicaid Jobs — Curated Roles in Medicaid, Care Workforce, and Healthcare Tech | MedicaidReady Careers";
+    "Find Verified Jobs — Analyst, Healthcare, Government, Tech & Remote Roles | MedicaidReady Careers";
   const metaDescription =
-    "Browse curated Medicaid, care workforce, and healthcare technology jobs. Filter by work setting, employment type, posted date, and category. Apply directly through each employer's official site.";
+    "Browse verified jobs across healthcare, technology, government, analyst, operations, compliance, cybersecurity, cloud, IT, finance, and remote career categories.";
 
   const filterPanel = (
     <aside className="cj-sidebar" aria-label="Filters">
@@ -488,8 +460,8 @@ export default function CareersJobs({ jobs }: Props) {
       </fieldset>
 
       <fieldset className="cj-group">
-        <legend className="cj-group-title">Category</legend>
-        {CATEGORY_DEFS.map((def) => (
+        <legend className="cj-group-title">Role category</legend>
+        {CAREERS_CATEGORY_DEFS.map((def) => (
           <label key={def.key} className={`cj-row${cats.has(def.key) ? " is-selected" : ""}`}>
             <input
               type="checkbox"
@@ -596,7 +568,7 @@ export default function CareersJobs({ jobs }: Props) {
               <div className="cj-results">
                 <div className="cj-results-head">
                   <div className="cj-results-tabs">
-                    <span className="cj-tab cj-tab-active">Recommended Jobs</span>
+                    <span className="cj-tab cj-tab-active">{activeResultsLabel}</span>
                   </div>
                   <div className="cj-results-meta">
                     <span className="cj-results-count">
@@ -862,7 +834,7 @@ export default function CareersJobs({ jobs }: Props) {
 
         .cj-layout {
           display: grid;
-          grid-template-columns: 260px minmax(0, 1fr);
+          grid-template-columns: 292px minmax(0, 1fr);
           gap: 24px;
           align-items: start;
         }
