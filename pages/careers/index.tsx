@@ -388,39 +388,31 @@ export default function CareersHome({ stats }: Props) {
 
         <section className="careers-section">
           <div className="careers-container">
-            <div className="careers-eyebrow">Career resources</div>
-            <h2 className="careers-h2">Tools and guides for your search.</h2>
+            <div className="careers-eyebrow">Explore the platform</div>
+            <h2 className="careers-h2">More than a list of jobs.</h2>
             <p className="careers-lead">
-              Free resources you can use today — from career insights and verified
-              job search tools to benefits guidance and practical hiring resources.
+              MedicaidReady Careers is becoming a verified job search and career
+              intelligence platform for professionals exploring tech, healthcare,
+              data, public sector, analyst, operations, and care workforce roles.
             </p>
 
             <div className="ch-resources">
               <Link href="/careers/insights" className="ch-res-card ch-res-card-featured">
-                <div className="ch-res-icon" aria-hidden="true">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                    <path d="M4 15V5M8 15V9M12 15V7M16 15V3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-                    <path d="M3 16h14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-                  </svg>
+                <div className="ch-res-topline">
+                  <div className="ch-res-icon" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                      <path d="M4 15V5M8 15V9M12 15V7M16 15V3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                      <path d="M3 16h14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                    </svg>
+                  </div>
+                  <span className="ch-new-badge">New</span>
                 </div>
-                <div className="ch-res-title">Career Insights Center</div>
+                <div className="ch-res-title">Career Insights</div>
                 <div className="ch-res-body">
-                  Hiring trends, salary insights, weekly reports, and verified job market signals.
+                  Weekly hiring reports, salary signals, employer spotlights,
+                  and verified job market updates.
                 </div>
                 <span className="ch-res-link">Explore insights →</span>
-              </Link>
-
-              <Link href="/quiz" className="ch-res-card">
-                <div className="ch-res-icon" aria-hidden="true">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                    <path d="M10 2L3 5v5c0 4.4 3.1 8 7 9 3.9-1 7-4.6 7-9V5l-7-3z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
-                  </svg>
-                </div>
-                <div className="ch-res-title">Check your Medicaid eligibility</div>
-                <div className="ch-res-body">
-                  Free 2-minute eligibility check. Covers all 50 states.
-                </div>
-                <span className="ch-res-link">Take the quiz →</span>
               </Link>
 
               <Link href="/careers/resources" className="ch-res-card">
@@ -430,10 +422,10 @@ export default function CareersHome({ stats }: Props) {
                     <path d="M7 8h6M7 11h6M7 14h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
                   </svg>
                 </div>
-                <div className="ch-res-title">Career resources</div>
+                <div className="ch-res-title">Career Resources</div>
                 <div className="ch-res-body">
-                  Curated links and guides for tech, healthcare, data, public sector,
-                  Medicaid, and care workforce career pathways.
+                  Application tools, resume guidance, job search help, and curated
+                  resources for stronger applications.
                 </div>
                 <span className="ch-res-link">Browse resources →</span>
               </Link>
@@ -445,12 +437,26 @@ export default function CareersHome({ stats }: Props) {
                     <path d="M7 17V9h6v8M9 7v.01M11 7v.01" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
                   </svg>
                 </div>
-                <div className="ch-res-title">Browse companies</div>
+                <div className="ch-res-title">Browse Companies</div>
                 <div className="ch-res-body">
-                  See which employers are actively hiring across tech, healthcare,
-                  data, public sector, analyst, and care workforce roles.
+                  Discover employers actively hiring across tech, healthcare,
+                  data, public sector, analyst, and care roles.
                 </div>
-                <span className="ch-res-link">See employers →</span>
+                <span className="ch-res-link">See companies →</span>
+              </Link>
+
+              <Link href="/careers/post-a-job" className="ch-res-card ch-res-card-dark">
+                <div className="ch-res-icon ch-res-icon-dark" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M10 4v12M4 10h12" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+                  </svg>
+                </div>
+                <div className="ch-res-title">Post a Job</div>
+                <div className="ch-res-body">
+                  Reach professionals looking for verified analyst, healthcare,
+                  technology, public sector, and operations opportunities.
+                </div>
+                <span className="ch-res-link">Start hiring →</span>
               </Link>
             </div>
           </div>
@@ -980,8 +986,37 @@ export default function CareersHome({ stats }: Props) {
           color: inherit;
         }
         .ch-res-card-featured {
-          border-color: rgba(186, 117, 23, 0.5);
+          border-color: rgba(186, 117, 23, 0.55);
           background: linear-gradient(180deg, #ffffff 0%, #fff8eb 100%);
+          box-shadow: 0 10px 28px rgba(186, 117, 23, 0.10);
+        }
+        .ch-res-card-dark {
+          background: linear-gradient(180deg, #042C53 0%, #021c38 100%);
+          border-color: rgba(186, 117, 23, 0.55);
+          color: #ffffff;
+        }
+        .ch-res-card-dark .ch-res-title {
+          color: #ffffff;
+        }
+        .ch-res-card-dark .ch-res-body {
+          color: #bfdbfe;
+        }
+        .ch-res-topline {
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+          gap: 10px;
+          margin-bottom: 14px;
+        }
+        .ch-new-badge {
+          border-radius: 999px;
+          background: #BA7517;
+          color: #ffffff;
+          padding: 4px 9px;
+          font-size: 10px;
+          font-weight: 800;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
         }
         .ch-res-icon {
           width: 40px;
@@ -994,6 +1029,14 @@ export default function CareersHome({ stats }: Props) {
           align-items: center;
           justify-content: center;
           margin-bottom: 14px;
+        }
+        .ch-res-topline .ch-res-icon {
+          margin-bottom: 0;
+        }
+        .ch-res-icon-dark {
+          background: rgba(255,255,255,0.10);
+          border-color: rgba(255,255,255,0.16);
+          color: #EF9F27;
         }
         .ch-res-title {
           font-size: 15px;
