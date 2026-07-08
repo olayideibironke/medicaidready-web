@@ -10,8 +10,10 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     const close = () => setMenuOpen(false);
+
     router.events.on("routeChangeStart", close);
     router.events.on("hashChangeStart", close);
+
     return () => {
       router.events.off("routeChangeStart", close);
       router.events.off("hashChangeStart", close);
@@ -65,33 +67,44 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           --amber-bg: #fffbeb;
           --amber-border: #fde68a;
           --red: #dc2626;
-          --shadow-sm: 0 1px 3px rgba(15,23,42,0.08), 0 1px 2px rgba(15,23,42,0.04);
-          --shadow-md: 0 4px 12px rgba(15,23,42,0.08), 0 2px 4px rgba(15,23,42,0.04);
-          --shadow-lg: 0 12px 32px rgba(15,23,42,0.10), 0 4px 8px rgba(15,23,42,0.04);
+          --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.08),
+            0 1px 2px rgba(15, 23, 42, 0.04);
+          --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08),
+            0 2px 4px rgba(15, 23, 42, 0.04);
+          --shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.1),
+            0 4px 8px rgba(15, 23, 42, 0.04);
           --radius-sm: 8px;
           --radius-md: 12px;
           --radius-lg: 16px;
           --radius-xl: 24px;
         }
 
-        html, body {
+        html,
+        body {
           width: 100%;
           max-width: 100%;
           overflow-x: hidden;
           background: var(--bg);
           color: var(--ink);
-          font-family: 'DM Sans', ui-sans-serif, system-ui, -apple-system, sans-serif;
+          font-family: "DM Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
           font-size: 16px;
           line-height: 1.6;
           -webkit-text-size-adjust: 100%;
           -webkit-font-smoothing: antialiased;
         }
 
-        a { color: inherit; text-decoration: none; }
-        button { font-family: inherit; }
-        input, select, textarea { font-family: inherit; }
+        a {
+          color: inherit;
+          text-decoration: none;
+        }
 
-        /* Shell */
+        button,
+        input,
+        select,
+        textarea {
+          font-family: inherit;
+        }
+
         .shell {
           min-height: 100vh;
           display: flex;
@@ -99,7 +112,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           background: var(--bg);
         }
 
-        /* Header */
         .header-hidden {
           display: none !important;
         }
@@ -108,7 +120,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           position: sticky;
           top: 0;
           z-index: 100;
-          background: rgba(255,255,255,0.97);
+          background: rgba(255, 255, 255, 0.97);
           backdrop-filter: blur(8px);
           -webkit-backdrop-filter: blur(8px);
           border-bottom: 1px solid var(--border);
@@ -126,7 +138,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           gap: 16px;
         }
 
-        /* Brand */
         .brand {
           display: inline-flex;
           align-items: center;
@@ -168,7 +179,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           color: var(--gold);
         }
 
-        /* Nav */
         .nav {
           display: flex;
           align-items: center;
@@ -184,7 +194,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           font-size: 14px;
           font-weight: 500;
           color: var(--text);
-          transition: background 140ms, color 140ms;
+          transition:
+            background 140ms,
+            color 140ms;
           white-space: nowrap;
         }
 
@@ -203,7 +215,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           color: #fff;
           background: var(--navy);
           white-space: nowrap;
-          transition: background 140ms, transform 100ms;
+          transition:
+            background 140ms,
+            transform 100ms;
           border: 1px solid var(--navy-dark);
           box-shadow: var(--shadow-sm);
         }
@@ -213,7 +227,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           transform: translateY(-1px);
         }
 
-        /* Mobile button */
         .menu-btn {
           display: none;
           align-items: center;
@@ -232,7 +245,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           display: block;
         }
 
-        /* Mobile panel */
         .mobile-panel {
           border-top: 1px solid var(--border);
           background: var(--surface);
@@ -272,7 +284,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           margin-top: 4px;
         }
 
-        /* Footer */
         .footer {
           background: var(--surface);
           border-top: 1px solid var(--border);
@@ -286,14 +297,15 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          gap: 16px;
+          gap: 18px;
           flex-wrap: wrap;
         }
 
         .footer-left {
           display: flex;
           flex-direction: column;
-          gap: 4px;
+          gap: 5px;
+          min-width: 0;
         }
 
         .footer-brand {
@@ -301,7 +313,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           align-items: center;
           gap: 8px;
           font-size: 14px;
-          font-weight: 600;
+          font-weight: 700;
           color: var(--ink);
         }
 
@@ -311,12 +323,36 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           border-radius: 50%;
           background: var(--gold);
           flex-shrink: 0;
+          box-shadow: 0 0 0 4px rgba(186, 117, 23, 0.1);
         }
 
-        .footer-copy {
-          font-size: 13px;
-          color: var(--muted);
+        .footer-meta {
+          display: flex;
+          align-items: center;
+          flex-wrap: wrap;
+          gap: 8px;
           padding-left: 16px;
+          color: var(--muted);
+          font-size: 13px;
+          line-height: 1.5;
+        }
+
+        .footer-owner {
+          color: var(--muted);
+          font-weight: 600;
+        }
+
+        .footer-owner strong {
+          color: var(--navy);
+          font-weight: 900;
+        }
+
+        .footer-meta-divider {
+          width: 4px;
+          height: 4px;
+          border-radius: 999px;
+          background: var(--border-strong);
+          flex-shrink: 0;
         }
 
         .footer-links {
@@ -332,7 +368,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           font-size: 13px;
           font-weight: 500;
           color: var(--muted);
-          transition: color 120ms, background 120ms;
+          transition:
+            color 120ms,
+            background 120ms;
         }
 
         .footer-link:hover {
@@ -346,16 +384,46 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           background: var(--border);
         }
 
-        /* Responsive */
         @media (max-width: 680px) {
-          .nav { display: none; }
-          .menu-btn { display: flex; }
-          .header-inner { padding: 0 16px; }
-          .footer-inner { padding: 20px 16px; flex-direction: column; align-items: flex-start; gap: 12px; }
+          .nav {
+            display: none;
+          }
+
+          .menu-btn {
+            display: flex;
+          }
+
+          .header-inner {
+            padding: 0 16px;
+          }
+
+          .footer-inner {
+            padding: 20px 16px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 12px;
+          }
+
+          .footer-meta {
+            padding-left: 16px;
+          }
+        }
+
+        @media (max-width: 420px) {
+          .footer-meta {
+            display: grid;
+            gap: 4px;
+          }
+
+          .footer-meta-divider {
+            display: none;
+          }
         }
 
         @media (prefers-reduced-motion: reduce) {
-          *, *::before, *::after {
+          *,
+          *::before,
+          *::after {
             transition-duration: 0ms !important;
             animation-duration: 0ms !important;
           }
@@ -365,15 +433,62 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       <div className="shell">
         <header className={`header ${isCareersRoute ? "header-hidden" : ""}`}>
           <div className="header-inner">
-            <Link href="/" className="brand" aria-label="MedicaidReady Home" onClick={() => setMenuOpen(false)}>
+            <Link
+              href="/"
+              className="brand"
+              aria-label="MedicaidReady Home"
+              onClick={() => setMenuOpen(false)}
+            >
               <span className="brand-icon" aria-hidden="true">
-                <svg viewBox="0 0 52 56" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MedicaidReady Hex Crest Mark">
-                  <polygon points="26,3 48,15 48,39 26,51 4,39 4,15" fill="#042C53"/>
-                  <polygon points="26,9 43,19 43,35 26,45 9,35 9,19" fill="none" stroke="#BA7517" strokeWidth="1.5"/>
-                  <line x1="26" y1="20" x2="26" y2="34" stroke="#FFFFFF" strokeWidth="4" strokeLinecap="round"/>
-                  <line x1="19" y1="27" x2="33" y2="27" stroke="#FFFFFF" strokeWidth="4" strokeLinecap="round"/>
-                  <line x1="26" y1="20" x2="26" y2="34" stroke="#BA7517" strokeWidth="1.5" strokeLinecap="round"/>
-                  <line x1="19" y1="27" x2="33" y2="27" stroke="#BA7517" strokeWidth="1.5" strokeLinecap="round"/>
+                <svg
+                  viewBox="0 0 52 56"
+                  xmlns="http://www.w3.org/2000/svg"
+                  role="img"
+                  aria-label="MedicaidReady Hex Crest Mark"
+                >
+                  <polygon points="26,3 48,15 48,39 26,51 4,39 4,15" fill="#042C53" />
+                  <polygon
+                    points="26,9 43,19 43,35 26,45 9,35 9,19"
+                    fill="none"
+                    stroke="#BA7517"
+                    strokeWidth="1.5"
+                  />
+                  <line
+                    x1="26"
+                    y1="20"
+                    x2="26"
+                    y2="34"
+                    stroke="#FFFFFF"
+                    strokeWidth="4"
+                    strokeLinecap="round"
+                  />
+                  <line
+                    x1="19"
+                    y1="27"
+                    x2="33"
+                    y2="27"
+                    stroke="#FFFFFF"
+                    strokeWidth="4"
+                    strokeLinecap="round"
+                  />
+                  <line
+                    x1="26"
+                    y1="20"
+                    x2="26"
+                    y2="34"
+                    stroke="#BA7517"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                  />
+                  <line
+                    x1="19"
+                    y1="27"
+                    x2="33"
+                    y2="27"
+                    stroke="#BA7517"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                  />
                 </svg>
               </span>
               <span className="brand-name">
@@ -383,8 +498,12 @@ export default function MyApp({ Component, pageProps }: AppProps) {
             </Link>
 
             <nav className="nav" aria-label="Primary navigation">
-              <Link href="/pricing" className="nav-link">Pricing</Link>
-              <Link href="/quiz" className="nav-cta">Check Eligibility — Free</Link>
+              <Link href="/pricing" className="nav-link">
+                Pricing
+              </Link>
+              <Link href="/quiz" className="nav-cta">
+                Check Eligibility — Free
+              </Link>
             </nav>
 
             <button
@@ -396,11 +515,21 @@ export default function MyApp({ Component, pageProps }: AppProps) {
             >
               {menuOpen ? (
                 <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                  <path d="M4 4l10 10M14 4L4 14" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round"/>
+                  <path
+                    d="M4 4l10 10M14 4L4 14"
+                    stroke="currentColor"
+                    strokeWidth="1.75"
+                    strokeLinecap="round"
+                  />
                 </svg>
               ) : (
                 <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                  <path d="M3 5h12M3 9h12M3 13h12" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round"/>
+                  <path
+                    d="M3 5h12M3 9h12M3 13h12"
+                    stroke="currentColor"
+                    strokeWidth="1.75"
+                    strokeLinecap="round"
+                  />
                 </svg>
               )}
             </button>
@@ -409,12 +538,25 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           {menuOpen && (
             <div className="mobile-panel">
               <div className="mobile-panel-inner" role="menu">
-                <Link href="/pricing" className="mobile-link" onClick={() => setMenuOpen(false)}>Pricing</Link>
-                <Link href="/quiz" className="mobile-cta" onClick={() => setMenuOpen(false)}>Check My Eligibility — Free</Link>
+                <Link
+                  href="/pricing"
+                  className="mobile-link"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Pricing
+                </Link>
+                <Link
+                  href="/quiz"
+                  className="mobile-cta"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Check My Eligibility — Free
+                </Link>
               </div>
             </div>
           )}
         </header>
+
         <main style={{ flex: 1 }}>
           <Component {...pageProps} />
         </main>
@@ -426,14 +568,28 @@ export default function MyApp({ Component, pageProps }: AppProps) {
                 <span className="footer-brand-dot" aria-hidden="true" />
                 MedicaidReady
               </div>
-              <div className="footer-copy">© {year} MedicaidReady. All rights reserved.</div>
+
+              <div className="footer-meta">
+                <span>© {year} MedicaidReady. All rights reserved.</span>
+                <span className="footer-meta-divider" aria-hidden="true" />
+                <span className="footer-owner">
+                  A product of <strong>Westforge Holdings Inc.</strong>
+                </span>
+              </div>
             </div>
+
             <nav className="footer-links" aria-label="Legal links">
-              <Link href="/privacy" className="footer-link">Privacy</Link>
+              <Link href="/privacy" className="footer-link">
+                Privacy
+              </Link>
               <span className="footer-divider" aria-hidden="true" />
-              <Link href="/terms" className="footer-link">Terms</Link>
+              <Link href="/terms" className="footer-link">
+                Terms
+              </Link>
               <span className="footer-divider" aria-hidden="true" />
-              <Link href="/security" className="footer-link">Security</Link>
+              <Link href="/security" className="footer-link">
+                Security
+              </Link>
             </nav>
           </div>
         </footer>
@@ -441,6 +597,3 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     </>
   );
 }
-
-
-
