@@ -1,8 +1,8 @@
 import Head from "next/head";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import type { GetStaticPaths, GetStaticProps } from "next";
 import CareersShell from "../../../components/careers/CareersShell";
+import SaveJobButton from "../../../components/careers/SaveJobButton";
 import {
   getApprovedJobBySlug,
   listApprovedJobSlugs,
@@ -11,7 +11,6 @@ import {
 import type { CareersJob, CareersJobMode } from "../../../lib/careers/sampleJobs";
 
 const SITE_URL = "https://www.medicaidready.org";
-const SAVED_KEY = "mr_saved_jobs_v1";
 
 type SimilarJob = {
   id: string;
@@ -55,14 +54,18 @@ function pickSimilar(job: CareersJob, all: CareersJob[]): SimilarJob[] {
 
   function score(other: CareersJob): number {
     if (other.id === job.id) return -1;
+
     let s = 0;
     const hay = `${other.title} ${other.summary}`.toLowerCase();
+
     for (const t of tokens) {
       if (hay.includes(t)) s += 1;
     }
+
     if (other.company === job.company) s += 2;
     if (other.remote === job.remote) s += 1;
     if (other.type === job.type) s += 1;
+
     return s;
   }
 
@@ -91,6 +94,7 @@ export const getStaticProps: GetStaticProps<Props, { id: string }> = async (ctx)
   }
 
   let similar: SimilarJob[] = [];
+
   try {
     const all = await listApprovedJobs();
     similar = pickSimilar(job, all);
@@ -105,15 +109,11 @@ function getApplyUrl(job: CareersJob): string | null {
   const jobWithUrl = job as JobWithApplyUrl;
   const value = jobWithUrl.applyUrl ?? jobWithUrl.apply_url ?? null;
 
-  if (typeof value !== "string") {
-    return null;
-  }
+  if (typeof value !== "string") return null;
 
   const trimmed = value.trim();
 
-  if (!trimmed) {
-    return null;
-  }
+  if (!trimmed) return null;
 
   return trimmed;
 }
@@ -121,8 +121,11 @@ function getApplyUrl(job: CareersJob): string | null {
 function getSourceType(job: CareersJob): string | null {
   const j = job as JobWithSource;
   const value = j.sourceType ?? j.source_type ?? null;
+
   if (typeof value !== "string") return null;
+
   const trimmed = value.trim();
+
   return trimmed || null;
 }
 
@@ -134,19 +137,26 @@ function handleMissingApplyUrl() {
 
 function formatPostedAt(iso: string): string {
   const then = new Date(iso).getTime();
+
   if (Number.isNaN(then)) return "";
+
   const days = Math.max(0, Math.floor((Date.now() - then) / 86_400_000));
+
   if (days === 0) return "Posted today";
   if (days === 1) return "Posted yesterday";
   if (days < 30) return `Posted ${days} days ago`;
+
   const months = Math.floor(days / 30);
+
   return `Posted ${months} month${months === 1 ? "" : "s"} ago`;
 }
 
 function companyInitials(company: string): string {
   const parts = company.trim().split(/\s+/).filter(Boolean);
+
   if (parts.length === 0) return "MR";
   if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+
   return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
 }
 
@@ -159,22 +169,27 @@ function avatarPalette(company: string): { bg: string; fg: string } {
     { bg: "#faf5ff", fg: "#7c3aed" },
     { bg: "#fff1f2", fg: "#be123c" },
   ];
+
   let hash = 0;
+
   for (let i = 0; i < company.length; i++) {
     hash = (hash * 31 + company.charCodeAt(i)) >>> 0;
   }
+
   return PALETTE[hash % PALETTE.length];
 }
 
 function modeBadgeClass(mode: CareersJobMode | string): string {
   if (mode === "Remote") return "careers-pill-teal";
   if (mode === "Hybrid") return "careers-pill-navy";
+
   return "careers-pill";
 }
 
 function typeBadgeClass(type: string): string {
   if (type === "Contract") return "careers-pill-purple";
   if (type === "Full-time") return "careers-pill-green";
+
   return "careers-pill-blue";
 }
 
@@ -222,6 +237,7 @@ function buildJobPostingJsonLd(
         .join("")}</ul>`
     );
   }
+
   if (job.requirements.length > 0) {
     descriptionParts.push(
       `<h4>Requirements</h4><ul>${job.requirements
@@ -229,6 +245,7 @@ function buildJobPostingJsonLd(
         .join("")}</ul>`
     );
   }
+
   if (job.benefits.length > 0) {
     descriptionParts.push(
       `<h4>Benefits</h4><ul>${job.benefits
@@ -238,11 +255,11 @@ function buildJobPostingJsonLd(
   }
 
   const description =
-    descriptionParts.join("") ||
-    `<p>${escapeHtml(`${job.title} at ${job.company}.`)}</p>`;
+    descriptionParts.join("") || `<p>${escapeHtml(`${job.title} at ${job.company}.`)}</p>`;
 
   const datePosted = (() => {
     const d = new Date(job.postedAt);
+
     return Number.isNaN(d.getTime()) ? new Date().toISOString() : d.toISOString();
   })();
 
@@ -277,6 +294,7 @@ function buildJobPostingJsonLd(
       .split(",")
       .map((p) => p.trim())
       .filter(Boolean);
+
     const addressLocality = parts[0] ?? job.location;
     const addressRegion = parts[1] ?? "";
     const address: Record<string, string> = {
@@ -284,7 +302,9 @@ function buildJobPostingJsonLd(
       addressLocality,
       addressCountry: "US",
     };
+
     if (addressRegion) address.addressRegion = addressRegion;
+
     ld.jobLocation = {
       "@type": "Place",
       address,
@@ -328,7 +348,8 @@ function buildMetaDescription(job: CareersJob): string {
   ).replace(/\s+/g, " ");
 
   if (candidate.length <= 200) return candidate;
-  return candidate.slice(0, 197).trimEnd() + "…";
+
+  return `${candidate.slice(0, 197).trimEnd()}...`;
 }
 
 export default function JobDetail({ job, similar }: Props) {
@@ -337,44 +358,11 @@ export default function JobDetail({ job, similar }: Props) {
   const isApproved = sourceType !== null;
 
   const canonicalUrl = `${SITE_URL}/careers/jobs/${job.id}`;
-  const pageTitle = `${job.title} — ${job.company} | MedicaidReady Careers`;
+  const pageTitle = `${job.title} | ${job.company} | MedicaidReady Careers`;
   const metaDescription = buildMetaDescription(job);
 
-  const jobPostingLd = isApproved
-    ? buildJobPostingJsonLd(job, canonicalUrl, applyUrl)
-    : null;
+  const jobPostingLd = isApproved ? buildJobPostingJsonLd(job, canonicalUrl, applyUrl) : null;
   const breadcrumbLd = isApproved ? buildBreadcrumbJsonLd(job, canonicalUrl) : null;
-
-  const [saved, setSaved] = useState(false);
-
-  useEffect(() => {
-    try {
-      const raw = window.localStorage.getItem(SAVED_KEY);
-      if (raw) {
-        const obj = JSON.parse(raw) as Record<string, boolean>;
-        setSaved(Boolean(obj[job.id]));
-      }
-    } catch {
-      /* ignore */
-    }
-  }, [job.id]);
-
-  function toggleSaved() {
-    try {
-      const raw = window.localStorage.getItem(SAVED_KEY);
-      const obj = raw ? (JSON.parse(raw) as Record<string, boolean>) : {};
-      if (obj[job.id]) {
-        delete obj[job.id];
-        setSaved(false);
-      } else {
-        obj[job.id] = true;
-        setSaved(true);
-      }
-      window.localStorage.setItem(SAVED_KEY, JSON.stringify(obj));
-    } catch {
-      /* ignore */
-    }
-  }
 
   const av = avatarPalette(job.company);
 
@@ -393,7 +381,7 @@ export default function JobDetail({ job, similar }: Props) {
             <meta property="og:description" content={metaDescription} />
             <meta property="og:type" content="article" />
             <meta property="og:url" content={canonicalUrl} />
-            <meta property="og:site_name" content="MedicaidReady" />
+            <meta property="og:site_name" content="MedicaidReady Careers" />
             <meta name="twitter:card" content="summary" />
             <meta name="twitter:title" content={pageTitle} />
             <meta name="twitter:description" content={metaDescription} />
@@ -419,7 +407,13 @@ export default function JobDetail({ job, similar }: Props) {
           <div className="careers-container">
             <Link href="/careers/jobs" className="careers-detail-back jd-back">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                <path d="M9 2L4 7l5 5" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"/>
+                <path
+                  d="M9 2L4 7l5 5"
+                  stroke="currentColor"
+                  strokeWidth="1.75"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
               Back to results
             </Link>
@@ -435,6 +429,7 @@ export default function JobDetail({ job, similar }: Props) {
                     >
                       {companyInitials(job.company)}
                     </div>
+
                     <div className="jd-header-text">
                       <h1 className="jd-title">{job.title}</h1>
                       <div className="jd-company-row">
@@ -445,17 +440,32 @@ export default function JobDetail({ job, similar }: Props) {
                           aria-label="Verified employer"
                         >
                           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                            <path d="M7 0.7l1.6 1L10.5 1.5l.4 1.9 1.6 1.1-.7 1.8.7 1.8-1.6 1.1-.4 1.9-1.9-.2L7 13.3l-1.6-1L3.5 12.5l-.4-1.9L1.5 9.5l.7-1.8-.7-1.8 1.6-1.1L3.5 2.9l1.9.2L7 0.7z" fill="#0e7490"/>
-                            <path d="M4.5 7l1.7 1.7L9.5 5.3" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                            <path
+                              d="M7 0.7l1.6 1L10.5 1.5l.4 1.9 1.6 1.1-.7 1.8.7 1.8-1.6 1.1-.4 1.9-1.9-.2L7 13.3l-1.6-1L3.5 12.5l-.4-1.9L1.5 9.5l.7-1.8-.7-1.8 1.6-1.1L3.5 2.9l1.9.2L7 0.7z"
+                              fill="#0e7490"
+                            />
+                            <path
+                              d="M4.5 7l1.7 1.7L9.5 5.3"
+                              stroke="white"
+                              strokeWidth="1.6"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
                           </svg>
                         </span>
-                        <span className="jd-sep" aria-hidden="true">·</span>
+                        <span className="jd-sep" aria-hidden="true">
+                          ·
+                        </span>
                         <span>{job.location || "Location not specified"}</span>
                       </div>
+
                       {job.featured && (
                         <span className="jd-featured-tag">
                           <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                            <path d="M6 1l1.5 3.2L11 4.7l-2.5 2.4.6 3.4L6 8.9 2.9 10.5l.6-3.4L1 4.7l3.5-.5L6 1z" fill="currentColor"/>
+                            <path
+                              d="M6 1l1.5 3.2L11 4.7l-2.5 2.4.6 3.4L6 8.9 2.9 10.5l.6-3.4L1 4.7l3.5-.5L6 1z"
+                              fill="currentColor"
+                            />
                           </svg>
                           Featured
                         </span>
@@ -465,7 +475,9 @@ export default function JobDetail({ job, similar }: Props) {
 
                   <div className="careers-job-meta jd-meta">
                     <span className={`careers-pill ${typeBadgeClass(job.type)}`}>{job.type}</span>
-                    <span className={`careers-pill ${modeBadgeClass(job.remote)}`}>{job.remote}</span>
+                    <span className={`careers-pill ${modeBadgeClass(job.remote)}`}>
+                      {job.remote}
+                    </span>
                     {job.salary && (
                       <span className="careers-pill careers-pill-gold">{job.salary}</span>
                     )}
@@ -481,7 +493,13 @@ export default function JobDetail({ job, similar }: Props) {
                       >
                         Apply on company site
                         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                          <path d="M5 9l5-5M5 4h5v5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path
+                            d="M5 9l5-5M5 4h5v5"
+                            stroke="currentColor"
+                            strokeWidth="1.6"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
                         </svg>
                       </a>
                     ) : (
@@ -493,22 +511,38 @@ export default function JobDetail({ job, similar }: Props) {
                         Apply for this role
                       </button>
                     )}
-                    <button
-                      type="button"
-                      className={`jd-save${saved ? " jd-save-active" : ""}`}
-                      onClick={toggleSaved}
-                      aria-pressed={saved}
-                    >
-                      <svg width="14" height="14" viewBox="0 0 14 14" fill={saved ? "currentColor" : "none"} aria-hidden="true">
-                        <path d="M3 1.5h8v11l-4-2.5-4 2.5v-11z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
-                      </svg>
-                      {saved ? "Saved" : "Save"}
-                    </button>
+
+                    <SaveJobButton jobId={job.id} variant="full" />
+
+                    <Link href="/careers/saved-jobs" className="jd-saved-link">
+                      Saved Jobs
+                    </Link>
                   </div>
 
                   <p className="jd-disclosure">
                     Curated listing. Apply through the employer&apos;s official site.
                   </p>
+                </div>
+
+                <div className="jd-applyready-banner">
+                  <div>
+                    <span className="jd-applyready-eyebrow">ApplyReady</span>
+                    <h2>Prepare your resume and application plan before applying.</h2>
+                    <p>
+                      Save this role, review it later, and use ApplyReady to organize your
+                      resume, job list, and next steps before going to the employer&apos;s
+                      official application page.
+                    </p>
+                  </div>
+
+                  <div className="jd-applyready-actions">
+                    <Link href="/careers/applyready" className="jd-applyready-primary">
+                      Prepare with ApplyReady
+                    </Link>
+                    <Link href="/careers/saved-jobs" className="jd-applyready-secondary">
+                      View saved jobs
+                    </Link>
+                  </div>
                 </div>
 
                 {job.description && (
@@ -554,9 +588,9 @@ export default function JobDetail({ job, similar }: Props) {
                 <div className="careers-detail-section jd-bottom-apply">
                   <h3>Ready to apply?</h3>
                   <p style={{ marginBottom: 16 }}>
-                    Applications go directly to <strong>{job.company}</strong>.
-                    MedicaidReady Careers curates and routes — we do not collect your
-                    application data.
+                    Applications go directly to <strong>{job.company}</strong>. MedicaidReady
+                    Careers curates and routes listings, we do not collect your application
+                    data for employer-linked jobs.
                   </p>
                   <div className="careers-actions" style={{ marginTop: 0 }}>
                     {applyUrl ? (
@@ -568,7 +602,13 @@ export default function JobDetail({ job, similar }: Props) {
                       >
                         Apply on company site
                         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                          <path d="M5 9l5-5M5 4h5v5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path
+                            d="M5 9l5-5M5 4h5v5"
+                            stroke="currentColor"
+                            strokeWidth="1.6"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
                         </svg>
                       </a>
                     ) : (
@@ -580,6 +620,9 @@ export default function JobDetail({ job, similar }: Props) {
                         Apply for this role
                       </button>
                     )}
+                    <Link href="/careers/applyready" className="careers-btn-ghost">
+                      Prepare with ApplyReady
+                    </Link>
                     <Link href="/careers/jobs" className="careers-btn-ghost">
                       View other openings
                     </Link>
@@ -588,6 +631,18 @@ export default function JobDetail({ job, similar }: Props) {
               </div>
 
               <aside className="jd-rail" aria-label="Job details">
+                <div className="jd-card jd-card-save">
+                  <div className="jd-card-title">ApplyReady tools</div>
+                  <p>
+                    Save this job, keep it in your ApplyReady list, and prepare before
+                    applying through the employer&apos;s official site.
+                  </p>
+                  <SaveJobButton jobId={job.id} variant="full" />
+                  <Link href="/careers/saved-jobs" className="jd-rail-secondary">
+                    View saved jobs
+                  </Link>
+                </div>
+
                 <div className="jd-card">
                   <div className="jd-card-title">Job details</div>
                   <dl className="jd-dl">
@@ -646,11 +701,14 @@ export default function JobDetail({ job, similar }: Props) {
 
                 <div className="jd-card jd-resources">
                   <div className="jd-card-title">Useful resources</div>
-                  <Link href="/quiz" className="jd-res-link">
-                    Check your own Medicaid eligibility →
+                  <Link href="/careers/applyready" className="jd-res-link">
+                    Prepare with ApplyReady →
+                  </Link>
+                  <Link href="/careers/saved-jobs" className="jd-res-link">
+                    View saved jobs →
                   </Link>
                   <Link href="/careers/resources" className="jd-res-link">
-                    Career resources for healthcare roles →
+                    Career resources →
                   </Link>
                   <Link href="/careers/companies" className="jd-res-link">
                     Browse hiring employers →
@@ -667,6 +725,7 @@ export default function JobDetail({ job, similar }: Props) {
                 <div className="jd-similar-grid">
                   {similar.map((s) => {
                     const sav = avatarPalette(s.company);
+
                     return (
                       <Link
                         key={s.id}
@@ -687,8 +746,12 @@ export default function JobDetail({ job, similar }: Props) {
                             {s.location ? ` · ${s.location}` : ""}
                           </div>
                           <div className="jd-similar-pills">
-                            <span className={`careers-pill ${typeBadgeClass(s.type)}`}>{s.type}</span>
-                            <span className={`careers-pill ${modeBadgeClass(s.remote)}`}>{s.remote}</span>
+                            <span className={`careers-pill ${typeBadgeClass(s.type)}`}>
+                              {s.type}
+                            </span>
+                            <span className={`careers-pill ${modeBadgeClass(s.remote)}`}>
+                              {s.remote}
+                            </span>
                           </div>
                         </div>
                       </Link>
@@ -724,12 +787,14 @@ export default function JobDetail({ job, similar }: Props) {
           padding: 26px 28px;
           margin-bottom: 16px;
         }
+
         .jd-header-top {
           display: flex;
           gap: 16px;
           align-items: flex-start;
           margin-bottom: 16px;
         }
+
         .jd-avatar {
           width: 56px;
           height: 56px;
@@ -743,7 +808,12 @@ export default function JobDetail({ job, similar }: Props) {
           flex-shrink: 0;
           border: 1px solid rgba(15, 23, 42, 0.06);
         }
-        .jd-header-text { min-width: 0; flex: 1; }
+
+        .jd-header-text {
+          min-width: 0;
+          flex: 1;
+        }
+
         .jd-title {
           font-size: 26px;
           font-weight: 700;
@@ -752,6 +822,7 @@ export default function JobDetail({ job, similar }: Props) {
           margin: 0 0 6px;
           line-height: 1.2;
         }
+
         .jd-company-row {
           display: flex;
           align-items: center;
@@ -760,12 +831,21 @@ export default function JobDetail({ job, similar }: Props) {
           color: #475569;
           flex-wrap: wrap;
         }
+
         .jd-company {
           font-weight: 600;
           color: #334155;
         }
-        .jd-verified { display: inline-flex; align-items: center; }
-        .jd-sep { color: #cbd5e1; }
+
+        .jd-verified {
+          display: inline-flex;
+          align-items: center;
+        }
+
+        .jd-sep {
+          color: #cbd5e1;
+        }
+
         .jd-featured-tag {
           display: inline-flex;
           align-items: center;
@@ -780,43 +860,49 @@ export default function JobDetail({ job, similar }: Props) {
           text-transform: uppercase;
           margin-top: 6px;
         }
+
         .jd-meta {
           margin-bottom: 18px;
         }
+
         .jd-actions {
           display: flex;
           gap: 10px;
           flex-wrap: wrap;
           align-items: center;
         }
+
         .jd-apply {
           flex: 0 1 auto;
         }
-        .jd-save {
+
+        .jd-saved-link {
           display: inline-flex;
           align-items: center;
-          gap: 6px;
-          padding: 12px 18px;
-          border-radius: 10px;
+          justify-content: center;
+          min-height: 46px;
+          padding: 10px 18px;
+          border-radius: 999px;
           background: #ffffff;
-          color: #475569;
-          border: 1px solid #cbd5e1;
+          color: #042c53;
+          border: 1px solid #cfdced;
           font-size: 14px;
-          font-weight: 600;
-          cursor: pointer;
-          font-family: inherit;
-          transition: border-color 120ms, color 120ms, background 120ms;
+          font-weight: 900;
+          text-decoration: none;
+          transition:
+            transform 140ms ease,
+            border-color 140ms ease,
+            background 140ms ease,
+            color 140ms ease;
         }
-        .jd-save:hover {
+
+        .jd-saved-link:hover {
+          transform: translateY(-1px);
           border-color: #BA7517;
-          color: #BA7517;
           background: #fff7e6;
-        }
-        .jd-save-active {
           color: #BA7517;
-          border-color: #BA7517;
-          background: #fff7e6;
         }
+
         .jd-disclosure {
           margin: 14px 0 0;
           font-size: 12px;
@@ -824,10 +910,91 @@ export default function JobDetail({ job, similar }: Props) {
           line-height: 1.5;
         }
 
+        .jd-applyready-banner {
+          display: grid;
+          grid-template-columns: minmax(0, 1fr) auto;
+          gap: 20px;
+          align-items: center;
+          border: 1px solid #dbe5f0;
+          border-radius: 18px;
+          background:
+            radial-gradient(circle at top right, rgba(239, 159, 39, 0.16), transparent 32%),
+            linear-gradient(135deg, #041f3d 0%, #07335f 58%, #0c447c 100%);
+          color: #ffffff;
+          padding: 24px;
+          margin-bottom: 16px;
+          box-shadow: 0 16px 40px rgba(4, 44, 83, 0.14);
+        }
+
+        .jd-applyready-eyebrow {
+          display: block;
+          color: #f5b942;
+          font-size: 11px;
+          font-weight: 950;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          margin-bottom: 8px;
+        }
+
+        .jd-applyready-banner h2 {
+          margin: 0;
+          color: #ffffff;
+          font-size: 23px;
+          line-height: 1.12;
+          font-weight: 950;
+          letter-spacing: -0.035em;
+        }
+
+        .jd-applyready-banner p {
+          max-width: 720px;
+          margin: 10px 0 0;
+          color: rgba(255, 255, 255, 0.76);
+          line-height: 1.65;
+          font-size: 14px;
+        }
+
+        .jd-applyready-actions {
+          display: grid;
+          gap: 8px;
+          min-width: 210px;
+        }
+
+        .jd-applyready-primary,
+        .jd-applyready-secondary {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 999px;
+          padding: 11px 16px;
+          font-size: 13px;
+          font-weight: 950;
+          text-decoration: none;
+          white-space: nowrap;
+        }
+
+        .jd-applyready-primary {
+          background: #f5b942;
+          color: #061b3a;
+        }
+
+        .jd-applyready-primary:hover {
+          background: #ffd978;
+        }
+
+        .jd-applyready-secondary {
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          color: #ffffff;
+        }
+
+        .jd-applyready-secondary:hover {
+          background: rgba(255, 255, 255, 0.1);
+        }
+
         .jd-rail {
           position: sticky;
           top: 140px;
         }
+
         .jd-card {
           background: #ffffff;
           border: 1px solid #e2e8f0;
@@ -836,6 +1003,21 @@ export default function JobDetail({ job, similar }: Props) {
           margin-bottom: 14px;
           box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
         }
+
+        .jd-card-save {
+          border-top: 4px solid #BA7517;
+          background:
+            radial-gradient(circle at top right, rgba(239, 159, 39, 0.13), transparent 34%),
+            #ffffff;
+        }
+
+        .jd-card-save p {
+          margin: 0 0 14px;
+          color: #64748b;
+          font-size: 13px;
+          line-height: 1.65;
+        }
+
         .jd-card-title {
           font-size: 12px;
           font-weight: 800;
@@ -844,9 +1026,33 @@ export default function JobDetail({ job, similar }: Props) {
           text-transform: uppercase;
           margin-bottom: 12px;
         }
+
+        .jd-rail-secondary {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          min-height: 42px;
+          margin-top: 10px;
+          border-radius: 999px;
+          background: #ffffff;
+          color: #042c53;
+          border: 1px solid #cfdced;
+          font-size: 13px;
+          font-weight: 900;
+          text-decoration: none;
+        }
+
+        .jd-rail-secondary:hover {
+          border-color: #BA7517;
+          background: #fff7e6;
+          color: #BA7517;
+        }
+
         .jd-dl {
           margin: 0;
         }
+
         .jd-dl-row {
           display: flex;
           justify-content: space-between;
@@ -855,11 +1061,16 @@ export default function JobDetail({ job, similar }: Props) {
           border-bottom: 1px solid #f1f5f9;
           font-size: 13px;
         }
-        .jd-dl-row:last-child { border-bottom: 0; }
+
+        .jd-dl-row:last-child {
+          border-bottom: 0;
+        }
+
         .jd-dl-row dt {
           color: #64748b;
           font-weight: 500;
         }
+
         .jd-dl-row dd {
           color: #042C53;
           font-weight: 600;
@@ -871,6 +1082,7 @@ export default function JobDetail({ job, similar }: Props) {
           flex-wrap: wrap;
           justify-content: flex-end;
         }
+
         .jd-dl-badge {
           display: inline-flex;
           align-items: center;
@@ -884,6 +1096,7 @@ export default function JobDetail({ job, similar }: Props) {
           text-transform: uppercase;
           border: 1px solid #a5f3fc;
         }
+
         .jd-rail-apply {
           width: 100%;
           margin-top: 14px;
@@ -899,8 +1112,14 @@ export default function JobDetail({ job, similar }: Props) {
           text-decoration: none;
           border-bottom: 1px solid #f1f5f9;
         }
-        .jd-resources .jd-res-link:last-child { border-bottom: 0; }
-        .jd-resources .jd-res-link:hover { color: #BA7517; }
+
+        .jd-resources .jd-res-link:last-child {
+          border-bottom: 0;
+        }
+
+        .jd-resources .jd-res-link:hover {
+          color: #BA7517;
+        }
 
         .jd-bottom-apply {
           background: linear-gradient(180deg, #ffffff 0%, #fffbf2 100%);
@@ -910,12 +1129,14 @@ export default function JobDetail({ job, similar }: Props) {
         .jd-similar {
           margin-top: 28px;
         }
+
         .jd-similar-grid {
           display: grid;
           grid-template-columns: repeat(2, 1fr);
           gap: 12px;
           margin-top: 14px;
         }
+
         .jd-similar-card {
           display: flex;
           gap: 14px;
@@ -927,12 +1148,14 @@ export default function JobDetail({ job, similar }: Props) {
           color: inherit;
           transition: border-color 140ms, transform 100ms, box-shadow 140ms;
         }
+
         .jd-similar-card:hover {
           border-color: #BA7517;
           transform: translateY(-1px);
           box-shadow: 0 6px 18px rgba(4, 44, 83, 0.08);
           color: inherit;
         }
+
         .jd-similar-avatar {
           width: 40px;
           height: 40px;
@@ -945,7 +1168,12 @@ export default function JobDetail({ job, similar }: Props) {
           flex-shrink: 0;
           border: 1px solid rgba(15, 23, 42, 0.06);
         }
-        .jd-similar-body { min-width: 0; flex: 1; }
+
+        .jd-similar-body {
+          min-width: 0;
+          flex: 1;
+        }
+
         .jd-similar-title {
           font-size: 14px;
           font-weight: 700;
@@ -953,11 +1181,13 @@ export default function JobDetail({ job, similar }: Props) {
           margin: 0 0 3px;
           letter-spacing: -0.01em;
         }
+
         .jd-similar-meta {
           font-size: 12px;
           color: #64748b;
           margin: 0 0 8px;
         }
+
         .jd-similar-pills {
           display: flex;
           gap: 4px;
@@ -965,16 +1195,52 @@ export default function JobDetail({ job, similar }: Props) {
         }
 
         @media (max-width: 960px) {
-          .jd-layout { grid-template-columns: 1fr; }
-          .jd-rail { position: static; }
-          .jd-similar-grid { grid-template-columns: 1fr; }
+          .jd-layout {
+            grid-template-columns: 1fr;
+          }
+
+          .jd-rail {
+            position: static;
+          }
+
+          .jd-similar-grid {
+            grid-template-columns: 1fr;
+          }
+
+          .jd-applyready-banner {
+            grid-template-columns: 1fr;
+          }
+
+          .jd-applyready-actions {
+            min-width: 0;
+            display: flex;
+            flex-wrap: wrap;
+          }
         }
+
         @media (max-width: 600px) {
-          .jd-header { padding: 20px 18px; }
-          .jd-title { font-size: 22px; }
-          .jd-actions { flex-direction: column; align-items: stretch; }
-          .jd-apply, .jd-save {
+          .jd-header {
+            padding: 20px 18px;
+          }
+
+          .jd-title {
+            font-size: 22px;
+          }
+
+          .jd-actions {
+            flex-direction: column;
+            align-items: stretch;
+          }
+
+          .jd-apply,
+          .jd-actions :global(.save-job-btn-full),
+          .jd-saved-link {
             justify-content: center;
+            width: 100%;
+          }
+
+          .jd-applyready-primary,
+          .jd-applyready-secondary {
             width: 100%;
           }
         }
