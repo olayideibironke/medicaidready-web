@@ -9,6 +9,13 @@ import {
   isApplyReadyProfileStarted,
   type ApplyReadyProfile,
 } from "../../../lib/careers/applyReadyProfile";
+import {
+  calculateApplyReadyResumeCompletion,
+  EMPTY_APPLYREADY_RESUME_STATUS,
+  getApplyReadyResumeStatus,
+  isApplyReadyResumeStarted,
+  type ApplyReadyResumeStatus,
+} from "../../../lib/careers/applyReadyResume";
 
 const SITE_URL = "https://www.medicaidready.org";
 const PAGE_PATH = "/careers/applyready/dashboard";
@@ -57,12 +64,16 @@ function formatUpdatedAt(value: string): string {
 export default function ApplyReadyDashboardPage() {
   const [savedCount, setSavedCount] = useState(0);
   const [profile, setProfile] = useState<ApplyReadyProfile>(EMPTY_APPLYREADY_PROFILE);
+  const [resumeStatus, setResumeStatus] = useState<ApplyReadyResumeStatus>(
+    EMPTY_APPLYREADY_RESUME_STATUS
+  );
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
     const sync = () => {
       setSavedCount(getSavedJobRecords().length);
       setProfile(getApplyReadyProfile());
+      setResumeStatus(getApplyReadyResumeStatus());
       setReady(true);
     };
 
@@ -71,16 +82,20 @@ export default function ApplyReadyDashboardPage() {
     window.addEventListener("storage", sync);
     window.addEventListener("applyready:saved-jobs-updated", sync);
     window.addEventListener("applyready:profile-updated", sync);
+    window.addEventListener("applyready:resume-updated", sync);
 
     return () => {
       window.removeEventListener("storage", sync);
       window.removeEventListener("applyready:saved-jobs-updated", sync);
       window.removeEventListener("applyready:profile-updated", sync);
+      window.removeEventListener("applyready:resume-updated", sync);
     };
   }, []);
 
   const profileStarted = isApplyReadyProfileStarted(profile);
   const profileCompletion = calculateProfileCompletion(profile);
+  const resumeStarted = isApplyReadyResumeStarted(resumeStatus);
+  const resumeCompletion = calculateApplyReadyResumeCompletion(resumeStatus);
 
   const foundationItems = useMemo(
     () => [
@@ -93,9 +108,9 @@ export default function ApplyReadyDashboardPage() {
       },
       {
         title: "Resume Vault",
-        status: "Planned next",
+        status: resumeStarted ? `${resumeCompletion}% ready` : "Ready to start",
         description:
-          "Securely store, replace, and manage resumes after account sign-in and storage are ready.",
+          "Track resume readiness before secure account storage and file upload are added.",
         href: "/careers/applyready/resume",
       },
       {
@@ -107,13 +122,13 @@ export default function ApplyReadyDashboardPage() {
       },
       {
         title: "Application Tracker",
-        status: "After profile",
+        status: "Next foundation",
         description:
           "Track saved, preparing, applied, interview, offer, not selected, and follow-up statuses.",
         href: "/careers/applyready/tracker",
       },
     ],
-    [profileCompletion, profileStarted, savedCount]
+    [profileCompletion, profileStarted, resumeCompletion, resumeStarted, savedCount]
   );
 
   const metaTitle = "ApplyReady Dashboard | MedicaidReady Careers";
@@ -152,16 +167,16 @@ export default function ApplyReadyDashboardPage() {
                   <h1>Your career preparation command center.</h1>
                   <p>
                     Track your ApplyReady foundation in one place. Start with your candidate
-                    profile, save jobs that fit your goals, and prepare for resume vault,
-                    tracker, and AI-supported tools as the platform grows.
+                    profile, prepare your resume, save jobs that fit your goals, and move
+                    toward application tracking with a cleaner plan.
                   </p>
 
                   <div className="ard-actions">
                     <Link href="/careers/applyready/profile" className="ard-primary">
                       Build Profile
                     </Link>
-                    <Link href="/careers/saved-jobs" className="ard-secondary">
-                      View Saved Jobs
+                    <Link href="/careers/applyready/resume" className="ard-secondary">
+                      Resume Vault
                     </Link>
                   </div>
                 </div>
@@ -172,7 +187,11 @@ export default function ApplyReadyDashboardPage() {
                   <div className="ard-panel-metrics">
                     <div>
                       <strong>{ready ? `${profileCompletion}%` : "0%"}</strong>
-                      <small>Profile completion</small>
+                      <small>Profile</small>
+                    </div>
+                    <div>
+                      <strong>{ready ? `${resumeCompletion}%` : "0%"}</strong>
+                      <small>Resume</small>
                     </div>
                     <div>
                       <strong>{ready ? savedCount : 0}</strong>
@@ -181,12 +200,16 @@ export default function ApplyReadyDashboardPage() {
                   </div>
 
                   <p>
-                    {profileStarted
-                      ? "Your profile draft has started."
-                      : "Start your candidate profile to unlock the next build step."}
+                    {profileStarted || resumeStarted || savedCount > 0
+                      ? "Your ApplyReady foundation is underway."
+                      : "Start your profile, resume readiness, or saved jobs list."}
                   </p>
 
-                  <small>{formatUpdatedAt(profile.updatedAt)}</small>
+                  <small>
+                    Profile: {formatUpdatedAt(profile.updatedAt)}
+                    <br />
+                    Resume: {formatUpdatedAt(resumeStatus.updatedAt)}
+                  </small>
                 </aside>
               </div>
             </div>
@@ -201,9 +224,9 @@ export default function ApplyReadyDashboardPage() {
                 </div>
                 <p>
                   We are building ApplyReady as a real candidate preparation system. Saved
-                  jobs and profile drafts can start now. Resume storage and account-tied
-                  data should wait until sign-in, database, storage, and privacy controls
-                  are ready.
+                  jobs, profile drafts, and resume readiness can start now. Resume file
+                  upload and account-tied data should wait until sign-in, database, storage,
+                  and privacy controls are ready.
                 </p>
               </div>
 
@@ -230,12 +253,12 @@ export default function ApplyReadyDashboardPage() {
                   <h2>
                     {profileStarted
                       ? "Your candidate profile draft is underway."
-                      : "Start your candidate profile before moving to resume tools."}
+                      : "Start your candidate profile before deeper matching tools."}
                   </h2>
                   <p>
                     The profile gives ApplyReady the context needed for saved jobs, resume
                     matching, tracker statuses, and future AI-supported tools. It is the
-                    right foundation before we build resume upload or application tracking.
+                    right foundation before we build full account-based resume upload.
                   </p>
                 </div>
 
@@ -275,6 +298,60 @@ export default function ApplyReadyDashboardPage() {
             </div>
           </section>
 
+          <section className="ard-resume-section">
+            <div className="careers-container">
+              <div className="ard-resume">
+                <div className="ard-resume-card">
+                  <div className="ard-progress-top">
+                    <span>Resume readiness</span>
+                    <strong>{ready ? `${resumeCompletion}%` : "0%"}</strong>
+                  </div>
+
+                  <div className="ard-progress-track">
+                    <div
+                      className="ard-progress-fill ard-progress-fill-resume"
+                      style={{ width: `${ready ? resumeCompletion : 0}%` }}
+                    />
+                  </div>
+
+                  <div className="ard-profile-facts">
+                    <div>
+                      <span>Resume label</span>
+                      <strong>{resumeStatus.resumeName.trim() || "Not added"}</strong>
+                    </div>
+                    <div>
+                      <span>Target role</span>
+                      <strong>{resumeStatus.targetRole.trim() || "Not added"}</strong>
+                    </div>
+                    <div>
+                      <span>Format</span>
+                      <strong>{resumeStatus.resumeFormat.trim() || "Not selected"}</strong>
+                    </div>
+                  </div>
+
+                  <Link href="/careers/applyready/resume" className="ard-profile-link">
+                    Continue resume vault
+                  </Link>
+                </div>
+
+                <div>
+                  <p className="ard-eyebrow ard-eyebrow-dark">Resume Vault</p>
+                  <h2>
+                    {resumeStarted
+                      ? "Your resume readiness draft is underway."
+                      : "Prepare resume readiness before file upload."}
+                  </h2>
+                  <p>
+                    This stage tracks whether the candidate has a current resume, target role,
+                    clean format, and readiness checklist. Actual resume upload should come
+                    later with secure account storage, replacement controls, delete controls,
+                    and privacy wording.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
           <section className="ard-account-section">
             <div className="careers-container">
               <div className="ard-account">
@@ -297,8 +374,8 @@ export default function ApplyReadyDashboardPage() {
                   </div>
                   <div>
                     <span>02</span>
-                    <strong>Secure resume vault</strong>
-                    <p>Upload, replace, delete, and manage resumes after account planning.</p>
+                    <strong>Resume readiness</strong>
+                    <p>Resume Vault status is now started without unsafe file upload.</p>
                   </div>
                   <div>
                     <span>03</span>
@@ -318,7 +395,7 @@ export default function ApplyReadyDashboardPage() {
                   <h2>AI comes after profile and resume structure.</h2>
                   <p>
                     AI resume tools become more useful after we know the candidate profile,
-                    target roles, saved jobs, and resume content. That is why we build the
+                    target roles, saved jobs, and resume readiness. That is why we build the
                     foundation before charging into AI features.
                   </p>
                 </div>
@@ -390,7 +467,7 @@ export default function ApplyReadyDashboardPage() {
 
         .ard-hero-grid {
           display: grid;
-          grid-template-columns: minmax(0, 1fr) 390px;
+          grid-template-columns: minmax(0, 1fr) 430px;
           gap: 34px;
           align-items: center;
         }
@@ -490,8 +567,8 @@ export default function ApplyReadyDashboardPage() {
 
         .ard-panel-metrics {
           display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 12px;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 10px;
           margin-top: 18px;
         }
 
@@ -499,13 +576,14 @@ export default function ApplyReadyDashboardPage() {
           border: 1px solid rgba(255, 255, 255, 0.11);
           border-radius: 18px;
           background: rgba(255, 255, 255, 0.08);
-          padding: 16px;
+          padding: 14px;
+          min-width: 0;
         }
 
         .ard-panel strong {
           display: block;
           color: #ffffff;
-          font-size: 34px;
+          font-size: 27px;
           line-height: 1;
           font-weight: 950;
           letter-spacing: -0.06em;
@@ -517,6 +595,7 @@ export default function ApplyReadyDashboardPage() {
           color: rgba(255, 255, 255, 0.62);
           font-size: 12px;
           font-weight: 750;
+          line-height: 1.5;
         }
 
         .ard-panel p {
@@ -536,6 +615,7 @@ export default function ApplyReadyDashboardPage() {
 
         .ard-status h2,
         .ard-profile h2,
+        .ard-resume h2,
         .ard-account h2,
         .ard-ai h2 {
           margin: 10px 0 0;
@@ -548,6 +628,7 @@ export default function ApplyReadyDashboardPage() {
 
         .ard-status p,
         .ard-profile p,
+        .ard-resume p,
         .ard-ai p {
           margin: 0;
           color: #475569;
@@ -625,10 +706,11 @@ export default function ApplyReadyDashboardPage() {
 
         .ard-profile-section {
           background: #eef4fb;
-          padding: 58px 0;
+          padding: 58px 0 0;
         }
 
-        .ard-profile {
+        .ard-profile,
+        .ard-resume {
           display: grid;
           grid-template-columns: minmax(0, 1fr) 430px;
           gap: 34px;
@@ -640,15 +722,32 @@ export default function ApplyReadyDashboardPage() {
           box-shadow: 0 16px 42px rgba(4, 44, 83, 0.08);
         }
 
-        .ard-profile p {
+        .ard-profile p,
+        .ard-resume p {
           margin-top: 16px;
         }
 
-        .ard-profile-card {
+        .ard-resume-section {
+          background: #eef4fb;
+          padding: 24px 0 58px;
+        }
+
+        .ard-resume {
+          grid-template-columns: 430px minmax(0, 1fr);
+        }
+
+        .ard-profile-card,
+        .ard-resume-card {
           border: 1px solid #dbe5f0;
           border-radius: 24px;
           background: #f8fafc;
           padding: 22px;
+        }
+
+        .ard-resume-card {
+          background:
+            radial-gradient(circle at top right, rgba(239, 159, 39, 0.12), transparent 34%),
+            #f8fafc;
         }
 
         .ard-progress-top {
@@ -683,6 +782,10 @@ export default function ApplyReadyDashboardPage() {
           border-radius: inherit;
           background: linear-gradient(135deg, #ba7517, #f5b942);
           transition: width 220ms ease;
+        }
+
+        .ard-progress-fill-resume {
+          background: linear-gradient(135deg, #0c447c, #85b7eb);
         }
 
         .ard-profile-facts {
@@ -820,6 +923,7 @@ export default function ApplyReadyDashboardPage() {
           .ard-hero-grid,
           .ard-status,
           .ard-profile,
+          .ard-resume,
           .ard-account,
           .ard-ai {
             grid-template-columns: 1fr;
@@ -843,7 +947,9 @@ export default function ApplyReadyDashboardPage() {
           .ard-panel,
           .ard-card,
           .ard-profile,
-          .ard-profile-card {
+          .ard-resume,
+          .ard-profile-card,
+          .ard-resume-card {
             border-radius: 22px;
           }
 
