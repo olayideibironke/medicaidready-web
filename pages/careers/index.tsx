@@ -21,6 +21,15 @@ const POPULAR_SEARCHES = [
   "Business Analyst",
 ];
 
+const APPLYREADY_FEATURES = [
+  "Career Profile",
+  "Resume Vault",
+  "Saved Jobs",
+  "Application Tracker",
+  "AI Resume Review",
+  "Interview Prep",
+];
+
 type Stats = {
   totalJobs: number;
   remoteJobs: number;
@@ -138,9 +147,9 @@ export default function CareersHome({ stats }: Props) {
 
   const url = `${SITE_URL}/careers`;
   const metaTitle =
-    "MedicaidReady Careers | Verified Jobs, Hiring Reports, and Career Intelligence";
+    "MedicaidReady Careers | Verified Jobs, ApplyReady Tools, and Career Intelligence";
   const metaDescription =
-    "Search verified jobs across technology, data, cybersecurity, cloud, public sector, healthcare, operations, and care workforce roles. Use employer links, hiring reports, and career intelligence to apply with confidence.";
+    "Search verified jobs across technology, data, cybersecurity, cloud, public sector, healthcare, operations, and care workforce roles. Use ApplyReady tools, employer links, hiring reports, and career intelligence to apply with confidence.";
 
   return (
     <>
@@ -331,6 +340,53 @@ export default function CareersHome({ stats }: Props) {
           </section>
         )}
 
+        <section className="ch-applyready-section">
+          <div className="careers-container">
+            <div className="ch-applyready">
+              <div className="ch-applyready-copy">
+                <div className="careers-eyebrow" style={{ color: "#EF9F27" }}>
+                  ApplyReady
+                </div>
+                <h2>Prepare your resume, profile, and application plan before you apply.</h2>
+                <p>
+                  ApplyReady is the candidate preparation layer for MedicaidReady Careers.
+                  Build a stronger profile, organize saved jobs, track applications, and use
+                  AI-supported tools to improve your resume before applying through each
+                  employer&apos;s official site.
+                </p>
+
+                <div className="ch-applyready-actions">
+                  <Link href="/careers/applyready" className="ch-applyready-primary">
+                    Explore ApplyReady
+                  </Link>
+                  <Link href="/careers/jobs" className="ch-applyready-secondary">
+                    Browse Jobs
+                  </Link>
+                </div>
+              </div>
+
+              <div className="ch-applyready-panel">
+                <div className="ch-applyready-panel-top">
+                  <span className="ch-applyready-live-dot" aria-hidden="true" />
+                  <span>Candidate tools roadmap</span>
+                </div>
+
+                <div className="ch-applyready-tools">
+                  {APPLYREADY_FEATURES.map((feature) => (
+                    <span key={feature}>{feature}</span>
+                  ))}
+                </div>
+
+                <div className="ch-applyready-note">
+                  First release focuses on preparation, saved jobs, profile structure, and
+                  resume readiness. Direct applications can come later for employers who accept
+                  candidates inside MedicaidReady Careers.
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section className="ch-insights-section">
           <div className="careers-container">
             <div className="ch-insights">
@@ -471,6 +527,25 @@ export default function CareersHome({ stats }: Props) {
             </p>
 
             <div className="ch-resources">
+              <Link href="/careers/applyready" className="ch-res-card ch-res-card-applyready">
+                <div className="ch-res-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path
+                      d="M6 4h8a2 2 0 012 2v10H4V6a2 2 0 012-2z"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinejoin="round"
+                    />
+                    <path d="M7 8h6M7 11h6M7 14h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                  </svg>
+                </div>
+                <div className="ch-res-title">ApplyReady</div>
+                <div className="ch-res-body">
+                  Candidate profile, resume prep, saved jobs, application tracking, and AI-supported tools.
+                </div>
+                <span className="ch-res-link">Prepare to apply</span>
+              </Link>
+
               <Link href="/careers/insights" className="ch-res-card ch-res-card-featured">
                 <div className="ch-res-icon" aria-hidden="true">
                   <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -949,6 +1024,136 @@ export default function CareersHome({ stats }: Props) {
           font-weight: 750;
         }
 
+        .ch-applyready-section {
+          background: #eef4fb;
+          padding: 16px 0 54px;
+        }
+
+        .ch-applyready {
+          display: grid;
+          grid-template-columns: minmax(0, 1fr) 410px;
+          gap: 34px;
+          align-items: center;
+          border-radius: 30px;
+          background:
+            radial-gradient(circle at top right, rgba(239, 159, 39, 0.18), transparent 34%),
+            linear-gradient(135deg, #041f3d 0%, #07335f 58%, #0c447c 100%);
+          color: #ffffff;
+          padding: 48px 30px;
+          box-shadow: 0 26px 60px rgba(4, 44, 83, 0.20);
+        }
+
+        .ch-applyready-copy h2 {
+          max-width: 760px;
+          margin: 14px 0 0;
+          color: #ffffff;
+          font-size: clamp(30px, 4vw, 50px);
+          line-height: 1.04;
+          letter-spacing: -0.05em;
+          font-weight: 950;
+        }
+
+        .ch-applyready-copy p {
+          max-width: 740px;
+          margin: 18px 0 0;
+          color: rgba(255, 255, 255, 0.78);
+          font-size: 16px;
+          line-height: 1.75;
+        }
+
+        .ch-applyready-actions {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 12px;
+          margin-top: 26px;
+        }
+
+        .ch-applyready-primary,
+        .ch-applyready-secondary {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 999px;
+          padding: 12px 18px;
+          font-size: 14px;
+          font-weight: 950;
+          text-decoration: none;
+        }
+
+        .ch-applyready-primary {
+          background: #ef9f27;
+          color: #041f3d;
+        }
+
+        .ch-applyready-primary:hover {
+          background: #f5b942;
+        }
+
+        .ch-applyready-secondary {
+          border: 1px solid rgba(255, 255, 255, 0.18);
+          color: #ffffff;
+        }
+
+        .ch-applyready-secondary:hover {
+          background: rgba(255, 255, 255, 0.1);
+        }
+
+        .ch-applyready-panel {
+          border: 1px solid rgba(255, 255, 255, 0.14);
+          border-radius: 24px;
+          background: rgba(255, 255, 255, 0.08);
+          padding: 22px;
+          backdrop-filter: blur(16px);
+        }
+
+        .ch-applyready-panel-top {
+          display: inline-flex;
+          align-items: center;
+          gap: 9px;
+          color: #ffffff;
+          font-size: 12px;
+          font-weight: 950;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+        }
+
+        .ch-applyready-live-dot {
+          width: 9px;
+          height: 9px;
+          border-radius: 999px;
+          background: #22c55e;
+          box-shadow: 0 0 0 5px rgba(34, 197, 94, 0.12);
+        }
+
+        .ch-applyready-tools {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 9px;
+          margin-top: 20px;
+        }
+
+        .ch-applyready-tools span {
+          display: inline-flex;
+          align-items: center;
+          border: 1px solid rgba(239, 159, 39, 0.42);
+          border-radius: 999px;
+          background: rgba(239, 159, 39, 0.12);
+          color: #ffe2ad;
+          padding: 8px 11px;
+          font-size: 12px;
+          font-weight: 900;
+        }
+
+        .ch-applyready-note {
+          margin-top: 18px;
+          border-top: 1px solid rgba(255, 255, 255, 0.12);
+          padding-top: 16px;
+          color: rgba(255, 255, 255, 0.68);
+          font-size: 13px;
+          line-height: 1.65;
+          font-weight: 650;
+        }
+
         .ch-insights-section {
           background: #eef4fb;
           padding: 16px 0 54px;
@@ -1183,7 +1388,7 @@ export default function CareersHome({ stats }: Props) {
 
         .ch-resources {
           display: grid;
-          grid-template-columns: repeat(4, 1fr);
+          grid-template-columns: repeat(5, 1fr);
           gap: 16px;
           margin-top: 24px;
         }
@@ -1211,6 +1416,13 @@ export default function CareersHome({ stats }: Props) {
           background:
             radial-gradient(circle at top right, rgba(239, 159, 39, 0.18), transparent 36%),
             #ffffff;
+        }
+
+        .ch-res-card-applyready {
+          background:
+            radial-gradient(circle at top right, rgba(12, 68, 124, 0.14), transparent 34%),
+            linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+          border-color: #cfdced;
         }
 
         .ch-res-icon {
@@ -1260,17 +1472,21 @@ export default function CareersHome({ stats }: Props) {
           .ch-hiring {
             grid-template-columns: 1fr;
           }
+
+          .ch-resources {
+            grid-template-columns: repeat(3, 1fr);
+          }
         }
 
         @media (max-width: 980px) {
           .ch-search,
+          .ch-applyready,
           .ch-insights,
           .ch-featured-card {
             grid-template-columns: 1fr;
           }
 
-          .ch-stats,
-          .ch-resources {
+          .ch-stats {
             grid-template-columns: repeat(2, 1fr);
           }
         }
@@ -1304,6 +1520,12 @@ export default function CareersHome({ stats }: Props) {
             grid-template-columns: 1fr;
           }
 
+          .ch-applyready,
+          .ch-insights {
+            padding: 30px 18px;
+            border-radius: 24px;
+          }
+
           .ch-hiring {
             padding: 16px;
           }
@@ -1324,11 +1546,6 @@ export default function CareersHome({ stats }: Props) {
 
           .ch-stat:last-child {
             border-bottom: 0;
-          }
-
-          .ch-insights {
-            padding: 30px 18px;
-            border-radius: 24px;
           }
         }
       `}</style>
