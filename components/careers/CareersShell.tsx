@@ -1,4 +1,4 @@
-﻿import Link from "next/link";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import type { ReactNode } from "react";
 
@@ -34,7 +34,7 @@ const NAV_ITEMS: NavItem[] = [
   {
     href: "/careers/applyready",
     label: "ApplyReady",
-    match: (p) => p === "/careers/applyready",
+    match: (p) => p === "/careers/applyready" || p.startsWith("/careers/applyready/"),
   },
   {
     href: "/careers/resources",
@@ -160,28 +160,46 @@ export default function CareersShell({ children }: { children: ReactNode }) {
         .careers-shell {
           background: #f6f8fb;
           color: #0f172a;
+          overflow-x: clip;
           --c-navy: #042C53;
           --c-navy-2: #0C447C;
           --c-gold: #BA7517;
           --c-gold-bright: #EF9F27;
           --c-light-blue: #85B7EB;
+          --careers-edge: clamp(16px, 3.2vw, 56px);
+          --careers-container-max: 1720px;
+          --careers-subnav-height: 73px;
+        }
+
+        .careers-shell *,
+        .careers-shell *::before,
+        .careers-shell *::after {
+          box-sizing: border-box;
         }
 
         .careers-shell .careers-container {
-          width: 100%;
-          max-width: 1180px;
-          margin: 0 auto;
-          padding: 0 24px;
+          width: min(100% - calc(var(--careers-edge) * 2), var(--careers-container-max));
+          max-width: none;
+          margin-inline: auto;
+          padding-inline: 0;
+        }
+
+        @media (min-width: 1800px) {
+          .careers-shell {
+            --careers-edge: 64px;
+            --careers-container-max: 1840px;
+          }
         }
 
         .careers-shell .careers-subnav-wrap {
-          background: #ffffff;
+          background: rgba(255, 255, 255, 0.96);
           border-bottom: 1px solid #e2e8f0;
           box-shadow: inset 0 -3px 0 0 #BA7517;
-          margin-bottom: 32px;
-          position: relative;
-          top: auto;
-          z-index: 20;
+          margin-bottom: 0;
+          position: sticky;
+          top: 0;
+          z-index: 80;
+          backdrop-filter: blur(14px);
         }
 
         .careers-shell .careers-subnav-inner {
@@ -335,7 +353,7 @@ export default function CareersShell({ children }: { children: ReactNode }) {
         }
 
         .careers-shell .careers-section {
-          padding: 56px 0;
+          padding: clamp(28px, 4vw, 52px) 0;
         }
 
         .careers-shell .careers-section-tight {
@@ -775,6 +793,24 @@ export default function CareersShell({ children }: { children: ReactNode }) {
           line-height: 1.6;
         }
 
+        .careers-shell .cj-layout {
+          width: 100% !important;
+          display: grid !important;
+          grid-template-columns: clamp(260px, 20vw, 340px) minmax(0, 1fr) !important;
+          gap: clamp(18px, 2vw, 34px) !important;
+          align-items: start !important;
+        }
+
+        .careers-shell .cj-search-bar {
+          width: 100% !important;
+          max-width: none !important;
+        }
+
+        .careers-shell .cj-results {
+          min-width: 0 !important;
+          width: 100% !important;
+        }
+
         .careers-shell .cj-sidebar {
           background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%) !important;
           border: 1px solid #dbe5f0 !important;
@@ -783,9 +819,11 @@ export default function CareersShell({ children }: { children: ReactNode }) {
           padding: 16px 18px 18px !important;
           box-shadow: 0 10px 26px rgba(4, 44, 83, 0.08) !important;
           position: sticky !important;
-          top: 24px !important;
-          max-height: calc(100vh - 48px) !important;
+          top: calc(var(--careers-subnav-height) + 16px) !important;
+          max-height: calc(100dvh - var(--careers-subnav-height) - 32px) !important;
           overflow-y: auto !important;
+          overscroll-behavior: contain !important;
+          align-self: start !important;
         }
 
         .careers-shell .cj-sidebar fieldset,
@@ -900,10 +938,30 @@ export default function CareersShell({ children }: { children: ReactNode }) {
           border-bottom: 1px solid rgba(219, 229, 240, 0.22);
         }
 
+        @media (max-width: 1180px) {
+          .careers-shell {
+            --careers-edge: clamp(16px, 2.4vw, 32px);
+          }
+
+          .careers-shell .cj-layout {
+            grid-template-columns: clamp(250px, 28vw, 300px) minmax(0, 1fr) !important;
+          }
+        }
+
         @media (max-width: 1040px) {
           .careers-shell .careers-subnav-link {
             padding: 8px 10px;
             font-size: 13px;
+          }
+        }
+
+        @media (max-width: 960px) {
+          .careers-shell .cj-layout {
+            grid-template-columns: 1fr !important;
+          }
+
+          .careers-shell .cj-sidebar {
+            display: none !important;
           }
         }
 
@@ -959,8 +1017,14 @@ export default function CareersShell({ children }: { children: ReactNode }) {
         }
 
         @media (max-width: 600px) {
+          .careers-shell {
+            --careers-edge: 16px;
+            --careers-subnav-height: 64px;
+          }
+
           .careers-shell .careers-container {
-            padding: 0 16px;
+            width: min(100% - 32px, var(--careers-container-max));
+            padding-inline: 0;
           }
         }
       `}</style>
