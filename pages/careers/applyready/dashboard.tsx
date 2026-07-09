@@ -16,6 +16,12 @@ import {
   isApplyReadyResumeStarted,
   type ApplyReadyResumeStatus,
 } from "../../../lib/careers/applyReadyResume";
+import {
+  countApplicationsByStatus,
+  getActiveApplyReadyApplications,
+  getApplyReadyApplications,
+  type ApplyReadyApplication,
+} from "../../../lib/careers/applyReadyTracker";
 
 const SITE_URL = "https://www.medicaidready.org";
 const PAGE_PATH = "/careers/applyready/dashboard";
@@ -67,6 +73,7 @@ export default function ApplyReadyDashboardPage() {
   const [resumeStatus, setResumeStatus] = useState<ApplyReadyResumeStatus>(
     EMPTY_APPLYREADY_RESUME_STATUS
   );
+  const [applications, setApplications] = useState<ApplyReadyApplication[]>([]);
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
@@ -74,6 +81,7 @@ export default function ApplyReadyDashboardPage() {
       setSavedCount(getSavedJobRecords().length);
       setProfile(getApplyReadyProfile());
       setResumeStatus(getApplyReadyResumeStatus());
+      setApplications(getApplyReadyApplications());
       setReady(true);
     };
 
@@ -83,12 +91,14 @@ export default function ApplyReadyDashboardPage() {
     window.addEventListener("applyready:saved-jobs-updated", sync);
     window.addEventListener("applyready:profile-updated", sync);
     window.addEventListener("applyready:resume-updated", sync);
+    window.addEventListener("applyready:tracker-updated", sync);
 
     return () => {
       window.removeEventListener("storage", sync);
       window.removeEventListener("applyready:saved-jobs-updated", sync);
       window.removeEventListener("applyready:profile-updated", sync);
       window.removeEventListener("applyready:resume-updated", sync);
+      window.removeEventListener("applyready:tracker-updated", sync);
     };
   }, []);
 
@@ -96,6 +106,16 @@ export default function ApplyReadyDashboardPage() {
   const profileCompletion = calculateProfileCompletion(profile);
   const resumeStarted = isApplyReadyResumeStarted(resumeStatus);
   const resumeCompletion = calculateApplyReadyResumeCompletion(resumeStatus);
+
+  const activeApplications = useMemo(
+    () => getActiveApplyReadyApplications(applications),
+    [applications]
+  );
+
+  const activeApplicationCount = activeApplications.length;
+  const appliedCount = countApplicationsByStatus(applications, "Applied");
+  const interviewCount = countApplicationsByStatus(applications, "Interview");
+  const followUpCount = countApplicationsByStatus(applications, "Follow up");
 
   const foundationItems = useMemo(
     () => [
@@ -122,13 +142,23 @@ export default function ApplyReadyDashboardPage() {
       },
       {
         title: "Application Tracker",
-        status: "Next foundation",
+        status:
+          activeApplicationCount === 1
+            ? "1 active application"
+            : `${activeApplicationCount} active applications`,
         description:
           "Track saved, preparing, applied, interview, offer, not selected, and follow-up statuses.",
         href: "/careers/applyready/tracker",
       },
     ],
-    [profileCompletion, profileStarted, resumeCompletion, resumeStarted, savedCount]
+    [
+      activeApplicationCount,
+      profileCompletion,
+      profileStarted,
+      resumeCompletion,
+      resumeStarted,
+      savedCount,
+    ]
   );
 
   const metaTitle = "ApplyReady Dashboard | MedicaidReady Careers";
@@ -167,16 +197,16 @@ export default function ApplyReadyDashboardPage() {
                   <h1>Your career preparation command center.</h1>
                   <p>
                     Track your ApplyReady foundation in one place. Start with your candidate
-                    profile, prepare your resume, save jobs that fit your goals, and move
-                    toward application tracking with a cleaner plan.
+                    profile, prepare your resume, save jobs that fit your goals, and manage
+                    each application with a cleaner plan.
                   </p>
 
                   <div className="ard-actions">
-                    <Link href="/careers/applyready/profile" className="ard-primary">
-                      Build Profile
+                    <Link href="/careers/applyready/tracker" className="ard-primary">
+                      Open Tracker
                     </Link>
-                    <Link href="/careers/applyready/resume" className="ard-secondary">
-                      Resume Vault
+                    <Link href="/careers/jobs" className="ard-secondary">
+                      Browse Jobs
                     </Link>
                   </div>
                 </div>
@@ -197,12 +227,16 @@ export default function ApplyReadyDashboardPage() {
                       <strong>{ready ? savedCount : 0}</strong>
                       <small>Saved jobs</small>
                     </div>
+                    <div>
+                      <strong>{ready ? activeApplicationCount : 0}</strong>
+                      <small>Tracked</small>
+                    </div>
                   </div>
 
                   <p>
-                    {profileStarted || resumeStarted || savedCount > 0
+                    {profileStarted || resumeStarted || savedCount > 0 || activeApplicationCount > 0
                       ? "Your ApplyReady foundation is underway."
-                      : "Start your profile, resume readiness, or saved jobs list."}
+                      : "Start your profile, resume readiness, saved jobs, or tracker."}
                   </p>
 
                   <small>
@@ -224,9 +258,9 @@ export default function ApplyReadyDashboardPage() {
                 </div>
                 <p>
                   We are building ApplyReady as a real candidate preparation system. Saved
-                  jobs, profile drafts, and resume readiness can start now. Resume file
-                  upload and account-tied data should wait until sign-in, database, storage,
-                  and privacy controls are ready.
+                  jobs, profile drafts, resume readiness, and application tracking can start
+                  now. Resume file upload and account-tied data should wait until sign-in,
+                  database, storage, and privacy controls are ready.
                 </p>
               </div>
 
@@ -352,17 +386,62 @@ export default function ApplyReadyDashboardPage() {
             </div>
           </section>
 
+          <section className="ard-tracker-section">
+            <div className="careers-container">
+              <div className="ard-tracker">
+                <div>
+                  <p className="ard-eyebrow">Application Tracker</p>
+                  <h2>
+                    {activeApplicationCount > 0
+                      ? "Your application tracker is active."
+                      : "Start tracking applications after saving or finding roles."}
+                  </h2>
+                  <p>
+                    The tracker helps candidates organize roles by status, follow-up needs,
+                    interviews, and outcomes. This gives ApplyReady a real workflow before
+                    account-based storage is added.
+                  </p>
+
+                  <Link href="/careers/applyready/tracker" className="ard-tracker-link">
+                    Open application tracker
+                  </Link>
+                </div>
+
+                <div className="ard-tracker-card">
+                  <div className="ard-tracker-grid">
+                    <div>
+                      <strong>{ready ? activeApplicationCount : 0}</strong>
+                      <span>Active</span>
+                    </div>
+                    <div>
+                      <strong>{ready ? appliedCount : 0}</strong>
+                      <span>Applied</span>
+                    </div>
+                    <div>
+                      <strong>{ready ? interviewCount : 0}</strong>
+                      <span>Interview</span>
+                    </div>
+                    <div>
+                      <strong>{ready ? followUpCount : 0}</strong>
+                      <span>Follow up</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
           <section className="ard-account-section">
             <div className="careers-container">
               <div className="ard-account">
                 <div>
                   <p className="ard-eyebrow">Account foundation</p>
-                  <h2>Profile and resume features need secure accounts.</h2>
+                  <h2>Profile, resume, and tracker features need secure accounts.</h2>
                   <p>
-                    Saved jobs can start in browser storage, but candidate profiles and
-                    resumes should eventually be tied to secure accounts. That keeps user
-                    data safer and gives us the right path for resume tools, tracker
-                    history, and AI-supported preparation.
+                    Saved jobs can start in browser storage, but candidate profiles, resumes,
+                    and application history should eventually be tied to secure accounts. That
+                    keeps user data safer and gives us the right path for resume tools,
+                    tracker history, and AI-supported preparation.
                   </p>
                 </div>
 
@@ -375,12 +454,12 @@ export default function ApplyReadyDashboardPage() {
                   <div>
                     <span>02</span>
                     <strong>Resume readiness</strong>
-                    <p>Resume Vault status is now started without unsafe file upload.</p>
+                    <p>Resume Vault status is started without unsafe file upload.</p>
                   </div>
                   <div>
                     <span>03</span>
                     <strong>Application tracker</strong>
-                    <p>Track status after profile and resume structure are stable.</p>
+                    <p>Tracker foundation is now connected to ApplyReady.</p>
                   </div>
                 </div>
               </div>
@@ -392,11 +471,11 @@ export default function ApplyReadyDashboardPage() {
               <div className="ard-ai">
                 <div>
                   <p className="ard-eyebrow ard-eyebrow-dark">AI tools later</p>
-                  <h2>AI comes after profile and resume structure.</h2>
+                  <h2>AI comes after profile, resume, and tracker structure.</h2>
                   <p>
                     AI resume tools become more useful after we know the candidate profile,
-                    target roles, saved jobs, and resume readiness. That is why we build the
-                    foundation before charging into AI features.
+                    target roles, saved jobs, resume readiness, and application history.
+                    That is why we build the foundation before charging into AI features.
                   </p>
                 </div>
 
@@ -567,7 +646,7 @@ export default function ApplyReadyDashboardPage() {
 
         .ard-panel-metrics {
           display: grid;
-          grid-template-columns: repeat(3, 1fr);
+          grid-template-columns: repeat(2, 1fr);
           gap: 10px;
           margin-top: 18px;
         }
@@ -616,6 +695,7 @@ export default function ApplyReadyDashboardPage() {
         .ard-status h2,
         .ard-profile h2,
         .ard-resume h2,
+        .ard-tracker h2,
         .ard-account h2,
         .ard-ai h2 {
           margin: 10px 0 0;
@@ -629,6 +709,7 @@ export default function ApplyReadyDashboardPage() {
         .ard-status p,
         .ard-profile p,
         .ard-resume p,
+        .ard-tracker p,
         .ard-ai p {
           margin: 0;
           color: #475569;
@@ -710,7 +791,8 @@ export default function ApplyReadyDashboardPage() {
         }
 
         .ard-profile,
-        .ard-resume {
+        .ard-resume,
+        .ard-tracker {
           display: grid;
           grid-template-columns: minmax(0, 1fr) 430px;
           gap: 34px;
@@ -723,21 +805,44 @@ export default function ApplyReadyDashboardPage() {
         }
 
         .ard-profile p,
-        .ard-resume p {
+        .ard-resume p,
+        .ard-tracker p {
           margin-top: 16px;
         }
 
         .ard-resume-section {
           background: #eef4fb;
-          padding: 24px 0 58px;
+          padding: 24px 0;
         }
 
         .ard-resume {
           grid-template-columns: 430px minmax(0, 1fr);
         }
 
+        .ard-tracker-section {
+          background: #eef4fb;
+          padding: 0 0 58px;
+        }
+
+        .ard-tracker {
+          background:
+            radial-gradient(circle at top right, rgba(239, 159, 39, 0.12), transparent 34%),
+            #061b3a;
+          border-color: rgba(255, 255, 255, 0.12);
+          color: #ffffff;
+        }
+
+        .ard-tracker h2 {
+          color: #ffffff;
+        }
+
+        .ard-tracker p {
+          color: rgba(255, 255, 255, 0.74);
+        }
+
         .ard-profile-card,
-        .ard-resume-card {
+        .ard-resume-card,
+        .ard-tracker-card {
           border: 1px solid #dbe5f0;
           border-radius: 24px;
           background: #f8fafc;
@@ -748,6 +853,11 @@ export default function ApplyReadyDashboardPage() {
           background:
             radial-gradient(circle at top right, rgba(239, 159, 39, 0.12), transparent 34%),
             #f8fafc;
+        }
+
+        .ard-tracker-card {
+          border-color: rgba(255, 255, 255, 0.14);
+          background: rgba(255, 255, 255, 0.08);
         }
 
         .ard-progress-top {
@@ -815,11 +925,11 @@ export default function ApplyReadyDashboardPage() {
           font-weight: 900;
         }
 
-        .ard-profile-link {
+        .ard-profile-link,
+        .ard-tracker-link {
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          width: 100%;
           min-height: 44px;
           margin-top: 18px;
           border-radius: 999px;
@@ -831,8 +941,53 @@ export default function ApplyReadyDashboardPage() {
           box-shadow: inset 0 -2px 0 #ba7517;
         }
 
+        .ard-profile-link {
+          width: 100%;
+        }
+
+        .ard-tracker-link {
+          padding: 0 18px;
+          background: #f5b942;
+          color: #061b3a;
+          box-shadow: none;
+        }
+
         .ard-profile-link:hover {
           background: #0c447c;
+        }
+
+        .ard-tracker-link:hover {
+          background: #ffd978;
+        }
+
+        .ard-tracker-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 12px;
+        }
+
+        .ard-tracker-grid div {
+          border: 1px solid rgba(255, 255, 255, 0.13);
+          border-radius: 18px;
+          background: rgba(255, 255, 255, 0.08);
+          padding: 18px;
+        }
+
+        .ard-tracker-grid strong {
+          display: block;
+          color: #ffffff;
+          font-size: 36px;
+          line-height: 1;
+          font-weight: 950;
+          letter-spacing: -0.06em;
+        }
+
+        .ard-tracker-grid span {
+          display: block;
+          margin-top: 8px;
+          color: rgba(255, 255, 255, 0.68);
+          font-size: 12px;
+          font-weight: 850;
         }
 
         .ard-account-section {
@@ -924,6 +1079,7 @@ export default function ApplyReadyDashboardPage() {
           .ard-status,
           .ard-profile,
           .ard-resume,
+          .ard-tracker,
           .ard-account,
           .ard-ai {
             grid-template-columns: 1fr;
@@ -940,7 +1096,8 @@ export default function ApplyReadyDashboardPage() {
           }
 
           .ard-panel-metrics,
-          .ard-grid {
+          .ard-grid,
+          .ard-tracker-grid {
             grid-template-columns: 1fr;
           }
 
@@ -948,8 +1105,10 @@ export default function ApplyReadyDashboardPage() {
           .ard-card,
           .ard-profile,
           .ard-resume,
+          .ard-tracker,
           .ard-profile-card,
-          .ard-resume-card {
+          .ard-resume-card,
+          .ard-tracker-card {
             border-radius: 22px;
           }
 
