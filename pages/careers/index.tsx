@@ -138,9 +138,9 @@ export default function CareersHome({ stats }: Props) {
 
   const url = `${SITE_URL}/careers`;
   const metaTitle =
-    "MedicaidReady Careers — Verified Jobs Across Tech, Healthcare, Data, and Public Sector";
+    "MedicaidReady Careers | Verified Jobs, Hiring Reports, and Career Intelligence";
   const metaDescription =
-    "Find verified jobs across technology, healthcare, data, cybersecurity, cloud, public sector, analyst, operations, and care workforce career tracks. Updated weekly. Apply directly through each employer's official site.";
+    "Search verified jobs across technology, data, cybersecurity, cloud, public sector, healthcare, operations, and care workforce roles. Use employer links, hiring reports, and career intelligence to apply with confidence.";
 
   return (
     <>
@@ -152,7 +152,7 @@ export default function CareersHome({ stats }: Props) {
         <meta property="og:description" content={metaDescription} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={url} />
-        <meta property="og:site_name" content="MedicaidReady" />
+        <meta property="og:site_name" content="MedicaidReady Careers" />
       </Head>
 
       <CareersShell>
@@ -160,84 +160,122 @@ export default function CareersHome({ stats }: Props) {
           <div className="ch-hero-glow" />
           <div className="careers-container">
             <div className="ch-hero-inner">
-              <div className="ch-hero-copy-wrap">
-                <div className="careers-eyebrow ch-eyebrow">MedicaidReady Careers</div>
+              <div className="ch-hero-main">
+                <div className="ch-eyebrow">MedicaidReady Careers</div>
                 <h1 className="ch-hero-title">
-                  Verified jobs across tech, healthcare, data, public sector, and care careers
-                  — all in one place.
+                  Right skills. Real openings. Better career moves.
                 </h1>
                 <p className="ch-hero-sub">
-                  Curated openings across technology, cybersecurity, cloud, data,
-                  healthcare, public sector, analyst, operations, and care workforce roles.
-                  Updated weekly. Apply through each employer&apos;s official site.
+                  Search verified roles across technology, data, cybersecurity, cloud,
+                  public sector, healthcare, operations, and care workforce careers.
+                  Use employer links, weekly reports, and hiring signals to apply with
+                  more confidence.
                 </p>
+
+                <form className="ch-search" onSubmit={handleSearch} role="search">
+                  <div className="ch-search-field ch-search-field-q">
+                    <span className="ch-search-icon" aria-hidden="true">
+                      <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                        <circle cx="8" cy="8" r="5.25" stroke="currentColor" strokeWidth="1.6" />
+                        <path
+                          d="M12 12l3 3"
+                          stroke="currentColor"
+                          strokeWidth="1.6"
+                          strokeLinecap="round"
+                        />
+                      </svg>
+                    </span>
+                    <input
+                      type="search"
+                      className="ch-search-input"
+                      placeholder="Job title, skill, company, or keyword"
+                      aria-label="Job title, skill, company, or keyword"
+                      value={q}
+                      onChange={(event) => setQ(event.target.value)}
+                    />
+                  </div>
+
+                  <div className="ch-search-field ch-search-field-loc">
+                    <span className="ch-search-icon" aria-hidden="true">
+                      <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                        <path
+                          d="M9 16s5-4.5 5-9a5 5 0 10-10 0c0 4.5 5 9 5 9z"
+                          stroke="currentColor"
+                          strokeWidth="1.6"
+                          strokeLinejoin="round"
+                        />
+                        <circle cx="9" cy="7" r="2" stroke="currentColor" strokeWidth="1.6" />
+                      </svg>
+                    </span>
+                    <input
+                      type="search"
+                      className="ch-search-input"
+                      placeholder="City, state, or remote"
+                      aria-label="City, state, or remote"
+                      value={loc}
+                      onChange={(event) => setLoc(event.target.value)}
+                    />
+                  </div>
+
+                  <button type="submit" className="ch-search-btn">
+                    Search jobs
+                  </button>
+                </form>
+
+                <div className="ch-popular">
+                  <span className="ch-popular-label">Start with a role or skill</span>
+                  <div className="ch-popular-list">
+                    {POPULAR_SEARCHES.map((label) => (
+                      <button
+                        type="button"
+                        key={label}
+                        className="ch-popular-chip"
+                        onClick={() => jumpToChip(label)}
+                      >
+                        {label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
               </div>
 
-              <form className="ch-search" onSubmit={handleSearch} role="search">
-                <div className="ch-search-field ch-search-field-q">
-                  <span className="ch-search-icon" aria-hidden="true">
-                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                      <circle cx="8" cy="8" r="5.25" stroke="currentColor" strokeWidth="1.6" />
-                      <path
-                        d="M12 12l3 3"
-                        stroke="currentColor"
-                        strokeWidth="1.6"
-                        strokeLinecap="round"
-                      />
-                    </svg>
-                  </span>
-                  <input
-                    type="search"
-                    className="ch-search-input"
-                    placeholder="Job title, skill, company, or keyword"
-                    aria-label="Job title, skill, company, or keyword"
-                    value={q}
-                    onChange={(event) => setQ(event.target.value)}
-                  />
+              <aside className="ch-hero-panel">
+                <div className="ch-panel-label">Start your job search</div>
+                <h2>Find roles that match your skills and goals.</h2>
+                <p>
+                  Search openings, compare career lanes, review hiring reports, and move
+                  from job browsing to a more focused application plan.
+                </p>
+
+                <div className="ch-panel-metrics">
+                  <div>
+                    <strong>{formatNumber(stats.totalJobs)}</strong>
+                    <span>verified roles</span>
+                  </div>
+                  <div>
+                    <strong>{formatNumber(stats.remoteJobs)}</strong>
+                    <span>remote-friendly</span>
+                  </div>
+                  <div>
+                    <strong>{formatNumber(stats.uniqueCompanies)}</strong>
+                    <span>employers</span>
+                  </div>
                 </div>
 
-                <div className="ch-search-field ch-search-field-loc">
-                  <span className="ch-search-icon" aria-hidden="true">
-                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                      <path
-                        d="M9 16s5-4.5 5-9a5 5 0 10-10 0c0 4.5 5 9 5 9z"
-                        stroke="currentColor"
-                        strokeWidth="1.6"
-                        strokeLinejoin="round"
-                      />
-                      <circle cx="9" cy="7" r="2" stroke="currentColor" strokeWidth="1.6" />
-                    </svg>
-                  </span>
-                  <input
-                    type="search"
-                    className="ch-search-input"
-                    placeholder="City, state, or remote"
-                    aria-label="City, state, or remote"
-                    value={loc}
-                    onChange={(event) => setLoc(event.target.value)}
-                  />
-                </div>
-
-                <button type="submit" className="ch-search-btn">
-                  Search jobs
-                </button>
-              </form>
-
-              <div className="ch-popular">
-                <span className="ch-popular-label">Popular searches</span>
-                <div className="ch-popular-list">
-                  {POPULAR_SEARCHES.map((label) => (
-                    <button
-                      type="button"
-                      key={label}
-                      className="ch-popular-chip"
-                      onClick={() => jumpToChip(label)}
-                    >
-                      {label}
-                    </button>
-                  ))}
-                </div>
-              </div>
+                {stats.featuredJob && (
+                  <Link
+                    href={`/careers/jobs/${stats.featuredJob.id}`}
+                    className="ch-panel-featured"
+                  >
+                    <span>Role spotlight</span>
+                    <strong>{stats.featuredJob.title}</strong>
+                    <small>
+                      {stats.featuredJob.company}
+                      {stats.featuredJob.location ? ` · ${stats.featuredJob.location}` : ""}
+                    </small>
+                  </Link>
+                )}
+              </aside>
             </div>
           </div>
         </section>
@@ -248,7 +286,7 @@ export default function CareersHome({ stats }: Props) {
               <div className="ch-hiring">
                 <div className="ch-hiring-head">
                   <span className="ch-hiring-dot" aria-hidden="true" />
-                  <span className="ch-hiring-title">Hiring now</span>
+                  <span className="ch-hiring-title">Hiring companies</span>
                 </div>
                 <div className="ch-hiring-list">
                   {stats.hiringCompanies.map((company) => (
@@ -286,7 +324,7 @@ export default function CareersHome({ stats }: Props) {
                 </div>
                 <div className="ch-stat">
                   <div className="ch-stat-value">Weekly</div>
-                  <div className="ch-stat-label">Market updates</div>
+                  <div className="ch-stat-label">Career reports</div>
                 </div>
               </div>
             </div>
@@ -301,20 +339,20 @@ export default function CareersHome({ stats }: Props) {
                   Career Intelligence
                 </div>
                 <h2 className="ch-insights-title">
-                  Career Insights Center for verified hiring trends.
+                  Make your job search sharper before you apply.
                 </h2>
                 <p className="ch-insights-sub">
-                  Go beyond job listings. Explore hiring signals, salary snapshots,
+                  Go beyond job listings. Review hiring signals, salary snapshots,
                   verified opportunity reports, and weekly market summaries built from
-                  real MedicaidReady Careers job activity.
+                  MedicaidReady Careers job activity.
                 </p>
 
                 <div className="ch-insights-actions">
                   <Link href="/careers/insights" className="ch-insights-cta">
                     Explore Career Insights
                   </Link>
-                  <Link href="/careers/jobs" className="ch-insights-ghost">
-                    Browse verified jobs
+                  <Link href="/careers/reports" className="ch-insights-ghost">
+                    View Hiring Reports
                   </Link>
                 </div>
               </div>
@@ -353,7 +391,7 @@ export default function CareersHome({ stats }: Props) {
 
         <section className="careers-section">
           <div className="careers-container">
-            <CategoryGrid heading="Browse by category" />
+            <CategoryGrid heading="Explore jobs by career track" />
           </div>
         </section>
 
@@ -361,7 +399,7 @@ export default function CareersHome({ stats }: Props) {
           <section className="ch-featured-section">
             <div className="careers-container">
               <div className="careers-eyebrow">Featured role</div>
-              <h2 className="careers-h2">Spotlight</h2>
+              <h2 className="careers-h2">A role worth reviewing today.</h2>
 
               <Link
                 href={`/careers/jobs/${stats.featuredJob.id}`}
@@ -428,8 +466,8 @@ export default function CareersHome({ stats }: Props) {
             <div className="careers-eyebrow">Career resources</div>
             <h2 className="careers-h2">Tools and guides for your search.</h2>
             <p className="careers-lead">
-              Free resources you can use today — from career insights and verified
-              job search tools to benefits guidance and practical hiring resources.
+              Free resources for career insights, verified job search, benefits guidance,
+              and practical hiring support.
             </p>
 
             <div className="ch-resources">
@@ -449,7 +487,7 @@ export default function CareersHome({ stats }: Props) {
                 <div className="ch-res-body">
                   Hiring trends, salary insights, weekly reports, and verified job market signals.
                 </div>
-                <span className="ch-res-link">Explore insights →</span>
+                <span className="ch-res-link">Explore insights</span>
               </Link>
 
               <Link href="/careers/jobs" className="ch-res-card">
@@ -462,7 +500,7 @@ export default function CareersHome({ stats }: Props) {
                 <div className="ch-res-body">
                   Search by role, skill, company, location, work setting, and category.
                 </div>
-                <span className="ch-res-link">Find jobs →</span>
+                <span className="ch-res-link">Find jobs</span>
               </Link>
 
               <Link href="/careers/resources" className="ch-res-card">
@@ -482,7 +520,7 @@ export default function CareersHome({ stats }: Props) {
                   Curated links and guides for tech, healthcare, data, public sector,
                   Medicaid, and care workforce career pathways.
                 </div>
-                <span className="ch-res-link">Browse resources →</span>
+                <span className="ch-res-link">Browse resources</span>
               </Link>
 
               <Link href="/careers/companies" className="ch-res-card">
@@ -501,7 +539,7 @@ export default function CareersHome({ stats }: Props) {
                 <div className="ch-res-body">
                   Explore employers represented across MedicaidReady Careers listings.
                 </div>
-                <span className="ch-res-link">View companies →</span>
+                <span className="ch-res-link">View companies</span>
               </Link>
             </div>
           </div>
@@ -519,53 +557,63 @@ export default function CareersHome({ stats }: Props) {
           position: relative;
           overflow: hidden;
           background:
-            radial-gradient(circle at 15% 0%, rgba(186, 117, 23, 0.16), transparent 34%),
-            linear-gradient(180deg, #f8fafc 0%, #eef4fb 100%);
-          border-bottom: 1px solid #dbe5f0;
-          padding: 64px 0 34px;
+            radial-gradient(circle at 12% 18%, rgba(239, 159, 39, 0.20), transparent 24%),
+            radial-gradient(circle at 84% 20%, rgba(12, 68, 124, 0.34), transparent 32%),
+            linear-gradient(135deg, #061b3a 0%, #07335f 58%, #0c447c 100%);
+          color: #ffffff;
+          border-bottom: 1px solid rgba(219, 229, 240, 0.2);
+          padding: 72px 0 44px;
         }
 
         .ch-hero-glow {
           position: absolute;
-          inset: auto -120px -180px auto;
-          width: 440px;
-          height: 440px;
+          right: -180px;
+          bottom: -220px;
+          width: 520px;
+          height: 520px;
           border-radius: 999px;
-          background: rgba(12, 68, 124, 0.12);
-          filter: blur(8px);
+          background: rgba(133, 183, 235, 0.18);
+          filter: blur(10px);
           pointer-events: none;
         }
 
         .ch-hero-inner {
           position: relative;
           display: grid;
-          gap: 24px;
+          grid-template-columns: minmax(0, 1fr) 390px;
+          gap: 44px;
+          align-items: center;
         }
 
-        .ch-hero-copy-wrap {
-          max-width: 940px;
+        .ch-hero-main {
+          min-width: 0;
         }
 
         .ch-eyebrow {
-          margin-bottom: 12px;
+          color: #f5b942;
+          font-size: 12px;
+          font-weight: 950;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          margin-bottom: 14px;
         }
 
         .ch-hero-title {
-          max-width: 960px;
+          max-width: 980px;
           margin: 0;
-          color: #042c53;
-          font-size: clamp(38px, 5vw, 68px);
-          line-height: 1.02;
-          letter-spacing: -0.055em;
+          color: #ffffff;
+          font-size: clamp(44px, 6.4vw, 88px);
+          line-height: 0.96;
+          letter-spacing: -0.065em;
           font-weight: 950;
         }
 
         .ch-hero-sub {
-          max-width: 900px;
-          margin: 18px 0 0;
-          color: #334155;
-          font-size: 17px;
-          line-height: 1.75;
+          max-width: 860px;
+          margin: 24px 0 0;
+          color: rgba(255, 255, 255, 0.82);
+          font-size: 19px;
+          line-height: 1.7;
         }
 
         .ch-search {
@@ -573,13 +621,13 @@ export default function CareersHome({ stats }: Props) {
           grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.9fr) auto;
           gap: 10px;
           align-items: center;
-          max-width: 1040px;
-          margin-top: 10px;
-          padding: 8px;
-          border: 1px solid #dbe5f0;
-          border-radius: 18px;
-          background: rgba(255, 255, 255, 0.92);
-          box-shadow: 0 18px 45px rgba(4, 44, 83, 0.09);
+          max-width: 980px;
+          margin-top: 34px;
+          padding: 9px;
+          border: 1px solid rgba(255, 255, 255, 0.14);
+          border-radius: 20px;
+          background: rgba(255, 255, 255, 0.96);
+          box-shadow: 0 24px 52px rgba(0, 0, 0, 0.24);
           backdrop-filter: blur(16px);
         }
 
@@ -589,7 +637,7 @@ export default function CareersHome({ stats }: Props) {
           align-items: center;
           gap: 10px;
           padding: 0 14px;
-          border-radius: 13px;
+          border-radius: 14px;
           background: #ffffff;
         }
 
@@ -609,7 +657,7 @@ export default function CareersHome({ stats }: Props) {
           border: 0;
           outline: 0;
           background: transparent;
-          padding: 15px 0;
+          padding: 16px 0;
           color: #0f172a;
           font-size: 15px;
           font-family: inherit;
@@ -623,14 +671,14 @@ export default function CareersHome({ stats }: Props) {
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          min-height: 48px;
-          padding: 0 22px;
-          border-radius: 13px;
+          min-height: 50px;
+          padding: 0 24px;
+          border-radius: 14px;
           border: 1px solid #021c38;
           background: linear-gradient(135deg, #042c53, #0c447c);
           color: #ffffff;
           font-size: 14px;
-          font-weight: 900;
+          font-weight: 950;
           font-family: inherit;
           cursor: pointer;
           box-shadow: 0 10px 22px rgba(4, 44, 83, 0.22), inset 0 -2px 0 #ba7517;
@@ -641,47 +689,146 @@ export default function CareersHome({ stats }: Props) {
         }
 
         .ch-popular {
-          display: flex;
-          flex-wrap: wrap;
-          align-items: center;
+          display: grid;
           gap: 12px;
-          max-width: 1040px;
+          max-width: 980px;
+          margin-top: 22px;
         }
 
         .ch-popular-label {
-          color: #64748b;
+          color: rgba(255, 255, 255, 0.7);
           font-size: 13px;
-          font-weight: 800;
+          font-weight: 850;
         }
 
         .ch-popular-list {
           display: flex;
           flex-wrap: wrap;
-          gap: 8px;
+          gap: 9px;
         }
 
         .ch-popular-chip {
-          border: 1px solid #dbe5f0;
+          border: 1px solid rgba(255, 255, 255, 0.16);
           border-radius: 999px;
-          background: #ffffff;
-          color: #042c53;
-          padding: 8px 12px;
+          background: rgba(255, 255, 255, 0.08);
+          color: #ffffff;
+          padding: 9px 13px;
           font-size: 13px;
-          font-weight: 800;
+          font-weight: 850;
           font-family: inherit;
           cursor: pointer;
-          box-shadow: 0 8px 18px rgba(4, 44, 83, 0.06);
+          backdrop-filter: blur(10px);
         }
 
         .ch-popular-chip:hover {
-          border-color: #ba7517;
-          color: #ba7517;
-          background: #fff7e6;
+          border-color: #f5b942;
+          color: #061b3a;
+          background: #f5b942;
+        }
+
+        .ch-hero-panel {
+          border: 1px solid rgba(255, 255, 255, 0.14);
+          border-radius: 30px;
+          background: rgba(255, 255, 255, 0.08);
+          padding: 26px;
+          box-shadow: 0 28px 70px rgba(0, 0, 0, 0.28);
+          backdrop-filter: blur(18px);
+        }
+
+        .ch-panel-label {
+          color: #f5b942;
+          font-size: 12px;
+          font-weight: 950;
+          letter-spacing: 0.16em;
+          text-transform: uppercase;
+        }
+
+        .ch-hero-panel h2 {
+          margin: 14px 0 0;
+          color: #ffffff;
+          font-size: 30px;
+          line-height: 1.08;
+          letter-spacing: -0.04em;
+          font-weight: 950;
+        }
+
+        .ch-hero-panel p {
+          margin: 14px 0 0;
+          color: rgba(255, 255, 255, 0.74);
+          line-height: 1.7;
+          font-size: 15px;
+        }
+
+        .ch-panel-metrics {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 10px;
+          margin-top: 22px;
+        }
+
+        .ch-panel-metrics div {
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 18px;
+          background: rgba(255, 255, 255, 0.08);
+          padding: 14px;
+        }
+
+        .ch-panel-metrics strong {
+          display: block;
+          color: #ffffff;
+          font-size: 24px;
+          line-height: 1;
+          font-weight: 950;
+          letter-spacing: -0.04em;
+        }
+
+        .ch-panel-metrics span {
+          display: block;
+          margin-top: 6px;
+          color: rgba(255, 255, 255, 0.64);
+          font-size: 12px;
+          font-weight: 800;
+        }
+
+        .ch-panel-featured {
+          display: grid;
+          gap: 6px;
+          margin-top: 18px;
+          border: 1px solid rgba(245, 185, 66, 0.24);
+          border-radius: 20px;
+          background: rgba(245, 185, 66, 0.12);
+          padding: 16px;
+          color: #ffffff;
+          text-decoration: none;
+        }
+
+        .ch-panel-featured:hover {
+          background: rgba(245, 185, 66, 0.18);
+        }
+
+        .ch-panel-featured span {
+          color: #f5b942;
+          font-size: 11px;
+          font-weight: 950;
+          text-transform: uppercase;
+          letter-spacing: 0.14em;
+        }
+
+        .ch-panel-featured strong {
+          color: #ffffff;
+          font-size: 15px;
+          line-height: 1.3;
+        }
+
+        .ch-panel-featured small {
+          color: rgba(255, 255, 255, 0.68);
+          font-size: 12px;
+          font-weight: 750;
         }
 
         .ch-hiring-section {
           background: #eef4fb;
-          padding: 0 0 22px;
+          padding: 24px 0 0;
         }
 
         .ch-hiring {
@@ -702,7 +849,7 @@ export default function CareersHome({ stats }: Props) {
           gap: 8px;
           color: #042c53;
           font-size: 13px;
-          font-weight: 900;
+          font-weight: 950;
           white-space: nowrap;
         }
 
@@ -742,7 +889,7 @@ export default function CareersHome({ stats }: Props) {
 
         .ch-stats-section {
           background: #eef4fb;
-          padding: 0 0 38px;
+          padding: 24px 0 38px;
         }
 
         .ch-stats {
@@ -1078,6 +1225,16 @@ export default function CareersHome({ stats }: Props) {
           font-weight: 950;
         }
 
+        @media (max-width: 1060px) {
+          .ch-hero-inner {
+            grid-template-columns: 1fr;
+          }
+
+          .ch-hero-panel {
+            max-width: 720px;
+          }
+        }
+
         @media (max-width: 980px) {
           .ch-search,
           .ch-insights,
@@ -1097,7 +1254,15 @@ export default function CareersHome({ stats }: Props) {
 
         @media (max-width: 680px) {
           .ch-hero {
-            padding-top: 42px;
+            padding-top: 48px;
+          }
+
+          .ch-hero-title {
+            font-size: clamp(40px, 13vw, 58px);
+          }
+
+          .ch-hero-sub {
+            font-size: 16px;
           }
 
           .ch-search {
@@ -1109,6 +1274,7 @@ export default function CareersHome({ stats }: Props) {
             border-bottom: 1px solid #e2e8f0;
           }
 
+          .ch-panel-metrics,
           .ch-stats,
           .ch-resources,
           .ch-insights-metrics {
