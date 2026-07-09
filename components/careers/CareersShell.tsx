@@ -34,7 +34,10 @@ const NAV_ITEMS: NavItem[] = [
   {
     href: "/careers/applyready",
     label: "ApplyReady",
-    match: (p) => p === "/careers/applyready" || p.startsWith("/careers/applyready/"),
+    match: (p) =>
+      p === "/careers/applyready" ||
+      p.startsWith("/careers/applyready/") ||
+      p === "/careers/saved-jobs",
   },
   {
     href: "/careers/resources",
