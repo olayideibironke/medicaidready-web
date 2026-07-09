@@ -283,7 +283,7 @@ export default function CareersHome({ stats }: Props) {
         {stats.hiringCompanies.length > 0 && (
           <section className="ch-hiring-section">
             <div className="careers-container">
-              <div className="ch-hiring">
+              <div className="ch-hiring" aria-label="Hiring companies currently represented">
                 <div className="ch-hiring-head">
                   <span className="ch-hiring-dot" aria-hidden="true" />
                   <span className="ch-hiring-title">Hiring companies</span>
@@ -552,7 +552,7 @@ export default function CareersHome({ stats }: Props) {
         </section>
       </CareersShell>
 
-      <style jsx>{`
+      <style jsx global>{`
         .ch-hero {
           position: relative;
           overflow: hidden;
@@ -828,63 +828,86 @@ export default function CareersHome({ stats }: Props) {
 
         .ch-hiring-section {
           background: #eef4fb;
-          padding: 24px 0 0;
+          padding: 26px 0 0;
         }
 
         .ch-hiring {
           display: grid;
-          grid-template-columns: auto minmax(0, 1fr);
-          gap: 16px;
+          grid-template-columns: 210px minmax(0, 1fr);
+          gap: 18px;
           align-items: center;
           border: 1px solid #dbe5f0;
-          border-radius: 18px;
-          background: #ffffff;
-          padding: 14px 16px;
-          box-shadow: 0 12px 30px rgba(4, 44, 83, 0.06);
+          border-radius: 24px;
+          background:
+            radial-gradient(circle at left, rgba(239, 159, 39, 0.12), transparent 34%),
+            linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+          padding: 18px;
+          box-shadow: 0 16px 42px rgba(4, 44, 83, 0.08);
         }
 
         .ch-hiring-head {
           display: inline-flex;
           align-items: center;
-          gap: 8px;
+          gap: 10px;
+          width: fit-content;
+          border: 1px solid #dbe5f0;
+          border-radius: 999px;
+          background: #ffffff;
           color: #042c53;
+          padding: 10px 14px;
           font-size: 13px;
           font-weight: 950;
           white-space: nowrap;
+          box-shadow: 0 8px 20px rgba(4, 44, 83, 0.06);
         }
 
         .ch-hiring-dot {
-          width: 9px;
-          height: 9px;
+          width: 10px;
+          height: 10px;
           border-radius: 999px;
           background: #22c55e;
-          box-shadow: 0 0 0 5px rgba(34, 197, 94, 0.12);
+          box-shadow: 0 0 0 5px rgba(34, 197, 94, 0.13);
+          flex-shrink: 0;
         }
 
         .ch-hiring-list {
           display: flex;
-          gap: 8px;
-          overflow: hidden;
+          gap: 10px;
+          align-items: center;
           flex-wrap: wrap;
+          min-width: 0;
         }
 
         .ch-hiring-pill {
           display: inline-flex;
           align-items: center;
+          justify-content: center;
+          min-height: 38px;
           border-radius: 999px;
-          background: #f8fafc;
-          border: 1px solid #e2e8f0;
-          color: #334155;
-          padding: 7px 10px;
-          font-size: 12px;
-          font-weight: 800;
+          background: #ffffff;
+          border: 1px solid #cfdced;
+          color: #042c53;
+          padding: 9px 14px;
+          font-size: 13px;
+          font-weight: 900;
+          line-height: 1;
           text-decoration: none;
+          white-space: nowrap;
+          box-shadow: 0 8px 18px rgba(4, 44, 83, 0.05);
+          transition:
+            transform 140ms ease,
+            border-color 140ms ease,
+            background 140ms ease,
+            color 140ms ease,
+            box-shadow 140ms ease;
         }
 
         .ch-hiring-pill:hover {
-          color: #ba7517;
+          transform: translateY(-1px);
+          color: #061b3a;
           border-color: #ba7517;
           background: #fff7e6;
+          box-shadow: 0 12px 26px rgba(186, 117, 23, 0.12);
         }
 
         .ch-stats-section {
@@ -1233,6 +1256,10 @@ export default function CareersHome({ stats }: Props) {
           .ch-hero-panel {
             max-width: 720px;
           }
+
+          .ch-hiring {
+            grid-template-columns: 1fr;
+          }
         }
 
         @media (max-width: 980px) {
@@ -1245,10 +1272,6 @@ export default function CareersHome({ stats }: Props) {
           .ch-stats,
           .ch-resources {
             grid-template-columns: repeat(2, 1fr);
-          }
-
-          .ch-hiring {
-            grid-template-columns: 1fr;
           }
         }
 
@@ -1279,6 +1302,19 @@ export default function CareersHome({ stats }: Props) {
           .ch-resources,
           .ch-insights-metrics {
             grid-template-columns: 1fr;
+          }
+
+          .ch-hiring {
+            padding: 16px;
+          }
+
+          .ch-hiring-list {
+            gap: 8px;
+          }
+
+          .ch-hiring-pill {
+            width: 100%;
+            justify-content: flex-start;
           }
 
           .ch-stat {
