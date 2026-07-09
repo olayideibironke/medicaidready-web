@@ -240,6 +240,19 @@ export default function CareersJobs({ jobs }: Props) {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
   useEffect(() => {
+    if (typeof document === "undefined") return;
+
+    document.documentElement.classList.add("careers-jobs-scroll-lock");
+    document.body.classList.add("careers-jobs-scroll-lock");
+    window.scrollTo({ top: 0, left: 0 });
+
+    return () => {
+      document.documentElement.classList.remove("careers-jobs-scroll-lock");
+      document.body.classList.remove("careers-jobs-scroll-lock");
+    };
+  }, []);
+
+  useEffect(() => {
     if (!router.isReady) return;
 
     const nextQuery = queryStringValue(router.query.q) || queryStringValue(router.query.query);
@@ -487,8 +500,8 @@ export default function CareersJobs({ jobs }: Props) {
       </Head>
 
       <CareersShell>
-        <section className="careers-section">
-          <div className="careers-container">
+        <section className="careers-section cj-page-section">
+          <div className="careers-container cj-page-container">
             <div className="cj-search-bar">
               <div className="cj-search-field cj-search-field-q">
                 <span className="cj-search-icon" aria-hidden="true">
@@ -786,7 +799,38 @@ export default function CareersJobs({ jobs }: Props) {
       </CareersShell>
 
       <style jsx global>{`
+        @media (min-width: 961px) {
+          html.careers-jobs-scroll-lock,
+          body.careers-jobs-scroll-lock {
+            overflow: hidden !important;
+          }
+        }
+
+        .cj-page-section {
+          --cj-subnav-height: 62px;
+          --cj-top-space: clamp(34px, 6vh, 76px);
+          height: calc(100dvh - var(--cj-subnav-height));
+          min-height: 0;
+          overflow: hidden;
+          padding-top: var(--cj-top-space) !important;
+          padding-bottom: 0 !important;
+        }
+
+        .cj-page-container {
+          width: min(100%, calc(100vw - clamp(24px, 3.5vw, 72px))) !important;
+          max-width: none !important;
+          height: calc(100dvh - var(--cj-subnav-height) - var(--cj-top-space));
+          min-height: 0;
+          display: flex;
+          flex-direction: column;
+          margin-left: auto !important;
+          margin-right: auto !important;
+          padding-left: 0 !important;
+          padding-right: 0 !important;
+        }
+
         .cj-search-bar {
+          flex: 0 0 auto;
           display: grid;
           grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) auto;
           gap: 10px;
@@ -856,13 +900,22 @@ export default function CareersJobs({ jobs }: Props) {
         }
 
         .cj-layout {
+          flex: 1 1 auto;
+          min-height: 0;
           display: grid;
-          grid-template-columns: 292px minmax(0, 1fr);
-          gap: 24px;
-          align-items: start;
+          grid-template-columns: clamp(286px, 19vw, 340px) minmax(0, 1fr);
+          gap: clamp(18px, 2vw, 32px);
+          align-items: stretch;
+          overflow: hidden;
         }
         .cj-results {
           min-width: 0;
+          height: 100%;
+          min-height: 0;
+          overflow-y: auto;
+          overflow-x: hidden;
+          padding-right: clamp(6px, 0.9vw, 14px);
+          scrollbar-gutter: stable;
         }
 
         .cj-sidebar {
@@ -872,10 +925,15 @@ export default function CareersJobs({ jobs }: Props) {
           border-radius: 18px !important;
           padding: 16px 18px 18px !important;
           box-shadow: 0 10px 26px rgba(4, 44, 83, 0.08) !important;
-          position: sticky !important;
-          top: 24px !important;
-          max-height: calc(100vh - 160px) !important;
+          position: relative !important;
+          top: auto !important;
+          height: 100% !important;
+          max-height: none !important;
+          min-height: 0 !important;
           overflow-y: auto !important;
+          align-self: stretch !important;
+          z-index: 20 !important;
+          scrollbar-gutter: stable !important;
         }
         .cj-sidebar-head {
           display: flex !important;
@@ -1347,12 +1405,30 @@ export default function CareersJobs({ jobs }: Props) {
           width: 100%;
         }
 
+        @media (max-width: 1180px) {
+          .cj-page-container {
+            width: min(100%, calc(100vw - 32px)) !important;
+            max-width: none !important;
+          }
+
+          .cj-layout {
+            grid-template-columns: 286px minmax(0, 1fr);
+            gap: 20px;
+          }
+        }
+
         @media (max-width: 960px) {
           .cj-layout {
             grid-template-columns: 1fr;
+            overflow: visible;
           }
           .cj-sidebar {
             display: none !important;
+          }
+          .cj-results {
+            height: auto;
+            overflow: visible;
+            padding-right: 0;
           }
           .cj-filters-btn {
             display: inline-flex;
@@ -1365,6 +1441,21 @@ export default function CareersJobs({ jobs }: Props) {
           }
         }
         @media (max-width: 720px) {
+          .cj-page-section {
+            height: auto;
+            min-height: auto;
+            overflow: visible;
+            padding-top: 52px !important;
+            padding-bottom: 48px !important;
+          }
+
+          .cj-page-container {
+            width: min(100%, calc(100vw - 20px)) !important;
+            max-width: min(100%, calc(100vw - 20px)) !important;
+            height: auto;
+            display: block;
+          }
+
           .cj-search-bar {
             grid-template-columns: 1fr;
             gap: 6px;
