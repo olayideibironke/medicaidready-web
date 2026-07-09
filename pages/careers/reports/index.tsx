@@ -90,14 +90,24 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
     cloudInfrastructure: jobs.filter((job) =>
       textIncludes(job, [
         "cloud",
+        "cloud engineer",
+        "cloud infrastructure",
         "devops",
+        "dev ops",
         "infrastructure",
+        "infrastructure engineer",
         "site reliability",
         "sre",
+        "platform engineer",
+        "systems engineer",
+        "systems administrator",
+        "network engineer",
         "azure",
         "aws",
         "gcp",
         "kubernetes",
+        "docker",
+        "terraform",
       ])
     ).length,
   };
@@ -164,14 +174,14 @@ export default function CareersReportsIndex({ stats, generatedAt }: Props) {
       status: "Live",
     },
     {
-      eyebrow: "Next Report Lane",
-      title: "Cloud, DevOps & Infrastructure Jobs",
+      eyebrow: "Live Report",
+      title: "Cloud, DevOps & Infrastructure Jobs Hiring Now",
       description:
-        "Review DevOps, SRE, cloud infrastructure, platform, Azure, AWS, GCP, and systems engineering roles.",
-      href: "/careers/jobs?category=cloud_infrastructure",
+        "Review cloud engineering, DevOps, SRE, infrastructure, platform, Azure, AWS, GCP, Kubernetes, systems, and cloud operations roles.",
+      href: "/careers/reports/cloud-devops-infrastructure-jobs-hiring-now",
       metric: stats.cloudInfrastructure,
       metricLabel: "cloud matches",
-      status: "Job search",
+      status: "Live",
     },
   ];
 
@@ -230,7 +240,7 @@ export default function CareersReportsIndex({ stats, generatedAt }: Props) {
 
                   <div className="reports-actions">
                     <Link
-                      href="/careers/reports/cybersecurity-jobs-hiring-now"
+                      href="/careers/reports/cloud-devops-infrastructure-jobs-hiring-now"
                       className="reports-primary"
                     >
                       Read latest report
