@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import { useRouter } from "next/router";
 import type { ReactNode } from "react";
 
@@ -885,6 +885,19 @@ export default function CareersShell({ children }: { children: ReactNode }) {
           background: linear-gradient(135deg, #0C447C, #042C53) !important;
           color: #ffffff !important;
           transform: translateY(-1px) !important;
+        }
+        /* ===== Shared Careers hero safety rules ===== */
+        .careers-shell section[class*="-hero"] [class*="-actions"] {
+          margin-bottom: 30px;
+        }
+
+        .careers-shell section[class*="-hero"] [class*="-primary"],
+        .careers-shell section[class*="-hero"] [class*="-secondary"] {
+          text-decoration: none !important;
+        }
+
+        .careers-shell section[class*="-hero"] {
+          border-bottom: 1px solid rgba(219, 229, 240, 0.22);
         }
 
         @media (max-width: 1040px) {
