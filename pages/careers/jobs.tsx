@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import CareersShell from "../../components/careers/CareersShell";
 import CategoryGrid from "../../components/careers/CategoryGrid";
 import JobAlertCapture from "../../components/careers/JobAlertCapture";
+import SaveJobButton from "../../components/careers/SaveJobButton";
 import {
   CAREERS_CATEGORY_DEFS,
   careersJobSearchText,
@@ -20,7 +21,6 @@ import type {
 } from "../../lib/careers/sampleJobs";
 
 const SITE_URL = "https://www.medicaidready.org";
-const SAVED_KEY = "mr_saved_jobs_v1";
 
 const COMPANY_LOGO_DOMAINS: Record<string, string> = {
   "unitedhealth group": "unitedhealthgroup.com",
@@ -68,7 +68,6 @@ const COMPANY_LOGO_DOMAINS: Record<string, string> = {
   "lifepoint health": "lifepointhealth.net",
   "oak street health": "oakstreethealth.com",
   chenmed: "chenmed.com",
-  vituity: "vituity.com",
 };
 
 type Props = { jobs: CareersJob[] };
@@ -222,7 +221,8 @@ export default function CareersJobs({ jobs }: Props) {
 
   const initialQ = queryStringValue(router.query.q) || queryStringValue(router.query.query);
   const initialLoc = queryStringValue(router.query.loc) || queryStringValue(router.query.location);
-  const initialMode = normalizeWorkModeParam(router.query.workMode) || normalizeWorkModeParam(router.query.mode);
+  const initialMode =
+    normalizeWorkModeParam(router.query.workMode) || normalizeWorkModeParam(router.query.mode);
   const initialCategory = normalizeCategoryParam(router.query.category);
 
   const [query, setQuery] = useState(initialQ);
@@ -237,15 +237,16 @@ export default function CareersJobs({ jobs }: Props) {
   );
   const [salaryOnly, setSalaryOnly] = useState(false);
   const [featuredOnly, setFeaturedOnly] = useState(false);
-  const [saved, setSaved] = useState<Record<string, boolean>>({});
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
   useEffect(() => {
     if (!router.isReady) return;
 
     const nextQuery = queryStringValue(router.query.q) || queryStringValue(router.query.query);
-    const nextLocation = queryStringValue(router.query.loc) || queryStringValue(router.query.location);
-    const nextMode = normalizeWorkModeParam(router.query.workMode) || normalizeWorkModeParam(router.query.mode);
+    const nextLocation =
+      queryStringValue(router.query.loc) || queryStringValue(router.query.location);
+    const nextMode =
+      normalizeWorkModeParam(router.query.workMode) || normalizeWorkModeParam(router.query.mode);
     const nextCategory = normalizeCategoryParam(router.query.category);
 
     setQuery((current) => (current === nextQuery ? current : nextQuery));
@@ -276,32 +277,6 @@ export default function CareersJobs({ jobs }: Props) {
     router.query.mode,
     router.query.category,
   ]);
-
-  useEffect(() => {
-    try {
-      const raw = window.localStorage.getItem(SAVED_KEY);
-      if (raw) setSaved(JSON.parse(raw) as Record<string, boolean>);
-    } catch {
-      /* ignore */
-    }
-  }, []);
-
-  function toggleSaved(id: string) {
-    setSaved((prev) => {
-      const next = { ...prev };
-
-      if (next[id]) delete next[id];
-      else next[id] = true;
-
-      try {
-        window.localStorage.setItem(SAVED_KEY, JSON.stringify(next));
-      } catch {
-        /* ignore */
-      }
-
-      return next;
-    });
-  }
 
   function toggleSetItem<T>(set: Set<T>, item: T, setter: (s: Set<T>) => void) {
     const next = new Set(set);
@@ -387,7 +362,7 @@ export default function CareersJobs({ jobs }: Props) {
 
   const url = `${SITE_URL}/careers/jobs`;
   const metaTitle =
-    "Find Verified Jobs — Analyst, Healthcare, Government, Tech & Remote Roles | MedicaidReady Careers";
+    "Find Verified Jobs | Analyst, Healthcare, Government, Tech and Remote Roles | MedicaidReady Careers";
   const metaDescription =
     "Browse verified jobs across healthcare, technology, government, analyst, operations, compliance, cybersecurity, cloud, IT, finance, and remote career categories.";
 
@@ -508,7 +483,7 @@ export default function CareersJobs({ jobs }: Props) {
         <meta property="og:description" content={metaDescription} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={url} />
-        <meta property="og:site_name" content="MedicaidReady" />
+        <meta property="og:site_name" content="MedicaidReady Careers" />
       </Head>
 
       <CareersShell>
@@ -519,7 +494,12 @@ export default function CareersJobs({ jobs }: Props) {
                 <span className="cj-search-icon" aria-hidden="true">
                   <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
                     <circle cx="8" cy="8" r="5.25" stroke="currentColor" strokeWidth="1.6" />
-                    <path d="M12 12l3 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+                    <path
+                      d="M12 12l3 3"
+                      stroke="currentColor"
+                      strokeWidth="1.6"
+                      strokeLinecap="round"
+                    />
                   </svg>
                 </span>
                 <input
@@ -533,7 +513,12 @@ export default function CareersJobs({ jobs }: Props) {
               <div className="cj-search-field cj-search-field-loc">
                 <span className="cj-search-icon" aria-hidden="true">
                   <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                    <path d="M9 16s5-4.5 5-9a5 5 0 10-10 0c0 4.5 5 9 5 9z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+                    <path
+                      d="M9 16s5-4.5 5-9a5 5 0 10-10 0c0 4.5 5 9 5 9z"
+                      stroke="currentColor"
+                      strokeWidth="1.6"
+                      strokeLinejoin="round"
+                    />
                     <circle cx="9" cy="7" r="2" stroke="currentColor" strokeWidth="1.6" />
                   </svg>
                 </span>
@@ -553,7 +538,12 @@ export default function CareersJobs({ jobs }: Props) {
                 aria-controls="cj-filters-mobile"
               >
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                  <path d="M2 4h10M3 7h8M5 10h4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+                  <path
+                    d="M2 4h10M3 7h8M5 10h4"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                  />
                 </svg>
                 All filters
                 {activeFilterCount > 0 && (
@@ -593,7 +583,6 @@ export default function CareersJobs({ jobs }: Props) {
                       const logoUrl = companyLogoUrl(job);
                       const isFeatured = Boolean(job.featured);
                       const isHot = daysSince(job.postedAt) <= 7;
-                      const isSaved = Boolean(saved[job.id]);
                       const benefitTags = (job.benefits ?? []).slice(0, 3);
 
                       return (
@@ -611,8 +600,17 @@ export default function CareersJobs({ jobs }: Props) {
 
                           {isFeatured && (
                             <span className="jc-featured-badge">
-                              <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                                <path d="M6 1l1.5 3.2L11 4.7l-2.5 2.4.6 3.4L6 8.9 2.9 10.5l.6-3.4L1 4.7l3.5-.5L6 1z" fill="currentColor" />
+                              <svg
+                                width="11"
+                                height="11"
+                                viewBox="0 0 12 12"
+                                fill="none"
+                                aria-hidden="true"
+                              >
+                                <path
+                                  d="M6 1l1.5 3.2L11 4.7l-2.5 2.4.6 3.4L6 8.9 2.9 10.5l.6-3.4L1 4.7l3.5-.5L6 1z"
+                                  fill="currentColor"
+                                />
                               </svg>
                               Featured
                             </span>
@@ -636,9 +634,24 @@ export default function CareersJobs({ jobs }: Props) {
                                   title="Verified employer"
                                   aria-label="Verified employer"
                                 >
-                                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                                    <path d="M7 0.7l1.6 1L10.5 1.5l.4 1.9 1.6 1.1-.7 1.8.7 1.8-1.6 1.1-.4 1.9-1.9-.2L7 13.3l-1.6-1L3.5 12.5l-.4-1.9L1.5 9.5l.7-1.8-.7-1.8 1.6-1.1L3.5 2.9l1.9.2L7 0.7z" fill="#0e7490" />
-                                    <path d="M4.5 7l1.7 1.7L9.5 5.3" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                                  <svg
+                                    width="14"
+                                    height="14"
+                                    viewBox="0 0 14 14"
+                                    fill="none"
+                                    aria-hidden="true"
+                                  >
+                                    <path
+                                      d="M7 0.7l1.6 1L10.5 1.5l.4 1.9 1.6 1.1-.7 1.8.7 1.8-1.6 1.1-.4 1.9-1.9-.2L7 13.3l-1.6-1L3.5 12.5l-.4-1.9L1.5 9.5l.7-1.8-.7-1.8 1.6-1.1L3.5 2.9l1.9.2L7 0.7z"
+                                      fill="#0e7490"
+                                    />
+                                    <path
+                                      d="M4.5 7l1.7 1.7L9.5 5.3"
+                                      stroke="white"
+                                      strokeWidth="1.6"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                    />
                                   </svg>
                                 </span>
                                 {isHot && (
@@ -650,15 +663,23 @@ export default function CareersJobs({ jobs }: Props) {
                                     <span className="jc-hiring-dot-inner" />
                                   </span>
                                 )}
-                                <span className="jc-loc-sep" aria-hidden="true">•</span>
+                                <span className="jc-loc-sep" aria-hidden="true">
+                                  •
+                                </span>
                                 <span className="jc-loc">{job.location}</span>
                               </div>
 
                               <div className="careers-job-meta jc-meta">
-                                <span className={`careers-pill ${typeBadgeClass(job.type)}`}>{job.type}</span>
-                                <span className={`careers-pill ${modeBadgeClass(job.remote)}`}>{job.remote}</span>
+                                <span className={`careers-pill ${typeBadgeClass(job.type)}`}>
+                                  {job.type}
+                                </span>
+                                <span className={`careers-pill ${modeBadgeClass(job.remote)}`}>
+                                  {job.remote}
+                                </span>
                                 {job.salary && (
-                                  <span className="careers-pill careers-pill-gold">{job.salary}</span>
+                                  <span className="careers-pill careers-pill-gold">
+                                    {job.salary}
+                                  </span>
                                 )}
                               </div>
 
@@ -680,26 +701,23 @@ export default function CareersJobs({ jobs }: Props) {
                                 </span>
 
                                 <div className="jc-actions">
-                                  <button
-                                    type="button"
-                                    className={`jc-save${isSaved ? " jc-save-active" : ""}`}
-                                    onClick={(e) => {
-                                      e.preventDefault();
-                                      e.stopPropagation();
-                                      toggleSaved(job.id);
-                                    }}
-                                    aria-pressed={isSaved}
-                                    aria-label={isSaved ? "Remove from saved" : "Save this job"}
-                                  >
-                                    <svg width="14" height="14" viewBox="0 0 14 14" fill={isSaved ? "currentColor" : "none"} aria-hidden="true">
-                                      <path d="M3 1.5h8v11l-4-2.5-4 2.5v-11z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-                                    </svg>
-                                    {isSaved ? "Saved" : "Save"}
-                                  </button>
+                                  <SaveJobButton jobId={job.id} />
                                   <Link href={`/careers/jobs/${job.id}`} className="jc-apply">
                                     Apply
-                                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                                      <path d="M3 6h6M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                                    <svg
+                                      width="12"
+                                      height="12"
+                                      viewBox="0 0 12 12"
+                                      fill="none"
+                                      aria-hidden="true"
+                                    >
+                                      <path
+                                        d="M3 6h6M7 3l3 3-3 3"
+                                        stroke="currentColor"
+                                        strokeWidth="1.6"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                      />
                                     </svg>
                                   </Link>
                                 </div>
@@ -745,7 +763,12 @@ export default function CareersJobs({ jobs }: Props) {
               aria-label="Close filters"
             >
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                <path d="M3 3l8 8M11 3l-8 8" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
+                <path
+                  d="M3 3l8 8M11 3l-8 8"
+                  stroke="currentColor"
+                  strokeWidth="1.75"
+                  strokeLinecap="round"
+                />
               </svg>
             </button>
           </div>
@@ -1232,31 +1255,8 @@ export default function CareersJobs({ jobs }: Props) {
           display: inline-flex;
           gap: 8px;
           align-items: center;
-        }
-        .jc-save {
-          display: inline-flex;
-          align-items: center;
-          gap: 6px;
-          padding: 7px 12px;
-          border-radius: 8px;
-          background: #ffffff;
-          color: #475569;
-          border: 1px solid #cbd5e1;
-          font-size: 13px;
-          font-weight: 600;
-          cursor: pointer;
-          font-family: inherit;
-          transition: border-color 120ms, color 120ms, background 120ms;
-        }
-        .jc-save:hover {
-          border-color: #BA7517;
-          color: #BA7517;
-          background: #fff7e6;
-        }
-        .jc-save-active {
-          color: #BA7517;
-          border-color: #BA7517;
-          background: #fff7e6;
+          position: relative;
+          z-index: 6;
         }
         .jc-apply {
           display: inline-flex !important;
