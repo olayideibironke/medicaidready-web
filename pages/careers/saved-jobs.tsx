@@ -5,6 +5,10 @@ import { useEffect, useMemo, useState } from "react";
 import CareersShell from "../../components/careers/CareersShell";
 import SaveJobButton from "../../components/careers/SaveJobButton";
 import { getSavedJobRecords } from "../../lib/careers/applyReadyStorage";
+import {
+  addApplyReadyApplication,
+  getApplyReadyApplications,
+} from "../../lib/careers/applyReadyTracker";
 import { listApprovedJobs } from "../../lib/careers/db";
 import type { CareersJob } from "../../lib/careers/sampleJobs";
 
@@ -43,13 +47,32 @@ function formatPostedAt(iso: string): string {
   return `Posted ${months} month${months === 1 ? "" : "s"} ago`;
 }
 
+function trackerUrlForJob(job: CareersJob): string {
+  return `${SITE_URL}/careers/jobs/${job.id}`;
+}
+
+function trackerNotesForJob(job: CareersJob): string {
+  const salaryText = job.salary ? ` Salary: ${job.salary}.` : "";
+
+  return `Added from ApplyReady Saved Jobs. Work setting: ${job.remote}. Employment type: ${job.type}.${salaryText}`;
+}
+
 export default function SavedJobsPage({ jobs }: Props) {
   const [savedIds, setSavedIds] = useState<string[]>([]);
+  const [trackedJobUrls, setTrackedJobUrls] = useState<Set<string>>(new Set());
   const [ready, setReady] = useState(false);
+  const [trackerMessage, setTrackerMessage] = useState("");
 
   useEffect(() => {
     const sync = () => {
       setSavedIds(getSavedJobRecords().map((record) => record.jobId));
+      setTrackedJobUrls(
+        new Set(
+          getApplyReadyApplications()
+            .map((application) => application.jobUrl)
+            .filter((jobUrl): jobUrl is string => Boolean(jobUrl))
+        )
+      );
       setReady(true);
     };
 
@@ -57,10 +80,12 @@ export default function SavedJobsPage({ jobs }: Props) {
 
     window.addEventListener("storage", sync);
     window.addEventListener("applyready:saved-jobs-updated", sync);
+    window.addEventListener("applyready:tracker-updated", sync);
 
     return () => {
       window.removeEventListener("storage", sync);
       window.removeEventListener("applyready:saved-jobs-updated", sync);
+      window.removeEventListener("applyready:tracker-updated", sync);
     };
   }, []);
 
@@ -71,6 +96,35 @@ export default function SavedJobsPage({ jobs }: Props) {
       .map((jobId) => jobMap.get(jobId))
       .filter((job): job is CareersJob => Boolean(job));
   }, [jobs, savedIds]);
+
+  function handleAddToTracker(job: CareersJob) {
+    const jobUrl = trackerUrlForJob(job);
+    const currentApplications = getApplyReadyApplications();
+    const alreadyTracked = currentApplications.some((application) => application.jobUrl === jobUrl);
+
+    if (alreadyTracked) {
+      setTrackedJobUrls(new Set(currentApplications.map((application) => application.jobUrl)));
+      setTrackerMessage("This saved job is already in the Application Tracker.");
+      window.setTimeout(() => setTrackerMessage(""), 3500);
+      return;
+    }
+
+    addApplyReadyApplication({
+      title: job.title,
+      company: job.company,
+      location: job.location,
+      jobUrl,
+      status: "Saved",
+      nextStepDate: "",
+      notes: trackerNotesForJob(job),
+    });
+
+    const nextApplications = getApplyReadyApplications();
+
+    setTrackedJobUrls(new Set(nextApplications.map((application) => application.jobUrl)));
+    setTrackerMessage("Saved job added to the Application Tracker.");
+    window.setTimeout(() => setTrackerMessage(""), 3500);
+  }
 
   const metaTitle = "Saved Jobs | ApplyReady | MedicaidReady Careers";
   const metaDescription =
@@ -138,7 +192,10 @@ export default function SavedJobsPage({ jobs }: Props) {
                   <p className="sj-eyebrow sj-eyebrow-dark">Your list</p>
                   <h2>Saved jobs</h2>
                 </div>
-                <Link href="/careers/jobs">Find more jobs</Link>
+                <div className="sj-section-actions">
+                  {trackerMessage && <span className="sj-tracker-message">{trackerMessage}</span>}
+                  <Link href="/careers/jobs">Find more jobs</Link>
+                </div>
               </div>
 
               {!ready ? (
@@ -159,8 +216,11 @@ export default function SavedJobsPage({ jobs }: Props) {
                 </div>
               ) : (
                 <div className="sj-list">
-                  {savedJobs.map((job) => (
-                    <article className="sj-card" key={job.id}>
+                  {savedJobs.map((job) => {
+                    const isTracked = trackedJobUrls.has(trackerUrlForJob(job));
+
+                    return (
+                      <article className="sj-card" key={job.id}>
                       <div className="sj-card-main">
                         <div className="sj-card-top">
                           <div>
@@ -189,14 +249,28 @@ export default function SavedJobsPage({ jobs }: Props) {
                             <Link href={`/careers/jobs/${job.id}`} className="sj-outline">
                               View details
                             </Link>
+                            {isTracked ? (
+                              <Link href="/careers/applyready/tracker" className="sj-tracker-added">
+                                In Tracker
+                              </Link>
+                            ) : (
+                              <button
+                                type="button"
+                                className="sj-tracker-add"
+                                onClick={() => handleAddToTracker(job)}
+                              >
+                                Add to Tracker
+                              </button>
+                            )}
                             <Link href="/careers/applyready" className="sj-prepare">
                               Prepare with ApplyReady
                             </Link>
                           </div>
                         </div>
                       </div>
-                    </article>
-                  ))}
+                      </article>
+                    );
+                  })}
                 </div>
               )}
             </div>
@@ -307,7 +381,9 @@ export default function SavedJobsPage({ jobs }: Props) {
         .sj-secondary,
         .sj-empty-btn,
         .sj-outline,
-        .sj-prepare {
+        .sj-prepare,
+        .sj-tracker-add,
+        .sj-tracker-added {
           display: inline-flex;
           align-items: center;
           justify-content: center;
@@ -397,11 +473,32 @@ export default function SavedJobsPage({ jobs }: Props) {
           font-weight: 950;
         }
 
+        .sj-section-actions {
+          display: inline-flex;
+          align-items: center;
+          justify-content: flex-end;
+          gap: 12px;
+          flex-wrap: wrap;
+        }
+
         .sj-section-head a {
           color: #ba7517;
           font-size: 14px;
           font-weight: 950;
           text-decoration: none;
+          white-space: nowrap;
+        }
+
+        .sj-tracker-message {
+          display: inline-flex;
+          align-items: center;
+          border: 1px solid #bbf7d0;
+          border-radius: 999px;
+          background: #f0fdf4;
+          color: #15803d;
+          padding: 8px 12px;
+          font-size: 12px;
+          font-weight: 900;
           white-space: nowrap;
         }
 
@@ -543,6 +640,31 @@ export default function SavedJobsPage({ jobs }: Props) {
           border-color: #ba7517;
         }
 
+        .sj-tracker-add,
+        .sj-tracker-added {
+          border: 1px solid #f1deb3;
+          background: #fff7e6;
+          color: #ba7517;
+          padding: 9px 14px;
+          font-size: 13px;
+          cursor: pointer;
+          font-family: inherit;
+        }
+
+        .sj-tracker-add:hover,
+        .sj-tracker-added:hover {
+          border-color: #ba7517;
+          background: #fff3d5;
+          color: #042c53;
+          transform: translateY(-1px);
+        }
+
+        .sj-tracker-added {
+          background: #f0fdf4;
+          border-color: #bbf7d0;
+          color: #15803d;
+        }
+
         .sj-prepare {
           background: #042c53;
           color: #ffffff;
@@ -569,6 +691,7 @@ export default function SavedJobsPage({ jobs }: Props) {
 
           .sj-section-head,
           .sj-card-top,
+          .sj-section-actions,
           .sj-foot {
             flex-direction: column;
             align-items: flex-start;
