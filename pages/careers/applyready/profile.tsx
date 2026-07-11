@@ -136,8 +136,8 @@ export default function ApplyReadyProfilePage() {
                   <h1>Build your ApplyReady profile draft.</h1>
                   <p>
                     Add your preferred roles, skills, location, work setting, salary goal,
-                    and career interests so ApplyReady can become more useful as profile,
-                    resume, tracker, and AI tools are added.
+                    and career interests so ApplyReady can become more useful across saved jobs,
+                    resume readiness, tracker activity, and future AI tools.
                   </p>
 
                   <div className="arp-actions">
@@ -273,8 +273,7 @@ export default function ApplyReadyProfilePage() {
                   </div>
 
                   <p className="arp-local-note">
-                    This profile draft is saved only in this browser for now. Full account
-                    sign-in, database storage, and resume upload will come later.
+                    This profile draft is saved only in this browser for now. Full account sign-in and account-based storage can come later.
                   </p>
                 </form>
 
@@ -283,23 +282,21 @@ export default function ApplyReadyProfilePage() {
                     <div className="arp-side-title">Why this comes first</div>
                     <p>
                       A profile gives ApplyReady the structure needed for better saved jobs,
-                      tracker statuses, resume matching, and future AI-supported tools.
+                      tracker statuses, resume readiness context, and future AI-supported tools.
                     </p>
                   </div>
 
                   <div className="arp-side-card">
-                    <div className="arp-side-title">Not resume storage yet</div>
+                    <div className="arp-side-title">Not account storage yet</div>
                     <p>
-                      Resumes can include private details. Uploads should wait until secure
-                      accounts, storage, delete controls, and privacy wording are ready.
+                      Resume details can include private information. Account-based resume tools should wait until secure accounts, storage controls, delete controls, and privacy wording are ready.
                     </p>
                   </div>
 
                   <div className="arp-side-card arp-side-card-dark">
-                    <div className="arp-side-title">Next build</div>
+                    <div className="arp-side-title">Continue workflow</div>
                     <p>
-                      After this profile page is clean, we connect profile status into the
-                      dashboard and then build the resume vault placeholder.
+                      Use the dashboard to continue profile, resume readiness, saved jobs, and tracker work.
                     </p>
                     <Link href="/careers/applyready/dashboard">Back to dashboard</Link>
                   </div>
