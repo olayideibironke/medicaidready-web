@@ -9,8 +9,8 @@ type Props = {
 
 export default function JobAlertCapture({
   source,
-  heading = "Get new Medicaid roles in your inbox",
-  body = "One short email when curated Medicaid Careers roles go live. No spam, unsubscribe anytime.",
+  heading = "Get career and ApplyReady updates in your inbox",
+  body = "One short email when new verified roles, career tools, or ApplyReady updates go live. No spam, unsubscribe anytime.",
 }: Props) {
   const [email, setEmail] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -20,31 +20,38 @@ export default function JobAlertCapture({
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
+
     const trimmed = email.trim();
+
     if (!trimmed || !trimmed.includes("@")) {
       setError("Please enter a valid email address.");
       return;
     }
+
     setError("");
     setSubmitting(true);
+
     try {
       const res = await fetch("/api/careers/job-alerts/subscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: trimmed, source }),
       });
+
       const json = (await res.json()) as {
         ok: boolean;
         alreadySubscribed?: boolean;
         error?: string;
       };
+
       if (!res.ok || !json.ok) {
         throw new Error(json.error ?? "subscribe_failed");
       }
+
       setAlreadySubscribed(Boolean(json.alreadySubscribed));
       setDone(true);
     } catch (e: unknown) {
-      setError(e instanceof Error ? e.message : "Could not subscribe — please try again.");
+      setError(e instanceof Error ? e.message : "Could not subscribe. Please try again.");
     } finally {
       setSubmitting(false);
     }
@@ -56,11 +63,12 @@ export default function JobAlertCapture({
         <div className="alert-capture-heading">{heading}</div>
         <div className="alert-capture-body">{body}</div>
       </div>
+
       {done ? (
         <div className="alert-capture-done">
           {alreadySubscribed
-            ? "You're already on the list — we'll be in touch when new roles go live."
-            : "Subscribed. We'll be in touch when new roles go live."}
+            ? "You are already on the list. We will be in touch when new updates go live."
+            : "Subscribed. We will be in touch when new updates go live."}
         </div>
       ) : (
         <form className="alert-capture-form" onSubmit={handleSubmit} noValidate>
@@ -78,10 +86,11 @@ export default function JobAlertCapture({
             className="alert-capture-btn"
             disabled={submitting || !email.trim()}
           >
-            {submitting ? "…" : "Notify me"}
+            {submitting ? "..." : "Notify me"}
           </button>
         </form>
       )}
+
       {error && (
         <p className="alert-capture-error" role="alert">
           {error}
@@ -96,6 +105,7 @@ export default function JobAlertCapture({
           padding: 20px 24px;
           box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
         }
+
         .alert-capture-heading {
           font-size: 16px;
           font-weight: 700;
@@ -103,17 +113,20 @@ export default function JobAlertCapture({
           letter-spacing: -0.01em;
           margin: 0 0 4px;
         }
+
         .alert-capture-body {
           font-size: 13px;
           color: #475569;
           line-height: 1.6;
           margin: 0 0 12px;
         }
+
         .alert-capture-form {
           display: flex;
           gap: 8px;
           align-items: stretch;
         }
+
         .alert-capture-input {
           flex: 1;
           padding: 11px 14px;
@@ -128,10 +141,12 @@ export default function JobAlertCapture({
           box-sizing: border-box;
           min-width: 0;
         }
+
         .alert-capture-input:focus {
           border-color: #0a3d6b;
           box-shadow: 0 0 0 3px rgba(10, 61, 107, 0.1);
         }
+
         .alert-capture-btn {
           padding: 11px 18px;
           border-radius: 10px;
@@ -145,13 +160,16 @@ export default function JobAlertCapture({
           white-space: nowrap;
           transition: background 140ms;
         }
+
         .alert-capture-btn:hover:not(:disabled) {
           background: #072d52;
         }
+
         .alert-capture-btn:disabled {
           opacity: 0.55;
           cursor: not-allowed;
         }
+
         .alert-capture-done {
           font-size: 14px;
           color: #15803d;
@@ -160,10 +178,25 @@ export default function JobAlertCapture({
           border-radius: 10px;
           padding: 12px 14px;
         }
+
         .alert-capture-error {
           font-size: 13px;
           color: #dc2626;
           margin: 8px 0 0;
+        }
+
+        @media (max-width: 620px) {
+          .alert-capture {
+            padding: 18px;
+          }
+
+          .alert-capture-form {
+            flex-direction: column;
+          }
+
+          .alert-capture-btn {
+            width: 100%;
+          }
         }
       `}</style>
     </div>
