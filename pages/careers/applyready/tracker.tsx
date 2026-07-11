@@ -81,9 +81,23 @@ function normalizeUrl(value: string): string {
   return `https://${trimmed}`;
 }
 
+function applicationToDraft(application: ApplyReadyApplication): DraftApplication {
+  return {
+    title: application.title,
+    company: application.company,
+    location: application.location,
+    jobUrl: application.jobUrl,
+    status: application.status,
+    nextStepDate: application.nextStepDate,
+    notes: application.notes,
+  };
+}
+
 export default function ApplyReadyTrackerPage() {
   const [applications, setApplications] = useState<ApplyReadyApplication[]>([]);
   const [draft, setDraft] = useState<DraftApplication>(EMPTY_DRAFT);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editDraft, setEditDraft] = useState<DraftApplication>(EMPTY_DRAFT);
   const [ready, setReady] = useState(false);
   const [savedMessage, setSavedMessage] = useState("");
   const [statusFilter, setStatusFilter] = useState<ApplyReadyApplicationStatus | "All">("All");
@@ -121,6 +135,11 @@ export default function ApplyReadyTrackerPage() {
   const interviewCount = countApplicationsByStatus(applications, "Interview");
   const followUpCount = countApplicationsByStatus(applications, "Follow up");
 
+  function showMessage(message: string) {
+    setSavedMessage(message);
+    window.setTimeout(() => setSavedMessage(""), 3500);
+  }
+
   function updateDraft(
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) {
@@ -132,29 +151,73 @@ export default function ApplyReadyTrackerPage() {
     }));
   }
 
+  function updateEditDraft(
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) {
+    const { name, value } = event.target;
+
+    setEditDraft((current) => ({
+      ...current,
+      [name]: value,
+    }));
+  }
+
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     if (!draft.title.trim() || !draft.company.trim()) {
-      setSavedMessage("Add at least the role title and company.");
-      window.setTimeout(() => setSavedMessage(""), 3500);
+      showMessage("Add at least the role title and company.");
       return;
     }
 
     addApplyReadyApplication({
       ...draft,
+      title: draft.title.trim(),
+      company: draft.company.trim(),
+      location: draft.location.trim(),
       jobUrl: normalizeUrl(draft.jobUrl),
+      notes: draft.notes.trim(),
     });
 
     setApplications(getApplyReadyApplications());
     setDraft(EMPTY_DRAFT);
-    setSavedMessage("Application added to tracker.");
-    window.setTimeout(() => setSavedMessage(""), 3500);
+    showMessage("Application added to tracker.");
   }
 
   function handleStatusChange(id: string, status: ApplyReadyApplicationStatus) {
     const nextApplications = updateApplyReadyApplication(id, { status });
     setApplications(nextApplications);
+  }
+
+  function handleStartEdit(application: ApplyReadyApplication) {
+    setEditingId(application.id);
+    setEditDraft(applicationToDraft(application));
+  }
+
+  function handleCancelEdit() {
+    setEditingId(null);
+    setEditDraft(EMPTY_DRAFT);
+  }
+
+  function handleSaveEdit(id: string) {
+    if (!editDraft.title.trim() || !editDraft.company.trim()) {
+      showMessage("Keep at least the role title and company.");
+      return;
+    }
+
+    const nextApplications = updateApplyReadyApplication(id, {
+      ...editDraft,
+      title: editDraft.title.trim(),
+      company: editDraft.company.trim(),
+      location: editDraft.location.trim(),
+      jobUrl: normalizeUrl(editDraft.jobUrl),
+      notes: editDraft.notes.trim(),
+    });
+
+    setApplications(nextApplications);
+    setEditingId(null);
+    setEditDraft(EMPTY_DRAFT);
+    showMessage("Application updated.");
   }
 
   function handleDelete(id: string) {
@@ -164,6 +227,11 @@ export default function ApplyReadyTrackerPage() {
 
     const nextApplications = deleteApplyReadyApplication(id);
     setApplications(nextApplications);
+
+    if (editingId === id) {
+      setEditingId(null);
+      setEditDraft(EMPTY_DRAFT);
+    }
   }
 
   const metaTitle = "Application Tracker | ApplyReady | MedicaidReady Careers";
@@ -339,7 +407,7 @@ export default function ApplyReadyTrackerPage() {
                     <button
                       type="button"
                       className="art-clear"
-                      onClick={() => setDraft(EMPTY_APPLYREADY_APPLICATION)}
+                      onClick={() => setDraft(EMPTY_DRAFT)}
                     >
                       Clear Form
                     </button>
@@ -403,80 +471,185 @@ export default function ApplyReadyTrackerPage() {
                 <div className="art-empty">
                   <h3>No applications tracked yet.</h3>
                   <p>
-                    Add a role above, or save jobs from the job board and manually move the
-                    roles you want to track here.
+                    Add a role above, or save jobs from the job board and move the roles you
+                    want to track here.
                   </p>
                   <Link href="/careers/jobs">Browse jobs</Link>
                 </div>
               ) : (
                 <div className="art-list">
-                  {filteredApplications.map((application) => (
-                    <article className="art-card" key={application.id}>
-                      <div className="art-card-main">
-                        <div>
-                          <span className="art-status-pill">{application.status}</span>
-                          <h3>{application.title}</h3>
-                          <p>
-                            {application.company}
-                            {application.location ? ` · ${application.location}` : ""}
-                          </p>
+                  {filteredApplications.map((application) => {
+                    const isEditing = editingId === application.id;
+
+                    return (
+                      <article className="art-card" key={application.id}>
+                        <div className="art-card-main">
+                          <div>
+                            <span className="art-status-pill">{application.status}</span>
+                            <h3>{application.title}</h3>
+                            <p>
+                              {application.company}
+                              {application.location ? ` · ${application.location}` : ""}
+                            </p>
+                          </div>
+
+                          <div className="art-card-actions">
+                            {application.jobUrl && !isEditing && (
+                              <a
+                                href={application.jobUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                Open job
+                              </a>
+                            )}
+                            {!isEditing && (
+                              <button type="button" onClick={() => handleStartEdit(application)}>
+                                Edit
+                              </button>
+                            )}
+                            <button type="button" onClick={() => handleDelete(application.id)}>
+                              Remove
+                            </button>
+                          </div>
                         </div>
 
-                        <div className="art-card-actions">
-                          {application.jobUrl && (
-                            <a
-                              href={application.jobUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              Open job
-                            </a>
-                          )}
-                          <button type="button" onClick={() => handleDelete(application.id)}>
-                            Remove
-                          </button>
-                        </div>
-                      </div>
+                        {isEditing ? (
+                          <div className="art-edit-box">
+                            <div className="art-form-grid">
+                              <label className="art-field">
+                                <span>Role title</span>
+                                <input
+                                  name="title"
+                                  type="text"
+                                  value={editDraft.title}
+                                  onChange={updateEditDraft}
+                                />
+                              </label>
 
-                      <div className="art-card-details">
-                        <div>
-                          <span>Next step</span>
-                          <strong>{formatDate(application.nextStepDate)}</strong>
-                        </div>
-                        <div>
-                          <span>Last update</span>
-                          <strong>{formatUpdated(application.updatedAt)}</strong>
-                        </div>
-                      </div>
+                              <label className="art-field">
+                                <span>Company</span>
+                                <input
+                                  name="company"
+                                  type="text"
+                                  value={editDraft.company}
+                                  onChange={updateEditDraft}
+                                />
+                              </label>
 
-                      <div className="art-card-control">
-                        <label>
-                          <span>Update status</span>
-                          <select
-                            value={application.status}
-                            onChange={(event) =>
-                              handleStatusChange(
-                                application.id,
-                                event.target.value as ApplyReadyApplicationStatus
-                              )
-                            }
-                          >
-                            {APPLYREADY_APPLICATION_STATUSES.map((status) => (
-                              <option key={status} value={status}>
-                                {status}
-                              </option>
-                            ))}
-                          </select>
-                        </label>
-                      </div>
+                              <label className="art-field">
+                                <span>Location</span>
+                                <input
+                                  name="location"
+                                  type="text"
+                                  value={editDraft.location}
+                                  onChange={updateEditDraft}
+                                />
+                              </label>
 
-                      {application.notes && <p className="art-notes">{application.notes}</p>}
+                              <label className="art-field">
+                                <span>Status</span>
+                                <select
+                                  name="status"
+                                  value={editDraft.status}
+                                  onChange={updateEditDraft}
+                                >
+                                  {APPLYREADY_APPLICATION_STATUSES.map((status) => (
+                                    <option key={status} value={status}>
+                                      {status}
+                                    </option>
+                                  ))}
+                                </select>
+                              </label>
 
-                      <p className="art-status-description">
-                        {STATUS_DESCRIPTIONS[application.status]}
-                      </p>
-                    </article>
-                  ))}
+                              <label className="art-field">
+                                <span>Job link</span>
+                                <input
+                                  name="jobUrl"
+                                  type="text"
+                                  value={editDraft.jobUrl}
+                                  onChange={updateEditDraft}
+                                />
+                              </label>
+
+                              <label className="art-field">
+                                <span>Next step date</span>
+                                <input
+                                  name="nextStepDate"
+                                  type="date"
+                                  value={editDraft.nextStepDate}
+                                  onChange={updateEditDraft}
+                                />
+                              </label>
+
+                              <label className="art-field art-field-wide">
+                                <span>Notes</span>
+                                <textarea
+                                  name="notes"
+                                  value={editDraft.notes}
+                                  onChange={updateEditDraft}
+                                  placeholder="Update your follow-up plan, resume notes, contact person, or interview notes."
+                                />
+                              </label>
+                            </div>
+
+                            <div className="art-edit-actions">
+                              <button
+                                type="button"
+                                className="art-submit"
+                                onClick={() => handleSaveEdit(application.id)}
+                              >
+                                Save Changes
+                              </button>
+                              <button type="button" className="art-clear" onClick={handleCancelEdit}>
+                                Cancel
+                              </button>
+                            </div>
+                          </div>
+                        ) : (
+                          <>
+                            <div className="art-card-details">
+                              <div>
+                                <span>Next step</span>
+                                <strong>{formatDate(application.nextStepDate)}</strong>
+                              </div>
+                              <div>
+                                <span>Last update</span>
+                                <strong>{formatUpdated(application.updatedAt)}</strong>
+                              </div>
+                            </div>
+
+                            <div className="art-card-control">
+                              <label>
+                                <span>Update status</span>
+                                <select
+                                  value={application.status}
+                                  onChange={(event) =>
+                                    handleStatusChange(
+                                      application.id,
+                                      event.target.value as ApplyReadyApplicationStatus
+                                    )
+                                  }
+                                >
+                                  {APPLYREADY_APPLICATION_STATUSES.map((status) => (
+                                    <option key={status} value={status}>
+                                      {status}
+                                    </option>
+                                  ))}
+                                </select>
+                              </label>
+                            </div>
+
+                            {application.notes && <p className="art-notes">{application.notes}</p>}
+
+                            <p className="art-status-description">
+                              {STATUS_DESCRIPTIONS[application.status]}
+                            </p>
+                          </>
+                        )}
+                      </article>
+                    );
+                  })}
                 </div>
               )}
             </div>
@@ -760,7 +933,8 @@ export default function ApplyReadyTrackerPage() {
           resize: vertical;
         }
 
-        .art-form-actions {
+        .art-form-actions,
+        .art-edit-actions {
           display: flex;
           flex-wrap: wrap;
           gap: 10px;
@@ -1031,6 +1205,12 @@ export default function ApplyReadyTrackerPage() {
           gap: 7px;
         }
 
+        .art-edit-box {
+          margin-top: 18px;
+          border-top: 1px solid #e2e8f0;
+          padding-top: 18px;
+        }
+
         .art-notes {
           border-top: 1px solid #e2e8f0;
           padding-top: 14px;
@@ -1067,7 +1247,8 @@ export default function ApplyReadyTrackerPage() {
           }
 
           .art-actions,
-          .art-form-actions {
+          .art-form-actions,
+          .art-edit-actions {
             flex-direction: column;
             align-items: stretch;
           }
