@@ -7,22 +7,59 @@ const SITE_URL = "https://www.medicaidready.org";
 const PAGE_PATH = "/careers/applyready";
 const CANONICAL_URL = `${SITE_URL}${PAGE_PATH}`;
 
-const PREP_FEATURES = [
+const WORKFLOW_LINKS = [
   {
-    title: "Career Profile",
-    body: "Create one candidate profile with your preferred roles, location, work setting, skills, salary goals, and career interests.",
+    title: "Dashboard",
+    eyebrow: "Workspace",
+    body: "See profile progress, resume readiness, saved jobs, and tracker counts in one place.",
+    href: "/careers/applyready/dashboard",
+  },
+  {
+    title: "Candidate Profile",
+    eyebrow: "Profile",
+    body: "Save a browser-based draft with preferred roles, skills, work setting, location, and salary goals.",
+    href: "/careers/applyready/profile",
   },
   {
     title: "Resume Vault",
-    body: "Store resumes in one place so you can quickly prepare for jobs that fit your background and goals.",
+    eyebrow: "Readiness",
+    body: "Track resume readiness, target role, format, checklist items, and notes before secure upload is added later.",
+    href: "/careers/applyready/resume",
+  },
+  {
+    title: "Saved Jobs",
+    eyebrow: "Shortlist",
+    body: "Review jobs saved from the job board and move strong matches into your application tracker.",
+    href: "/careers/saved-jobs",
+  },
+  {
+    title: "Application Tracker",
+    eyebrow: "Follow up",
+    body: "Track role status, notes, job links, next steps, interviews, and follow-up needs.",
+    href: "/careers/applyready/tracker",
+  },
+];
+
+const PREP_FEATURES = [
+  {
+    title: "Career Profile",
+    body: "Create one browser-saved candidate profile with your preferred roles, location, work setting, skills, salary goals, and career interests.",
+    href: "/careers/applyready/profile",
+  },
+  {
+    title: "Resume Readiness",
+    body: "Track whether your resume is current, targeted, formatted, quantified, saved as PDF, and ready for a stronger application.",
+    href: "/careers/applyready/resume",
   },
   {
     title: "Saved Jobs",
     body: "Save roles you want to review later and keep your search organized across different career tracks.",
+    href: "/careers/saved-jobs",
   },
   {
     title: "Application Tracker",
-    body: "Track jobs you viewed, saved, prepared for, applied to, and need to follow up on.",
+    body: "Track jobs you viewed, saved, prepared for, applied to, need to follow up on, or want to archive.",
+    href: "/careers/applyready/tracker",
   },
 ];
 
@@ -38,25 +75,25 @@ const AI_TOOLS = [
 const STEPS = [
   {
     number: "01",
-    title: "Build your profile",
-    body: "Add your career goals, skills, preferred roles, location, and work setting so ApplyReady can help you prepare with more context.",
+    title: "Start your profile",
+    body: "Add your career goals, skills, preferred roles, location, and work setting so your ApplyReady workspace has useful context.",
   },
   {
     number: "02",
-    title: "Upload or draft your resume",
-    body: "Keep your resume ready, review it for clarity, and shape it around the jobs you want to pursue.",
+    title: "Prepare your resume readiness",
+    body: "Use the Resume Vault checklist to track your target role, resume format, notes, and application readiness before secure file upload is added later.",
   },
   {
     number: "03",
-    title: "Prepare before you apply",
-    body: "Use ApplyReady tools to improve your resume, write supporting materials, and apply through the employer’s official site with more confidence.",
+    title: "Save jobs and track progress",
+    body: "Save roles from the job board, move strong matches into the tracker, update statuses, add notes, and follow up with a cleaner plan.",
   },
 ];
 
 export default function ApplyReadyPage() {
   const metaTitle = "ApplyReady | Resume Prep and Candidate Tools | MedicaidReady Careers";
   const metaDescription =
-    "ApplyReady helps candidates prepare resumes, career profiles, saved jobs, application trackers, and AI-supported job search materials before applying through official employer sites.";
+    "ApplyReady helps candidates prepare career profiles, resume readiness, saved jobs, application trackers, and future AI-supported job search materials before applying through official employer sites.";
 
   return (
     <>
@@ -87,43 +124,73 @@ export default function ApplyReadyPage() {
                   <p className="ar-eyebrow">ApplyReady</p>
                   <h1>Prepare better before you apply.</h1>
                   <p className="ar-hero-sub">
-                    ApplyReady helps candidates build a stronger profile, organize resumes,
-                    save jobs, track applications, and use AI-supported tools to prepare for
-                    the roles they want.
+                    ApplyReady helps candidates build a stronger profile, prepare resume
+                    readiness, save jobs, track applications, and organize next steps before
+                    applying through each employer&apos;s official process.
                   </p>
 
                   <div className="ar-actions">
-                    <Link href="/careers/jobs" className="ar-primary">
+                    <Link href="/careers/applyready/dashboard" className="ar-primary">
+                      Open Dashboard
+                    </Link>
+                    <Link href="/careers/jobs" className="ar-secondary">
                       Browse Jobs
                     </Link>
-                    <Link href="#join" className="ar-secondary">
-                      Join ApplyReady Updates
+                    <Link href="#join" className="ar-tertiary">
+                      Join Updates
                     </Link>
                   </div>
 
                   <p className="ar-actions-note">
-                    Start with verified jobs today. ApplyReady tools and updates will continue
-                    expanding as the platform grows.
+                    Current ApplyReady tools are browser-saved and do not require an account.
+                    Secure accounts, database storage, and resume file upload can come later.
                   </p>
                 </div>
 
                 <aside className="ar-panel">
-                  <div className="ar-panel-label">Candidate preparation system</div>
+                  <div className="ar-panel-label">Candidate preparation workspace</div>
                   <h2>Your job search command center.</h2>
                   <p>
-                    ApplyReady is designed to help candidates prepare application materials
-                    before they apply through each employer&apos;s official site.
+                    Start with the live workspace now. Save jobs, prepare your profile, track
+                    resume readiness, and manage applications without adding unnecessary
+                    account friction yet.
                   </p>
 
                   <div className="ar-panel-list">
-                    <span>Profile</span>
-                    <span>Resume</span>
-                    <span>Saved jobs</span>
-                    <span>Tracker</span>
-                    <span>AI review</span>
-                    <span>Interview prep</span>
+                    <Link href="/careers/applyready/dashboard">Dashboard</Link>
+                    <Link href="/careers/applyready/profile">Profile</Link>
+                    <Link href="/careers/applyready/resume">Resume</Link>
+                    <Link href="/careers/saved-jobs">Saved jobs</Link>
+                    <Link href="/careers/applyready/tracker">Tracker</Link>
                   </div>
                 </aside>
+              </div>
+            </div>
+          </section>
+
+          <section className="ar-workspace-section">
+            <div className="careers-container">
+              <div className="ar-section-head ar-section-head-split">
+                <div>
+                  <p className="ar-eyebrow ar-eyebrow-dark">Live workspace</p>
+                  <h2>Open the tools that are ready now.</h2>
+                </div>
+                <p>
+                  This is the lean ApplyReady flow we need for this phase. It gives candidates
+                  useful preparation tools without building account login, file upload, direct
+                  apply, or employer dashboards yet.
+                </p>
+              </div>
+
+              <div className="ar-workflow-grid">
+                {WORKFLOW_LINKS.map((item) => (
+                  <Link href={item.href} className="ar-workflow-card" key={item.title}>
+                    <span>{item.eyebrow}</span>
+                    <h3>{item.title}</h3>
+                    <p>{item.body}</p>
+                    <strong>Open</strong>
+                  </Link>
+                ))}
               </div>
             </div>
           </section>
@@ -154,7 +221,7 @@ export default function ApplyReadyPage() {
 
               <div className="ar-feature-grid">
                 {PREP_FEATURES.map((feature) => (
-                  <article className="ar-feature-card" key={feature.title}>
+                  <Link href={feature.href} className="ar-feature-card" key={feature.title}>
                     <div className="ar-feature-icon" aria-hidden="true">
                       <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                         <path
@@ -168,7 +235,8 @@ export default function ApplyReadyPage() {
                     </div>
                     <h3>{feature.title}</h3>
                     <p>{feature.body}</p>
-                  </article>
+                    <strong>Open tool</strong>
+                  </Link>
                 ))}
               </div>
             </div>
@@ -178,12 +246,13 @@ export default function ApplyReadyPage() {
             <div className="careers-container">
               <div className="ar-ai">
                 <div>
-                  <p className="ar-eyebrow">AI resume tools</p>
-                  <h2>Shape your resume for the role you want.</h2>
+                  <p className="ar-eyebrow">Future AI resume tools</p>
+                  <h2>AI should come after the preparation structure is solid.</h2>
                   <p>
-                    ApplyReady AI tools will help candidates review resume quality, improve
-                    job-specific wording, create recruiter summaries, prepare cover letters,
-                    and get ready for interviews.
+                    ApplyReady AI tools can later help candidates review resume quality,
+                    improve job-specific wording, create recruiter summaries, prepare cover
+                    letters, and get ready for interviews. For now, the live foundation is
+                    profile, resume readiness, saved jobs, tracker, and dashboard.
                   </p>
                 </div>
 
@@ -230,9 +299,9 @@ export default function ApplyReadyPage() {
 
                 <div className="ar-trust-card">
                   <strong>Now</strong>
-                  <span>Profile, resume prep, saved jobs, tracker, and AI support.</span>
+                  <span>Browser-saved profile draft, resume readiness, saved jobs, tracker, and dashboard.</span>
                   <strong>Later</strong>
-                  <span>Direct applications for employers who post and accept applicants on the platform.</span>
+                  <span>Secure accounts, database storage, resume upload, and direct applications for participating employers.</span>
                 </div>
               </div>
             </div>
@@ -243,10 +312,10 @@ export default function ApplyReadyPage() {
               <div className="ar-join">
                 <div>
                   <p className="ar-eyebrow ar-eyebrow-dark">Get updates</p>
-                  <h2>Be first to know when ApplyReady tools go live.</h2>
+                  <h2>Be first to know when ApplyReady expands.</h2>
                   <p>
-                    Join updates for ApplyReady candidate profiles, resume tools, saved jobs,
-                    and application tracking features.
+                    Join updates for secure accounts, resume upload, AI resume tools,
+                    employer posting workflows, and future ApplyReady releases.
                   </p>
                 </div>
 
@@ -358,7 +427,8 @@ export default function ApplyReadyPage() {
         }
 
         .ar-primary,
-        .ar-secondary {
+        .ar-secondary,
+        .ar-tertiary {
           display: inline-flex;
           align-items: center;
           justify-content: center;
@@ -387,14 +457,16 @@ export default function ApplyReadyPage() {
           transform: translateY(-1px);
         }
 
-        .ar-secondary {
+        .ar-secondary,
+        .ar-tertiary {
           color: #ffffff;
           border: 1px solid rgba(255, 255, 255, 0.22);
           background: rgba(255, 255, 255, 0.06);
           box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
         }
 
-        .ar-secondary:hover {
+        .ar-secondary:hover,
+        .ar-tertiary:hover {
           background: rgba(255, 255, 255, 0.1);
           border-color: rgba(245, 185, 66, 0.4);
           transform: translateY(-1px);
@@ -449,7 +521,8 @@ export default function ApplyReadyPage() {
           margin-top: 22px;
         }
 
-        .ar-panel-list span {
+        .ar-panel-list a,
+        .ar-ai-tools span {
           display: inline-flex;
           align-items: center;
           border: 1px solid rgba(245, 185, 66, 0.24);
@@ -459,10 +532,108 @@ export default function ApplyReadyPage() {
           padding: 8px 11px;
           font-size: 12px;
           font-weight: 850;
+          text-decoration: none;
+        }
+
+        .ar-panel-list a:hover {
+          background: rgba(245, 185, 66, 0.2);
+          color: #ffffff;
+        }
+
+        .ar-workspace-section {
+          background: #eef4fb;
+          padding: 58px 0;
+        }
+
+        .ar-section-head {
+          margin-bottom: 24px;
+        }
+
+        .ar-section-head-split {
+          display: grid;
+          grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+          gap: 28px;
+          align-items: start;
+        }
+
+        .ar-section-head-split p:last-child {
+          margin: 0;
+          color: #475569;
+          font-size: 16px;
+          line-height: 1.75;
+        }
+
+        .ar-workflow-grid {
+          display: grid;
+          grid-template-columns: repeat(5, 1fr);
+          gap: 14px;
+        }
+
+        .ar-workflow-card,
+        .ar-feature-card {
+          display: grid;
+          border: 1px solid #dbe5f0;
+          border-radius: 24px;
+          background: #ffffff;
+          padding: 22px;
+          text-decoration: none;
+          color: inherit;
+          box-shadow: 0 14px 34px rgba(4, 44, 83, 0.06);
+          transition:
+            transform 140ms ease,
+            border-color 140ms ease,
+            box-shadow 140ms ease;
+        }
+
+        .ar-workflow-card {
+          gap: 12px;
+        }
+
+        .ar-workflow-card:hover,
+        .ar-feature-card:hover {
+          transform: translateY(-2px);
+          border-color: #ba7517;
+          box-shadow: 0 18px 42px rgba(4, 44, 83, 0.1);
+        }
+
+        .ar-workflow-card span {
+          width: fit-content;
+          border: 1px solid #f1deb3;
+          border-radius: 999px;
+          background: #fff7e6;
+          color: #ba7517;
+          padding: 6px 10px;
+          font-size: 11px;
+          font-weight: 950;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+        }
+
+        .ar-workflow-card h3 {
+          margin: 0;
+          color: #042c53;
+          font-size: 18px;
+          line-height: 1.2;
+          font-weight: 950;
+          letter-spacing: -0.025em;
+        }
+
+        .ar-workflow-card p {
+          margin: 0;
+          color: #64748b;
+          font-size: 14px;
+          line-height: 1.68;
+        }
+
+        .ar-workflow-card strong,
+        .ar-feature-card strong {
+          color: #0c447c;
+          font-size: 13px;
+          font-weight: 950;
         }
 
         .ar-intro-section {
-          background: #eef4fb;
+          background: #f8fafc;
         }
 
         .ar-intro {
@@ -494,10 +665,6 @@ export default function ApplyReadyPage() {
           font-size: 16px;
         }
 
-        .ar-section-head {
-          margin-bottom: 24px;
-        }
-
         .ar-feature-grid {
           display: grid;
           grid-template-columns: repeat(4, 1fr);
@@ -505,11 +672,7 @@ export default function ApplyReadyPage() {
         }
 
         .ar-feature-card {
-          border: 1px solid #dbe5f0;
-          border-radius: 24px;
-          background: #ffffff;
-          padding: 22px;
-          box-shadow: 0 14px 34px rgba(4, 44, 83, 0.06);
+          gap: 0;
         }
 
         .ar-feature-icon {
@@ -535,7 +698,7 @@ export default function ApplyReadyPage() {
         }
 
         .ar-feature-card p {
-          margin: 10px 0 0;
+          margin: 10px 0 14px;
           color: #64748b;
           font-size: 14px;
           line-height: 1.68;
@@ -579,15 +742,8 @@ export default function ApplyReadyPage() {
         }
 
         .ar-ai-tools span {
-          display: inline-flex;
-          align-items: center;
-          border: 1px solid rgba(245, 185, 66, 0.24);
-          border-radius: 999px;
-          background: rgba(245, 185, 66, 0.12);
-          color: #ffe2ad;
           padding: 10px 13px;
           font-size: 13px;
-          font-weight: 850;
         }
 
         .ar-steps {
@@ -706,8 +862,15 @@ export default function ApplyReadyPage() {
           font-size: 15px;
         }
 
+        @media (max-width: 1280px) {
+          .ar-workflow-grid {
+            grid-template-columns: repeat(3, 1fr);
+          }
+        }
+
         @media (max-width: 980px) {
           .ar-hero-grid,
+          .ar-section-head-split,
           .ar-intro,
           .ar-ai,
           .ar-trust,
@@ -715,7 +878,8 @@ export default function ApplyReadyPage() {
             grid-template-columns: 1fr;
           }
 
-          .ar-feature-grid {
+          .ar-feature-grid,
+          .ar-workflow-grid {
             grid-template-columns: repeat(2, 1fr);
           }
 
@@ -729,7 +893,8 @@ export default function ApplyReadyPage() {
             font-size: clamp(40px, 13vw, 58px);
           }
 
-          .ar-feature-grid {
+          .ar-feature-grid,
+          .ar-workflow-grid {
             grid-template-columns: 1fr;
           }
 
@@ -745,7 +910,8 @@ export default function ApplyReadyPage() {
           }
 
           .ar-primary,
-          .ar-secondary {
+          .ar-secondary,
+          .ar-tertiary {
             width: 100%;
             justify-content: center;
           }
