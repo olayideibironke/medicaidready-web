@@ -130,7 +130,7 @@ export default function ApplyReadyDashboardPage() {
         title: "Resume Vault",
         status: resumeStarted ? `${resumeCompletion}% ready` : "Ready to start",
         description:
-          "Track resume readiness before secure account storage and file upload are added.",
+          "Track resume readiness before account-based storage is added.",
         href: "/careers/applyready/resume",
       },
       {
@@ -259,8 +259,7 @@ export default function ApplyReadyDashboardPage() {
                 <p>
                   We are building ApplyReady as a real candidate preparation system. Saved
                   jobs, profile drafts, resume readiness, and application tracking can start
-                  now. Resume file upload and account-tied data should wait until sign-in,
-                  database, storage, and privacy controls are ready.
+                  now. Account-tied data should wait until sign-in, database storage, and privacy controls are ready.
                 </p>
               </div>
 
@@ -292,7 +291,7 @@ export default function ApplyReadyDashboardPage() {
                   <p>
                     The profile gives ApplyReady the context needed for saved jobs, resume
                     matching, tracker statuses, and future AI-supported tools. It is the
-                    right foundation before we build full account-based resume upload.
+                    right foundation before we build full account-based storage.
                   </p>
                 </div>
 
@@ -373,13 +372,11 @@ export default function ApplyReadyDashboardPage() {
                   <h2>
                     {resumeStarted
                       ? "Your resume readiness draft is underway."
-                      : "Prepare resume readiness before file upload."}
+                      : "Prepare resume readiness before account-based storage."}
                   </h2>
                   <p>
                     This stage tracks whether the candidate has a current resume, target role,
-                    clean format, and readiness checklist. Actual resume upload should come
-                    later with secure account storage, replacement controls, delete controls,
-                    and privacy wording.
+                    clean format, and readiness checklist. Account-based resume tools should come later with secure storage, replacement controls, delete controls, and privacy wording.
                   </p>
                 </div>
               </div>
@@ -436,10 +433,9 @@ export default function ApplyReadyDashboardPage() {
               <div className="ard-account">
                 <div>
                   <p className="ard-eyebrow">Account foundation</p>
-                  <h2>Profile, resume, and tracker features need secure accounts.</h2>
+                  <h2>Profile, resume, and tracker history need secure accounts.</h2>
                   <p>
-                    Saved jobs can start in browser storage, but candidate profiles, resumes,
-                    and application history should eventually be tied to secure accounts. That
+                    Saved jobs can start in browser storage, but candidate profile drafts, resume readiness, and application history should eventually be tied to secure accounts. That
                     keeps user data safer and gives us the right path for resume tools,
                     tracker history, and AI-supported preparation.
                   </p>
@@ -454,7 +450,7 @@ export default function ApplyReadyDashboardPage() {
                   <div>
                     <span>02</span>
                     <strong>Resume readiness</strong>
-                    <p>Resume Vault status is started without unsafe file upload.</p>
+                    <p>Resume Vault status is started without account-based storage yet.</p>
                   </div>
                   <div>
                     <span>03</span>
