@@ -432,7 +432,7 @@ export default function ApplyReadyTrackerPage() {
                     <div className="art-side-title">Build order</div>
                     <p>
                       We shaped profile, resume readiness, saved jobs, and tracker before
-                      adding real accounts and resume upload.
+                      adding secure accounts and account-based storage.
                     </p>
                     <Link href="/careers/applyready/dashboard">Back to dashboard</Link>
                   </div>
