@@ -23,7 +23,7 @@ const WORKFLOW_LINKS = [
   {
     title: "Resume Vault",
     eyebrow: "Readiness",
-    body: "Track resume readiness, target role, format, checklist items, and notes before secure upload is added later.",
+    body: "Track resume readiness, target role, format, checklist items, and notes before account-based storage is added later.",
     href: "/careers/applyready/resume",
   },
   {
@@ -81,7 +81,7 @@ const STEPS = [
   {
     number: "02",
     title: "Prepare your resume readiness",
-    body: "Use the Resume Vault checklist to track your target role, resume format, notes, and application readiness before secure file upload is added later.",
+    body: "Use the Resume Vault checklist to track your target role, resume format, notes, and application readiness before account-based resume tools are added later.",
   },
   {
     number: "03",
@@ -143,7 +143,7 @@ export default function ApplyReadyPage() {
 
                   <p className="ar-actions-note">
                     Current ApplyReady tools are browser-saved and do not require an account.
-                    Secure accounts, database storage, and resume file upload can come later.
+                    Secure accounts and account-based storage can come later.
                   </p>
                 </div>
 
@@ -177,8 +177,8 @@ export default function ApplyReadyPage() {
                 </div>
                 <p>
                   This is the lean ApplyReady flow we need for this phase. It gives candidates
-                  useful preparation tools without building account login, file upload, direct
-                  apply, or employer dashboards yet.
+                  useful preparation tools without adding account requirements or employer-side
+                  workflows yet.
                 </p>
               </div>
 
@@ -292,8 +292,8 @@ export default function ApplyReadyPage() {
                   <h2>ApplyReady prepares candidates. Employers still receive applications through their official process.</h2>
                   <p>
                     For employer-linked jobs, candidates will still apply through the official
-                    employer site. Direct in-platform applications can be added later for
-                    employers who choose to receive applications inside MedicaidReady Careers.
+                    employer site. The tracker does not submit applications. It helps candidates
+                    prepare, organize, and follow up with a cleaner plan.
                   </p>
                 </div>
 
@@ -301,7 +301,7 @@ export default function ApplyReadyPage() {
                   <strong>Now</strong>
                   <span>Browser-saved profile draft, resume readiness, saved jobs, tracker, and dashboard.</span>
                   <strong>Later</strong>
-                  <span>Secure accounts, database storage, resume upload, and direct applications for participating employers.</span>
+                  <span>Secure accounts, account-based storage, and employer-side workflows when the platform is ready.</span>
                 </div>
               </div>
             </div>
@@ -314,8 +314,8 @@ export default function ApplyReadyPage() {
                   <p className="ar-eyebrow ar-eyebrow-dark">Get updates</p>
                   <h2>Be first to know when ApplyReady expands.</h2>
                   <p>
-                    Join updates for secure accounts, resume upload, AI resume tools,
-                    employer posting workflows, and future ApplyReady releases.
+                    Join updates for secure accounts, AI resume tools, employer posting workflows,
+                    and future ApplyReady releases.
                   </p>
                 </div>
 
