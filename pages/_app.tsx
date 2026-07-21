@@ -22,6 +22,17 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
   const year = useMemo(() => new Date().getFullYear(), []);
   const isCareersRoute = router.pathname.startsWith("/careers");
+  const isCheckoutRoute = router.pathname.startsWith("/checkout");
+  const isQuizRoute = router.pathname === "/quiz";
+  const isPublicFluidRoute = !isCareersRoute && !isCheckoutRoute && !isQuizRoute;
+
+  const mainClassName = [
+    "site-main",
+    isCareersRoute ? "site-main-careers" : "",
+    isPublicFluidRoute ? "site-main-public-fluid" : "site-main-public-standard",
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   return (
     <>
@@ -36,20 +47,22 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       </Head>
 
       <style jsx global>{`
-        *, *::before, *::after {
+        *,
+        *::before,
+        *::after {
           box-sizing: border-box;
           margin: 0;
           padding: 0;
         }
 
         :root {
-          --navy: #042C53;
+          --navy: #042c53;
           --navy-dark: #021c38;
-          --navy-2: #0C447C;
-          --blue: #0C447C;
-          --blue-light: #85B7EB;
-          --gold: #BA7517;
-          --gold-bright: #EF9F27;
+          --navy-2: #0c447c;
+          --blue: #0c447c;
+          --blue-light: #85b7eb;
+          --gold: #ba7517;
+          --gold-bright: #ef9f27;
           --gold-soft: #f4e4c6;
           --ink: #0f172a;
           --text: #334155;
@@ -77,6 +90,10 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           --radius-md: 12px;
           --radius-lg: 16px;
           --radius-xl: 24px;
+
+          --site-edge: clamp(16px, 3.2vw, 56px);
+          --site-container-max: 1720px;
+          --site-subtle-max: 1180px;
         }
 
         html,
@@ -93,6 +110,13 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           -webkit-font-smoothing: antialiased;
         }
 
+        @supports (overflow: clip) {
+          html,
+          body {
+            overflow-x: clip;
+          }
+        }
+
         a {
           color: inherit;
           text-decoration: none;
@@ -105,11 +129,91 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           font-family: inherit;
         }
 
+        img,
+        picture,
+        video,
+        canvas {
+          max-width: 100%;
+        }
+
         .shell {
           min-height: 100vh;
+          width: 100%;
+          min-width: 0;
           display: flex;
           flex-direction: column;
           background: var(--bg);
+          overflow-x: hidden;
+        }
+
+        @supports (overflow: clip) {
+          .shell {
+            overflow-x: clip;
+          }
+        }
+
+        .site-main {
+          flex: 1;
+          width: 100%;
+          min-width: 0;
+        }
+
+        .site-main > * {
+          min-width: 0;
+        }
+
+        .site-main-public-fluid {
+          --public-edge: var(--site-edge);
+          --public-container-max: var(--site-container-max);
+          overflow-x: hidden;
+        }
+
+        @supports (overflow: clip) {
+          .site-main-public-fluid {
+            overflow-x: clip;
+          }
+        }
+
+        .site-main-public-fluid .container {
+          width: min(
+            calc(100% - calc(var(--public-edge) * 2)),
+            var(--public-container-max)
+          ) !important;
+          max-width: none !important;
+          margin-left: auto !important;
+          margin-right: auto !important;
+          padding-left: 0 !important;
+          padding-right: 0 !important;
+        }
+
+        .site-main-public-fluid section,
+        .site-main-public-fluid article,
+        .site-main-public-fluid aside,
+        .site-main-public-fluid div,
+        .site-main-public-fluid form {
+          min-width: 0;
+        }
+
+        .site-main-public-fluid img,
+        .site-main-public-fluid svg,
+        .site-main-public-fluid video,
+        .site-main-public-fluid canvas {
+          max-width: 100%;
+        }
+
+        .site-main-public-fluid table {
+          width: 100%;
+          max-width: 100%;
+        }
+
+        .site-main-public-standard {
+          overflow-x: hidden;
+        }
+
+        @supports (overflow: clip) {
+          .site-main-public-standard {
+            overflow-x: clip;
+          }
         }
 
         .header-hidden {
@@ -128,9 +232,13 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         }
 
         .header-inner {
-          max-width: 1120px;
+          width: min(
+            calc(100% - calc(var(--site-edge) * 2)),
+            var(--site-container-max)
+          );
+          max-width: none;
           margin: 0 auto;
-          padding: 0 24px;
+          padding: 0;
           height: 64px;
           display: flex;
           align-items: center;
@@ -251,9 +359,13 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         }
 
         .mobile-panel-inner {
-          max-width: 1120px;
+          width: min(
+            calc(100% - calc(var(--site-edge) * 2)),
+            var(--site-container-max)
+          );
+          max-width: none;
           margin: 0 auto;
-          padding: 12px 16px 16px;
+          padding: 12px 0 16px;
           display: flex;
           flex-direction: column;
           gap: 4px;
@@ -291,9 +403,13 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         }
 
         .footer-inner {
-          max-width: 1120px;
+          width: min(
+            calc(100% - calc(var(--site-edge) * 2)),
+            var(--site-container-max)
+          );
+          max-width: none;
           margin: 0 auto;
-          padding: 28px 24px;
+          padding: 28px 0;
           display: flex;
           align-items: center;
           justify-content: space-between;
@@ -384,7 +500,17 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           background: var(--border);
         }
 
+        @media (min-width: 1800px) {
+          :root {
+            --site-container-max: 1840px;
+          }
+        }
+
         @media (max-width: 680px) {
+          :root {
+            --site-edge: 16px;
+          }
+
           .nav {
             display: none;
           }
@@ -393,12 +519,14 @@ export default function MyApp({ Component, pageProps }: AppProps) {
             display: flex;
           }
 
-          .header-inner {
-            padding: 0 16px;
+          .header-inner,
+          .mobile-panel-inner,
+          .footer-inner {
+            width: min(calc(100% - 32px), var(--site-container-max));
           }
 
           .footer-inner {
-            padding: 20px 16px;
+            padding: 20px 0;
             flex-direction: column;
             align-items: flex-start;
             gap: 12px;
@@ -406,6 +534,10 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
           .footer-meta {
             padding-left: 16px;
+          }
+
+          .site-main-public-fluid .container {
+            width: min(calc(100% - 32px), var(--public-container-max)) !important;
           }
         }
 
@@ -502,7 +634,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
                 Pricing
               </Link>
               <Link href="/quiz" className="nav-cta">
-                Check Eligibility — Free
+                Check Eligibility - Free
               </Link>
             </nav>
 
@@ -550,14 +682,14 @@ export default function MyApp({ Component, pageProps }: AppProps) {
                   className="mobile-cta"
                   onClick={() => setMenuOpen(false)}
                 >
-                  Check My Eligibility — Free
+                  Check My Eligibility - Free
                 </Link>
               </div>
             </div>
           )}
         </header>
 
-        <main style={{ flex: 1 }}>
+        <main className={mainClassName}>
           <Component {...pageProps} />
         </main>
 

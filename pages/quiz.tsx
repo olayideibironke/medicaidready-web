@@ -406,8 +406,8 @@ export default function Quiz() {
                   <p className="field-hint">
                     Include all income sources for everyone in your household before taxes.
                   </p>
-                  <div className="input-wrap">
-                    <span className="input-prefix" aria-hidden="true">
+                  <div className="currency-field">
+                    <span className="currency-prefix" aria-hidden="true">
                       $
                     </span>
                     <input
@@ -415,7 +415,8 @@ export default function Quiz() {
                       type="number"
                       min="0"
                       step="1"
-                      className="field-input input-with-prefix"
+                      inputMode="numeric"
+                      className="currency-input"
                       placeholder="e.g. 2500"
                       value={answers.monthlyIncome}
                       onChange={(e) => setAnswers((a) => ({ ...a, monthlyIncome: e.target.value }))}
@@ -842,25 +843,55 @@ export default function Quiz() {
           font-weight: 500;
         }
 
-        .input-wrap {
-          position: relative;
+        .currency-field {
+          display: flex;
+          align-items: stretch;
+          width: 100%;
           margin-top: 6px;
+          border: 1.5px solid var(--border);
+          border-radius: var(--radius-md);
+          background: var(--surface);
+          overflow: hidden;
+          transition: border-color 140ms, box-shadow 140ms;
         }
 
-        .input-prefix {
-          position: absolute;
-          left: 16px;
-          top: 50%;
-          transform: translateY(-50%);
+        .currency-field:focus-within {
+          border-color: var(--navy);
+          box-shadow: 0 0 0 3px rgba(10, 61, 107, 0.1);
+        }
+
+        .currency-prefix {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          min-width: 48px;
+          padding: 0 15px;
+          border-right: 1px solid var(--border);
+          background: var(--bg);
+          color: var(--navy);
           font-size: 16px;
-          font-weight: 600;
-          color: var(--text);
-          pointer-events: none;
-          z-index: 1;
+          font-weight: 800;
+          line-height: 1;
+          flex-shrink: 0;
         }
 
-        .input-with-prefix {
-          padding-left: 30px !important;
+        .currency-input {
+          flex: 1;
+          min-width: 0;
+          width: 100%;
+          border: 0;
+          outline: none;
+          background: transparent;
+          color: var(--ink);
+          padding: 13px 16px;
+          font-size: 16px;
+          line-height: 1.5;
+          box-sizing: border-box;
+          appearance: auto;
+        }
+
+        .currency-input::placeholder {
+          color: var(--subtle);
         }
 
         .size-grid {
